@@ -3,8 +3,10 @@ package com.doners.donersbackend.common.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
+@Getter
 @ApiModel("BaseResponseDto")
 public class BaseResponseDto {
     @ApiModelProperty(name="응답 메세지", example="성공")
