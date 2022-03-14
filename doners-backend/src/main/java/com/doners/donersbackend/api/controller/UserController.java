@@ -53,4 +53,24 @@ public class UserController {
         return ResponseEntity.status(200).body(BaseResponseDto.of("닉네임을 성공적으로 변경했습니다.", 200));
     }
 
+    @GetMapping("/check/{userNickname}")
+    @ApiOperation(value="닉네임 중복 검사")
+    @ApiResponses({
+            @ApiResponse(code=200, message="해당 닉네임은 사용 가능합니다."),
+            @ApiResponse(code=409, message="해당 닉네임은 사용 불가능합니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDto> checkNickname(
+            @PathVariable("userNickname") @ApiParam(value="중복 검사하려는 닉네임", required=true) String userNickname) {
+        try {
+            Integer statusCode = userService.checkNickname(userNickname);
+
+            if(statusCode == 409)
+                return ResponseEntity.status(409).body(BaseResponseDto.of("해당 닉네임은 사용 불가능합니다.", 409));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDto.of("해당 닉네임은 사용 불가능합니다.", 409));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseDto.of("해당 닉네임은 사용 가능합니다.", 409));
+    }
+
 }
