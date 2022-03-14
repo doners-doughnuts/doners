@@ -28,12 +28,14 @@ dependencies {
 	implementation("io.springfox:springfox-data-rest:3.0.0")
 	implementation("io.springfox:springfox-bean-validators:3.0.0")
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	implementation 'org.projectlombok:lombok:1.18.20'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
 //tasks.named('test') {
 //	useJUnitPlatform()
 //}
