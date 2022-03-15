@@ -17,9 +17,10 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
+### my ignore ###
 src/main/resources/application-aws.properties
 
+### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
