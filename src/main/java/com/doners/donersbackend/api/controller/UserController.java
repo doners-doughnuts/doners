@@ -96,6 +96,7 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("회원 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(409).body(BaseResponseDTO.of("프로필 이미지 등록에 실패했습니다.", 409));
         }
 
