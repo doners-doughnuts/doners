@@ -1,6 +1,6 @@
 package com.doners.donersbackend.api.service;
 
-import com.doners.donersbackend.api.dto.request.UserInfoPostDto;
+import com.doners.donersbackend.api.dto.request.UserInfoPostDTO;
 import com.doners.donersbackend.db.entity.User;
 import com.doners.donersbackend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,22 +14,20 @@ public class UserServiceImpl implements UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
     @Override
-    public Integer setUserInfo(UserInfoPostDto userInfoPostDto) {
-        String userEmail = userInfoPostDto.getUserEmail();
+    public void setUserInfo(UserInfoPostDTO userInfoPostDTO) {
+        String userEmail = userInfoPostDTO.getUserEmail();
 
         // 이미 해당 이메일로 가입한 계정 존재하는지 확인
         if(userRepository.findByUserEmail(userEmail).isPresent())
-            return 409;
+            return;
 
         // account 정보 추가할 것
         User user = User.builder()
-                .userName(userInfoPostDto.getUserName())
-                .userEmail(userInfoPostDto.getUserEmail())
-                .userNickname(userInfoPostDto.getUserNickname()).build();
+                .userName(userInfoPostDTO.getUserName())
+                .userEmail(userInfoPostDTO.getUserEmail())
+                .userNickname(userInfoPostDTO.getUserNickname()).build();
 
         userRepository.save(user);
-
-        return 200;
     }
 
     // 닉네임 변경

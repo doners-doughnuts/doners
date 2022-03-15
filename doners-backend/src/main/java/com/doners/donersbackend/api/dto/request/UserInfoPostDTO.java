@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @ApiModel("UserSignUpPostDto")
 @NoArgsConstructor
 @Getter
-public class UserInfoPostDto {
+public class UserInfoPostDTO {
 
     @ApiModelProperty(name="이름")
     private String userName;
