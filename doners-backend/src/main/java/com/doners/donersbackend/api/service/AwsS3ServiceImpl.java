@@ -19,11 +19,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-@Service("awsS3Service")
+@Service
 @RequiredArgsConstructor
 public class AwsS3ServiceImpl implements AwsS3Service {
 
-    @Value("${cloud.aws.s3.bucket")
+    @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     private final AmazonS3Client amazonS3Client;
@@ -74,6 +74,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         try {
             return fileName.substring(fileName.lastIndexOf("."));
         } catch (StringIndexOutOfBoundsException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
     }
