@@ -22,10 +22,10 @@ public class DonationGetListWrapperResponseDTO extends BaseResponseDTO {
         this.donationGetListResponseDTOList = donationGetListResponseDTOList;
     }
 
-    public static DonationGetListWrapperResponseDTO of(Integer statusCode, String message, DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO) {
+    public static DonationGetListWrapperResponseDTO of(String message, Integer statusCode, DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO) {
         DonationGetListWrapperResponseDTO res = donationGetListWrapperResponseDTO;
-        res.setStatusCode(statusCode);
         res.setMessage(message);
+        res.setStatusCode(statusCode);
 
         return res;
     }
