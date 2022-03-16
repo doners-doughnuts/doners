@@ -45,6 +45,9 @@ dependencies {
 
 	// jasypt
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
+	// image-scaling
+	implementation group: 'com.mortennobel', name: 'java-image-scaling', version: '0.8.6'
 }
 
 //tasks.named('test') {
