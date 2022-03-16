@@ -30,6 +30,9 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_title")
     private String title;
 
+    @Column(name = "donation_category")
+    private String category;
+
     @Column(name = "donation_description")
     private String description;
 
