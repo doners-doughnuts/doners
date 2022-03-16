@@ -19,22 +19,12 @@ class DonersBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
-//		User user = User.builder()
-//				.userName("손창현")
-//				.userNickname("웅대디")
-//				.userEmail("gganzii1215@gmail.com")
-//				.userAccount(null).build();
-//
-//		userRepository.save(user);
-//
-//		User user1 = userRepository.findByUserEmail("gganzii1215@gmail.com").get();
-//
-//		System.out.println(user1);
+
 	}
 
 	@Test
 	void jasypt() {
-		String url = "jdbc:mysql://localhost:3306/doners_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
+		String url = "jdbc:mysql://doners-db/doners_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true";
 		String username = "doners";
 		String userpassword = "doners404!";
 
