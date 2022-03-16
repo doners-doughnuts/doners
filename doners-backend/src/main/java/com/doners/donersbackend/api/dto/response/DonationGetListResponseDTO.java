@@ -13,7 +13,7 @@ import java.util.Map;
 @ToString
 public class DonationGetListResponseDTO {
 
-    @ApiModelProperty(name = "대표 이미지")
+    @ApiModelProperty(name = "대표 사진")
     private Map<String, String> image;
 
     @ApiModelProperty(name = "제목")
