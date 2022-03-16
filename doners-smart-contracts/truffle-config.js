@@ -19,10 +19,8 @@
  */
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-//
-// const fs = require('fs');
-const mnemonic = 'black pact gown together air sign because eagle hawk thumb real napkin'.trim();
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const fs = require('fs');
+const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**
@@ -67,12 +65,12 @@ module.exports = {
     skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     },
     // Useful for private networks
-    // private: {
-    // provider: () => new HDWalletProvider(mnemonic, `http://20.196.209.2:8545`),
-    // network_id: 31221,   // This network is yours, in the cloud.
-    // gas:0,
-    // production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+    ssafy: {
+      provider: () => new HDWalletProvider(mnemonic, `http://20.196.209.2:8545`),
+      host: "20.196.209.2",  
+      network_id: "*",   // This network is yours, in the cloud.
+      from:"079dae51ae588fBe92163F75C18F030812A4979A"
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
