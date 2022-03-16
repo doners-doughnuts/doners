@@ -33,11 +33,6 @@ public class DonationController {
             @ApiParam(value = "증빙 자료", required = true) @RequestPart(value = "evidence") List<MultipartFile> evidence
     ) {
 
-//        System.out.println(donationInfoDTO);
-//        System.out.println(certificate.getOriginalFilename());
-//        System.out.println(image.getSize());
-//        System.out.println(evidence.get(0).getContentType());
-
         if (donationService.createDonation(donationInfoDTO, certificate, image, evidence)) {
             return ResponseEntity.status(201).body(BaseResponseDTO.of("신청 완료", 201));
         } else {
