@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ImageRepository extends JpaRepository<Image, String> {
     Optional<Image> findByUser(User user);
+    Optional<Image> findByUserAndImageIsResized(User user, boolean isResized);
 }
