@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ApiModel("DonationBudgetInfo")
+@ApiModel("DonationBudgetRequestInfo")
 @Getter
 @ToString
 @NoArgsConstructor
