@@ -6,6 +6,9 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.doners.donersbackend.db.entity.Image;
 import com.doners.donersbackend.db.entity.User;
+import com.doners.donersbackend.db.entity.donation.Donation;
+import com.doners.donersbackend.db.entity.donation.File;
+import com.doners.donersbackend.db.repository.FileRepository;
 import com.doners.donersbackend.db.repository.ImageRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
 import com.mortennobel.imagescaling.AdvancedResizeOp;
@@ -23,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,6 +39,8 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     private final AmazonS3Client amazonS3Client;
 
     private final ImageRepository imageRepository;
+
+    private final FileRepository fileRepository;
 
     private final UserRepository userRepository;
 
@@ -102,6 +108,90 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         }
 
         imageRepository.save(thumbnailImage);
+    }
+
+    @Override
+    public void uploadMyFile(Donation donation, MultipartFile image, List<MultipartFile> evidence) {
+
+        if (image != null) {
+            String fileName = createFileName(image.getOriginalFilename());
+
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(image.getSize());
+            objectMetadata.setContentType(image.getContentType());
+
+            try (InputStream inputStream = image.getInputStream()) {
+                amazonS3Client.putObject(
+                        new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                                .withCannedAcl(CannedAccessControlList.PublicRead)
+                );
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "기부 신청글 대표 사진 업로드에 실패했습니다.");
+            }
+
+            Image img = Image.builder()
+                    .imageOriginFileName(image.getOriginalFilename())
+                    .imageNewFileName(fileName)
+                    .donation(donation)
+                    .build();
+
+            imageRepository.save(img);
+        }
+
+        evidence.forEach(file -> {
+            String fileName = createFileName(file.getOriginalFilename());
+
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(file.getSize());
+            objectMetadata.setContentType(file.getContentType());
+
+            try (InputStream inputStream = file.getInputStream()) {
+                amazonS3Client.putObject(
+                        new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                                .withCannedAcl(CannedAccessControlList.PublicRead)
+                );
+            } catch (IOException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "증빙 자료 업로드에 실패했습니다.");
+            }
+
+            File evidenceFile = File.builder()
+                    .originalFileName(file.getOriginalFilename())
+                    .savedFileName(fileName)
+                    .build();
+
+            fileRepository.save(evidenceFile);
+        });
+
+    }
+
+    @Override
+    public void uploadDeputyFile(Donation donation, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
+
+        String fileName = createFileName(certificate.getOriginalFilename());
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(certificate.getSize());
+        objectMetadata.setContentType(certificate.getContentType());
+
+        try (InputStream inputStream = certificate.getInputStream()) {
+            amazonS3Client.putObject(
+                    new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                            .withCannedAcl(CannedAccessControlList.PublicRead)
+            );
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "증빙 자료 업로드에 실패했습니다.");
+        }
+
+        File certificateFile = File.builder()
+                .originalFileName(certificate.getOriginalFilename())
+                .savedFileName(fileName)
+                .donation(donation)
+                .build();
+
+        fileRepository.save(certificateFile);
+
+        uploadMyFile(donation, image, evidence);
+
     }
 
     @Override
