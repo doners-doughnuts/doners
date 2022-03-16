@@ -13,6 +13,9 @@ import java.util.Map;
 @ToString
 public class DonationGetListResponseDTO {
 
+    @ApiModelProperty(name = "기부글 ID")
+    private String donationId;
+
     @ApiModelProperty(name = "대표 사진")
     private Map<String, String> image;
 
@@ -26,7 +29,8 @@ public class DonationGetListResponseDTO {
     private long targetAmount;
 
     @Builder
-    public DonationGetListResponseDTO(Map<String, String> image, String title, String beneficiaryName, long targetAmount) {
+    public DonationGetListResponseDTO(String donationId, Map<String, String> image, String title, String beneficiaryName, long targetAmount) {
+        this.donationId = donationId;
         this.image = image;
         this.title = title;
         this.beneficiaryName = beneficiaryName;
