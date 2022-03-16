@@ -1,0 +1,48 @@
+package com.doners.donersbackend.db.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.sql.Clob;
+import java.time.LocalDateTime;
+
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Community extends BaseEntity {
+    @Column(name="community_title")
+    private String communityTitle;
+
+    @Column(name="community_description")
+    @Lob
+    private String communityDescription;
+
+    @Column(name="community_create_time")
+    private LocalDateTime communityCreateTime;
+
+    @Column(name="community_views")
+    private Long communityViews;
+
+    @Column(name="community_is_deleted", columnDefinition="BOOLEAN DEFAULT false")
+    private boolean communityIsDeleted;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
+
+    // 닉네임 수정
+    public void changeCommunity(String communityTitle,String communityDescription) {
+        this.communityTitle = communityTitle;
+        this.communityDescription = communityDescription;
+    }
+
+    // 글 삭제
+    public void deleteCommunity() {
+        if(!this.communityIsDeleted) {
+            this.communityIsDeleted = true;
+        }
+    }
+}
