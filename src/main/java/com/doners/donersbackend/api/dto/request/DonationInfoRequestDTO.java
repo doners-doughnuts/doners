@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@ApiModel("DonationInfoDTO")
+@ApiModel("DonationInfoRequestDTO")
 @Getter
 @ToString
 @NoArgsConstructor
@@ -43,7 +43,7 @@ public class DonationInfoRequestDTO {
     private String description;
 
     @ApiModelProperty(name = "모금액 활용 계획")
-    private List<DonationBudgetRequestDTO> plans;
+    private List<DonationBudgetRequestDTO> budget;
 
     @ApiModelProperty(name = "목표 모금액")
     private long targetAmount;
