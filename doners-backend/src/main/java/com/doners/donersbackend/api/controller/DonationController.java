@@ -29,8 +29,8 @@ public class DonationController {
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponseDTO> register(
             @ApiParam(value = "기부 신청 정보", required = true) @RequestPart DonationInfoRequestDTO donationInfoRequestDTO,
-            @ApiParam(value = "관계증명서", required = false) @RequestPart(value = "certificate", required = false) MultipartFile certificate,
-            @ApiParam(value = "대표 사진", required = false) @RequestPart(value = "image", required = false) MultipartFile image,
+            @ApiParam(value = "관계증명서") @RequestPart(value = "certificate", required = false) MultipartFile certificate,
+            @ApiParam(value = "대표 사진") @RequestPart(value = "image", required = false) MultipartFile image,
             @ApiParam(value = "증빙 자료", required = true) @RequestPart(value = "evidence") List<MultipartFile> evidence
     ) {
 
@@ -50,7 +50,7 @@ public class DonationController {
     @GetMapping
     public ResponseEntity<? extends BaseResponseDTO> getList(String category) {
 
-        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of(200, "기부글 목록 조회 성공", donationService.getList(category)));
+        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 목록 조회 성공", 200, donationService.getList(category)));
 
     }
 
