@@ -117,6 +117,7 @@ public class DonationServiceImpl implements DonationService {
 
     }
 
+    @Transactional
     @Override
     public DonationResponseDTO getDonation(String donationId) {
 
@@ -174,9 +175,12 @@ public class DonationServiceImpl implements DonationService {
             evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
         );
 
+        increaseViews(donation);
+
         return DonationResponseDTO.builder()
                 .title(donation.getTitle())
                 .category(donation.getCategory())
+                .views(donation.getViews())
                 .description(donation.getDescription())
                 .image(image)
                 .startTime(donation.getStartTime())
@@ -191,6 +195,14 @@ public class DonationServiceImpl implements DonationService {
                 .achievementRate((double) amountSum / donation.getAmount() * 100)
                 .evidence(evidence)
                 .build();
+
+    }
+
+    public void increaseViews(Donation donation) {
+
+        donation.updateViews();
+
+        donationRepository.save(donation);
 
     }
 
