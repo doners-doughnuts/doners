@@ -2,6 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
 import com.doners.donersbackend.api.dto.response.DonationGetListWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.DonationRecommendResponseDTO;
 import com.doners.donersbackend.api.dto.response.DonationResponseDTO;
 import com.doners.donersbackend.api.service.DonationService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
@@ -95,6 +96,30 @@ public class DonationController {
         }
 
         return ResponseEntity.ok(DonationResponseDTO.of("기부글 조회에 성공했습니다.", 200, donationResponseDTO));
+
+    }
+
+    @ApiOperation(value = "기부글 추천")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "기부글 추천에 성공했습니다."),
+            @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "기부글 추천에 실패했습니다.")
+    })
+    @GetMapping("/recommend/{donationId}")
+    public ResponseEntity<? extends BaseResponseDTO> recommend(
+            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId) {
+
+        DonationRecommendResponseDTO donationRecommendResponseDTO = null;
+
+        try {
+            donationRecommendResponseDTO = donationService.recommendDonation(donationId);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 추천에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.ok(DonationRecommendResponseDTO.of("기부글 추천에 성공했습니다.", 200, donationRecommendResponseDTO));
 
     }
 
