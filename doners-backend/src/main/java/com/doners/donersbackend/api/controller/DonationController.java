@@ -24,8 +24,10 @@ public class DonationController {
 
     @ApiOperation(value = "기부 신청")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "기부 신청에 성공했습니다."),
-            @ApiResponse(code = 409, message = "기부 신청에 실패했습니다.")
+            @ApiResponse(code = 201, message = "기부글 신청에 성공했습니다."),
+            @ApiResponse(code = 404, message = "해당 신청자 정보를 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "신청자에 대한 기부글이 이미 존재합니다."),
+            @ApiResponse(code = 409, message = "기부글 신청에 실패했습니다.")
     })
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponseDTO> register(
@@ -35,36 +37,64 @@ public class DonationController {
             @ApiParam(value = "증빙 자료", required = true) @RequestPart(value = "evidence") List<MultipartFile> evidence
     ) {
 
-        if (donationService.createDonation(donationInfoRequestDTO, certificate, image, evidence)) {
-            return ResponseEntity.status(201).body(BaseResponseDTO.of("신청 완료", 201));
-        } else {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("신청 불가", 409));
+        try {
+            if (!donationService.createDonation(donationInfoRequestDTO, certificate, image, evidence)) {
+                return ResponseEntity.status(409).body(BaseResponseDTO.of("신청자에 대한 기부글이 이미 존재합니다.", 409));
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 신청자 정보를 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청에 실패했습니다.", 409));
         }
+
+        return ResponseEntity.status(201).body(BaseResponseDTO.of("기부글 신청에 성공했습니다.", 201));
 
     }
 
     @ApiOperation(value = "기부글 목록 조회")
     @ApiResponses({
             @ApiResponse(code = 200, message = "기부글 목록 조회에 성공했습니다."),
+            @ApiResponse(code = 404, message = "기부글 목록을 찾을 수 없습니다."),
             @ApiResponse(code = 409, message = "기부글 목록 조회에 실패했습니다.")
     })
     @GetMapping
     public ResponseEntity<? extends BaseResponseDTO> getList(String category) {
 
-        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 목록 조회 성공", 200, donationService.getDonationList(category)));
+        DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
+
+        try {
+            donationGetListWrapperResponseDTO = donationService.getDonationList(category);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글 목록을 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 목록 조회에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 목록 조회에 성공했습니다.", 200, donationGetListWrapperResponseDTO));
 
     }
 
     @ApiOperation(value = "기부글 상세 조회")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "기부글 상세 조회에 성공했습니다."),
-            @ApiResponse(code = 409, message = "기부글 상세 조회에 실패했습니다.")
+            @ApiResponse(code = 200, message = "기부글 조회에 성공했습니다."),
+            @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "기부글 조회에 실패했습니다.")
     })
     @GetMapping("/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> get(
             @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId) {
 
-        return ResponseEntity.ok(DonationResponseDTO.of("기부글 상세 조회 성공", 200, donationService.getDonation(donationId)));
+        DonationResponseDTO donationResponseDTO = null;
+
+        try {
+            donationResponseDTO = donationService.getDonation(donationId);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 조회에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.ok(DonationResponseDTO.of("기부글 조회에 성공했습니다.", 200, donationResponseDTO));
 
     }
 
