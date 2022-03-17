@@ -157,6 +157,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
             File evidenceFile = File.builder()
                     .originalFileName(file.getOriginalFilename())
                     .savedFileName(fileName)
+                    .donation(donation)
                     .build();
 
             fileRepository.save(evidenceFile);
@@ -179,7 +180,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
                             .withCannedAcl(CannedAccessControlList.PublicRead)
             );
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "증빙 자료 업로드에 실패했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "관계 증명서 업로드에 실패했습니다.");
         }
 
         File certificateFile = File.builder()
