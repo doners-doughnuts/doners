@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
+@Getter
 @Builder
 @Getter
 @ToString
