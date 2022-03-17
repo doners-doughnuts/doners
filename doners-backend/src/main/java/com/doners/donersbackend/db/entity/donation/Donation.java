@@ -54,11 +54,24 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_views")
     private int views;
 
+    @Column(name = "donation_recommendations")
+    private int recommendations;
+
     @Column(name = "donation_is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    
+    // 조회
+    public void updateViews() {
+        this.views += 1;
+    }
+
+    // 추천
+    public void updateRecommendations() {
+        this.recommendations += 1;
+    }
 
 }
