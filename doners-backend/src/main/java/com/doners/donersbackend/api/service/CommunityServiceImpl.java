@@ -2,14 +2,17 @@ package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.CommunityChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.CommunityRegisterPostDTO;
+import com.doners.donersbackend.api.dto.response.CommunityGetListResponseDTO;
+import com.doners.donersbackend.api.dto.response.CommunityGetListWrapperResponseDTO;
 import com.doners.donersbackend.db.entity.Community;
-import com.doners.donersbackend.db.entity.User;
 import com.doners.donersbackend.db.repository.CommunityRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +62,29 @@ public class CommunityServiceImpl implements CommunityService{
 
         communityRepository.save(community);
         return 200;
+    }
+
+    @Override
+    public CommunityGetListWrapperResponseDTO getCommunityList() {
+        List<Community> communityList = communityRepository.findByCommunityIsDeleted(false).orElse(null);
+
+        List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
+
+        communityList.forEach(community -> {
+            communityGetListResponseDTOList.add(
+                    CommunityGetListResponseDTO.builder()
+                            .communityId(community.getId())
+                            .communityTitle(community.getCommunityTitle())
+                            .communityDescription(community.getCommunityDescription())
+                            .communityCreateTime(community.getCommunityCreateTime())
+                            .communityViews(community.getCommunityViews())
+                            .communityWriter(community.getUser().getUserNickname())
+                            .build()
+            );
+        });
+
+        return CommunityGetListWrapperResponseDTO.builder()
+                .communityGetListResponseDTOList(communityGetListResponseDTOList)
+                .build();
     }
 }

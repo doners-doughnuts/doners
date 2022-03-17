@@ -2,8 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.api.dto.request.AppreciationChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.AppreciationRegisterPostDTO;
-import com.doners.donersbackend.api.dto.request.CommunityChangePatchDTO;
-import com.doners.donersbackend.api.dto.request.CommunityRegisterPostDTO;
+import com.doners.donersbackend.api.dto.response.AppreciationGetListWrapperResponseDTO;
 import com.doners.donersbackend.api.service.AppreciationService;
 import com.doners.donersbackend.api.service.AwsS3Service;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
@@ -84,6 +83,16 @@ public class AppreciationController {
         }
 
         return ResponseEntity.status(200).body(BaseResponseDTO.of("글 삭제에 성공했습니다.", 200));
+    }
+
+    @GetMapping
+    @ApiOperation(value="감사 글 목록 조회")
+    @ApiResponses({
+            @ApiResponse(code=200, message="감사 글 목록 조회에 성공했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> getAppreciationList() {
+
+        return ResponseEntity.ok(AppreciationGetListWrapperResponseDTO.of("감사글 목록 조회 성공", 200, appreciationService.getAppreciationList()));
     }
 
     @PostMapping("/image")
