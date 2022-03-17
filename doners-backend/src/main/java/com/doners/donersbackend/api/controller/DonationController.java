@@ -2,6 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
 import com.doners.donersbackend.api.dto.response.DonationGetListWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.DonationResponseDTO;
 import com.doners.donersbackend.api.service.DonationService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
 import io.swagger.annotations.*;
@@ -50,7 +51,20 @@ public class DonationController {
     @GetMapping
     public ResponseEntity<? extends BaseResponseDTO> getList(String category) {
 
-        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 목록 조회 성공", 200, donationService.getList(category)));
+        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 목록 조회 성공", 200, donationService.getDonationList(category)));
+
+    }
+
+    @ApiOperation(value = "기부글 상세 조회")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "기부글 상세 조회에 성공했습니다."),
+            @ApiResponse(code = 409, message = "기부글 상세 조회에 실패했습니다.")
+    })
+    @GetMapping("/{donationId}")
+    public ResponseEntity<? extends BaseResponseDTO> get(
+            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId) {
+
+        return ResponseEntity.ok(DonationResponseDTO.of("기부글 상세 조회 성공", 200, donationService.getDonation(donationId)));
 
     }
 
