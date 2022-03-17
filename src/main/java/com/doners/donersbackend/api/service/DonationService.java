@@ -2,6 +2,7 @@ package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
 import com.doners.donersbackend.api.dto.response.DonationGetListWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.DonationRecommendResponseDTO;
 import com.doners.donersbackend.api.dto.response.DonationResponseDTO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,5 +18,8 @@ public interface DonationService {
 
     // 기부글 상세 조회
     DonationResponseDTO getDonation(String donationId);
+
+    // 기부글 추천
+    DonationRecommendResponseDTO recommendDonation(String donationId);
 
 }

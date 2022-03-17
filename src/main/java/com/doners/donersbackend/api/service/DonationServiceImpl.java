@@ -175,6 +175,7 @@ public class DonationServiceImpl implements DonationService {
             evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
         );
 
+        // 조회수 증가
         increaseViews(donation);
 
         return DonationResponseDTO.builder()
@@ -198,8 +199,26 @@ public class DonationServiceImpl implements DonationService {
 
     }
 
+    @Override
+    public DonationRecommendResponseDTO recommendDonation(String donationId) {
+
+        Donation donation = donationRepository.findById(donationId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
+
+        // 추천수 업데이트
+        donation.updateRecommendations();
+
+        donationRepository.save(donation);
+
+        return DonationRecommendResponseDTO.builder()
+                .recommendations(donation.getRecommendations())
+                .build();
+
+    }
+
     public void increaseViews(Donation donation) {
 
+        // 조회수 업데이트
         donation.updateViews();
 
         donationRepository.save(donation);
