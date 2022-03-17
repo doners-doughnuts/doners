@@ -60,5 +60,10 @@ public class Donation extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    
+    // 조회수 증가
+    public void updateViews() {
+        this.views += 1;
+    }
 
 }
