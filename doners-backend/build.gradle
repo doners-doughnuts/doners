@@ -48,6 +48,9 @@ dependencies {
 
 	// image-scaling
 	implementation group: 'com.mortennobel', name: 'java-image-scaling', version: '0.8.6'
+
+	// mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 //tasks.named('test') {
