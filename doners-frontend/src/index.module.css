@@ -1,0 +1,9 @@
+@value background from 'assets/styles/colors.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: background;
+}
