@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Builder
-@Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
