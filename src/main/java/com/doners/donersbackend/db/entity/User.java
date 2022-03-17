@@ -1,14 +1,12 @@
 package com.doners.donersbackend.db.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
+@Getter
 @Builder
 @ToString
 @NoArgsConstructor

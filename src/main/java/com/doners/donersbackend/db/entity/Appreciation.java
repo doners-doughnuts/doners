@@ -2,6 +2,7 @@ package com.doners.donersbackend.db.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Appreciation extends BaseEntity {
     @Column(name="appreciation_title")
     private String appreciationTitle;
