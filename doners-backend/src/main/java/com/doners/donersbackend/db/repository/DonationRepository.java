@@ -1,5 +1,6 @@
 package com.doners.donersbackend.db.repository;
 
+import com.doners.donersbackend.db.entity.User;
 import com.doners.donersbackend.db.entity.donation.Donation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,13 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
     Optional<List<Donation>> findByCategoryAndIsDeleted(String category, boolean isDeleted);
 
     boolean existsByIdAndIsDeleted(String donationId, boolean isDeleted);
+
+    Optional<List<Donation>> findByTitleContainingOrDescriptionContaining(String title, String description);
+
+    Optional<List<Donation>> findByTitleContaining(String title);
+
+    Optional<List<Donation>> findByDescriptionContaining(String description);
+
+    Optional<List<Donation>> findByUser(User user);
 
 }

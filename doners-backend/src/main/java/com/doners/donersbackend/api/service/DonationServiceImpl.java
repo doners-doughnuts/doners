@@ -172,7 +172,7 @@ public class DonationServiceImpl implements DonationService {
         Map<String, String> evidence = new HashMap<>();
 
         fileList.forEach(file ->
-            evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
+                evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
         );
 
         // 조회수 증가
@@ -212,6 +212,61 @@ public class DonationServiceImpl implements DonationService {
 
         return DonationRecommendResponseDTO.builder()
                 .recommendations(donation.getRecommendations())
+                .build();
+
+    }
+
+    @Override
+    public DonationGetListWrapperResponseDTO searchDonation(String type, String keyword) {
+
+        List<Donation> donationList = new ArrayList<>();
+
+        switch (type) {
+            // 제목 + 사연
+            case "td":
+                donationList = donationRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword)
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+            // 제목
+            case "t":
+                donationList = donationRepository.findByTitleContaining(keyword)
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+            // 사연
+            case "d":
+                donationList = donationRepository.findByDescriptionContaining(keyword)
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+            // 닉네임
+            case "n":
+                donationList = donationRepository.findByUser(userRepository.findByUserNickname(keyword).orElse(null))
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+        }
+
+        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
+
+        donationList.forEach(donation -> {
+            // 대표 사진
+            Map<String, String> image = new HashMap<>();
+            Image img = imageRepository.findByDonation(donation)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
+            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
+            image.put(img.getImageOriginFileName(), imgUrl);
+
+            donationGetListResponseDTOList.add(
+                    DonationGetListResponseDTO.builder()
+                            .donationId(donation.getId())
+                            .image(image)
+                            .title(donation.getTitle())
+                            .beneficiaryName(donation.getBeneficiaryName())
+                            .targetAmount(donation.getAmount())
+                            .build()
+            );
+        });
+
+        return DonationGetListWrapperResponseDTO.builder()
+                .donationGetListResponseDTOList(donationGetListResponseDTOList)
                 .build();
 
     }
