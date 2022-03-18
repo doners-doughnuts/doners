@@ -1,5 +1,6 @@
 package com.doners.donersbackend.api.service;
 
+import com.doners.donersbackend.api.dto.request.DonationApproveRequestDTO;
 import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
 import com.doners.donersbackend.api.dto.response.*;
 import com.doners.donersbackend.db.entity.Image;
@@ -39,7 +40,7 @@ public class DonationServiceImpl implements DonationService {
 
     @Transactional
     @Override
-    public boolean createDonation(DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
+    public Boolean createDonation(DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
 
         if (donationRepository.findByUserIdAndIsDeleted(donationInfoRequestDTO.getUserId(), false).orElse(null) != null)
             return false;
@@ -268,6 +269,29 @@ public class DonationServiceImpl implements DonationService {
         return DonationGetListWrapperResponseDTO.builder()
                 .donationGetListResponseDTOList(donationGetListResponseDTOList)
                 .build();
+
+    }
+
+    @Override
+    public Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) {
+
+        // TODO: 관리자인지 확인'
+
+        Donation donation = donationRepository.findById(donationApproveRequestDTO.getDonationId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
+
+        // 이미 승인
+        if (donation.isApproved()) return 2;
+
+        // 거절
+        if (!donationApproveRequestDTO.isApprove()) return 0;
+
+        // 신청 승인
+        donation.updateIsApproved();
+
+        donationRepository.save(donation);
+
+        return 1;
 
     }
 
