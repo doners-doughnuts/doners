@@ -22,4 +22,6 @@ public interface DonationService {
     // 기부글 추천
     DonationRecommendResponseDTO recommendDonation(String donationId);
 
+    DonationGetListWrapperResponseDTO searchDonation(String type, String keyword);
+
 }
