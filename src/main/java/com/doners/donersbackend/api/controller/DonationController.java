@@ -123,4 +123,30 @@ public class DonationController {
 
     }
 
+    @ApiOperation(value = "기부글 검색")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "기부글 검색에 성공했습니다."),
+            @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "기부글 검색에 실패했습니다.")
+    })
+    @GetMapping("/search")
+    public ResponseEntity<? extends BaseResponseDTO> search(
+            @ApiParam(value = "검색 유형", required = true) @RequestParam String type,
+            @ApiParam(value = "검색어", required = true) @RequestParam String keyword
+    ) {
+
+        DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
+
+        try {
+            donationGetListWrapperResponseDTO = donationService.searchDonation(type, keyword);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 검색에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 검색에 성공했습니다.", 200, donationGetListWrapperResponseDTO));
+
+    }
+
 }
