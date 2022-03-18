@@ -74,4 +74,9 @@ public class Donation extends BaseEntity {
         this.recommendations += 1;
     }
 
+    // 승인
+    public void updateIsApproved() {
+        this.isApproved = true;
+    }
+
 }

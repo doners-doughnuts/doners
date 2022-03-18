@@ -1,5 +1,6 @@
 package com.doners.donersbackend.api.controller;
 
+import com.doners.donersbackend.api.dto.request.DonationApproveRequestDTO;
 import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
 import com.doners.donersbackend.api.dto.response.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.api.dto.response.DonationRecommendResponseDTO;
@@ -83,7 +84,8 @@ public class DonationController {
     })
     @GetMapping("/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> get(
-            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId) {
+            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId
+    ) {
 
         DonationResponseDTO donationResponseDTO = null;
 
@@ -107,7 +109,8 @@ public class DonationController {
     })
     @GetMapping("/recommend/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
-            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId) {
+            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId
+    ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
@@ -146,6 +149,37 @@ public class DonationController {
         }
 
         return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("기부글 검색에 성공했습니다.", 200, donationGetListWrapperResponseDTO));
+
+    }
+
+    @ApiOperation(value = "기부글 신청 승인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "기부글 신청 승인에 성공했습니다."),
+            @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "기부글 신청이 거절되었습니다."),
+            @ApiResponse(code = 409, message = "이미 승인된 기부글 입니다."),
+            @ApiResponse(code = 409, message = "기부글 신청 승인에 실패했습니다.")
+    })
+    @PatchMapping("/approve")
+    public ResponseEntity<? extends BaseResponseDTO> approve(
+            @ApiParam(value = "기부글 승인 정보", required = true) @RequestBody DonationApproveRequestDTO donationApproveRequestDTO
+    ) {
+
+        try {
+            Integer result = donationService.approveDonation(donationApproveRequestDTO);
+
+            if (result == 0) {
+                return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청이 거절되었습니다.", 409));
+            } else if (result == 2) {
+                return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 승인된 기부글 입니다.", 409));
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 승인에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.ok(BaseResponseDTO.of("기부글 신청이 승인에 성공했습니다.", 200));
 
     }
 
