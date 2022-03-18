@@ -1,10 +1,12 @@
 import styles from './HomePage.module.css';
 import character from 'assets/images/character.png';
+import Button from 'components/common/Button/Button';
 
 const HomePage = () => {
   return (
     <div>
       <section className={styles.Introduction}>
+        <Button text="test"/>
         <div className={`${styles.container} ${styles['vertical-center']}`}>
           <div className={styles['Introduction-box']}>
             <h1 className={styles.slogan}>
