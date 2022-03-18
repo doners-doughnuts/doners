@@ -4,7 +4,7 @@ import character from 'assets/images/character.png';
 const HomePage = () => {
   return (
     <div>
-      <section className={styles.Introduction}>
+      <section className={`${styles.Introduction} ${styles.section}`}>
         <div className={`${styles.container} ${styles['vertical-center']}`}>
           <div className={styles['Introduction-box']}>
             <h1 className={styles.slogan}>
@@ -35,7 +35,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className={styles.Services}>
+      <section className={`${styles.Services} ${styles.section}`}>
         <div className={styles.badge}>
           <div className={styles['service-title']}>Why Doners?</div>
         </div>
@@ -52,7 +52,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className={styles.Services}>
+      <section className={`${styles.Services} ${styles.section}`}>
         <div
           className={`${styles.container} ${styles['container-default']} ${styles['right-sort']}`}
         >
@@ -68,7 +68,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className={styles.Services}>
+      <section className={`${styles.Services} ${styles.section}`}>
         <div className={`${styles.container} ${styles['container-default']}`}>
           <div className={styles.innerContainer}>
             <h1 className={styles.title}>서비스 장점 3</h1>
@@ -82,7 +82,9 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className={`${styles.Cummunity} ${styles['vertical-center']}`}>
+      <section
+        className={`${styles.Cummunity} ${styles.section} ${styles['vertical-center']}`}
+      >
         <div className={`${styles.container} ${styles['container-default']}`}>
           <div className={`${styles.innerContainer} `}>
             <div className={styles['welcome-community-box']}>
@@ -109,7 +111,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <section className={styles.About}>
+      <section className={`${styles.About} ${styles.section}`}>
         <img
           src={character}
           alt="character"

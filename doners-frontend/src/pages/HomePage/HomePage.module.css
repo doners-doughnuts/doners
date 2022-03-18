@@ -5,7 +5,7 @@
 @value secondary-Hover: #298C5C;
 
 /* 공통 */
-section {
+.section {
   border-bottom: 1px solid #bebebe;
 }
 
