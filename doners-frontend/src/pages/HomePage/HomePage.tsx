@@ -1,5 +1,6 @@
 import styles from './HomePage.module.css';
 import character from 'assets/images/character.png';
+import Button from 'components/common/Button/Button';
 
 const HomePage = () => {
   return (
