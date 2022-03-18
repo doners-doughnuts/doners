@@ -13,7 +13,9 @@ const Header = () => {
           </Link>
           <li>기부신청</li>
           <li>기부하기</li>
-          <li>커뮤니티</li>
+          <Link to="/community">
+            <li>커뮤니티</li>
+          </Link>
         </ul>
       </div>
       <div className={styles['header-center']}>
