@@ -3865,6 +3865,11 @@ dotenv-expand@^5.1.0:
   resolved "https://registry.npmjs.org/dotenv-expand/-/dotenv-expand-5.1.0.tgz"
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
 
+dotenv-expand@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-8.0.2.tgz#c75c6f695cff061a9ed9a95a520c6cc84b912188"
+  integrity sha512-vKKAk+VOzAWOV/dPIeSYqhgC/TQY+6L6Ibkzfsr8xd1stdBsTuGu9asCOXgbYbBeS+f2Y6lqqEuw7riOA+xEUQ==
+
 dotenv@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-10.0.0.tgz"
