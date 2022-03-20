@@ -1,0 +1,297 @@
+.container {
+  min-width: 1180px;
+}
+
+.innerContainer {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.community-tab {
+  display: flex;
+  list-style: none;
+  width: 800px;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.community-tab > li {
+  width: 25%;
+}
+
+.tab-item {
+  font-size: 24px;
+  padding: 10px 30px;
+  text-align: center;
+  position: relative;
+}
+
+.community-tab > li:not(:first-child) .tab-item::before {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 30px;
+  background-color: black;
+}
+
+.on {
+  border-bottom: 2px solid black;
+}
+
+/* 이벤트 혜택 section (추후 container 안으로 변경 예정) */
+
+.event-contents {
+  /* background-color: #f6f8fa; */
+}
+
+.module-box {
+  padding: 100px 0;
+}
+
+.event-items {
+  height: 454px;
+}
+
+.title {
+  font-size: 36px;
+  text-align: center;
+}
+
+.tab-list {
+  display: flex;
+  height: 80px;
+  background-color: white;
+  list-style: none;
+  padding: 0;
+  border-radius: 12px;
+}
+
+.tab-list > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  color: gray;
+  border-radius: 12px;
+}
+
+.tab-list > li:hover {
+  background-color: #3617ce;
+  color: white;
+  cursor: pointer;
+}
+
+.event-name {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.icon > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.content {
+  position: relative;
+}
+.content > img {
+  border-radius: 12px;
+}
+
+.info {
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  color: #efeff1;
+}
+
+dt,
+dd {
+  margin: 0;
+  font-size: 22px;
+}
+
+.benefit-items {
+  display: flex;
+}
+.benefit-basic-item {
+  background-color: #001822;
+  color: white;
+  padding: 50px;
+  border-radius: 12px;
+  position: relative;
+  width: 460px;
+}
+
+.flag {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -16px);
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: #3617ce;
+  color: #fff;
+  font-size: 18px;
+}
+
+.benefit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefit-list > li {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(225, 227, 228, 0.2);
+  margin-top: 20px;
+  padding-top: 30px;
+}
+
+.benefit-list > li:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.benefit-icon {
+  margin-right: 10px;
+}
+
+.benefit-icon img {
+  width: 70px;
+  height: 70px;
+}
+
+.benefit-info > dt {
+  position: relative;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+
+.benefit-info > dd {
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.point::after {
+  content: ' ';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.benefit-additional-item {
+  background-color: white;
+  border-radius: 12px;
+  width: 700px;
+  position: relative;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.benefit-tabs-wrap {
+  padding-top: 70px;
+}
+.benefit-tabs {
+  display: flex;
+  padding: 0;
+  list-style: none;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.benefit-tabs > li:not(:first-child)::before {
+  content: ' ';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 10px 10px 0;
+  border-radius: 50%;
+  background-color: #3617ce;
+  vertical-align: top;
+}
+
+.benefit-tabs button {
+  background: none;
+  border: none;
+}
+
+.slide-wrap {
+  margin-bottom: 50px;
+}
+
+.slide-content {
+  text-align: center;
+}
+
+.slide-content ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  margin: 0 40px;
+}
+
+.slide-box {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-box img {
+  width: 50px;
+  height: 50px;
+  opacity: 0.6;
+}
+
+.slide-box.select > img {
+  width: 80px;
+  height: 80px;
+  opacity: 1;
+}
+
+.slide-info {
+  position: relative;
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+}
+.slide-info img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.info-text {
+  position: absolute;
+  top: 50px;
+  left: 60px;
+}
+
+.info-text .title {
+  font-size: 22px;
+  text-align: left;
+}
+
+.info-text .desc {
+  max-width: 265px;
+  color: #585959;
+  font-size: 16px;
+}
