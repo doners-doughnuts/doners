@@ -5,7 +5,7 @@ import com.doners.donersbackend.api.dto.request.UserInfoPostDTO;
 public interface UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
-    void setUserInfo(UserInfoPostDTO userInfoPostDto);
+    Integer setUserInfo(UserInfoPostDTO userInfoPostDto);
     // 닉네임 변경
     Integer changeUserNickname(String userNickname);
 
