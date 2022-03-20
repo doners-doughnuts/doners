@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @Api(value="User API", tags={"User"})
@@ -25,12 +27,16 @@ public class UserController {
     @ApiOperation(value="필수 회원정보 입력 - 이름, 이메일, 닉네임")
     @ApiResponses({
             @ApiResponse(code=201, message="필수 회원정보 입력에 성공했습니다."),
-            @ApiResponse(code=409, message="필수 회원정보 입력에 실패했습니다.")
+            @ApiResponse(code=409, message="필수 회원정보 입력에 실패했습니다. / 이미 해당 이메일로 가입된 계정이 존재합니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> setUserInfo(
-            @RequestBody @ApiParam(value="필수 회원 정보", required=true) UserInfoPostDTO userInfoPostDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 회원 정보", required=true) UserInfoPostDTO userInfoPostDTO) {
         try {
-            userService.setUserInfo(userInfoPostDTO);
+            Integer statusCode = userService.setUserInfo(userInfoPostDTO);
+
+            if(statusCode == 409) {
+                return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 해당 이메일로 가입된 계정이 존재합니다.", 409));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(BaseResponseDTO.of("필수 회원정보 입력에 실패했습니다.", 409));
