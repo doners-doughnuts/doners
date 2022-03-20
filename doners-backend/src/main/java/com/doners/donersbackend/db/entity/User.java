@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-@Builder
 @Getter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
