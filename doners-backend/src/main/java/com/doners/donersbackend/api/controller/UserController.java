@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @Api(value="User API", tags={"User"})
@@ -28,7 +30,7 @@ public class UserController {
             @ApiResponse(code=409, message="필수 회원정보 입력에 실패했습니다.")
     })
     public ResponseEntity<? extends BaseResponseDTO> setUserInfo(
-            @RequestBody @ApiParam(value="필수 회원 정보", required=true) UserInfoPostDTO userInfoPostDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 회원 정보", required=true) UserInfoPostDTO userInfoPostDTO) {
         try {
             userService.setUserInfo(userInfoPostDTO);
         } catch (Exception e) {
