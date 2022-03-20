@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("UserSignUpPostDto")
+@ApiModel("UserInfoPostDto")
 @NoArgsConstructor
 @Getter
 public class UserInfoPostDTO {

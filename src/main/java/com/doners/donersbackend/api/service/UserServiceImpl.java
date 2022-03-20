@@ -14,12 +14,12 @@ public class UserServiceImpl implements UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
     @Override
-    public void setUserInfo(UserInfoPostDTO userInfoPostDTO) {
+    public Integer setUserInfo(UserInfoPostDTO userInfoPostDTO) {
         String userEmail = userInfoPostDTO.getUserEmail();
 
         // 이미 해당 이메일로 가입한 계정 존재하는지 확인
         if(userRepository.findByUserEmail(userEmail).isPresent())
-            return;
+            return 409;
 
         // account 정보 추가할 것
         User user = User.builder()
@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
                 .userNickname(userInfoPostDTO.getUserNickname()).build();
 
         userRepository.save(user);
+        return 201;
     }
 
     // 닉네임 변경
