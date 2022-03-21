@@ -1,6 +1,7 @@
 package com.doners.donersbackend.api.service;
 
-import com.doners.donersbackend.api.dto.request.UserInfoPostDTO;
+import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
+import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
 import com.doners.donersbackend.db.entity.User;
 import com.doners.donersbackend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,21 +15,43 @@ public class UserServiceImpl implements UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
     @Override
-    public Integer setUserInfo(UserInfoPostDTO userInfoPostDTO) {
-        String userEmail = userInfoPostDTO.getUserEmail();
+    public Integer setUserInfo(UserInfoSetRequestDTO userInfoSetRequestDTO) {
+        String userEmail = userInfoSetRequestDTO.getUserEmail();
+        String userAccount = userInfoSetRequestDTO.getUserAccount();
 
         // 이미 해당 이메일로 가입한 계정 존재하는지 확인
-        if(userRepository.findByUserEmail(userEmail).isPresent())
+        if(userRepository.findByUserEmailAndUserIsDeleted(userEmail, false).isPresent()) {
             return 409;
+        }
+
+        // 이미 해당 메타마스크 계정 주소로 가입한 계정 존재하는지 확인
+        if(userRepository.findByUserAccountAndUserIsDeleted(userAccount, false).isPresent()) {
+            return 409;
+        }
 
         // account 정보 추가할 것
         User user = User.builder()
-                .userName(userInfoPostDTO.getUserName())
-                .userEmail(userInfoPostDTO.getUserEmail())
-                .userNickname(userInfoPostDTO.getUserNickname()).build();
+                .userName(userInfoSetRequestDTO.getUserName())
+                .userNickname(userInfoSetRequestDTO.getUserNickname())
+                .userEmail(userEmail)
+                .userAccount(userAccount).build();
 
         userRepository.save(user);
         return 201;
+    }
+
+    @Override
+    public UserLoginResponseDTO getUserLoginResponseDTO(String userAccount) {
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 메타마스크 계정 주소로 가입된 정보가 없습니다."));
+
+        try {
+            return UserLoginResponseDTO.builder()
+                    .userNickname(user.getUserNickname()).build();
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     // 닉네임 변경
