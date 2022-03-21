@@ -5,6 +5,7 @@ import com.doners.donersbackend.db.entity.User;
 import com.doners.donersbackend.db.repository.EmailConfirmationRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,6 +18,9 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class EmailConfirmationServiceImpl implements EmailConfirmationService {
+
+    @Value("${doners.email.confirmation.server.domain}")
+    private String domain;
 
     private final JavaMailSender javaMailSender;
 
@@ -33,7 +37,6 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
             EmailConfirmation emailConfirmation = EmailConfirmation.builder()
                     .emailAddress(emailAddress)
                     .emailConfirmationCreateTime(LocalDateTime.now())
-                    .emailConfirmationDurationTime(LocalDateTime.now().plusMinutes(EMAIL_TOKEN_EXPIRATION_TIME))
                     .build();
 
             emailConfirmationRepository.save(emailConfirmation);
@@ -45,7 +48,7 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
 //            mailMessage.setText("인증 번호: " + emailConfirmation.getId());
             mailMessage.setText(new StringBuffer()
                             .append("\n\n 아래 링크를 클릭하시면 이메일 인증이 완료됩니다.\n")
-                            .append("http://localhost:8080/api/email/")
+                            .append("http://" + domain + ":8080/api/email/")
                             .append(emailAddress).toString());
 
             sendEmail(mailMessage);
@@ -68,33 +71,6 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
         }
 
         return 200;
-    }
-
-    @Override
-    public boolean isValidId(String emailConfirmationId) throws Exception {
-        EmailConfirmation emailConfirmation = emailConfirmationRepository.findByIdAndEmailConfirmationIsExpired(emailConfirmationId, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일 정보를 찾을 수 없습니다."));
-
-        if(LocalDateTime.now().isAfter(emailConfirmation.getEmailConfirmationDurationTime())) {
-            emailConfirmation.changeIsExpired(true);
-            emailConfirmationRepository.save(emailConfirmation);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean isValidEmail(String emailConfirmationId) throws Exception {
-        // 추후 변경
-        User user = userRepository.findByUserNickname("웅이")
-                .orElseThrow(() -> new IllegalArgumentException("해당 닉네임을 찾을 수 없습니다."));
-
-        EmailConfirmation emailConfirmation = emailConfirmationRepository.findById(emailConfirmationId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일 정보를 찾을 수 없습니다."));
-
-        return emailConfirmation.getUser().getId() == user.getId();
     }
 
     // 인증 완료된 이메일인지 확인

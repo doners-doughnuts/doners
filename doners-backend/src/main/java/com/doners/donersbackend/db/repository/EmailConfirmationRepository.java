@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface EmailConfirmationRepository extends JpaRepository<EmailConfirmation, String> {
 
-    Optional<EmailConfirmation> findByIdAndEmailConfirmationIsExpired(String id, boolean isExpired);
     Optional<EmailConfirmation> findByEmailAddressAndEmailConfirmationIsConfirmed(String emailAddress, boolean isConfirmed);
     Optional<EmailConfirmation> findByEmailAddress(String emailAddress);
 }
