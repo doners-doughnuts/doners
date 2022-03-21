@@ -16,4 +16,6 @@ public interface UserService {
     // 닉네임 중복 체크
     // 중복이면 409(불가) , 아니면 200(가능)
     Integer checkNickname(String userNickname);
+
+//    void deleteUser(String accessToken);
 }

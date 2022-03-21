@@ -81,4 +81,16 @@ public class UserServiceImpl implements UserService {
         return 200;
     }
 
+//    @Override
+//    public void deleteUser(String accessToken) {
+//        String token = accessToken.split(" ")[1];
+//        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+//
+//        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+//
+//        user.deleteUser();
+//        userRepository.save(user);
+//    }
+
 }
