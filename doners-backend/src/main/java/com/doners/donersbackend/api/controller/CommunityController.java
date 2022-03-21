@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @Api(value="Community API", tags={"Community"})
@@ -26,7 +28,7 @@ public class CommunityController {
             @ApiResponse(code=409, message="필수 게시글 정보 입력에 실패했습니다.")
     })
     public ResponseEntity<? extends BaseResponseDTO> setCommunityRegister(
-            @RequestBody @ApiParam(value="필수 게시글 정보", required=true) CommunityRegisterPostDTO communityRegisterPostDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) CommunityRegisterPostDTO communityRegisterPostDTO) {
         try {
             communityService.communityRegister(communityRegisterPostDTO);
         } catch (Exception e) {
@@ -46,7 +48,7 @@ public class CommunityController {
     })
     public ResponseEntity<? extends BaseResponseDTO> changeCommunity(
             @PathVariable("communityId") @ApiParam(value="글id", required=true) String communityId,
-            @RequestBody @ApiParam(value="필수 게시글 정보", required=true) CommunityChangePatchDTO communityChangePatchDTO) {
+            @RequestBody @Valid  @ApiParam(value="필수 게시글 정보", required=true) CommunityChangePatchDTO communityChangePatchDTO) {
 
         try {
             Integer statusCode = communityService.changeCommunity(communityId,communityChangePatchDTO);

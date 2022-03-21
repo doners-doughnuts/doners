@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @Api(value="Comment API", tags={"Comment"})
@@ -28,7 +30,7 @@ public class CommentController {
             @ApiResponse(code=409, message="필수 댓글 정보 입력에 실패했습니다.")
     })
     public ResponseEntity<? extends BaseResponseDTO> setCommentRegister(
-            @RequestBody @ApiParam(value="필수 게시글 정보", required=true) CommentRegisterPostDTO commentRegisterPostDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) CommentRegisterPostDTO commentRegisterPostDTO) {
         try {
             commentService.registerComment(commentRegisterPostDTO);
         } catch (Exception e) {
@@ -48,7 +50,7 @@ public class CommentController {
     })
     public ResponseEntity<? extends BaseResponseDTO> changeComment(
             @PathVariable("commentId") @ApiParam(value="댓글 id", required=true) String commentId,
-            @RequestBody @ApiParam(value="필수 게시글 정보", required=true) CommentChangePatchDTO commentChangePatchDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) CommentChangePatchDTO commentChangePatchDTO) {
 
         try {
             Integer statusCode = commentService.changeComment(commentId,commentChangePatchDTO);
