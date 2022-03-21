@@ -12,12 +12,17 @@ import javax.validation.constraints.NotBlank;
 @ApiModel("UserInfoPostDto")
 @NoArgsConstructor
 @Getter
-public class UserInfoPostDTO {
+public class UserInfoSetRequestDTO {
 
-    @NotBlank
     @NotNull
+    @NotBlank
     @ApiModelProperty(name="이름")
     private String userName;
+
+    @NotNull
+    @NotBlank
+    @ApiModelProperty(name="닉네임")
+    private String userNickname;
 
     @Email
     @NotBlank
@@ -26,6 +31,8 @@ public class UserInfoPostDTO {
 
     @NotNull
     @NotBlank
-    @ApiModelProperty(name="닉네임")
-    private String userNickname;
+    @ApiModelProperty(name="메타마스크 계정 주소")
+    private String userAccount;
+
+
 }
