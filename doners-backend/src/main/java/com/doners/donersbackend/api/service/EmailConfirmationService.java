@@ -11,10 +11,6 @@ public interface EmailConfirmationService {
     // 이메일 인증
     Integer confirmEmailAddress(String emailAddress);
 
-    boolean isValidId(String emailConfirmationId) throws Exception;
-
-    boolean isValidEmail(String emailConfirmationId) throws Exception;
-
     // 인증 완료된 이메일인지 확인
     boolean isConfirmedEmail(String emailAddress);
 
