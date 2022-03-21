@@ -1,21 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
-import Main from './routes/Main';
+import { RecoilRoot } from 'recoil';
+import Router from 'routes/routes';
+// TODO 
 import styles from './App.module.css';
-import CommunityPage from 'pages/Community/CommunityPage';
-function App() {
-  return (
-    <div className={styles.App}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Main />}>
-            <Route index element={<HomePage />} />
-            <Route path="/community" element={<CommunityPage />} />
-          </Route>
-        </Routes>
-      </Router>
-    </div>
-  );
-}
 
-export default App;
+export default function App() {
+  return (<>
+    {/* <ScrollToTop />
+     <GlobalStyles /> */}
+    {/* Recoil을 사용하는 component들은 <RecoilRoot>로 감싸야 함 */}
+    < RecoilRoot >
+      <Router />
+    </RecoilRoot >
+  </>
+  )
+}
