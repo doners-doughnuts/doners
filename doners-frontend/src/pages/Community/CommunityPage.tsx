@@ -1,9 +1,14 @@
 import { useRef, useState } from 'react';
 import styles from './CommunityPage.module.css';
 
-const CommunityPage = () => {
-  const [selector, setSelector] = useState(1);
+interface CommunityPageProps {
+  focus: number;
+}
 
+const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
+  const [selector, setSelector] = useState(focus);
+
+  console.log(focus);
   const onClick = (id: number) => {
     setSelector(id);
   };
