@@ -1,5 +1,5 @@
-import styles from './Footer.module.css';
-import Logo from '../../assets/images/logo.png';
+import styles from './Footer.module.scss';
+import Logo from '../../../assets/images/logo.png';
 
 import GitHubIcon from '@mui/icons-material/GitHub';
 import YouTubeIcon from '@mui/icons-material/YouTube';
