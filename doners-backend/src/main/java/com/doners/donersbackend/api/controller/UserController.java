@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -140,4 +141,21 @@ public class UserController {
 
         return ResponseEntity.status(201).body(BaseResponseDTO.of("프로필 이미지 등록에 성공했습니다.", 201));
     }
+
+//    @DeleteMapping()
+//    @ApiOperation(value="회원 탈퇴")
+//    @ApiResponses({
+//            @ApiResponse(code=200, message="회원 탈퇴를 완료했습니다."),
+//            @ApiResponse(code=409, message="회원 탈퇴에 실패했습니다."),
+//    })
+//    public ResponseEntity<? extends BaseResponseDTO> deleteUser(
+//            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+//        try {
+//            userService.deleteUser(accessToken);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(409).body(BaseResponseDTO.of("회원 탈퇴에 실패했습니다.", 409));
+//        }
+//
+//        return ResponseEntity.status(200).body(BaseResponseDTO.of("회원 탈퇴를 완료했습니다.", 200));
+//    }
 }
