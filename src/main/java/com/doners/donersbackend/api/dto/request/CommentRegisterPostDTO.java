@@ -1,9 +1,12 @@
 package com.doners.donersbackend.api.dto.request;
 
+import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 @ApiModel("CommentRegisterPostDTO")
 @NoArgsConstructor
@@ -16,9 +19,13 @@ public class CommentRegisterPostDTO {
     @ApiModelProperty(name="커뮤니티 id")
     private String communityId;
 
+    @NotBlank
+    @NotNull
     @ApiModelProperty(name="댓글 내용")
     private String commentDescription;
 
+    @NotBlank
+    @NotNull
     @ApiModelProperty(name="작성자 유저 주소")
     private String userAccount;
 }
