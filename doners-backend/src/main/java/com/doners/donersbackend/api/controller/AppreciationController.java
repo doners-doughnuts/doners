@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin("*")
 @Api(value="Appreciation API", tags={"Appreciation"})
@@ -29,7 +31,7 @@ public class AppreciationController {
             @ApiResponse(code=409, message="필수 게시글 정보 입력에 실패했습니다.")
     })
     public ResponseEntity<? extends BaseResponseDTO> setAppreciationRegister(
-            @RequestBody @ApiParam(value="필수 게시글 정보", required=true) AppreciationRegisterPostDTO appreciationRegisterPostDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) AppreciationRegisterPostDTO appreciationRegisterPostDTO) {
         try {
             appreciationService.appreciationRegister(appreciationRegisterPostDTO);
         } catch (Exception e) {
@@ -40,7 +42,7 @@ public class AppreciationController {
         return ResponseEntity.status(201).body(BaseResponseDTO.of("필수 게시글 정보 입력에 성공했습니다.", 201));
     }
 
-    @PatchMapping("{appreciationId}")
+    @PatchMapping("/{appreciationId}")
     @ApiOperation(value="글 변경 , 필수 정보 - 제목, 내용, 글id")
     @ApiResponses({
             @ApiResponse(code=200, message="글 변경에 성공했습니다."),
@@ -49,7 +51,7 @@ public class AppreciationController {
     })
     public ResponseEntity<? extends BaseResponseDTO> changeAppreciation(
             @PathVariable("appreciationId") @ApiParam(value="글id", required=true) String appreciationId,
-            @RequestBody @ApiParam(value="필수 게시글 정보", required=true) AppreciationChangePatchDTO appreciationChangePatchDTO) {
+            @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) AppreciationChangePatchDTO appreciationChangePatchDTO) {
 
         try {
             Integer statusCode = appreciationService.changeAppreciation(appreciationId,appreciationChangePatchDTO);
@@ -63,7 +65,7 @@ public class AppreciationController {
         return ResponseEntity.status(200).body(BaseResponseDTO.of("글 변경에 성공했습니다.", 200));
     }
 
-    @PatchMapping("/delete/{appreciationId}")
+    @DeleteMapping("/delete/{appreciationId}")
     @ApiOperation(value="글 삭제 , 필수 정보 - 글id")
     @ApiResponses({
             @ApiResponse(code=200, message="글 삭제에 성공했습니다."),
