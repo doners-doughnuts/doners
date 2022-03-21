@@ -40,7 +40,7 @@ public class AppreciationController {
         return ResponseEntity.status(201).body(BaseResponseDTO.of("필수 게시글 정보 입력에 성공했습니다.", 201));
     }
 
-    @PatchMapping("{appreciationId}")
+    @PatchMapping("/{appreciationId}")
     @ApiOperation(value="글 변경 , 필수 정보 - 제목, 내용, 글id")
     @ApiResponses({
             @ApiResponse(code=200, message="글 변경에 성공했습니다."),
@@ -63,7 +63,7 @@ public class AppreciationController {
         return ResponseEntity.status(200).body(BaseResponseDTO.of("글 변경에 성공했습니다.", 200));
     }
 
-    @PatchMapping("/delete/{appreciationId}")
+    @DeleteMapping("/delete/{appreciationId}")
     @ApiOperation(value="글 삭제 , 필수 정보 - 글id")
     @ApiResponses({
             @ApiResponse(code=200, message="글 삭제에 성공했습니다."),
