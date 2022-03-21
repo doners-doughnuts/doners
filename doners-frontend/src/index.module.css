@@ -1,4 +1,4 @@
-@value background from 'assets/styles/colors.css';
+@value background from 'assets/styles/constants/colors.scss';
 
 * {
   box-sizing: border-box;
