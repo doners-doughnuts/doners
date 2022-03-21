@@ -39,7 +39,7 @@ public class CommentController {
         return ResponseEntity.status(201).body(BaseResponseDTO.of("필수 댓글 정보 입력에 성공했습니다.", 201));
     }
 
-    @PatchMapping("{commentId}")
+    @PatchMapping("/{commentId}")
     @ApiOperation(value="댓글 변경 , 필수 정보 - 내용, 댓글 id")
     @ApiResponses({
             @ApiResponse(code=200, message="댓글 변경에 성공했습니다."),
@@ -62,7 +62,7 @@ public class CommentController {
         return ResponseEntity.status(200).body(BaseResponseDTO.of("댓글 변경에 성공했습니다.", 200));
     }
 
-    @PatchMapping("/delete/{commentId}")
+    @DeleteMapping("/delete/{commentId}")
     @ApiOperation(value="댓글 삭제 , 필수 정보 - 댓글 id")
     @ApiResponses({
             @ApiResponse(code=200, message="댓글 삭제에 성공했습니다."),
