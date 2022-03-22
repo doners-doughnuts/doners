@@ -94,6 +94,7 @@ public class CommunityController {
 
         return ResponseEntity.ok(CommunityGetListWrapperResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunityList()));
     }
+
     @GetMapping("/{communityId}")
     @ApiOperation(value="커뮤니티 글 조회")
     @ApiResponses({
