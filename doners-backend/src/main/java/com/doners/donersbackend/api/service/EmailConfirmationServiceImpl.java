@@ -32,7 +32,12 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
 
     // 이메일 인증을 위해 이메일 생성 메서드
     @Override
-    public void createEmailConfirmation(String emailAddress) {
+    public void createEmailConfirmation(String emailAddress) throws Exception {
+        if(userRepository.findByUserEmailAndUserIsDeleted(emailAddress, false).isPresent() ||
+        emailConfirmationRepository.findByEmailAddressAndEmailConfirmationIsConfirmed(emailAddress, false).isPresent()) {
+            throw new Exception("이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다.");
+        }
+
         try {
             EmailConfirmation emailConfirmation = EmailConfirmation.builder()
                     .emailAddress(emailAddress)
