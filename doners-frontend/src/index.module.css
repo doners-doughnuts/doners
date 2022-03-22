@@ -1,9 +1,21 @@
-@value background from 'assets/styles/constants/colors.scss';
+/* @font-face {
+  font-family: BASE FONT;
+  src: url('./assets/fonts/SuezOne-Regular.ttf');
+  unicode-range: U+0020-007E;
+}
+
+@font-face {
+  font-family: BASE FONT;
+  src: url('./assets/fonts/ONE+Mobile+POP.ttf');
+}
+
+@font-face {
+  font-family: 'Hand Writting';
+  src: url('./assets/fonts/손글씨체.ttf');
+}
+
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  background-color: background;
-}
+  font-family: BASE FONT;
+} */
