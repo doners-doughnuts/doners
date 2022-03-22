@@ -3,6 +3,7 @@ package com.doners.donersbackend.api.controller;
 import com.doners.donersbackend.api.dto.request.CommunityChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.CommunityRegisterPostDTO;
 import com.doners.donersbackend.api.dto.response.CommunityGetListWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.CommunityResponseDTO;
 import com.doners.donersbackend.api.service.CommunityService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
 import io.swagger.annotations.*;
@@ -92,5 +93,15 @@ public class CommunityController {
     public ResponseEntity<? extends BaseResponseDTO> getCommunityList() {
 
         return ResponseEntity.ok(CommunityGetListWrapperResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunityList()));
+    }
+    @GetMapping("/{communityId}")
+    @ApiOperation(value="커뮤니티 글 조회")
+    @ApiResponses({
+            @ApiResponse(code=200, message="글 조회에 성공했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> getCommunity(
+            @PathVariable("communityId") @ApiParam(value="글id", required=true) String communityId) {
+
+        return ResponseEntity.ok(CommunityResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunity(communityId)));
     }
 }
