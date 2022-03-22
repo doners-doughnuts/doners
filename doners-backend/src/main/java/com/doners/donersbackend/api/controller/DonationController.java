@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Api(value = "Donation API", tags = {"Donation"})
@@ -33,10 +35,10 @@ public class DonationController {
     })
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponseDTO> register(
-            @ApiParam(value = "기부 신청 정보", required = true) @RequestPart DonationInfoRequestDTO donationInfoRequestDTO,
-            @ApiParam(value = "관계증명서") @RequestPart(value = "certificate", required = false) MultipartFile certificate,
-            @ApiParam(value = "대표 사진") @RequestPart(value = "image", required = false) MultipartFile image,
-            @ApiParam(value = "증빙 자료", required = true) @RequestPart(value = "evidence") List<MultipartFile> evidence
+            @ApiParam(value = "기부 신청 정보", required = true) @Valid @RequestPart DonationInfoRequestDTO donationInfoRequestDTO,
+            @ApiParam(value = "관계증명서") @Valid @RequestPart(value = "certificate", required = false) MultipartFile certificate,
+            @ApiParam(value = "대표 사진") @Valid @RequestPart(value = "image", required = false) MultipartFile image,
+            @ApiParam(value = "증빙 자료", required = true) @Valid @RequestPart(value = "evidence") List<MultipartFile> evidence
     ) {
 
         try {
@@ -60,7 +62,8 @@ public class DonationController {
             @ApiResponse(code = 409, message = "기부글 목록 조회에 실패했습니다.")
     })
     @GetMapping
-    public ResponseEntity<? extends BaseResponseDTO> getList(String category) {
+    public ResponseEntity<? extends BaseResponseDTO> getList(
+            @ApiParam(value = "카테고리", required = true) @NotBlank String category) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
 
@@ -84,7 +87,7 @@ public class DonationController {
     })
     @GetMapping("/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> get(
-            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId
+            @ApiParam(value = "기부글 ID", required = true) @NotBlank @PathVariable String donationId
     ) {
 
         DonationResponseDTO donationResponseDTO = null;
@@ -109,7 +112,7 @@ public class DonationController {
     })
     @GetMapping("/recommend/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
-            @ApiParam(value = "기부글 ID", required = true) @PathVariable String donationId
+            @ApiParam(value = "기부글 ID", required = true) @NotBlank @PathVariable String donationId
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
@@ -134,8 +137,8 @@ public class DonationController {
     })
     @GetMapping("/search")
     public ResponseEntity<? extends BaseResponseDTO> search(
-            @ApiParam(value = "검색 유형", required = true) @RequestParam String type,
-            @ApiParam(value = "검색어", required = true) @RequestParam String keyword
+            @ApiParam(value = "검색 유형", required = true) @NotBlank @RequestParam String type,
+            @ApiParam(value = "검색어", required = true) @NotBlank @RequestParam String keyword
     ) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
@@ -154,22 +157,22 @@ public class DonationController {
 
     @ApiOperation(value = "기부글 신청 승인")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "기부글 신청 승인에 성공했습니다."),
+            @ApiResponse(code = 200, message = "기부글 신청이 승인되었습니다."),
+            @ApiResponse(code = 200, message = "기부글 신청이 거절되었습니다."),
             @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
-            @ApiResponse(code = 409, message = "기부글 신청이 거절되었습니다."),
             @ApiResponse(code = 409, message = "이미 승인된 기부글 입니다."),
             @ApiResponse(code = 409, message = "기부글 신청 승인에 실패했습니다.")
     })
     @PatchMapping("/approve")
     public ResponseEntity<? extends BaseResponseDTO> approve(
-            @ApiParam(value = "기부글 승인 정보", required = true) @RequestBody DonationApproveRequestDTO donationApproveRequestDTO
+            @ApiParam(value = "기부글 승인 정보", required = true) @Valid @RequestBody DonationApproveRequestDTO donationApproveRequestDTO
     ) {
 
         try {
             Integer result = donationService.approveDonation(donationApproveRequestDTO);
 
             if (result == 0) {
-                return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청이 거절되었습니다.", 409));
+                return ResponseEntity.ok(BaseResponseDTO.of("기부글 신청이 거절되었습니다.", 200));
             } else if (result == 2) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 승인된 기부글 입니다.", 409));
             }
@@ -179,7 +182,7 @@ public class DonationController {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 승인에 실패했습니다.", 409));
         }
 
-        return ResponseEntity.ok(BaseResponseDTO.of("기부글 신청이 승인에 성공했습니다.", 200));
+        return ResponseEntity.ok(BaseResponseDTO.of("기부글 신청이 승인되었습니다.", 200));
 
     }
 
