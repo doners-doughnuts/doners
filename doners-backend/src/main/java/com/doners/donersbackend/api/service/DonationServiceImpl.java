@@ -42,8 +42,7 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public Boolean createDonation(DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
 
-        if (donationRepository.findByUserIdAndIsDeleted(donationInfoRequestDTO.getUserId(), false).orElse(null) != null)
-            return false;
+        if (donationRepository.findByUserIdAndIsDeleted(donationInfoRequestDTO.getUserId(), false).orElse(null) != null) return false;
 
         // 기부글
         Donation donation = Donation.builder()
@@ -207,7 +206,7 @@ public class DonationServiceImpl implements DonationService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 추천수 업데이트
-        donation.updateRecommendations();
+        donation.changeRecommendations();
 
         donationRepository.save(donation);
 
@@ -284,10 +283,11 @@ public class DonationServiceImpl implements DonationService {
         if (donation.isApproved()) return 2;
 
         // 거절
-        if (!donationApproveRequestDTO.isApprove()) return 0;
+        if (!donationApproveRequestDTO.isApproved()) return 0;
 
-        // 신청 승인
-        donation.updateIsApproved();
+        // 신청 승인 및 시작 시간 설정
+        donation.changeIsApproved();
+        donation.changeStartTime();
 
         donationRepository.save(donation);
 
@@ -298,7 +298,7 @@ public class DonationServiceImpl implements DonationService {
     public void increaseViews(Donation donation) {
 
         // 조회수 업데이트
-        donation.updateViews();
+        donation.changeViews();
 
         donationRepository.save(donation);
 
