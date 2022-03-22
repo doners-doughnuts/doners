@@ -46,4 +46,8 @@ public class Appreciation extends BaseEntity {
             this.appreciationIsDeleted = true;
         }
     }
+    // 글 조회
+    public void updateViews() {
+        this.appreciationViews += 1;
+    }
 }
