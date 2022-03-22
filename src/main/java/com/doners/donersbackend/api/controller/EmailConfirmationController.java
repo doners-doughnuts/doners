@@ -6,6 +6,7 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin("*")
@@ -20,14 +21,14 @@ public class EmailConfirmationController {
     @ApiOperation(value="이메일 인증 요청")
     @ApiResponses({
             @ApiResponse(code=201, message="인증 메일이 전송되었습니다. 해당 이메일 계정을 확인해주세요."),
-            @ApiResponse(code=409, message="이메일 인증 요청에 실패했습니다."),
+            @ApiResponse(code=409, message="인증 메일 요청에 실패했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> createEmailConfirmation(
             @PathVariable("emailAddress") @ApiParam(value="이메일 주소", required=true) String emailAddress) {
         try {
             emailConfirmationService.createEmailConfirmation(emailAddress);
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("이메일 인증 요청에 실패했습니다.", 409));
+            return ResponseEntity.status(400).body(BaseResponseDTO.of("인증 메일 전송 실패했습니다.", 409));
         }
 
         return ResponseEntity.status(201).body(BaseResponseDTO.of("인증 메일이 전송되었습니다. 해당 이메일 계정을 확인해주세요.", 201));
