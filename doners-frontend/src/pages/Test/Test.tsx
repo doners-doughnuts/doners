@@ -3,6 +3,8 @@ import Button from 'assets/theme/Button/Button';
 import Tag from 'assets/theme/Tag/Tag';
 import React from 'react';
 import src from 'assets/images/character.png'
+import ImgButton from 'assets/theme/ImgButton/ImgButton';
+import Input from 'assets/theme/Input/Input';
 
 const Test = () => {
   return (
@@ -33,19 +35,12 @@ const Test = () => {
       <Avatar src={src}/>
       <Avatar size="small" src={src}/>
       
-      {/* <div>
-        <strong className="tag-red">red</strong>
-        <strong className="tag-yellow">yellow</strong>
-        <strong className="tag-orange">orange</strong>
-        <strong className="tag-green">green</strong>
-        <div className="tag-black">black</div>
-      </div>
-      <div>
-        <div className="avatar-32">
-        </div>
-        <div className="avatar-24">
-        </div>
-  </div>*/}
+      <ImgButton src={src}/>
+      <ImgButton src={src} shadow/>
+      <ImgButton src={src} shadow active/>
+
+      <Input />
+      <Input error/>
     </div>
 
   );

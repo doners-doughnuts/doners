@@ -50,6 +50,7 @@ export default function Router() {
       element: <ScrollLayout />,
       children: [
         { path: '', element: <Test />},
+        // { path: '', element: <Navigate to="membership" replace />},
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
