@@ -9,6 +9,7 @@ import DonateListPage from 'pages/Donate/DonateListPage';
 import DonateRegistPage from 'pages/Donate/DonateRegistPage';
 import HomePage from 'pages/HomePage/HomePage';
 import MyPage from 'pages/MyPage/MyPage';
+import Test from 'pages/Test/Test';
 
 import { Navigate, useRoutes } from 'react-router';
 
@@ -48,6 +49,7 @@ export default function Router() {
       path: '/community',
       element: <ScrollLayout />,
       children: [
+        { path: '', element: <Test />},
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
