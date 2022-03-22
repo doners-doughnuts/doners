@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @ApiModel("AppreciationRegisterPostDTO")
 @NoArgsConstructor
@@ -27,4 +28,7 @@ public class AppreciationRegisterPostDTO {
     @NotNull
     @ApiModelProperty(name="작성자 유저 주소")
     private String userAccount;
+
+    @ApiModelProperty(name = "모금액 활용 계획")
+    private List<AppreciationBudgetRequestDTO> appreciationBudgetRequestDTOList;
 }
