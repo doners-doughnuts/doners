@@ -1,0 +1,14 @@
+$gutter: 20px;
+
+$sm-columns: 4;
+$sm-margin: 5px;
+
+$md-columns: 12;
+$md-margin: 30px;
+$md-max-container: 960px + $md-margin * 2;
+
+$xl-columns: 12;
+$xl-unit: 75px;
+$xl-max-container: ($xl-unit + $gutter) * $xl-columns;
+
+$grid-margin: 15px;

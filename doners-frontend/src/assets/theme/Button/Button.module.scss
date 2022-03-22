@@ -1,0 +1,91 @@
+@import 'assets/styles/main';
+
+%btn-base {
+  @include inline-flexbox;
+  padding: 0 8px;
+  font-weight: 300;
+  border-radius: 8px;
+  border: 2px solid $black;
+  
+  &.fullWidth{
+    width: 100%; 
+    justify-content: center;
+  }
+  
+  &.shadow {
+    box-shadow: $btn-shadow;
+  }
+
+  & + & {
+      margin: 1rem; 
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    border: none;
+    opacity: 0.4;
+  }
+}
+
+// Button 종류
+.btn-primary {
+  @extend %btn-base;
+  color: $black;
+  background-color: $red;
+  transition: background-color 200ms ease-in-out;
+
+  &:not(:disabled):hover {
+    background-color: $red-dark;
+  }
+}
+
+.btn-secondary {
+  @extend %btn-base;
+  color: $black;
+  background-color: $green;
+  transition: background-color 200ms ease-in-out;
+
+  &:not(:disabled):hover {
+    background-color: $green-dark;
+  }
+}
+
+.btn-alternate {
+  @extend %btn-base;
+  color: $white;
+  background-color: $black;
+  transition: background-color 200ms ease-in-out;
+
+  &:not(:disabled):hover {
+    background-color: $white;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $white;
+    color: $black;
+    opacity: 0.5;
+  }
+}
+
+
+// 사이즈별 Button
+.btn-small { //small btn
+  @include text-style(14);
+  height: 32px;
+}
+
+
+.btn-large { //default btn
+  @include text-style(16);
+  height: 48px;
+}
+
+// .btn-40 {
+//   @include text-style(16);
+//   height: 40px;
+// }
+// .btn-55 {
+//   @include text-style(18);
+//   height: 55px;
+// }
