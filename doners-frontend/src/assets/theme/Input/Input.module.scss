@@ -1,0 +1,28 @@
+@import 'assets/styles/main';
+
+.input-form {
+  border-radius: 8px;
+  border: 2px solid $black;
+  width: 100%;
+  padding: 13px;
+
+  &:focus {
+    border-color: $blue;
+  }
+  
+  &.error {
+    background-color: $red;
+  }
+}
+
+// .avatar-small {
+//   @extend %avatar-base;
+//   width: 24px;
+//   height: 24px;
+// }
+
+// .avatar-large {
+//   @extend %avatar-base;
+//   width: 32px;
+//   height: 32px;
+// }
