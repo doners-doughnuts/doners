@@ -22,6 +22,9 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
     @Value("${doners.email.confirmation.server.domain}")
     private String domain;
 
+    @Value("${server.port}")
+    private String port;
+
     private final JavaMailSender javaMailSender;
 
     private final UserRepository userRepository;
@@ -53,7 +56,7 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
 //            mailMessage.setText("인증 번호: " + emailConfirmation.getId());
             mailMessage.setText(new StringBuffer()
                             .append("\n\n 아래 링크를 클릭하시면 이메일 인증이 완료됩니다.\n")
-                            .append("http://" + domain + ":8080/api/email/")
+                            .append("http://" + domain + ":" + port + "/api/email/")
                             .append(emailAddress).toString());
 
             sendEmail(mailMessage);
