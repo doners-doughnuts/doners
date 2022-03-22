@@ -1,3 +1,5 @@
+@import 'assets/styles/main';
+
 .header {
   height: 70px;
   display: flex;
@@ -9,7 +11,6 @@
   top: 0;
   z-index: 9999;
   justify-content: space-between;
-  background-color: background;
 
   a {
     text-decoration: none;

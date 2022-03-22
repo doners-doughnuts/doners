@@ -41,7 +41,9 @@ const Header = () => {
             <li>서비스 소개</li>
           </Link>
           <li>기부신청</li>
-          <li>기부하기</li>
+          <Link to="/category">
+            <li>기부하기</li>
+          </Link>
           <Link to="/community">
             <li>커뮤니티</li>
           </Link>
