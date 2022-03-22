@@ -65,18 +65,23 @@ public class Donation extends BaseEntity {
     private User user;
     
     // 조회
-    public void updateViews() {
+    public void changeViews() {
         this.views += 1;
     }
 
     // 추천
-    public void updateRecommendations() {
+    public void changeRecommendations() {
         this.recommendations += 1;
     }
 
     // 승인
-    public void updateIsApproved() {
+    public void changeIsApproved() {
         this.isApproved = true;
+    }
+
+    // 시작
+    public void changeStartTime() {
+        this.startTime = LocalDateTime.now();
     }
 
 }
