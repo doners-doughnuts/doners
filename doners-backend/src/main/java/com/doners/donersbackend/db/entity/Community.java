@@ -46,4 +46,8 @@ public class Community extends BaseEntity {
             this.communityIsDeleted = true;
         }
     }
+    // 글 조회
+    public void updateViews() {
+        this.communityViews += 1;
+    }
 }
