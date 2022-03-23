@@ -40,7 +40,7 @@ public class DonationInfoRequestDTO {
     private String title;
 
     @NotNull
-    @ApiModelProperty(name = "카테고리")
+    @ApiModelProperty(name = "카테고리 코드")
     private CategoryCode categoryCode;
 
     @Future
