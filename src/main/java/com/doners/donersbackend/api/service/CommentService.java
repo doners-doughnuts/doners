@@ -15,4 +15,6 @@ public interface CommentService {
     CommentGetListWrapperResponseDTO getAppreciationCommentList(String id);
     // 커뮤니티 댓글 목록
     CommentGetListWrapperResponseDTO getCommunityCommentList(String id);
+    // 감사글 대 댓글 목록
+    CommentGetListWrapperResponseDTO getSubCommentList(String parentId);
 }
