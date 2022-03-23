@@ -13,6 +13,6 @@ public interface ImageRepository extends JpaRepository<Image, String> {
 
     Optional<Image> findByUserAndImageIsResized(User user, boolean isResized);
 
-    Optional<Image> findByDonation(Donation donation);
+    Optional<Image> findByDonationAndImageIsResized(Donation donation, boolean isResized);
 
 }

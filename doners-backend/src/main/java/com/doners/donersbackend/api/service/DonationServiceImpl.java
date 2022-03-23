@@ -8,8 +8,8 @@ import com.doners.donersbackend.db.entity.donation.Donation;
 import com.doners.donersbackend.db.entity.donation.DonationBudget;
 import com.doners.donersbackend.db.entity.donation.DonationHistory;
 import com.doners.donersbackend.db.entity.donation.File;
-import com.doners.donersbackend.db.enums.CategoryCode;
 import com.doners.donersbackend.db.enums.ApprovalStatusCode;
+import com.doners.donersbackend.db.enums.CategoryCode;
 import com.doners.donersbackend.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -75,20 +75,20 @@ public class DonationServiceImpl implements DonationService {
                 )
         );
 
-        // 대표 사진 업로드
-        // 본인
-        if (!donationInfoRequestDTO.isDeputy()) awsS3Service.uploadMyFile(donation, image, evidence);
-            // 대리인
-        else awsS3Service.uploadDeputyFile(donation, certificate, image, evidence);
+        // 대표 사진 및 증빙 자료 업로드
+        uploadDonationFile(donation, image, evidence);
+
+        // 대리인일 경우 관계 증명서 업로드
+        if (donationInfoRequestDTO.isDeputy()) uploadCertificateFile(donation, certificate);
 
         return true;
 
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getDonationList(String code) {
+    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode) {
 
-        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsDeleted(CategoryCode.valueOf(code), false)
+        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsDeleted(categoryCode, false)
                 .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
 
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
@@ -96,7 +96,7 @@ public class DonationServiceImpl implements DonationService {
         donationList.forEach(donation -> {
             // 대표 사진
             Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonation(donation)
+            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
                     .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
             String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
             image.put(img.getImageOriginFileName(), imgUrl);
@@ -128,7 +128,7 @@ public class DonationServiceImpl implements DonationService {
         // 대표 사진
         Map<String, String> image = new HashMap<>();
 
-        Image img = imageRepository.findByDonation(donation)
+        Image img = imageRepository.findByDonationAndImageIsResized(donation, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
 
         image.put(img.getImageOriginFileName(), awsS3Service.getFilePath(img.getImageNewFileName()));
@@ -251,7 +251,7 @@ public class DonationServiceImpl implements DonationService {
         donationList.forEach(donation -> {
             // 대표 사진
             Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonation(donation)
+            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
                     .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
             String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
             image.put(img.getImageOriginFileName(), imgUrl);
@@ -303,6 +303,61 @@ public class DonationServiceImpl implements DonationService {
         donationRepository.save(donation);
 
         return 1;
+
+    }
+
+    @Override
+    public void uploadDonationFile(Donation donation, MultipartFile image, List<MultipartFile> evidence) {
+
+        if (image != null) {
+            String fileName = awsS3Service.uploadImage(image);
+
+            Image img = Image.builder()
+                    .imageOriginFileName(image.getOriginalFilename())
+                    .imageNewFileName(fileName)
+                    .donation(donation)
+                    .build();
+
+            imageRepository.save(img);
+
+            String thumbNailFileName = awsS3Service.uploadThumbnailImage(fileName, image);
+
+            Image thumbNailImg = Image.builder()
+                    .imageOriginFileName(image.getOriginalFilename())
+                    .imageNewFileName(thumbNailFileName)
+                    .imageIsResized(true)
+                    .donation(donation)
+                    .build();
+
+            imageRepository.save(thumbNailImg);
+        }
+
+        evidence.forEach(file -> {
+            String fileName = awsS3Service.uploadFile(file);
+
+            File evidenceFile = File.builder()
+                    .originalFileName(file.getOriginalFilename())
+                    .savedFileName(fileName)
+                    .donation(donation)
+                    .build();
+
+            fileRepository.save(evidenceFile);
+        });
+
+    }
+
+    @Override
+    public void uploadCertificateFile(Donation donation, MultipartFile certificate) {
+
+        String fileName = awsS3Service.uploadFile(certificate);
+
+        File certificateFile = File.builder()
+                .originalFileName(certificate.getOriginalFilename())
+                .savedFileName(fileName)
+                .donation(donation)
+                .build();
+
+        fileRepository.save(certificateFile);
 
     }
 
