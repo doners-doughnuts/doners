@@ -1,4 +1,4 @@
-package com.doners.donersbackend.api.dto.request;
+package com.doners.donersbackend.api.dto.request.donation;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

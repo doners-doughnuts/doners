@@ -1,8 +1,8 @@
 package com.doners.donersbackend.api.service;
 
-import com.doners.donersbackend.api.dto.request.DonationApproveRequestDTO;
-import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
-import com.doners.donersbackend.api.dto.response.*;
+import com.doners.donersbackend.api.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.api.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.api.dto.response.donation.*;
 import com.doners.donersbackend.db.entity.Image;
 import com.doners.donersbackend.db.entity.donation.Donation;
 import com.doners.donersbackend.db.entity.donation.DonationBudget;

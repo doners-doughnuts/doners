@@ -1,10 +1,10 @@
 package com.doners.donersbackend.api.service;
 
-import com.doners.donersbackend.api.dto.request.DonationApproveRequestDTO;
-import com.doners.donersbackend.api.dto.request.DonationInfoRequestDTO;
-import com.doners.donersbackend.api.dto.response.DonationGetListWrapperResponseDTO;
-import com.doners.donersbackend.api.dto.response.DonationRecommendResponseDTO;
-import com.doners.donersbackend.api.dto.response.DonationResponseDTO;
+import com.doners.donersbackend.api.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.api.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.api.dto.response.donation.DonationGetListWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.donation.DonationRecommendResponseDTO;
+import com.doners.donersbackend.api.dto.response.donation.DonationResponseDTO;
 import com.doners.donersbackend.db.entity.donation.Donation;
 import com.doners.donersbackend.db.enums.CategoryCode;
 import org.springframework.web.multipart.MultipartFile;
