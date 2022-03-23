@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment,String> {
-    Optional<List<Comment>> findAllByCommunity(Community community);
-    Optional<List<Comment>> findAllByAppreciation(Appreciation appreciation);
+    Optional<List<Comment>> findAllByCommunityAndCommentIsDeletedOrderByCommentCreateTime(Community community,boolean isDeleted);
+    Optional<List<Comment>> findAllByAppreciationAndCommentIsDeletedOrderByCommentCreateTime(Appreciation appreciation,boolean isDeleted);
 }
