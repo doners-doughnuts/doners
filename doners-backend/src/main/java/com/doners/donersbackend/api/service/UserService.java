@@ -2,6 +2,7 @@ package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
 import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -16,6 +17,8 @@ public interface UserService {
     // 닉네임 중복 체크
     // 중복이면 409(불가) , 아니면 200(가능)
     Integer checkNickname(String userNickname);
+
+    void uploadProfileImage(MultipartFile multipartFile);
 
 //    void deleteUser(String accessToken);
 }
