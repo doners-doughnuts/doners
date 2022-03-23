@@ -9,7 +9,12 @@ import java.io.IOException;
 import java.util.List;
 
 public interface AwsS3Service {
-    void uploadProfileImage(MultipartFile multipartFile);
+//    void uploadProfileImage(MultipartFile multipartFile);
+    String uploadImage(MultipartFile multipartFile);
+
+//    String uploadThumbnailImage(MultipartFile multipartFile);
+
+    String uploadThumbnailImage(String fileName, MultipartFile multipartFile);
 
     void uploadMyFile(Donation donation, MultipartFile image, List<MultipartFile> evidence);
 
