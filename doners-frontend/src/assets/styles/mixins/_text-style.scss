@@ -46,7 +46,6 @@
   letter-spacing: $letter-spacing-48;
 }
 
-
 @mixin text-style($size, $color: false) {
   @if ($size == 12) {
     @include text-style-12;
@@ -72,9 +71,6 @@
   @if ($size == 48) {
     @include text-style-48;
   }
-
-
-
 
   @if (type-of($color) == color) {
     color: $color;
