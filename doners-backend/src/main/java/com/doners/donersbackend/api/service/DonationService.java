@@ -27,6 +27,6 @@ public interface DonationService {
     DonationGetListWrapperResponseDTO searchDonation(String type, String keyword);
 
     // 기부글 승인
-    Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO);
+    Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException;
 
 }

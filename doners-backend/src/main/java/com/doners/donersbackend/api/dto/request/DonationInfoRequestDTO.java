@@ -1,5 +1,6 @@
 package com.doners.donersbackend.api.dto.request;
 
+import com.doners.donersbackend.db.enums.CategoryCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -38,9 +39,9 @@ public class DonationInfoRequestDTO {
     @ApiModelProperty(name = "제목")
     private String title;
 
-    @NotBlank
-    @ApiModelProperty(name = "카테고리")
-    private String category;
+    @NotNull
+    @ApiModelProperty(name = "카테고리 코드")
+    private CategoryCode categoryCode;
 
     @Future
     @ApiModelProperty(name = "마감일")

@@ -8,13 +8,14 @@ import com.doners.donersbackend.db.entity.donation.Donation;
 import com.doners.donersbackend.db.entity.donation.DonationBudget;
 import com.doners.donersbackend.db.entity.donation.DonationHistory;
 import com.doners.donersbackend.db.entity.donation.File;
+import com.doners.donersbackend.db.enums.CategoryCode;
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import com.doners.donersbackend.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,11 +52,11 @@ public class DonationServiceImpl implements DonationService {
                 .beneficiaryName(donationInfoRequestDTO.getBeneficiaryName())
                 .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
                 .title(donationInfoRequestDTO.getTitle())
-                .category(donationInfoRequestDTO.getCategory())
+                .categoryCode(donationInfoRequestDTO.getCategoryCode())
+//                .categoryCode(CategoryCode.COVID_19)
+                .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
                 .amount(donationInfoRequestDTO.getTargetAmount())
-                .startTime(LocalDateTime.now())
-                .endTime(LocalDateTime.now())
 //                .endTime(donationInfoRequestDTO.getEndTime())
                 .user(userRepository.findById(donationInfoRequestDTO.getUserId())
                         .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다.")))
@@ -85,9 +86,9 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getDonationList(String category) {
+    public DonationGetListWrapperResponseDTO getDonationList(String code) {
 
-        List<Donation> donationList = donationRepository.findByCategoryAndIsDeleted(category, false)
+        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsDeleted(CategoryCode.valueOf(code), false)
                 .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
 
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
@@ -180,7 +181,7 @@ public class DonationServiceImpl implements DonationService {
 
         return DonationResponseDTO.builder()
                 .title(donation.getTitle())
-                .category(donation.getCategory())
+                .categoryCode(donation.getCategoryCode())
                 .views(donation.getViews())
                 .description(donation.getDescription())
                 .image(image)
@@ -191,7 +192,8 @@ public class DonationServiceImpl implements DonationService {
                 .name(donation.getUser().getUserName())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
-                .isExist(donationRepository.existsByIdAndIsDeleted(donationId, true))
+                .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
+                .approvalStatusCode(donation.getApprovalStatusCode())
                 .donors(donationHistoryResponseDTOList)
                 .achievementRate((double) amountSum / donation.getAmount() * 100)
                 .evidence(evidence)
@@ -272,7 +274,7 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) {
+    public Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException {
 
         // TODO: 관리자인지 확인'
 
@@ -283,10 +285,19 @@ public class DonationServiceImpl implements DonationService {
         if (donation.isApproved()) return 2;
 
         // 거절
-        if (!donationApproveRequestDTO.isApproved()) return 0;
+        if (!donationApproveRequestDTO.isApproved()) {
+            if (donationApproveRequestDTO.getApprovalStatusCode() == null) throw new NullPointerException();
+
+            donation.changeApprovalStatusCode(donationApproveRequestDTO.getApprovalStatusCode());
+
+            donationRepository.save(donation);
+
+            return 0;
+        }
 
         // 신청 승인 및 시작 시간 설정
         donation.changeIsApproved();
+        donation.changeApprovalStatusCode(ApprovalStatusCode.APPROVAL);
         donation.changeStartTime();
 
         donationRepository.save(donation);
