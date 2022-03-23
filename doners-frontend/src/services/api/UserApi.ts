@@ -1,12 +1,12 @@
 import instance from 'services/axios';
 
-const COMMON = '/user';
+//const COMMON = '/user';
 
 export const login = async (userAccount: any) => {
-  const response = await instance.get(`${COMMON}/${userAccount}`);
+  const response = await instance.get(`/user/${userAccount}`);
   console.log(response);
   // 아직 JWT TOKEN없어서
-  if (response.data.statusCode == 200) {
+  if (response.data.statusCode === 200) {
     localStorage.setItem('user', userAccount);
   }
 
@@ -19,7 +19,7 @@ export const login = async (userAccount: any) => {
 
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: any) => {
-  const response = await instance.get(COMMON + '/nickcheck', {
+  const response = await instance.get('/nickcheck', {
     params: {
       userNickname: userNickname,
     },
@@ -29,7 +29,7 @@ export const checkNickname = async (userNickname: any) => {
 
 /* 이메일 인증 메일 발송 */
 export const emailConfirm = async (userEmail: any) => {
-  const response = await instance.get(COMMON + '/confirmemail', {
+  const response = await instance.post(`/email/${userEmail}`, {
     params: {
       userEmail: userEmail,
     },

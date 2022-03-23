@@ -7,6 +7,7 @@ import styles from './SignupForm.module.scss';
 import Input from 'assets/theme/Input/Input';
 import EmailAuthValidation from './EmailAuthValidation';
 import SignUpValidation from './SignUpValidation';
+import { emailConfirm } from 'services/api/UserApi';
 import { signupState } from 'atoms/atoms';
 import { useRecoilValue } from 'recoil';
 import useEmailAuth from 'hooks/useEmailAuth';
@@ -16,6 +17,7 @@ const cx = classNames.bind(styles);
 const SignupForm = () => {
   const [emailvailerror, SetEmailvailerror] = useState();
   const [emailvailerrormsg, SetEmailvailerrorMsg] = useState('');
+  const [emailsendmsg, Setemailsendmsg] = useState('');
   const [authmail, sendAuthMail] = useState(false);
   const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
     initialValues: {
@@ -31,7 +33,15 @@ const SignupForm = () => {
   });
 
   const signupvisible = useRecoilValue(signupState);
-
+  const handleEmailSend = async (email: any) => {
+    try {
+      const result = await emailConfirm(email);
+      console.log(result);
+      Setemailsendmsg(result.message);
+    } catch (error) {
+      Setemailsendmsg('이미 메일을 전송하였습니다.');
+    }
+  };
   const isEmail = (email: any) => {
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -39,9 +49,8 @@ const SignupForm = () => {
   };
 
   const emailAuthentication = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('이메일 전송 api');
     SetEmailvailerrorMsg('');
-
+    Setemailsendmsg('');
     //이메일 유효성 확인..
     if (!values.email) {
       SetEmailvailerrorMsg('이메일을 입력해주세요.');
@@ -50,6 +59,7 @@ const SignupForm = () => {
     } else {
       sendAuthMail(true);
       handleChange(event);
+      handleEmailSend(values.email);
     }
   };
 
@@ -92,6 +102,7 @@ const SignupForm = () => {
         />
         <div>{errors.authmail}</div>
         <div>{emailvailerrormsg}</div>
+        <div>{emailsendmsg}</div>
         <Button type="button" color="alternate" onClick={emailAuthentication}>
           인증
         </Button>
