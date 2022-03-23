@@ -6,8 +6,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.doners.donersbackend.db.entity.Image;
 import com.doners.donersbackend.db.entity.User;
-import com.doners.donersbackend.db.entity.donation.Donation;
-import com.doners.donersbackend.db.entity.donation.File;
 import com.doners.donersbackend.db.repository.FileRepository;
 import com.doners.donersbackend.db.repository.ImageRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
@@ -26,7 +24,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -53,20 +50,22 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         objectMetadata.setContentLength(multipartFile.getSize()); // bytes
         objectMetadata.setContentType(multipartFile.getContentType());
 
-        try(InputStream inputStream = multipartFile.getInputStream()) {
+        try (InputStream inputStream = multipartFile.getInputStream()) {
             amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "사진 등록에 실패했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "사진 업로드에 실패했습니다.");
         }
 
         return fileName;
+
     }
 
     @Override
     public String uploadThumbnailImage(String fileName, MultipartFile multipartFile) {
 
         String thumbnailFileName = "resized_" + fileName;
+
         try {
             BufferedImage bufferedImage = createThumbnail(multipartFile, 300, 300);
 
@@ -83,94 +82,32 @@ public class AwsS3ServiceImpl implements AwsS3Service {
             amazonS3Client.putObject(new PutObjectRequest(bucket, thumbnailFileName, thumbnailImageInputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "썸네일 사진 등록에 실패했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "썸네일 사진 업로드에 실패했습니다.");
         }
 
         return thumbnailFileName;
-    }
-
-    @Override
-    public void uploadMyFile(Donation donation, MultipartFile image, List<MultipartFile> evidence) {
-
-        if (image != null) {
-            String fileName = createFileName(image.getOriginalFilename());
-
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(image.getSize());
-            objectMetadata.setContentType(image.getContentType());
-
-            try (InputStream inputStream = image.getInputStream()) {
-                amazonS3Client.putObject(
-                        new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                                .withCannedAcl(CannedAccessControlList.PublicRead)
-                );
-            } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "기부 신청글 대표 사진 업로드에 실패했습니다.");
-            }
-
-            Image img = Image.builder()
-                    .imageOriginFileName(image.getOriginalFilename())
-                    .imageNewFileName(fileName)
-                    .donation(donation)
-                    .build();
-
-            imageRepository.save(img);
-        }
-
-        evidence.forEach(file -> {
-            String fileName = createFileName(file.getOriginalFilename());
-
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(file.getSize());
-            objectMetadata.setContentType(file.getContentType());
-
-            try (InputStream inputStream = file.getInputStream()) {
-                amazonS3Client.putObject(
-                        new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                                .withCannedAcl(CannedAccessControlList.PublicRead)
-                );
-            } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "증빙 자료 업로드에 실패했습니다.");
-            }
-
-            File evidenceFile = File.builder()
-                    .originalFileName(file.getOriginalFilename())
-                    .savedFileName(fileName)
-                    .donation(donation)
-                    .build();
-
-            fileRepository.save(evidenceFile);
-        });
 
     }
 
     @Override
-    public void uploadDeputyFile(Donation donation, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
+    public String uploadFile(MultipartFile multipartFile) {
 
-        String fileName = createFileName(certificate.getOriginalFilename());
+        String fileName = createFileName(multipartFile.getOriginalFilename());
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(certificate.getSize());
-        objectMetadata.setContentType(certificate.getContentType());
+        objectMetadata.setContentLength(multipartFile.getSize());
+        objectMetadata.setContentType(multipartFile.getContentType());
 
-        try (InputStream inputStream = certificate.getInputStream()) {
+        try (InputStream inputStream = multipartFile.getInputStream()) {
             amazonS3Client.putObject(
                     new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                             .withCannedAcl(CannedAccessControlList.PublicRead)
             );
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "관계 증명서 업로드에 실패했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("파일(%s) 업로드에 실패했습니다.", multipartFile.getOriginalFilename()));
         }
 
-        File certificateFile = File.builder()
-                .originalFileName(certificate.getOriginalFilename())
-                .savedFileName(fileName)
-                .donation(donation)
-                .build();
-
-        fileRepository.save(certificateFile);
-
-        uploadMyFile(donation, image, evidence);
+        return fileName;
 
     }
 
@@ -191,15 +128,19 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
     @Override
     public String getThumbnailPath(User user) {
+
         Image image = imageRepository.findByUser(user).orElse(null);
-        if(image == null)
+
+        if (image == null)
             return null;
         else
             return amazonS3Client.getResourceUrl(bucket, image.getImageNewFileName());
+
     }
 
     @Override
     public BufferedImage createThumbnail(MultipartFile profileImage, int thumbWidth, int thumbHeight) {
+
         try {
             InputStream in = profileImage.getInputStream();
             BufferedImage originalImage = ImageIO.read(in);
@@ -214,10 +155,12 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 리사이즈에 실패했습니다.");
         }
+
     }
 
     @Override
     public String getFilePath(String newFileName) {
         return amazonS3Client.getResourceUrl(bucket, newFileName);
     }
+
 }
