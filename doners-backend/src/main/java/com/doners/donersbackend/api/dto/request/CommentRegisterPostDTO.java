@@ -19,6 +19,9 @@ public class CommentRegisterPostDTO {
     @ApiModelProperty(name="커뮤니티 id")
     private String communityId;
 
+    @ApiModelProperty(name="댓글 id")
+    private String commentId;
+
     @NotBlank
     @NotNull
     @ApiModelProperty(name="댓글 내용")
