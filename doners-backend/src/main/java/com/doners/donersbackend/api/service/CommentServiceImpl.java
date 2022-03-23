@@ -2,7 +2,11 @@ package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.CommentChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.CommentRegisterPostDTO;
+import com.doners.donersbackend.api.dto.response.comment.CommentGetListWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.comment.CommentResponseDTO;
+import com.doners.donersbackend.db.entity.Appreciation;
 import com.doners.donersbackend.db.entity.Comment;
+import com.doners.donersbackend.db.entity.Community;
 import com.doners.donersbackend.db.repository.AppreciationRepository;
 import com.doners.donersbackend.db.repository.CommentRepository;
 import com.doners.donersbackend.db.repository.CommunityRepository;
@@ -11,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +29,15 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void registerComment(CommentRegisterPostDTO commentRegisterPostDTO) {
+        Comment parentComment = null;
+        if(commentRepository.findById(commentRegisterPostDTO.getCommentId()).isPresent()){
+            parentComment = commentRepository.findById(commentRegisterPostDTO.getCommentId()).get();
+        }
         // 댓글 작성 정보
         Comment comment = Comment.builder()
                 .commentDescription(commentRegisterPostDTO.getCommentDescription())
                 .user(userRepository.findByUserAccount(commentRegisterPostDTO.getUserAccount()).get())
+                .parentCommentId(parentComment)
                 .commentCreateTime(LocalDateTime.now()).build();
 
         if(commentRegisterPostDTO.getCommunityId().length()==0){// 감사 글 댓글
@@ -66,4 +77,41 @@ public class CommentServiceImpl implements CommentService{
         commentRepository.save(comment);
         return 200;
     }
+
+    @Override
+    public CommentGetListWrapperResponseDTO getAppreciationCommentList(String id) {
+        List<CommentResponseDTO> list = new ArrayList<>();
+        Appreciation appreciation = appreciationRepository.findById(id).get();
+
+        for(Comment c : commentRepository.findAllByAppreciationAndCommentIsDeletedOrderByCommentCreateTime(appreciation, false).get()) {
+            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
+        }
+
+        return new CommentGetListWrapperResponseDTO(list);
+    }
+
+    @Override
+    public CommentGetListWrapperResponseDTO getCommunityCommentList(String id) {
+        List<CommentResponseDTO> list = new ArrayList<>();
+        Community community = communityRepository.findById(id).get();
+
+        for(Comment c : commentRepository.findAllByCommunityAndCommentIsDeletedOrderByCommentCreateTime(community, false).get()) {
+            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
+        }
+
+        return new CommentGetListWrapperResponseDTO(list);
+    }
+
+    @Override
+    public CommentGetListWrapperResponseDTO getSubCommentList(String parentId) {
+        List<CommentResponseDTO> list = new ArrayList<>();
+
+        Comment comment = commentRepository.findById(parentId).get();
+        for(Comment c : commentRepository.findAllByParentCommentIdAndCommentIsDeletedOrderByCommentCreateTime(comment, false).get()) {
+            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
+        }
+
+        return new CommentGetListWrapperResponseDTO(list);
+    }
+
 }
