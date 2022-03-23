@@ -1,6 +1,7 @@
 package com.doners.donersbackend.api.dto.response;
 
 import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.db.enums.CategoryCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private String title;
 
     @ApiModelProperty(name = "카테고리")
-    private String category;
+    private CategoryCode categoryCode;
 
     @ApiModelProperty(name = "조회수")
     private int views;
@@ -65,9 +66,9 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private Map<String, String> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, String category, int views, String description, Map<String, String> image, LocalDateTime startTime, LocalDateTime endTime, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean isExist, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, int views, String description, Map<String, String> image, LocalDateTime startTime, LocalDateTime endTime, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean isExist, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
         this.title = title;
-        this.category = category;
+        this.categoryCode = categoryCode;
         this.views = views;
         this.description = description;
         this.image = image;
