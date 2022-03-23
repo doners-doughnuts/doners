@@ -62,11 +62,13 @@ const Header = () => {
           <li>언어</li>
           <li>알림</li>
           <li>프로필</li>
-          <button
-            className={`${styles['alternative-button']} ${styles.button}`}
-          >
-            Join
-          </button>
+          <Link to="/signup">
+            <button
+              className={`${styles['alternative-button']} ${styles.button}`}
+            >
+              Join
+            </button>
+          </Link>
         </ul>
       </div>
     </div>
