@@ -1,4 +1,4 @@
-package com.doners.donersbackend.api.dto.request;
+package com.doners.donersbackend.api.dto.request.donation;
 
 import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import io.swagger.annotations.ApiModel;
