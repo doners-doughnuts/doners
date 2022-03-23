@@ -1,5 +1,7 @@
 package com.doners.donersbackend.api.dto.request;
 
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
+import com.doners.donersbackend.db.enums.UserCode;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,5 +36,8 @@ public class UserInfoSetRequestDTO {
     @ApiModelProperty(name="메타마스크 계정 주소")
     private String userAccount;
 
+    @NotBlank
+    @ApiModelProperty(name="회원 코드")
+    private UserCode userCode;
 
 }
