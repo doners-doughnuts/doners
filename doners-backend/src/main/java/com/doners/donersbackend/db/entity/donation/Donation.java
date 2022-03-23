@@ -2,6 +2,7 @@ package com.doners.donersbackend.db.entity.donation;
 
 import com.doners.donersbackend.db.entity.BaseEntity;
 import com.doners.donersbackend.db.entity.User;
+import com.doners.donersbackend.db.enums.CategoryCode;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,8 +31,8 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_title")
     private String title;
 
-    @Column(name = "donation_category")
-    private String category;
+    @Column(name = "donation_category_code")
+    private CategoryCode categoryCode;
 
     @Column(name = "donation_description")
     private String description;
