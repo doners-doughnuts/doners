@@ -1,5 +1,6 @@
 package com.doners.donersbackend.api.dto.request;
 
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -22,6 +23,9 @@ public class DonationApproveRequestDTO {
     @NotNull
     @ApiModelProperty(name = "승인 여부")
     private boolean approved;
+
+    @ApiModelProperty(name = "거절 사유 코드")
+    private ApprovalStatusCode approvalStatusCode;
 
 }
 

@@ -2,6 +2,8 @@ package com.doners.donersbackend.db.entity.donation;
 
 import com.doners.donersbackend.db.entity.BaseEntity;
 import com.doners.donersbackend.db.entity.User;
+import com.doners.donersbackend.db.enums.CategoryCode;
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,8 +32,8 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_title")
     private String title;
 
-    @Column(name = "donation_category")
-    private String category;
+    @Column(name = "donation_category_code")
+    private CategoryCode categoryCode;
 
     @Column(name = "donation_description")
     private String description;
@@ -47,6 +49,9 @@ public class Donation extends BaseEntity {
 
     @Column(name = "donation_is_approved", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isApproved;
+
+    @Column(name = "donation_approval_status_code")
+    private ApprovalStatusCode approvalStatusCode;
 
     @Column(name = "donation_is_received", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isReceived;
@@ -82,6 +87,11 @@ public class Donation extends BaseEntity {
     // 시작
     public void changeStartTime() {
         this.startTime = LocalDateTime.now();
+    }
+
+    // 거절 사유
+    public void changeApprovalStatusCode(ApprovalStatusCode approvalStatusCode) {
+        this.approvalStatusCode = approvalStatusCode;
     }
 
 }
