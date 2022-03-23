@@ -9,6 +9,7 @@ import com.doners.donersbackend.db.entity.donation.DonationBudget;
 import com.doners.donersbackend.db.entity.donation.DonationHistory;
 import com.doners.donersbackend.db.entity.donation.File;
 import com.doners.donersbackend.db.enums.CategoryCode;
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import com.doners.donersbackend.db.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class DonationServiceImpl implements DonationService {
                 .title(donationInfoRequestDTO.getTitle())
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
 //                .categoryCode(CategoryCode.COVID_19)
+                .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
                 .amount(donationInfoRequestDTO.getTargetAmount())
 //                .endTime(donationInfoRequestDTO.getEndTime())
@@ -190,7 +192,8 @@ public class DonationServiceImpl implements DonationService {
                 .name(donation.getUser().getUserName())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
-                .isExist(donationRepository.existsByIdAndIsDeleted(donationId, true))
+                .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
+                .approvalStatusCode(donation.getApprovalStatusCode())
                 .donors(donationHistoryResponseDTOList)
                 .achievementRate((double) amountSum / donation.getAmount() * 100)
                 .evidence(evidence)
@@ -271,7 +274,7 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) {
+    public Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException {
 
         // TODO: 관리자인지 확인'
 
@@ -282,10 +285,19 @@ public class DonationServiceImpl implements DonationService {
         if (donation.isApproved()) return 2;
 
         // 거절
-        if (!donationApproveRequestDTO.isApproved()) return 0;
+        if (!donationApproveRequestDTO.isApproved()) {
+            if (donationApproveRequestDTO.getApprovalStatusCode() == null) throw new NullPointerException();
+
+            donation.changeApprovalStatusCode(donationApproveRequestDTO.getApprovalStatusCode());
+
+            donationRepository.save(donation);
+
+            return 0;
+        }
 
         // 신청 승인 및 시작 시간 설정
         donation.changeIsApproved();
+        donation.changeApprovalStatusCode(ApprovalStatusCode.APPROVAL);
         donation.changeStartTime();
 
         donationRepository.save(donation);

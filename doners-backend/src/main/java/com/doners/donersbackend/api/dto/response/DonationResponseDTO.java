@@ -1,6 +1,7 @@
 package com.doners.donersbackend.api.dto.response;
 
 import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import com.doners.donersbackend.db.enums.CategoryCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,7 +21,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "제목")
     private String title;
 
-    @ApiModelProperty(name = "카테고리")
+    @ApiModelProperty(name = "카테고리 코드")
     private CategoryCode categoryCode;
 
     @ApiModelProperty(name = "조회수")
@@ -54,7 +55,10 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private String phone;
 
     @ApiModelProperty(name = "기존 기부 신청 여부")
-    private boolean isExist;
+    private boolean exist;
+
+    @ApiModelProperty(name = "승인 상태 코드")
+    private ApprovalStatusCode approvalStatusCode;
 
     @ApiModelProperty(name = "기부자 명단")
     private List<DonationHistoryResponseDTO> donors;
@@ -66,7 +70,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private Map<String, String> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, int views, String description, Map<String, String> image, LocalDateTime startTime, LocalDateTime endTime, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean isExist, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, int views, String description, Map<String, String> image, LocalDateTime startTime, LocalDateTime endTime, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
@@ -79,7 +83,8 @@ public class DonationResponseDTO extends BaseResponseDTO {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.isExist = isExist;
+        this.exist = exist;
+        this.approvalStatusCode = approvalStatusCode;
         this.donors = donors;
         this.achievementRate = achievementRate;
         this.evidence = evidence;
