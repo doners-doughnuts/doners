@@ -2,13 +2,10 @@ package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.CommunityChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.CommunityRegisterPostDTO;
-import com.doners.donersbackend.api.dto.response.CommentResponseDTO;
 import com.doners.donersbackend.api.dto.response.CommunityGetListResponseDTO;
 import com.doners.donersbackend.api.dto.response.CommunityGetListWrapperResponseDTO;
 import com.doners.donersbackend.api.dto.response.CommunityResponseDTO;
-import com.doners.donersbackend.db.entity.Comment;
 import com.doners.donersbackend.db.entity.Community;
-import com.doners.donersbackend.db.entity.donation.Donation;
 import com.doners.donersbackend.db.repository.CommentRepository;
 import com.doners.donersbackend.db.repository.CommunityRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
@@ -100,26 +97,12 @@ public class CommunityServiceImpl implements CommunityService{
         Community community = communityRepository.findById(communityId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 커뮤니티 글을 찾을 수 없습니다."));
 
-        List<Comment> commentList = commentRepository.findAllByCommunity(community)
-                .orElse(null);
-        List<CommentResponseDTO> commentResponseDTOList = new ArrayList<>();
-
-        commentList.forEach(comment ->
-                commentResponseDTOList.add(
-                        CommentResponseDTO.builder()
-                                .commentId(comment.getId())
-                                .commentCreateTime(comment.getCommentCreateTime())
-                                .commentDescription(comment.getCommentDescription())
-                                .build()
-                )
-        );
         increaseViews(community);
         return CommunityResponseDTO.builder()
                 .communityTitle(community.getCommunityTitle())
                 .communityDescription(community.getCommunityDescription())
                 .communityCreateTime(community.getCommunityCreateTime())
                 .communityViews(community.getCommunityViews())
-                .commentResponseDTOList(commentResponseDTOList)
                 .communityWriter(community.getUser().getUserNickname())
                 .build();
     }

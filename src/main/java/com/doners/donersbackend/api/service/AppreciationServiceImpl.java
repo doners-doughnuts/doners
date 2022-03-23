@@ -123,26 +123,12 @@ public class AppreciationServiceImpl implements AppreciationService{
                 )
         );
 
-        List<Comment> commentList = commentRepository.findAllByAppreciation(appreciation)
-                .orElse(null);// 댓글이 없는 경우
-        List<CommentResponseDTO> commentResponseDTOList = new ArrayList<>();
-
-        commentList.forEach(comment ->
-                commentResponseDTOList.add(
-                        CommentResponseDTO.builder()
-                                .commentId(comment.getId())
-                                .commentCreateTime(comment.getCommentCreateTime())
-                                .commentDescription(comment.getCommentDescription())
-                                .build()
-                )
-        );
         increaseViews(appreciation);
         return AppreciationResponseDTO.builder()
                 .appreciationTitle(appreciation.getAppreciationTitle())
                 .appreciationDescription(appreciation.getAppreciationDescription())
                 .appreciationCreateTime(appreciation.getAppreciationCreateTime())
                 .appreciationViews(appreciation.getAppreciationViews())
-                .commentResponseDTOList(commentResponseDTOList)
                 .appreciationWriter(appreciation.getUser().getUserNickname())
                 .build();
     }
