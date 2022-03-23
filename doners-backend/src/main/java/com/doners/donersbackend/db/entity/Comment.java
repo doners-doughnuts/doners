@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Builder
@@ -27,6 +28,9 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
     private Comment parentCommentId;
+
+    @OneToMany(mappedBy = "parentCommentId", orphanRemoval = true)
+    private List<Comment> children;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="user_id")
