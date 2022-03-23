@@ -7,18 +7,22 @@ import com.doners.donersbackend.api.dto.response.DonationRecommendResponseDTO;
 import com.doners.donersbackend.api.dto.response.DonationResponseDTO;
 import com.doners.donersbackend.api.service.DonationService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.db.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Api(value = "Donation API", tags = {"Donation"})
 @CrossOrigin("*")
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/donation")
@@ -63,7 +67,7 @@ public class DonationController {
     })
     @GetMapping
     public ResponseEntity<? extends BaseResponseDTO> getList(
-            @ApiParam(value = "카테고리", required = true) @NotBlank String category) {
+            @ApiParam(value = "카테고리", required = true) @NotNull CategoryCode category) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
 
