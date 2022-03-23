@@ -1,4 +1,4 @@
-package com.doners.donersbackend.api.dto.response;
+package com.doners.donersbackend.api.dto.response.comment;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,4 +27,5 @@ public class CommentResponseDTO {
         this.commentCreateTime = commentCreateTime;
         this.commentDescription = commentDescription;
     }
+
 }
