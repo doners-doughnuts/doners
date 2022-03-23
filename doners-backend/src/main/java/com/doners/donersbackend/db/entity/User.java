@@ -1,5 +1,7 @@
 package com.doners.donersbackend.db.entity;
 
+import com.doners.donersbackend.db.enums.ApprovalStatusCode;
+import com.doners.donersbackend.db.enums.UserCode;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -12,6 +14,9 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity {
+    @Column(name = "user_code")
+    private UserCode userCode;
+
     @Column(name="user_name")
     private String userName;
 

@@ -131,7 +131,7 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseDTO> uploadProfileImage(
             @ApiParam(value="프로필 이미지", required=true) @RequestPart MultipartFile multipartFile) {
         try {
-            awsS3Service.uploadProfileImage(multipartFile);
+            userService.uploadProfileImage(multipartFile);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("회원 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {

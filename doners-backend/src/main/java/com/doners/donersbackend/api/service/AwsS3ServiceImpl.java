@@ -45,9 +45,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     private final UserRepository userRepository;
 
     @Override
-    public void uploadProfileImage(MultipartFile multipartFile) {
-        User user = userRepository.findByUserNickname("웅이2").orElseThrow(
-                () -> new IllegalArgumentException("해당 닉네임을 찾을 수 없습니다."));
+    public String uploadImage(MultipartFile multipartFile) {
 
         String fileName = createFileName(multipartFile.getOriginalFilename());
 
@@ -59,24 +57,16 @@ public class AwsS3ServiceImpl implements AwsS3Service {
             amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "프로필 사진 등록에 실패했습니다.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "사진 등록에 실패했습니다.");
         }
 
-        Image image = imageRepository.findByUserAndImageIsResized(user, false).orElse(null);
+        return fileName;
+    }
 
-        if(image == null) {
-            image = Image.builder()
-                    .imageOriginFileName(multipartFile.getOriginalFilename())
-                    .imageNewFileName(fileName)
-                    .user(user).build();
-        } else {
-            image.changeImage(multipartFile.getOriginalFilename(), fileName);
-        }
+    @Override
+    public String uploadThumbnailImage(String fileName, MultipartFile multipartFile) {
 
-        imageRepository.save(image);
-
-        // 썸네일(resized) 이미지 업로드
-        String thumbnailFileName = fileName + "_resized";
+        String thumbnailFileName = "resized_" + fileName;
         try {
             BufferedImage bufferedImage = createThumbnail(multipartFile, 300, 300);
 
@@ -86,6 +76,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
             byte[] buffer = os.toByteArray();
             InputStream thumbnailImageInputStream = new ByteArrayInputStream(buffer);
 
+            ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(buffer.length);
             objectMetadata.setContentType("image/png");
 
@@ -95,19 +86,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "썸네일 사진 등록에 실패했습니다.");
         }
 
-        Image thumbnailImage = imageRepository.findByUserAndImageIsResized(user, true).orElse(null);
-
-        if(thumbnailImage == null) {
-            thumbnailImage = Image.builder()
-                    .imageOriginFileName(thumbnailFileName)
-                    .imageNewFileName(fileName)
-                    .imageIsResized(true)
-                    .user(user).build();
-        } else {
-            thumbnailImage.changeImage(multipartFile.getOriginalFilename(), thumbnailFileName);
-        }
-
-        imageRepository.save(thumbnailImage);
+        return thumbnailFileName;
     }
 
     @Override
