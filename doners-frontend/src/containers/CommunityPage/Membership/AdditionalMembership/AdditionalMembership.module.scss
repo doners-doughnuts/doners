@@ -1,0 +1,168 @@
+@import 'assets/styles/main';
+
+.container {
+  margin-bottom: 100px;
+}
+.basic-items {
+  background-color: #001822;
+  // background-color: $red;
+  color: white;
+  padding: 70px 50px 30px;
+  border-radius: 12px;
+  position: relative;
+  height: 475px;
+
+  .item-list {
+    li {
+      @include flexbox(start, center);
+      font-family: $font-sub;
+      border-top: 1px solid rgba(225, 227, 228, 0.2);
+      margin-top: 20px;
+      padding-top: 30px;
+
+      &:first-child {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+      }
+
+      .icon {
+        margin-right: 10px;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+      }
+
+      .info {
+        dt {
+          position: relative;
+          margin-bottom: 10px;
+          width: fit-content;
+
+          .point::after {
+            content: ' ';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.15);
+          }
+        }
+
+        dd {
+          @include text-style(16);
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}
+.badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -16px);
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: $blue;
+  color: #fff;
+  font-size: 18px;
+}
+
+.additional-items {
+  background-color: $white;
+  border-radius: 12px;
+  position: relative;
+  margin-left: 20px;
+  height: 475px;
+  @include column-flexbox(between, center);
+
+  .tabs-wrap {
+    padding-top: 50px;
+
+    .tabs {
+      @include flexbox;
+      @include text-style(22);
+
+      li:not(:first-child)::before {
+        content: ' ';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        margin: 8px 10px 0;
+        border-radius: 50%;
+        background-color: #3617ce;
+        vertical-align: top;
+      }
+
+      .is-active button {
+        color: $blue;
+      }
+    }
+  }
+
+  .tabs-contents {
+    .slide-wrap {
+      margin-bottom: 50px;
+
+      .slide-content {
+        text-align: center;
+
+        ul {
+          @include flexbox(start, center);
+          margin: 0 40px;
+        }
+
+        .slide-box {
+          @include flexbox;
+          width: 80px;
+          height: 80px;
+          cursor: pointer;
+
+          img {
+            width: 50px;
+            height: 50px;
+            opacity: 0.6;
+          }
+        }
+
+        .select {
+          img {
+            width: 80px;
+            height: 80px;
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .slide-info {
+      position: relative;
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 0 0 12px 12px;
+
+      img {
+        max-width: 100%;
+        vertical-align: top;
+      }
+
+      .info-text {
+        position: absolute;
+        top: 80px;
+        left: 60px;
+
+        .title {
+          @include text-style(24);
+          text-align: left;
+        }
+        .desc {
+          max-width: 265px;
+          color: #585959;
+          @include text-style(16);
+        }
+      }
+    }
+  }
+}
