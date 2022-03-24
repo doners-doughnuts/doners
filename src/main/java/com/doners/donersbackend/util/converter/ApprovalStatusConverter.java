@@ -1,6 +1,6 @@
 package com.doners.donersbackend.util.converter;
 
-import com.doners.donersbackend.db.enums.ApprovalStatusCode;
+import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 
 import javax.persistence.Converter;
 
