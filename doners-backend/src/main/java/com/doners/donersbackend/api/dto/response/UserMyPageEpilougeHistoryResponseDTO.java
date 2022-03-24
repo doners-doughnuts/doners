@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @Builder
 public class UserMyPageEpilougeHistoryResponseDTO {
 
-    @ApiModelProperty(name = "커뮤니티 글 ID")
+    @ApiModelProperty(name = "감사 글 ID")
     private String epilougeId;
 
-    @ApiModelProperty(name = "커뮤니티 글 제목")
+    @ApiModelProperty(name = "감사 글 제목")
     private String epilougeTitle;
 
-    @ApiModelProperty(name = "커뮤니티 글 작성 시간")
+    @ApiModelProperty(name = "감사 글 작성 시간")
     private LocalDateTime epilougeCreateTime;
 
     @Builder
