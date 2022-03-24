@@ -1,1 +1,39 @@
 @import 'assets/styles/main';
+
+.inner-container {
+  padding: 250px 0;
+  position: relative;
+}
+
+.text-wrapper {
+  text-align: center;
+  margin-bottom: 120px;
+}
+
+.slogan {
+  @include text-style(48);
+  margin-bottom: 30px;
+
+  span {
+    @include text-style(48, $orange);
+  }
+}
+
+.description {
+  @include text-style(18, $gray-4);
+  margin-bottom: 32px;
+}
+
+.buttonRow {
+  width: 188px;
+  margin: 0 auto;
+}
+
+.character {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  right: -100px;
+  transform: rotate(30deg);
+}
