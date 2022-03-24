@@ -7,16 +7,18 @@ import styles from './SignupForm.module.scss';
 import Input from 'assets/theme/Input/Input';
 import EmailAuthValidation from './EmailAuthValidation';
 import SignUpValidation from './SignUpValidation';
-import { emailConfirm } from 'services/api/UserApi';
+import { emailConfirm, checkNickname, signupcheck } from 'services/api/UserApi';
 import { signupState } from 'atoms/atoms';
 import { useRecoilValue } from 'recoil';
 import useEmailAuth from 'hooks/useEmailAuth';
+import { useSetRecoilState } from 'recoil';
 
 const cx = classNames.bind(styles);
 
 const SignupForm = () => {
   const [emailvailerror, SetEmailvailerror] = useState();
   const [emailvailerrormsg, SetEmailvailerrorMsg] = useState('');
+  const [nicknamemsg, Setnicknamemsg] = useState('');
   const [emailsendmsg, Setemailsendmsg] = useState('');
   const [authmail, sendAuthMail] = useState(false);
   const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
@@ -28,11 +30,43 @@ const SignupForm = () => {
     },
     onSubmit: async (submitValues) => {
       console.log(submitValues);
+      console.log(checkNickname(submitValues.nickname));
+      const result = handlesignup();
     },
     validate: SignUpValidation,
   });
 
   const signupvisible = useRecoilValue(signupState);
+
+  const signup = async (nickname: any) => {
+    try {
+      const result = await checkNickname(nickname);
+      console.log(result);
+      Setemailsendmsg(result.message);
+    } catch (error) {}
+  };
+
+  const handlenickname = async (nickname: any) => {
+    try {
+      const result = await checkNickname(nickname);
+      console.log(result);
+      Setnicknamemsg(result.message);
+    } catch (error) {
+      Setnicknamemsg('이미 등록된 닉네임입니다.');
+    }
+  };
+  const handlesignup = async () => {
+    try {
+      const result = await signupcheck(
+        values.realname,
+        values.email,
+        signupvisible,
+        values.nickname
+      );
+      console.log(result);
+    } catch (error) {}
+  };
+
   const handleEmailSend = async (email: any) => {
     try {
       const result = await emailConfirm(email);

@@ -19,11 +19,29 @@ export const login = async (userAccount: any) => {
 
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: any) => {
-  const response = await instance.get('/nickcheck', {
+  const response = await instance.get(`/user/check/${userNickname}`, {
     params: {
       userNickname: userNickname,
     },
   });
+  return response.data;
+};
+
+export const signupcheck = async (
+  userName: any,
+  userEmail: any,
+  userAccount: any,
+  userNickname: any
+) => {
+  const response = await instance.post(`/user`, {
+    params: {
+      userAccount: userAccount,
+      userEmail: userEmail,
+      userName: userName,
+      userNickname: userNickname,
+    },
+  });
+  console.log(response);
   return response.data;
 };
 
