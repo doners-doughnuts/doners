@@ -1,12 +1,12 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.api.dto.request.EpilougeChangePatchDTO;
-import com.doners.donersbackend.api.dto.request.EpilougeRegisterPostDTO;
-import com.doners.donersbackend.api.dto.response.EpilougeGetListWrapperResponseDTO;
-import com.doners.donersbackend.api.dto.response.EpilougeResponseDTO;
-import com.doners.donersbackend.api.service.EpilougeService;
-import com.doners.donersbackend.api.service.AwsS3Service;
-import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.application.dto.request.EpilougeChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.EpilougeRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.EpilougeGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.EpilougeResponseDTO;
+import com.doners.donersbackend.application.service.EpilougeService;
+import com.doners.donersbackend.application.service.AwsS3Service;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

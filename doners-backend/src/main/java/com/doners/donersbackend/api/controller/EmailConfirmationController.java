@@ -1,12 +1,11 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.api.service.EmailConfirmationService;
-import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.application.service.EmailConfirmationService;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin("*")

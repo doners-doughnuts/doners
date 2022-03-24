@@ -1,12 +1,12 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
-import com.doners.donersbackend.api.dto.request.UserNicknameChangeRequestDTO;
-import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
-import com.doners.donersbackend.api.dto.response.UserMyPageCommunityHistoryWrapperResponseDTO;
-import com.doners.donersbackend.api.dto.response.UserMyPageEpilougeHistoryWrapperResponseDTO;
-import com.doners.donersbackend.api.service.UserService;
-import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.application.dto.request.UserInfoSetRequestDTO;
+import com.doners.donersbackend.application.dto.request.UserNicknameChangeRequestDTO;
+import com.doners.donersbackend.application.dto.response.UserLoginResponseDTO;
+import com.doners.donersbackend.application.dto.response.UserMyPageCommunityHistoryWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.UserMyPageEpilougeHistoryWrapperResponseDTO;
+import com.doners.donersbackend.application.service.UserService;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -95,21 +95,19 @@ public class UserController {
     @ApiOperation(value="닉네임 변경")
     @ApiResponses({
             @ApiResponse(code=200, message="닉네임 변경에 성공했습니다."),
-            @ApiResponse(code=404, message="해당 닉네임을 찾을 수 없습니다."),
+            @ApiResponse(code=401, message="권한이 없습니다."),
             @ApiResponse(code=409, message="닉네임 변경에 실패했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> changeNickname(
-//            @PathVariable("userNickname") @ApiParam(value="닉네임", required=true) String userNickname) {
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @RequestBody @ApiParam(value="변경할 닉네임", required=true) UserNicknameChangeRequestDTO userNicknameChangeRequestDTO) {
-        String userNickname = userNicknameChangeRequestDTO.getUserNickname();
-
         try {
-            Integer statusCode = userService.changeUserNickname(userNickname);
+            Integer statusCode = userService.changeUserNickname(accessToken, userNicknameChangeRequestDTO.getUserNickname());
 
             if(statusCode == 409)
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("닉네임 변경에 실패했습니다.", 409));
         } catch (IllegalArgumentException e){
-            return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 닉네임을 찾을 수 없습니다.", 404));
+            return ResponseEntity.status(401).body(BaseResponseDTO.of("권한이 없습니다.", 401));
         }
 
         return ResponseEntity.status(200).body(BaseResponseDTO.of("닉네임 변경에 성공했습니다.", 200));
@@ -143,8 +141,8 @@ public class UserController {
             @ApiResponse(code=409, message="프로필 이미지 등록에 실패했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> uploadProfileImage(
-            @ApiParam(value="프로필 이미지", required=true) @RequestPart MultipartFile multipartFile,
-            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @ApiParam(value="프로필 이미지", required=true) @RequestPart MultipartFile multipartFile) {
         try {
             userService.uploadProfileImage(accessToken, multipartFile);
         } catch (IllegalArgumentException e) {
