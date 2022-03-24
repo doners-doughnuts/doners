@@ -3,6 +3,8 @@ package com.doners.donersbackend.api.controller;
 import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
 import com.doners.donersbackend.api.dto.request.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
+import com.doners.donersbackend.api.dto.response.UserMyPageCommunityHistoryWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.UserMyPageEpilougeHistoryWrapperResponseDTO;
 import com.doners.donersbackend.api.service.UserService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
@@ -143,7 +145,6 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseDTO> uploadProfileImage(
             @ApiParam(value="프로필 이미지", required=true) @RequestPart MultipartFile multipartFile,
             @ApiIgnore @RequestHeader("Authorization") String accessToken) {
-        System.out.println("controller: " + accessToken);
         try {
             userService.uploadProfileImage(accessToken, multipartFile);
         } catch (IllegalArgumentException e) {
@@ -156,20 +157,67 @@ public class UserController {
         return ResponseEntity.status(201).body(BaseResponseDTO.of("프로필 이미지 등록에 성공했습니다.", 201));
     }
 
-//    @DeleteMapping()
-//    @ApiOperation(value="회원 탈퇴")
-//    @ApiResponses({
-//            @ApiResponse(code=200, message="회원 탈퇴를 완료했습니다."),
-//            @ApiResponse(code=409, message="회원 탈퇴에 실패했습니다."),
-//    })
-//    public ResponseEntity<? extends BaseResponseDTO> deleteUser(
-//            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
-//        try {
-//            userService.deleteUser(accessToken);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(409).body(BaseResponseDTO.of("회원 탈퇴에 실패했습니다.", 409));
-//        }
-//
-//        return ResponseEntity.status(200).body(BaseResponseDTO.of("회원 탈퇴를 완료했습니다.", 200));
-//    }
+    @DeleteMapping()
+    @ApiOperation(value="회원 탈퇴")
+    @ApiResponses({
+            @ApiResponse(code=200, message="회원 탈퇴를 완료했습니다."),
+            @ApiResponse(code=409, message="회원 탈퇴에 실패했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> deleteUser(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+        try {
+            userService.deleteUser(accessToken);
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("회원 탈퇴에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseDTO.of("회원 탈퇴를 완료했습니다.", 200));
+    }
+
+    @GetMapping("/mypage/community")
+    @ApiOperation(value="커뮤니티 글 작성 내역 조회")
+    @ApiResponses({
+            @ApiResponse(code=200, message="커뮤니티 글 작성 내역을 정상적으로 불러왔습니다."),
+            @ApiResponse(code=404, message="조회하려는 정보가 존재하지 않습니다."),
+            @ApiResponse(code=409, message="커뮤니티 글 작성 내역을 불러오지 못했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> getCommunityHistory(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+        UserMyPageCommunityHistoryWrapperResponseDTO communityHistoryWrapperResponseDTO = null;
+
+        try {
+            communityHistoryWrapperResponseDTO = userService.getCommunityHistoryList(accessToken);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("조회하려는 정보가 존재하지 않습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("커뮤니티 글 작성 내역을 불러오지 못했습니다.", 409));
+        }
+
+        return ResponseEntity.status(200).body(UserMyPageCommunityHistoryWrapperResponseDTO
+                .of("커뮤니티 글 작성 내역을 정상적으로 불러왔습니다.", 200, communityHistoryWrapperResponseDTO));
+    }
+
+    @GetMapping("/mypage/appreciation")
+    @ApiOperation(value="감사 글 작성 내역 조회")
+    @ApiResponses({
+            @ApiResponse(code=200, message="감사 글 작성 내역을 정상적으로 불러왔습니다."),
+            @ApiResponse(code=404, message="조회하려는 정보가 존재하지 않습니다."),
+            @ApiResponse(code=409, message="감사 글 작성 내역을 불러오지 못했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> getEpilougeHistory(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+        UserMyPageEpilougeHistoryWrapperResponseDTO epilougeHistoryWrapperResponseDTO = null;
+
+        try {
+            epilougeHistoryWrapperResponseDTO = userService.getEpilougeHistoryList(accessToken);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("조회하려는 정보가 존재하지 않습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("감사 글 작성 내역을 불러오지 못했습니다.", 409));
+        }
+
+        return ResponseEntity.status(200).body(UserMyPageEpilougeHistoryWrapperResponseDTO
+                .of("감사 글 작성 내역을 정상적으로 불러왔습니다.", 200, epilougeHistoryWrapperResponseDTO));
+    }
+
 }

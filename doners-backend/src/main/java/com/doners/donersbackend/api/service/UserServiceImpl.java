@@ -1,15 +1,22 @@
 package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
-import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
+import com.doners.donersbackend.api.dto.response.*;
+import com.doners.donersbackend.db.entity.Community;
+import com.doners.donersbackend.db.entity.Epilouge;
 import com.doners.donersbackend.db.entity.Image;
 import com.doners.donersbackend.db.entity.User;
+import com.doners.donersbackend.db.repository.CommunityRepository;
+import com.doners.donersbackend.db.repository.EpilougeRepository;
 import com.doners.donersbackend.db.repository.ImageRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +25,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final ImageRepository imageRepository;
+
+    private final CommunityRepository communityRepository;
+
+    private final EpilougeRepository epilougeRepository;
 
     private final AwsS3Service awsS3Service;
 
@@ -98,24 +109,21 @@ public class UserServiceImpl implements UserService {
         return 200;
     }
 
-//    @Override
-//    public void deleteUser(String accessToken) {
-//        String token = accessToken.split(" ")[1];
-//        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
-//
-//        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
-//
-//        user.deleteUser();
-//        userRepository.save(user);
-//    }
+    @Override
+    public void deleteUser(String accessToken) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+
+        user.deleteUser();
+        userRepository.save(user);
+    }
 
     @Override
     public void uploadProfileImage(String accessToken, MultipartFile multipartFile) {
 
-        String token = accessToken.split(" ")[1];
-
-        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+        String userAccount = getUserAccountFromAccessToken(accessToken);
 
         User user = userRepository.findByUserAccount(userAccount).orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
 
@@ -150,5 +158,69 @@ public class UserServiceImpl implements UserService {
 
         imageRepository.save(thumbnailImage);
 
+    }
+
+    @Override
+    public UserMyPageCommunityHistoryWrapperResponseDTO getCommunityHistoryList(String accessToken) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
+        List<Community> communityList = communityRepository
+                .findByUserAndCommunityIsDeletedOrderByCommunityCreateTimeDesc(user, false)
+                .orElseThrow(() -> new IllegalArgumentException("작성한 커뮤니티 글이 존재하지 않습니다."));
+
+        List<UserMyPageCommunityHistoryResponseDTO> list = new ArrayList<>();
+
+        try {
+            communityList.forEach(community -> {
+                list.add(
+                        UserMyPageCommunityHistoryResponseDTO.builder()
+                                .communityId(community.getId())
+                                .communityTitle(community.getCommunityTitle())
+                                .communityCreateTime(community.getCommunityCreateTime()).build()
+                );
+            });
+        } catch (Exception e) {
+            return null;
+        }
+
+        return UserMyPageCommunityHistoryWrapperResponseDTO.builder()
+                .userMyPageCommunityHistoryResponseDTOList(list).build();
+    }
+
+    @Override
+    public UserMyPageEpilougeHistoryWrapperResponseDTO getEpilougeHistoryList(String accessToken) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
+        List<Epilouge> epilougeList = epilougeRepository
+                .findByUserAndEpilougeIsDeletedOrderByEpilougeCreateTimeDesc(user, false)
+                .orElseThrow(() -> new IllegalArgumentException("작성한 감사 글이 존재하지 않습니다."));
+
+        List<UserMyPageEpilougeHistoryResponseDTO> list = new ArrayList<>();
+
+        try {
+            epilougeList.forEach(epilouge -> {
+                list.add(
+                        UserMyPageEpilougeHistoryResponseDTO.builder()
+                                .epilougeId(epilouge.getId())
+                                .epilougeTitle(epilouge.getEpilougeTitle())
+                                .epilougeCreateTime(epilouge.getEpilougeCreateTime()).build()
+                );
+            });
+        } catch (Exception e) {
+            return null;
+        }
+
+        return UserMyPageEpilougeHistoryWrapperResponseDTO.builder()
+                .userMyPageEpilougeHistoryResponseDTOList(list).build();
+    }
+
+    @Override
+    public String getUserAccountFromAccessToken(String accessToken) {
+        String token = accessToken.split(" ")[1];
+        return jwtAuthenticationProvider.getUserAccount(token);
     }
 }
