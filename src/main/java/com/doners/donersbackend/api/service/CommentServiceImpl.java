@@ -4,10 +4,10 @@ import com.doners.donersbackend.api.dto.request.CommentChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.CommentRegisterPostDTO;
 import com.doners.donersbackend.api.dto.response.comment.CommentGetListWrapperResponseDTO;
 import com.doners.donersbackend.api.dto.response.comment.CommentResponseDTO;
-import com.doners.donersbackend.db.entity.Appreciation;
+import com.doners.donersbackend.db.entity.Epilouge;
 import com.doners.donersbackend.db.entity.Comment;
 import com.doners.donersbackend.db.entity.Community;
-import com.doners.donersbackend.db.repository.AppreciationRepository;
+import com.doners.donersbackend.db.repository.EpilougeRepository;
 import com.doners.donersbackend.db.repository.CommentRepository;
 import com.doners.donersbackend.db.repository.CommunityRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
     private final CommunityRepository communityRepository;
-    private final AppreciationRepository appreciationRepository;
+    private final EpilougeRepository epilougeRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService{
                 .commentCreateTime(LocalDateTime.now()).build();
 
         if(commentRegisterPostDTO.getCommunityId().length()==0){// 감사 글 댓글
-            comment.changeAppreciationId(appreciationRepository.findById(commentRegisterPostDTO.getAppreciationId()).get());
+            comment.changeEpilougeId(epilougeRepository.findById(commentRegisterPostDTO.getEpilougeId()).get());
         }else{// 커뮤니티 글 댓글
             comment.changeCommunityId(communityRepository.findById(commentRegisterPostDTO.getCommunityId()).get());
         }
@@ -79,11 +79,11 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentGetListWrapperResponseDTO getAppreciationCommentList(String id) {
+    public CommentGetListWrapperResponseDTO getEpilougeCommentList(String id) {
         List<CommentResponseDTO> list = new ArrayList<>();
-        Appreciation appreciation = appreciationRepository.findById(id).get();
+        Epilouge epilouge = epilougeRepository.findById(id).get();
 
-        for(Comment c : commentRepository.findAllByAppreciationAndCommentIsDeletedOrderByCommentCreateTime(appreciation, false).get()) {
+        for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilouge, false).get()) {
             list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
         }
 
