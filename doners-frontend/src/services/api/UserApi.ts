@@ -3,7 +3,12 @@ import instance from 'services/axios';
 //const COMMON = '/user';
 
 export const login = async (userAccount: any) => {
-  const response = await instance.get(`/user/${userAccount}`);
+  console.log(userAccount);
+  const response = await instance.get(`/user/${userAccount}`, {
+    params: {
+      userAccount: userAccount,
+    },
+  });
   console.log(response);
   // 아직 JWT TOKEN없어서
   if (response.data.statusCode === 200) {
@@ -19,11 +24,7 @@ export const login = async (userAccount: any) => {
 
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: any) => {
-  const response = await instance.get(`/user/check/${userNickname}`, {
-    params: {
-      userNickname: userNickname,
-    },
-  });
+  const response = await instance.get(`/user/check/${userNickname}`, {});
   return response.data;
 };
 

@@ -1,3 +1,5 @@
+import { emailConfirm, checkNickname, signupcheck } from 'services/api/UserApi';
+
 type SignUpValidationProps = {
   realname?: string;
   authmail?: string;
@@ -12,6 +14,16 @@ export default function SignUpValidation({
   authmail,
 }: SignUpValidationProps) {
   const errors: SignUpValidationProps = {};
+
+  const testtt = (nickname: any) => {
+    try {
+      const response = checkNickname(nickname);
+      console.log(response);
+    } catch (error) {
+      console.log('테스트코인;');
+      return false;
+    }
+  };
 
   if (!realname) {
     errors.realname = '이름을 입력해주세요.';
@@ -30,6 +42,8 @@ export default function SignUpValidation({
     errors.nickname = '10자 이하의 닉네임을 사용해야 합니다.';
   } else if (!nICKNAME_REGEX.test(nickname)) {
     errors.nickname = '특수기호는 불가능합니다.';
+  } else if (!testtt(nickname)) {
+    errors.nickname = '중복된 닉네임 입니다.';
   }
 
   if (!authmail) {
