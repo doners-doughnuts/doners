@@ -1,8 +1,6 @@
 package com.doners.donersbackend.api.dto.request;
 
-import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import com.doners.donersbackend.db.enums.UserCode;
-import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -10,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @ApiModel("UserInfoPostDto")
 @NoArgsConstructor
@@ -36,7 +35,7 @@ public class UserInfoSetRequestDTO {
     @ApiModelProperty(name="메타마스크 계정 주소")
     private String userAccount;
 
-    @NotBlank
+    @NotNull
     @ApiModelProperty(name="회원 코드")
     private UserCode userCode;
 
