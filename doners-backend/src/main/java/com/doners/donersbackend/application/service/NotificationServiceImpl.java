@@ -63,6 +63,12 @@ public class NotificationServiceImpl implements NotificationService {
             if (donation.isApproved()) {
                 return createNotification(donation, "승인", notificationCodes[index]);
             }
+        // 종료 여부
+        } else {
+            // 종료 시간 지났으면
+            if (LocalDateTime.now().isAfter(donation.getEndTime())) {
+                return createNotification(donation, "종료", notificationCodes[index]);
+            }
         }
 
         return null;
