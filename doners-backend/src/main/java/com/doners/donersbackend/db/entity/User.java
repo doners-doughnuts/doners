@@ -1,6 +1,5 @@
 package com.doners.donersbackend.db.entity;
 
-import com.doners.donersbackend.db.enums.ApprovalStatusCode;
 import com.doners.donersbackend.db.enums.UserCode;
 import lombok.*;
 
@@ -28,6 +27,9 @@ public class User extends BaseEntity {
 
     @Column(name="user_account")
     private String userAccount;
+
+    @Column(name="user_password")
+    private String password;
 
     @Column(name="user_is_deleted", columnDefinition="BOOLEAN DEFAULT false")
     private boolean userIsDeleted;

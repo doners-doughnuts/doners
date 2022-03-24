@@ -18,7 +18,7 @@ public interface UserService {
     // 중복이면 409(불가) , 아니면 200(가능)
     Integer checkNickname(String userNickname);
 
-    void uploadProfileImage(MultipartFile multipartFile);
+    void uploadProfileImage(String accessToken, MultipartFile multipartFile);
 
 //    void deleteUser(String accessToken);
 }
