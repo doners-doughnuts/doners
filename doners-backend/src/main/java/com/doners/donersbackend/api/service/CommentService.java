@@ -12,7 +12,7 @@ public interface CommentService {
     // 댓글 삭제
     Integer deleteComment(String commentId);
     // 감사글 댓글 목록
-    CommentGetListWrapperResponseDTO getAppreciationCommentList(String id);
+    CommentGetListWrapperResponseDTO getEpilougeCommentList(String id);
     // 커뮤니티 댓글 목록
     CommentGetListWrapperResponseDTO getCommunityCommentList(String id);
     // 감사글 대 댓글 목록

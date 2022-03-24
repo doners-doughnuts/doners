@@ -2,13 +2,8 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.api.dto.request.CommentChangePatchDTO;
 import com.doners.donersbackend.api.dto.request.CommentRegisterPostDTO;
-import com.doners.donersbackend.api.dto.request.CommunityChangePatchDTO;
-import com.doners.donersbackend.api.dto.request.CommunityRegisterPostDTO;
-import com.doners.donersbackend.api.dto.response.AppreciationResponseDTO;
 import com.doners.donersbackend.api.dto.response.comment.CommentGetListWrapperResponseDTO;
-import com.doners.donersbackend.api.dto.response.comment.CommentResponseDTO;
 import com.doners.donersbackend.api.service.CommentService;
-import com.doners.donersbackend.api.service.CommunityService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -108,7 +103,7 @@ public class CommentController {
     public ResponseEntity<? extends BaseResponseDTO> getAppreciationComment(
             @PathVariable("appreciationId") @ApiParam(value="글id", required=true) String appreciationId) {
 
-        return ResponseEntity.ok(CommentGetListWrapperResponseDTO.of(200,"감사 글 댓글 목록 조회 성공", commentService.getAppreciationCommentList(appreciationId)));
+        return ResponseEntity.ok(CommentGetListWrapperResponseDTO.of(200,"감사 글 댓글 목록 조회 성공", commentService.getEpilougeCommentList(appreciationId)));
     }
 
     @GetMapping("/subComment/{commentId}")

@@ -6,15 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ApiModel("AppreciationBudgetRequestDTO")
+@ApiModel("EpilougeBudgetRequestDTO")
 @Getter
 @ToString
 @NoArgsConstructor
-public class AppreciationBudgetRequestDTO {
+public class EpilougeBudgetRequestDTO {
 
     @ApiModelProperty(name = "활용 계획")
-    private String appreciationBudgetPlan;
+    private String epilougeBudgetPlan;
 
     @ApiModelProperty(name = "활용 금액")
-    private long appreciationBudgetAmount;
+    private long epilougeBudgetAmount;
 }

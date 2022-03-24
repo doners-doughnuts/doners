@@ -7,19 +7,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
-@ApiModel("CommunityChangePatchDTO")
+@ApiModel("EpilougeRegisterPostDTO")
 @NoArgsConstructor
 @Getter
-public class AppreciationChangePatchDTO {
+public class EpilougeRegisterPostDTO {
 
     @NotBlank
     @NotNull
     @ApiModelProperty(name="글 제목")
-    private String appreciationTitle;
+    private String epilougeTitle;
 
     @NotBlank
     @NotNull
     @ApiModelProperty(name="글 내용")
-    private String appreciationDescription;
+    private String epilougeDescription;
+
+    @NotBlank
+    @NotNull
+    @ApiModelProperty(name="작성자 유저 주소")
+    private String userAccount;
+
+    @ApiModelProperty(name = "모금액 활용 계획")
+    private List<EpilougeBudgetRequestDTO> epilougeBudgetRequestDTOList;
 }
