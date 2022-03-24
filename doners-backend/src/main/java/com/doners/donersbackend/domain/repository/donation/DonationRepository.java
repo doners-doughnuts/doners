@@ -12,11 +12,11 @@ import java.util.Optional;
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, String> {
 
-    Optional<Donation> findByUserIdAndIsDeleted(String userId, boolean isDeleted);
+    Optional<Donation> findByUserIdAndIsDeleted(String userId, boolean delete);
 
-    Optional<List<Donation>> findByCategoryCodeAndIsDeleted(CategoryCode categoryCode, boolean isDeleted);
+    Optional<List<Donation>> findByCategoryCodeAndIsDeleted(CategoryCode categoryCode, boolean delete);
 
-    boolean existsByIdAndIsDeleted(String donationId, boolean isDeleted);
+    boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
     Optional<List<Donation>> findByTitleContainingOrDescriptionContaining(String title, String description);
 
@@ -25,5 +25,7 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
     Optional<List<Donation>> findByDescriptionContaining(String description);
 
     Optional<List<Donation>> findByUser(User user);
+
+    Optional<Donation> findByUserAndIsDeleted(User user, boolean delete);
 
 }
