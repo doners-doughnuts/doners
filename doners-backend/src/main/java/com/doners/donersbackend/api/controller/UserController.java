@@ -3,12 +3,15 @@ package com.doners.donersbackend.api.controller;
 import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
 import com.doners.donersbackend.api.dto.request.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
-import com.doners.donersbackend.api.service.AwsS3Service;
 import com.doners.donersbackend.api.service.UserService;
 import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
@@ -24,7 +27,9 @@ public class UserController {
 
     private final UserService userService;
 
-    private final AwsS3Service awsS3Service;
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @PostMapping
     @ApiOperation(value="필수 회원정보 입력 - 이름, 닉네임, 이메일, 메타마스크 계정 주소")
@@ -57,23 +62,30 @@ public class UserController {
     })
     public ResponseEntity<? extends BaseResponseDTO> login(
             @PathVariable("userAccount") @ApiParam(value="메타마스크 계정 주소", required=true) String userAccount) {
+
+        // 로그인 ID, PW 기반으로 AutenticationToken 을 생성하여 검증 (사용자 비밀번호 체크)
+        // authenticate 메소드가 실행될 때 UserDetailsServiceImpl 의 loadUserByUsername 메소드가 실행됨
+        Authentication authentication = null;
+
         UserLoginResponseDTO userLoginResponseDTO = null;
 
         try {
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userAccount, ""));
+
             userLoginResponseDTO = userService.getUserLoginResponseDTO(userAccount);
 
             if(userLoginResponseDTO == null) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("로그인에 실패했습니다.", 201));
             }
 
-            // 추후 적용
-//            String accessToken = ;
-//            userLoginResponseDTO.changeAccessToken(accessToken);
+            // 인증 정보를 기반으로 JWT 생성
+            userLoginResponseDTO.changeAccessToken(jwtAuthenticationProvider.createToken(authentication));
         } catch (Exception e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 메타마스크 계정 주소로 가입된 정보가 없습니다.", 404));
         }
 
         return ResponseEntity.status(200).body(UserLoginResponseDTO.of("로그인에 성공했습니다.", 200, userLoginResponseDTO));
+
     }
 
 
@@ -129,9 +141,11 @@ public class UserController {
             @ApiResponse(code=409, message="프로필 이미지 등록에 실패했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> uploadProfileImage(
-            @ApiParam(value="프로필 이미지", required=true) @RequestPart MultipartFile multipartFile) {
+            @ApiParam(value="프로필 이미지", required=true) @RequestPart MultipartFile multipartFile,
+            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+        System.out.println("controller: " + accessToken);
         try {
-            userService.uploadProfileImage(multipartFile);
+            userService.uploadProfileImage(accessToken, multipartFile);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("회원 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {

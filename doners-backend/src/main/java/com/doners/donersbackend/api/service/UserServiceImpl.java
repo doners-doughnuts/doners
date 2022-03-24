@@ -6,6 +6,7 @@ import com.doners.donersbackend.db.entity.Image;
 import com.doners.donersbackend.db.entity.User;
 import com.doners.donersbackend.db.repository.ImageRepository;
 import com.doners.donersbackend.db.repository.UserRepository;
+import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final AwsS3Service awsS3Service;
 
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
+
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
     @Override
     public Integer setUserInfo(UserInfoSetRequestDTO userInfoSetRequestDTO) {
+
         String userEmail = userInfoSetRequestDTO.getUserEmail();
         String userAccount = userInfoSetRequestDTO.getUserAccount();
 
@@ -42,10 +46,14 @@ public class UserServiceImpl implements UserService {
                 .userNickname(userInfoSetRequestDTO.getUserNickname())
                 .userEmail(userEmail)
                 .userAccount(userAccount)
-                .userCode(userInfoSetRequestDTO.getUserCode()).build();
+                .userCode(userInfoSetRequestDTO.getUserCode())
+                .password("")
+                .build();
 
         userRepository.save(user);
+
         return 201;
+
     }
 
     @Override
@@ -76,6 +84,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(user);
+
         return 200;
     }
 
@@ -102,12 +111,13 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public void uploadProfileImage(MultipartFile multipartFile) {
-        User user = userRepository.findByUserNickname("웅이2").orElseThrow(
-                () -> new IllegalArgumentException("해당 닉네임을 찾을 수 없습니다."));
-//        String token = accessToken.split(" ")[1];
-//        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
-//        User user = userRepository.findByUserAccount(userAccount).get();
+    public void uploadProfileImage(String accessToken, MultipartFile multipartFile) {
+
+        String token = accessToken.split(" ")[1];
+
+        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+
+        User user = userRepository.findByUserAccount(userAccount).orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
 
         String fileName = awsS3Service.uploadImage(multipartFile);
 
@@ -139,5 +149,6 @@ public class UserServiceImpl implements UserService {
         }
 
         imageRepository.save(thumbnailImage);
+
     }
 }
