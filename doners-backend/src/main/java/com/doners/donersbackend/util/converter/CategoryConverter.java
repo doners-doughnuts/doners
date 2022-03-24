@@ -1,6 +1,6 @@
 package com.doners.donersbackend.util.converter;
 
-import com.doners.donersbackend.db.enums.CategoryCode;
+import com.doners.donersbackend.domain.enums.CategoryCode;
 
 import javax.persistence.Converter;
 
