@@ -18,16 +18,12 @@ export default function Router() {
     {
       path: '/signup',
       element: <ScrollLayout />,
-      children: [
-        { path: '', element: <HomePage /> }
-      ]
+      children: [{ path: '', element: <HomePage /> }],
     },
     {
       path: '/category',
       element: <ScrollLayout />,
-      children: [
-        { path: '', element: <DonateCategoryPage /> }
-      ]
+      children: [{ path: '', element: <DonateCategoryPage /> }],
     },
     {
       path: '/fundraisings',
@@ -36,50 +32,42 @@ export default function Router() {
         { path: 'list', element: <DonateListPage /> },
         { path: 'apply', element: <DonateRegistPage /> },
         { path: ':donate_seq', element: <DonateDetailPage /> },
-      ]
+      ],
     },
     {
       path: '/profile',
       element: <ScrollLayout />,
-      children: [
-        { path: ':nickname', element: <MyPage /> }
-      ]
+      children: [{ path: ':nickname', element: <MyPage /> }],
     },
     {
       path: '/community',
       element: <ScrollLayout />,
       children: [
-        { path: '', element: <Test />},
-        // { path: '', element: <Navigate to="membership" replace />},
+        // { path: '', element: <Test />},
+        { path: '', element: <Navigate to="membership" replace /> },
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
         { path: 'board/:post_seq', element: <CommunityPage focus={3} /> },
         { path: 'board/write', element: <CommunityRegistPage /> },
         { path: 'about', element: <CommunityPage focus={4} /> },
-      ]
+      ],
     },
     {
       path: '/detail',
       element: <ScrollLayout />,
-      children: [
-        { path: ':epilouge_seq', element: <HomePage /> }
-      ]
+      children: [{ path: ':epilouge_seq', element: <HomePage /> }],
     },
     {
       path: '/admin',
       element: <ScrollLayout />,
-      children: [
-        { path: '', element: <HomePage /> }
-      ]
+      children: [{ path: '', element: <HomePage /> }],
     },
     {
       path: '/',
       element: <ScrollLayout />,
-      children: [
-        { path: '/', element: <HomePage /> }
-      ]
+      children: [{ path: '/', element: <HomePage /> }],
     },
     { path: '*', element: <Navigate to="/error" replace /> },
-  ])
-};
+  ]);
+}
