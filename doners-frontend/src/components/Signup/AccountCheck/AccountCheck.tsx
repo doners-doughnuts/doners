@@ -33,6 +33,7 @@ const AccountCheck = () => {
   };
   useEffect(() => {
     setSignupState('');
+    setIsLoggedState(false);
   }, []);
   useEffect(() => {
     if (account) {
@@ -52,34 +53,57 @@ const AccountCheck = () => {
       console.log('Login 성공');
       console.log(result.statusCode);
 
-      if (result.statusCode == 200) {
+      if (result.statusCode === 200) {
         // // 로그인 성공한 userId와, response로 온 userNickname을 atom에 저장
         // setLoggedUserState({
         //   userId: loginInfo.userId,
         //   userNickname: result.userNickname,
-        // });
+        // });setIsLoggedState
         setIsLoggedState(true);
         // 이전으로 돌아갈 수 있어야 하므로 history 유지
-        // navigate(-1);
-        //// navigate('/', { replace: true });
+        alert('로그인 성공!(임시 팝업)');
+        navigate(-1);
+
+        // navigate('/', { replace: true });
       }
     } catch (error) {
       console.log(error);
-      setSignupState(account);
+      if (!localStorage.getItem('user')) setSignupState(account);
     }
   };
 
   return (
     <div className="container">
-      <div>Connect to MetaMask</div>
-      {account !== ''
-        ? '존재하지 않는 회원입니다.'
-        : '연결하기 버튼을 눌러 연결해주세요 '}
-      {account}
-      <Button color="primary" onClick={getAccount}>
-        연결하기
-      </Button>
-      <a>지갑 사용방법이 궁금하다면?</a>
+      <section className={cx('container')}>
+        <div className={cx('row')}>
+          <div className={cx('col-lg-12')}>
+            <div className={cx('inner-container')}>
+              <div className={cx('text-wrapper')}>
+                <h1 className={cx('slogan')}>
+                  Connect to <span>MetaMask</span>
+                </h1>
+                <div className={cx('description')}>
+                  <span>
+                    {account !== ''
+                      ? localStorage.getItem('user')
+                        ? '이미 로그인 된 상태입니다.(네비바 회원가입하고 빨리 개발하겠슴다)'
+                        : '존재하지 않는 회원입니다.'
+                      : '연결하기 버튼을 눌러 연결해주세요 '}
+                    <br />
+                    <span>{account}</span>
+                  </span>
+                </div>
+              </div>
+              <div className={cx('buttonRow')}>
+                <Button color="primary" onClick={getAccount} fullWidth>
+                  연결하기
+                </Button>
+                <a>지갑 사용방법이 궁금하다면?</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
