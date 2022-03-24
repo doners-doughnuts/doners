@@ -2,6 +2,8 @@ package com.doners.donersbackend.api.service;
 
 import com.doners.donersbackend.api.dto.request.UserInfoSetRequestDTO;
 import com.doners.donersbackend.api.dto.response.UserLoginResponseDTO;
+import com.doners.donersbackend.api.dto.response.UserMyPageCommunityHistoryWrapperResponseDTO;
+import com.doners.donersbackend.api.dto.response.UserMyPageEpilougeHistoryWrapperResponseDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
@@ -20,5 +22,11 @@ public interface UserService {
 
     void uploadProfileImage(String accessToken, MultipartFile multipartFile);
 
-//    void deleteUser(String accessToken);
+    void deleteUser(String accessToken);
+
+    UserMyPageCommunityHistoryWrapperResponseDTO getCommunityHistoryList(String accessToken);
+
+    UserMyPageEpilougeHistoryWrapperResponseDTO getEpilougeHistoryList(String accessToken);
+
+    String getUserAccountFromAccessToken(String accessToken);
 }
