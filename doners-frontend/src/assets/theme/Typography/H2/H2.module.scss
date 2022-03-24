@@ -1,0 +1,23 @@
+@import 'assets/styles/main';
+
+%font-base {
+  @include text-style(36);
+}
+
+.text-orange {
+  @extend %font-base;
+  color: $orange;
+}
+
+.text-black {
+  @extend %font-base;
+  color: $black;
+}
+.text-yellow {
+  @extend %font-base;
+  color: $yellow;
+}
+.text-gray {
+  @extend %font-base;
+  color: $gray-4;
+}
