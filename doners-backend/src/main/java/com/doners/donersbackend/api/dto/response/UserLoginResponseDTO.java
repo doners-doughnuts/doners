@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 public class UserLoginResponseDTO extends BaseResponseDTO {
 
-    @ApiModelProperty(name="JWT")
+    @ApiModelProperty(name="accessToken")
     private String accessToken;
 
     @ApiModelProperty(name="닉네임")
