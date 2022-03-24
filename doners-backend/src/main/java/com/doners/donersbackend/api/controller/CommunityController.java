@@ -1,11 +1,11 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.api.dto.request.CommunityChangePatchDTO;
-import com.doners.donersbackend.api.dto.request.CommunityRegisterPostDTO;
-import com.doners.donersbackend.api.dto.response.CommunityGetListWrapperResponseDTO;
-import com.doners.donersbackend.api.dto.response.CommunityResponseDTO;
-import com.doners.donersbackend.api.service.CommunityService;
-import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.application.dto.request.CommunityChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.CommunityRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.CommunityGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.CommunityResponseDTO;
+import com.doners.donersbackend.application.service.CommunityService;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

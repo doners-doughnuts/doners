@@ -70,10 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				// "/api/user" 에 대한 요청은 인증 없이 접근을 허용하겠다.
 				.antMatchers("/api/user/**").permitAll()
-				.antMatchers("/api/user/image").authenticated()
 				.antMatchers("/api/email/**").permitAll()
 				.antMatchers("/swagger-ui/**").permitAll()
 				.antMatchers("/api/v3/**", "/swagger-ui/**", "/swagger/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
+				.antMatchers("/api/user/image", "/api/user/mypage/**", "/api/user/nickname").authenticated()
 				// 나머지 요청들은 모두 인증되어야 한다.
 				.anyRequest().authenticated()
 				.and()

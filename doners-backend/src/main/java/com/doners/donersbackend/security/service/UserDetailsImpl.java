@@ -1,6 +1,6 @@
 package com.doners.donersbackend.security.service;
 
-import com.doners.donersbackend.db.entity.User;
+import com.doners.donersbackend.domain.dao.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

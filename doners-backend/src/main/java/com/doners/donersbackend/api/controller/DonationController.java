@@ -1,13 +1,13 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.api.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.api.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.api.dto.response.donation.DonationGetListWrapperResponseDTO;
-import com.doners.donersbackend.api.dto.response.donation.DonationRecommendResponseDTO;
-import com.doners.donersbackend.api.dto.response.donation.DonationResponseDTO;
-import com.doners.donersbackend.api.service.DonationService;
-import com.doners.donersbackend.common.model.BaseResponseDTO;
-import com.doners.donersbackend.db.enums.CategoryCode;
+import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
+import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
+import com.doners.donersbackend.application.service.DonationService;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
+import com.doners.donersbackend.domain.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

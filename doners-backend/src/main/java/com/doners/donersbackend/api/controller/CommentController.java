@@ -1,10 +1,10 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.api.dto.request.CommentChangePatchDTO;
-import com.doners.donersbackend.api.dto.request.CommentRegisterPostDTO;
-import com.doners.donersbackend.api.dto.response.comment.CommentGetListWrapperResponseDTO;
-import com.doners.donersbackend.api.service.CommentService;
-import com.doners.donersbackend.common.model.BaseResponseDTO;
+import com.doners.donersbackend.application.dto.request.CommentChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.CommentRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.comment.CommentGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.service.CommentService;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
