@@ -11,17 +11,17 @@ import java.util.List;
 @ApiModel("AppreciationGetListWrapperResponseDTO")
 @Getter
 @ToString
-public class EpilougeGetListWrapperResponseDTO extends BaseResponseDTO {
+public class EpilogueGetListWrapperResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "감사 글 목록")
-    private List<EpilougeGetListResponseDTO> epilougeGetListResponseDTOList;
+    private List<EpilogueGetListResponseDTO> epilougeGetListResponseDTOList;
 
     @Builder
-    public EpilougeGetListWrapperResponseDTO(List<EpilougeGetListResponseDTO> epilougeGetListResponseDTOList) {
+    public EpilogueGetListWrapperResponseDTO(List<EpilogueGetListResponseDTO> epilougeGetListResponseDTOList) {
         this.epilougeGetListResponseDTOList = epilougeGetListResponseDTOList;
     }
 
-    public static EpilougeGetListWrapperResponseDTO of(String message, Integer statusCode, EpilougeGetListWrapperResponseDTO epilougeGetListWrapperResponseDTO) {
-        EpilougeGetListWrapperResponseDTO res = epilougeGetListWrapperResponseDTO;
+    public static EpilogueGetListWrapperResponseDTO of(String message, Integer statusCode, EpilogueGetListWrapperResponseDTO epilougeGetListWrapperResponseDTO) {
+        EpilogueGetListWrapperResponseDTO res = epilougeGetListWrapperResponseDTO;
         res.setMessage(message);
         res.setStatusCode(statusCode);
 

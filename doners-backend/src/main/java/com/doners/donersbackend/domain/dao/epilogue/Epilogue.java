@@ -1,4 +1,4 @@
-package com.doners.donersbackend.domain.dao.epilouge;
+package com.doners.donersbackend.domain.dao.epilogue;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.dao.User;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Epilouge extends BaseEntity {
+public class Epilogue extends BaseEntity {
     @Column(name="epilouge_title")
     private String epilougeTitle;
 

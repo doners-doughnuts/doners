@@ -207,7 +207,7 @@ public class UserController {
         UserMyPageEpilougeHistoryWrapperResponseDTO epilougeHistoryWrapperResponseDTO = null;
 
         try {
-            epilougeHistoryWrapperResponseDTO = userService.getEpilougeHistoryList(accessToken);
+            epilougeHistoryWrapperResponseDTO = userService.getEpilogueHistoryList(accessToken);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("조회하려는 정보가 존재하지 않습니다.", 404));
         } catch (Exception e) {
