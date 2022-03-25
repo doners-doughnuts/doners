@@ -1,0 +1,50 @@
+@import 'assets/styles/main';
+
+.btn-img {
+  @include flexbox;
+  border-radius: 200px;
+  border: 2px solid $black;
+  padding: 6px 15px;
+
+  &.shadow {
+    box-shadow: $btn-shadow;
+  }
+
+  &.active {
+    // background-color: $green;
+  }
+}
+
+.btn-large {
+  @include text-style(16);
+  img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 5px;
+  }
+}
+
+.btn-small {
+  @include text-style(12);
+  img {
+    display: block;
+    width: 10px;
+    height: 10px;
+    object-fit: cover;
+    margin-right: 3px;
+  }
+}
+
+.btn-yellow {
+  background-color: $yellow;
+}
+
+.btn-red {
+  background-color: $red;
+}
+
+.btn-green {
+  background-color: $green;
+}

@@ -1,0 +1,26 @@
+@import 'assets/styles/main';
+
+.inner-container {
+  border-bottom: 1px solid $gray-3;
+  padding: 10px 0 30px;
+
+  .comment-header {
+    @include flexbox(between, center);
+    margin-bottom: 30px;
+    .comment-info {
+      @include flexbox(start);
+      .sub-info {
+        margin-left: 10px;
+      }
+    }
+
+    .button-wrap {
+      @include flexbox(end, center);
+
+      .buttons {
+        @include flexbox(between, center);
+        width: 140px;
+      }
+    }
+  }
+}

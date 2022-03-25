@@ -1,0 +1,8 @@
+@import 'assets/styles/main';
+
+.btn-row {
+  @include flexbox(end, center);
+}
+.btn {
+  width: 10%;
+}
