@@ -61,7 +61,7 @@ const AccountCheck = () => {
         // });setIsLoggedState
         setIsLoggedState(true);
         // 이전으로 돌아갈 수 있어야 하므로 history 유지
-        alert('로그인 성공!');
+        alert('로그인 성공! ');
         navigate(-1);
 
         // navigate('/', { replace: true });
