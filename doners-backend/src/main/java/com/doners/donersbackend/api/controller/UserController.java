@@ -165,8 +165,10 @@ public class UserController {
             @ApiIgnore @RequestHeader("Authorization") String accessToken) {
         try {
             userService.deleteUser(accessToken);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("현재 프로필 정보로 된 회원 정보를 찾을 수 없습니다.", 409));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("회원 탈퇴에 실패했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("현재 등록된 이메일 주소로 인증된 정보를 삭제할 수 없습니다.", 409));
         }
 
         return ResponseEntity.status(200).body(BaseResponseDTO.of("회원 탈퇴를 완료했습니다.", 200));
