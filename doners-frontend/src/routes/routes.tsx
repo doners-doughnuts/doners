@@ -6,6 +6,7 @@ import DonateCategoryPage from 'pages/Donate/DonateCategoryPage';
 import DonateDetailPage from 'pages/Donate/DonateDetailPage';
 import DonateListPage from 'pages/Donate/DonateListPage';
 import DonateRegistPage from 'pages/Donate/DonateRegistPage';
+import SignupPage from 'pages/SignupPage/SignupPage';
 import HomePage from 'pages/HomePage/HomePage';
 import MyPage from 'pages/MyPage/MyPage';
 import Test from 'pages/Test/Test';
@@ -17,7 +18,7 @@ export default function Router() {
     {
       path: '/signup',
       element: <ScrollLayout />,
-      children: [{ path: '', element: <HomePage /> }],
+      children: [{ path: '', element: <SignupPage /> }],
     },
     {
       path: '/category',
