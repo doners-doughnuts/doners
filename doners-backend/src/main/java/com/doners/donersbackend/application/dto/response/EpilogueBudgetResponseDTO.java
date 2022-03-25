@@ -9,7 +9,7 @@ import lombok.ToString;
 @ApiModel("EpilougeBudgetResponseDTO")
 @Getter
 @ToString
-public class EpilougeBudgetResponseDTO {
+public class EpilogueBudgetResponseDTO {
 
     @ApiModelProperty(name = "활용 계획")
     private String epilougeBudgetPlan;
@@ -18,7 +18,7 @@ public class EpilougeBudgetResponseDTO {
     private long epilougeBudgetAmount;
 
     @Builder
-    public EpilougeBudgetResponseDTO(String epilougeBudgetPlan, long epilougeBudgetAmount) {
+    public EpilogueBudgetResponseDTO(String epilougeBudgetPlan, long epilougeBudgetAmount) {
         this.epilougeBudgetPlan = epilougeBudgetPlan;
         this.epilougeBudgetAmount = epilougeBudgetAmount;
     }
