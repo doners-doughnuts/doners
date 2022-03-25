@@ -1,4 +1,4 @@
-package com.doners.donersbackend.application.dto.request;
+package com.doners.donersbackend.application.dto.request.comment;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;

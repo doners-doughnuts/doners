@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.dao.epilogue;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,40 +16,40 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 public class Epilogue extends BaseEntity {
-    @Column(name="epilouge_title")
-    private String epilougeTitle;
+    @Column(name="epilogue_title")
+    private String epilogueTitle;
 
-    @Column(name="epilouge_description")
+    @Column(name="epilogue_description")
     @Lob
-    private String epilougeDescription;
+    private String epilogueDescription;
 
-    @Column(name="epilouge_create_time")
-    private LocalDateTime epilougeCreateTime;
+    @Column(name="epilogue_create_time")
+    private LocalDateTime epilogueCreateTime;
 
-    @Column(name="epilouge_views")
-    private Long epilougeViews;
+    @Column(name="epilogue_views")
+    private Long epilogueViews;
 
-    @Column(name="epilouge_is_deleted", columnDefinition="BOOLEAN DEFAULT false")
-    private boolean epilougeIsDeleted;
+    @Column(name="epilogue_is_deleted", columnDefinition="BOOLEAN DEFAULT false")
+    private boolean epilogueIsDeleted;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
     // 닉네임 수정
-    public void changeEpilouge(String epilougeTitle,String epilougeDescription) {
-        this.epilougeTitle = epilougeTitle;
-        this.epilougeDescription = epilougeDescription;
+    public void changeEpilogue(String epilogueTitle,String epilogueDescription) {
+        this.epilogueTitle = epilogueTitle;
+        this.epilogueDescription = epilogueDescription;
     }
 
     // 글 삭제
-    public void deleteEpilouge() {
-        if(!this.epilougeIsDeleted) {
-            this.epilougeIsDeleted = true;
+    public void deleteEpilogue() {
+        if(!this.epilogueIsDeleted) {
+            this.epilogueIsDeleted = true;
         }
     }
     // 글 조회
     public void updateViews() {
-        this.epilougeViews += 1;
+        this.epilogueViews += 1;
     }
 }

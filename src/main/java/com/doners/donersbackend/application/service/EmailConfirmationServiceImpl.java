@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.domain.dao.EmailConfirmation;
+import com.doners.donersbackend.domain.dao.email.EmailConfirmation;
 import com.doners.donersbackend.domain.repository.EmailConfirmationRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

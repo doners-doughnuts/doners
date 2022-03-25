@@ -1,4 +1,4 @@
-package com.doners.donersbackend.application.dto.request;
+package com.doners.donersbackend.application.dto.request.user;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("CommentChangePatchDTO")
+@ApiModel("UserNicknameChangeRequestDto")
 @NoArgsConstructor
 @Getter
-public class CommentChangePatchDTO {
+public class UserNicknameChangeRequestDTO {
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="댓글 내용")
-    private String commentDescription;
-
+    @ApiModelProperty(name="변경할 닉네임")
+    private String userNickname;
 }

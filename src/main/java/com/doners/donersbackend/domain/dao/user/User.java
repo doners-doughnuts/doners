@@ -1,5 +1,6 @@
-package com.doners.donersbackend.domain.dao;
+package com.doners.donersbackend.domain.dao.user;
 
+import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.enums.UserCode;
 import lombok.*;
 

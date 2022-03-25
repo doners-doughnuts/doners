@@ -3,7 +3,7 @@ package com.doners.donersbackend.application.service;
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
-import com.doners.donersbackend.domain.dao.Image;
+import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
 import com.doners.donersbackend.domain.dao.donation.DonationHistory;

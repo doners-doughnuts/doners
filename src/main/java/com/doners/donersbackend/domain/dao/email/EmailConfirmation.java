@@ -1,5 +1,6 @@
-package com.doners.donersbackend.domain.dao;
+package com.doners.donersbackend.domain.dao.email;
 
+import com.doners.donersbackend.domain.dao.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

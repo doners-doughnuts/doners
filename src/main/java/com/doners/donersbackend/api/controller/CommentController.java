@@ -1,7 +1,7 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.application.dto.request.CommentChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.CommentRegisterPostDTO;
+import com.doners.donersbackend.application.dto.request.comment.CommentChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.comment.CommentRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.service.CommentService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;

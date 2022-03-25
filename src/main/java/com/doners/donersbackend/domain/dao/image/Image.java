@@ -1,7 +1,9 @@
-package com.doners.donersbackend.domain.dao;
+package com.doners.donersbackend.domain.dao.image;
 
+import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
+import com.doners.donersbackend.domain.dao.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,6 @@
-package com.doners.donersbackend.application.dto.response;
+package com.doners.donersbackend.application.dto.response.community;
 
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

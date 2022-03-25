@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;

@@ -1,9 +1,9 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.EpilogueChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.EpilogueRegisterPostDTO;
-import com.doners.donersbackend.application.dto.response.EpilogueGetListWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.EpilogueResponseDTO;
+import com.doners.donersbackend.application.dto.request.epilogue.EpilogueChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.epilogue.EpilogueRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import org.springframework.web.multipart.MultipartFile;
 
