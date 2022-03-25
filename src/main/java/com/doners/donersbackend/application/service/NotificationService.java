@@ -4,6 +4,6 @@ import com.doners.donersbackend.application.dto.response.donation.NotificationRe
 
 public interface NotificationService {
 
-    NotificationResponseDTO getNotification(String accessToken, int index);
+    NotificationResponseDTO getNotification(String accessToken);
 
 }
