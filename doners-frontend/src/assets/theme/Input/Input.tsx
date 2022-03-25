@@ -3,13 +3,16 @@ import styles from './Input.module.scss';
 const cx = classNames.bind(styles);
 
 type InputType = {
-  error ?: boolean;
-  success ?: boolean;
-}
+  error?: boolean;
+  success?: boolean;
+};
 
-const Input = ({error, success}:InputType) => {
+const Input = ({ error, success }: InputType) => {
   return (
-    <input className={cx('input-form', {error, success})} placeholder='hello'/>
+    <input
+      className={cx('input-form', { error, success })}
+      placeholder="hello"
+    />
   );
 };
 

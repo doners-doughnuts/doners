@@ -1,8 +1,7 @@
-import { Header } from 'components';
+import BoardDetail from 'pages/Detail/BoardDetail/BoardDetail';
 import ScrollLayout from 'layouts/ScrollLayout/ScrollLayout';
 import NavLayout from 'layouts/ScrollLayout/ScrollLayout';
 import CommunityPage from 'pages/Community/CommunityPage';
-import CommunityRegistPage from 'pages/Community/CommunityRegistPage';
 import DonateCategoryPage from 'pages/Donate/DonateCategoryPage';
 import DonateDetailPage from 'pages/Donate/DonateDetailPage';
 import DonateListPage from 'pages/Donate/DonateListPage';
@@ -48,8 +47,8 @@ export default function Router() {
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
-        { path: 'board/:post_seq', element: <CommunityPage focus={3} /> },
-        { path: 'board/write', element: <CommunityRegistPage /> },
+        { path: 'board/:post_seq', element: <BoardDetail /> },
+        // { path: 'board/write', element: <CommunityRegistPage /> },
         { path: 'about', element: <CommunityPage focus={4} /> },
       ],
     },
@@ -68,6 +67,7 @@ export default function Router() {
       element: <ScrollLayout />,
       children: [{ path: '/', element: <HomePage /> }],
     },
-    { path: '*', element: <Navigate to="/error" replace /> },
+    // { path: '*', element: <Navigate to="/error" replace /> },
+    { path: '*', element: <Test /> },
   ]);
 }

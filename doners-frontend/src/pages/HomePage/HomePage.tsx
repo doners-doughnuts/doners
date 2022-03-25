@@ -1,9 +1,11 @@
+import IntroductionNFT from 'containers/HomePage/IntroductionNFT/IntroductionNFT';
 import LandingHero from 'containers/HomePage/LandingHero/LandingHero';
 
 const HomePage = () => {
   return (
     <>
-      <LandingHero />;
+      <LandingHero />
+      <IntroductionNFT />
     </>
   );
 
