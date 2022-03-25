@@ -4,10 +4,10 @@ import com.doners.donersbackend.application.dto.request.CommentChangePatchDTO;
 import com.doners.donersbackend.application.dto.request.CommentRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentResponseDTO;
-import com.doners.donersbackend.domain.dao.epilouge.Epilouge;
+import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.Comment;
 import com.doners.donersbackend.domain.dao.Community;
-import com.doners.donersbackend.domain.repository.epilouge.EpilougeRepository;
+import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.CommentRepository;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
     private final CommunityRepository communityRepository;
-    private final EpilougeRepository epilougeRepository;
+    private final EpilogueRepository epilogueRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService{
                 .commentCreateTime(LocalDateTime.now()).build();
 
         if(commentRegisterPostDTO.getCommunityId().length()==0){// 감사 글 댓글
-            comment.changeEpilougeId(epilougeRepository.findById(commentRegisterPostDTO.getEpilougeId()).get());
+            comment.changeEpilougeId(epilogueRepository.findById(commentRegisterPostDTO.getEpilougeId()).get());
         }else{// 커뮤니티 글 댓글
             comment.changeCommunityId(communityRepository.findById(commentRegisterPostDTO.getCommunityId()).get());
         }
@@ -79,11 +79,11 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentGetListWrapperResponseDTO getEpilougeCommentList(String id) {
+    public CommentGetListWrapperResponseDTO getEpilogueCommentList(String id) {
         List<CommentResponseDTO> list = new ArrayList<>();
-        Epilouge epilouge = epilougeRepository.findById(id).get();
+        Epilogue epilogue = epilogueRepository.findById(id).get();
 
-        for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilouge, false).get()) {
+        for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
             list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
         }
 
