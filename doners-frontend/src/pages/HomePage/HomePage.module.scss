@@ -1,0 +1,241 @@
+// @import 'assets/styles/main';
+
+// /* 공통 */
+// .section {
+//   border-bottom: 1px solid #bebebe;
+// }
+
+// .container {
+//   margin: 0 auto;
+//   width: 100%;
+// }
+
+// .container-default {
+//   max-width: 1140px;
+// }
+
+// .innerContainer {
+//   padding: 100px 0 125px 0;
+//   height: 100%;
+// }
+
+// .button {
+//   width: 200px;
+//   height: 50px;
+//   border-radius: 8px;
+// }
+
+// .vertical-center {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   /* justify-content: center; */
+// }
+
+// .right-sort {
+//   display: flex;
+//   justify-content: flex-end;
+// }
+// /* Section 1 Introduction */
+
+// .Introduction {
+//   /* height: 700px; */
+//   height: calc(100vh - 70px);
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   border-bottom: 1px solid #bebebe;
+// }
+
+// .Introduction-box {
+//   width: fit-content;
+//   position: relative;
+// }
+
+// .slogan {
+//   text-align: center;
+// }
+
+// .slogan > span {
+//   color: highlight-bold;
+// }
+
+// .buttonRow {
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .description {
+//   text-align: center;
+//   margin-bottom: 70px;
+// }
+
+// .primary-button {
+//   border: 2px solid black;
+//   background-color: primary;
+//   box-shadow: 6px 7px 5px black;
+// }
+
+// .character {
+//   width: 300px;
+//   height: 300px;
+//   position: absolute;
+//   top: -250px;
+//   right: -200px;
+//   transform: rotate(30deg);
+// }
+
+// /* Section 2 Services */
+// .badge {
+//   position: absolute;
+//   top: -40px;
+//   left: 200px;
+//   padding: 10px 30px;
+//   width: fit-content;
+//   height: 80px;
+//   border: 2px solid black;
+//   border-radius: 8px;
+//   background-color: secondary;
+//   font-size: 32px;
+//   display: flex;
+//   align-items: center;
+// }
+// .Services {
+//   /* height: 800px; */
+//   position: relative;
+// }
+// .service {
+//   width: 500px;
+//   height: 400px;
+//   background-color: white;
+//   box-shadow: 5px 5px 5px black;
+//   border-radius: 8px;
+//   padding: 20px;
+// }
+
+// .services-box {
+//   padding: 100px 0 125px 0;
+// }
+
+// /* Section 4 Cumminity */
+
+// .Cummunity {
+//   height: 800px;
+// }
+
+// .community-character {
+//   width: 250px;
+//   height: 250px;
+//   position: absolute;
+//   top: -200px;
+//   left: -50px;
+// }
+// .welcome-community-box {
+//   position: relative;
+//   height: 300px;
+//   background-color: secondary;
+//   border-radius: 8px;
+//   border: 2px solid black;
+//   padding: 30px;
+//   /* display: flex; */
+
+//   /* align-items: flex-end; */
+// }
+
+// .community-contents {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+// }
+
+// .community-textbox {
+//   font-size: 30px;
+//   text-align: center;
+// }
+
+// .right-button {
+//   margin-left: auto;
+// }
+// .alternative-button {
+//   background-color: black;
+//   color: white;
+//   border: none;
+// }
+
+// /* Section About */
+
+// .About {
+//   height: 800px;
+//   position: relative;
+//   overflow: hidden;
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .background {
+//   background-color: #e8e5e2;
+//   width: 150%;
+//   height: 100%;
+//   position: absolute;
+//   z-index: 1;
+//   top: 60%;
+//   border-radius: 50%;
+// }
+
+// .team-character {
+//   width: 200px;
+//   height: 200px;
+// }
+
+// .teamName {
+//   position: absolute;
+//   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+//   color: white;
+//   bottom: 30px;
+//   font-size: 60px;
+//   font-family: 'Hand Writting';
+//   z-index: 3;
+// }
+
+// .teammate1 {
+//   position: absolute;
+//   top: 400px;
+//   left: 400px;
+//   z-index: 2;
+// }
+// .teammate2 {
+//   position: absolute;
+//   top: 400px;
+//   right: 400px;
+//   z-index: 2;
+// }
+// .teammate3 {
+//   position: absolute;
+//   top: 100px;
+//   left: 200px;
+//   z-index: 2;
+//   transform: rotate(-30deg);
+// }
+// .teammate4 {
+//   position: absolute;
+//   top: 350px;
+//   left: 800px;
+//   z-index: 2;
+// }
+// .teammate5 {
+//   position: absolute;
+//   top: 0;
+//   left: 800px;
+//   z-index: 2;
+//   transform: rotate(180deg);
+// }
+
+// .teammate6 {
+//   position: absolute;
+//   top: 200px;
+//   right: 400px;
+//   z-index: 2;
+//   transform: rotate(30deg);
+// }

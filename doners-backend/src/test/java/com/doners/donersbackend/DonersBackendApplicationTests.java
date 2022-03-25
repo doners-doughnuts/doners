@@ -1,6 +1,6 @@
 package com.doners.donersbackend;
 
-import com.doners.donersbackend.db.repository.UserRepository;
+import com.doners.donersbackend.domain.repository.UserRepository;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,46 @@
+@import 'assets/styles/main';
+
+%h1-base {
+  @include text-style(48);
+}
+%h2-base {
+  @include text-style(36);
+}
+%h3-base {
+  @include text-style(24);
+  font-family: $font-sub;
+  font-weight: 700;
+}
+%h4-base {
+  @include text-style(18);
+  font-family: $font-sub;
+  font-weight: 700;
+}
+%h5-base {
+  @include text-style(12);
+  font-family: $font-sub;
+  font-weight: 500;
+}
+%p-base {
+  @include text-style(16);
+  font-family: $font-sub;
+  font-weight: 400;
+}
+
+.h1-red {
+  @extend %h1-base;
+  color: $red;
+}
+
+.h1-black {
+  @extend %h1-base;
+  color: $black;
+}
+.h1-yellow {
+  @extend %h1-base;
+  color: $yellow;
+}
+.h1-gray {
+  @extend %h1-base;
+  color: $gray-4;
+}

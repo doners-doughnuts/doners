@@ -1,0 +1,23 @@
+@import 'assets/styles/main';
+
+.content {
+  position: relative;
+
+  img {
+    max-width: 1140px;
+    border-radius: 12px;
+  }
+}
+
+.info {
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  color: $white;
+
+  dt,
+  dd {
+    margin: 0;
+    font-size: 22px;
+  }
+}
