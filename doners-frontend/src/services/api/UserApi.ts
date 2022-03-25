@@ -24,31 +24,46 @@ export const login = async (userAccount: any) => {
 
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: any) => {
-  const response = await instance.get(`/user/check/${userNickname}`, {});
-  return response.data;
-};
-
-export const signupcheck = async (
-  userName: any,
-  userEmail: any,
-  userAccount: any,
-  userNickname: any
-) => {
-  const response = await instance.post(`/user`, {
+  const response = await instance.get(`/user/check/${userNickname}`, {
     params: {
-      userAccount: userAccount,
-      userEmail: userEmail,
-      userName: userName,
       userNickname: userNickname,
     },
   });
+  console.log('??');
+  return response;
+};
+
+export const signupcheck = async (
+  username: any,
+  useremail: any,
+  useraccount: any,
+  usernickname: any
+) => {
+  const dataset = {
+    userAccount: useraccount,
+    userEmail: useremail,
+    userName: username,
+    userNickname: usernickname,
+  };
+  const response = await instance.post(`/user`, dataset);
   console.log(response);
-  return response.data;
+  return response;
 };
 
 /* 이메일 인증 메일 발송 */
 export const emailConfirm = async (userEmail: any) => {
   const response = await instance.post(`/email/${userEmail}`, {
+    params: {
+      userEmail: userEmail,
+    },
+  });
+  console.log(response.data);
+  return response.data;
+};
+
+/* 이메일 인증 완료 여부 확인 */
+export const emailcheck = async (userEmail: any) => {
+  const response = await instance.get(`/email/check/email/${userEmail}`, {
     params: {
       userEmail: userEmail,
     },

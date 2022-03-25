@@ -61,7 +61,7 @@ const AccountCheck = () => {
         // });setIsLoggedState
         setIsLoggedState(true);
         // 이전으로 돌아갈 수 있어야 하므로 history 유지
-        alert('로그인 성공!(임시 팝업)');
+        alert('로그인 성공!');
         navigate(-1);
 
         // navigate('/', { replace: true });
@@ -86,7 +86,7 @@ const AccountCheck = () => {
                   <span>
                     {account !== ''
                       ? localStorage.getItem('user')
-                        ? '이미 로그인 된 상태입니다.(네비바 회원가입하고 빨리 개발하겠슴다)'
+                        ? '이미 로그인 된 상태입니다.'
                         : '존재하지 않는 회원입니다.'
                       : '연결하기 버튼을 눌러 연결해주세요 '}
                     <br />

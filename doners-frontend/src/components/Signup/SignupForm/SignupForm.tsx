@@ -16,10 +16,12 @@ import { useSetRecoilState } from 'recoil';
 const cx = classNames.bind(styles);
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   const [emailvailerror, SetEmailvailerror] = useState();
   const [emailvailerrormsg, SetEmailvailerrorMsg] = useState('');
   const [emailsendmsg, Setemailsendmsg] = useState('');
   const [authmail, sendAuthMail] = useState(false);
+  const [disabledattr, setDisabledattr] = useState(false);
   const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
     initialValues: {
       realname: '',
@@ -29,25 +31,30 @@ const SignupForm = () => {
     },
     onSubmit: async (submitValues) => {
       console.log(submitValues);
-      console.log(checkNickname(submitValues.nickname));
+      alert('회원가입 시도');
+      // console.log(checkNickname(submitValues.nickname));
       const result = handlesignup();
+      console.log(result);
+      console.log('회원가입 완료');
+      alert('회원가입 완료');
+      navigate(-1);
     },
     validate: SignUpValidation,
   });
 
   const signupvisible = useRecoilValue(signupState);
 
-  const signup = async (nickname: any) => {
-    try {
-      const result = await checkNickname(nickname);
-      console.log(result);
-      Setemailsendmsg(result.message);
-    } catch (error) {}
-  };
+  // const signup = async (nickname: any) => {
+  //   try {
+  //     const result = await checkNickname(nickname);
+  //     console.log(result);
+  //     Setemailsendmsg(result.data.message);
+  //   } catch (error) {}
+  // };
 
-  const handlesignup = async () => {
+  const handlesignup = () => {
     try {
-      const result = await signupcheck(
+      const result = signupcheck(
         values.realname,
         values.email,
         signupvisible,
@@ -60,10 +67,10 @@ const SignupForm = () => {
   const handleEmailSend = async (email: any) => {
     try {
       const result = await emailConfirm(email);
+      Setemailsendmsg('전송된 메일의 링크를 눌러주세요.');
       console.log(result);
-      Setemailsendmsg(result.message);
     } catch (error) {
-      Setemailsendmsg('이미 메일을 전송하였습니다.');
+      Setemailsendmsg('이미 메일을 전송하였습니다. 메일을 확인해주세요');
     }
   };
   const isEmail = (email: any) => {
@@ -80,10 +87,14 @@ const SignupForm = () => {
       SetEmailvailerrorMsg('이메일을 입력해주세요.');
     } else if (!isEmail(values.email)) {
       SetEmailvailerrorMsg('이메일 형식으로 입력해주세요.');
+    } else if (!isEmail(values.email)) {
+      //
+      SetEmailvailerrorMsg('이미 인증이 완료된 이메일입니다.');
     } else {
       sendAuthMail(true);
       handleChange(event);
       handleEmailSend(values.email);
+      setDisabledattr(true);
     }
   };
 
@@ -123,6 +134,7 @@ const SignupForm = () => {
           name="email"
           error={errors.authmail ? true : false}
           onChange={handleChange}
+          disabled={disabledattr}
         />
         <div>{errors.authmail}</div>
         <div>{emailvailerrormsg}</div>
@@ -135,7 +147,7 @@ const SignupForm = () => {
         </Button>
       </form>
 
-      <section className={cx('container')}>
+      {/* <section className={cx('container')}>
         <div className={cx('row')}>
           <div className={cx('col-lg-12')}>
             <div className={cx('inner-container')}>
@@ -162,7 +174,7 @@ const SignupForm = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
