@@ -1,9 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import H5 from 'assets/theme/Typography/H5/H5';
 import styles from './Header.module.scss';
-import Logo from 'assets/images/logo.png';
+import classNames from 'classnames/bind';
+import Button from 'assets/theme/Button/Button';
+import Logo from 'assets/images/header-logo.svg';
+import { getLoggedUserInfo } from 'utils/loggedUser';
+import { useRecoilValue } from 'recoil';
+import { isLoggedState } from '../../atoms/atoms';
 
+const cx = classNames.bind(styles);
 const Header = () => {
+  const [loggedUserInfo, setLoggedUserInfo] = useState(false);
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
 
@@ -27,6 +36,12 @@ const Header = () => {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
+  useEffect(() => {
+    const localStorageUserInfo = getLoggedUserInfo();
+    console.log(localStorageUserInfo);
+    if (localStorageUserInfo) setLoggedUserInfo(true);
+  }, [getLoggedUserInfo()]);
+
   return (
     <div
       className={
@@ -35,40 +50,61 @@ const Header = () => {
           : styles['header']
       }
     >
-      <div className={styles['header-leftside']}>
-        <ul className={styles['header-list']}>
+      <div className={cx('header-leftside')}>
+        <ul className={cx('header-list')}>
           <Link to="/">
-            <li>서비스 소개</li>
+            <li>
+              <H5>서비스 소개</H5>
+            </li>
           </Link>
-          <li>기부신청</li>
+          <li>
+            <H5>기부신청</H5>
+          </li>
           <Link to="/category">
-            <li>기부하기</li>
+            <li>
+              <H5>기부하기</H5>
+            </li>
           </Link>
           <Link to="/community">
-            <li>커뮤니티</li>
+            <li>
+              <H5>커뮤니티</H5>
+            </li>
           </Link>
         </ul>
       </div>
-      <div className={styles['header-center']}>
+      <div className={cx('header-center')}>
         <div className={styles.logo}>
           <Link to="/">
             <img src={Logo} className={styles.logoImg} alt="logo" />
           </Link>
         </div>
-        <Link to="/">
-          <div className={styles.logoTitle}>DONERS</div>
-        </Link>
       </div>
-      <div className={styles['header-rightside']}>
-        <ul className={styles['header-list']}>
-          <li>언어</li>
-          <li>알림</li>
-          <li>프로필</li>
-          <button
-            className={`${styles['alternative-button']} ${styles.button}`}
-          >
-            Join
-          </button>
+      <div className={cx('header-rightside')}>
+        <ul className={cx('header-list')}>
+          <li>
+            <H5>언어</H5>
+          </li>
+          <li>
+            <H5>알림</H5>
+          </li>
+          <li>
+            <H5>프로필</H5>
+          </li>
+          <div className="btn">
+            {loggedUserInfo ? (
+              <Link to="/profile">
+                <Button size="small" fullWidth color={'alternate'}>
+                  Profile
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/signup">
+                <Button size="small" fullWidth color={'alternate'}>
+                  Join
+                </Button>
+              </Link>
+            )}
+          </div>
         </ul>
       </div>
     </div>

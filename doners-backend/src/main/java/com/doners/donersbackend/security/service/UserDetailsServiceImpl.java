@@ -1,6 +1,6 @@
 package com.doners.donersbackend.security.service;
 
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userAccount) throws UsernameNotFoundException {
 
-		Optional<User> oUser = userRepository.findByUserAccount(userAccount);
+		Optional<User> oUser = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false);
 
 		return new UserDetailsImpl(oUser.orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다.")));
 

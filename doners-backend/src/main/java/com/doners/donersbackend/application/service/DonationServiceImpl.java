@@ -3,17 +3,20 @@ package com.doners.donersbackend.application.service;
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
-import com.doners.donersbackend.domain.dao.Image;
+import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
 import com.doners.donersbackend.domain.dao.donation.DonationHistory;
 import com.doners.donersbackend.domain.dao.donation.File;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
+import com.doners.donersbackend.domain.enums.UserCode;
 import com.doners.donersbackend.domain.repository.*;
 import com.doners.donersbackend.domain.repository.donation.DonationBudgetRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationHistoryRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationRepository;
+import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,11 +45,15 @@ public class DonationServiceImpl implements DonationService {
 
     private final AwsS3Service awsS3Service;
 
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
+
     @Transactional
     @Override
-    public Boolean createDonation(DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
+    public Boolean createDonation(String accessToken, DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
 
-        if (donationRepository.findByUserIdAndIsDeleted(donationInfoRequestDTO.getUserId(), false).orElse(null) != null) return false;
+        User user = convertAccessTokenToUser(accessToken);
+
+        if (donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null) return false;
 
         // 기부글
         Donation donation = Donation.builder()
@@ -56,13 +63,11 @@ public class DonationServiceImpl implements DonationService {
                 .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
                 .title(donationInfoRequestDTO.getTitle())
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
-//                .categoryCode(CategoryCode.COVID_19)
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
                 .amount(donationInfoRequestDTO.getTargetAmount())
 //                .endTime(donationInfoRequestDTO.getEndTime())
-                .user(userRepository.findById(donationInfoRequestDTO.getUserId())
-                        .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다.")))
+                .user(user)
                 .build();
 
         donationRepository.save(donation);
@@ -205,7 +210,9 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationRecommendResponseDTO recommendDonation(String donationId) {
+    public DonationRecommendResponseDTO recommendDonation(String accessToken, String donationId) {
+
+        convertAccessTokenToUser(accessToken);
 
         Donation donation = donationRepository.findById(donationId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
@@ -244,7 +251,7 @@ public class DonationServiceImpl implements DonationService {
                 break;
             // 닉네임
             case "n":
-                donationList = donationRepository.findByUser(userRepository.findByUserNickname(keyword).orElse(null))
+                donationList = donationRepository.findByUser(userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
         }
@@ -277,15 +284,17 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public Integer approveDonation(DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException {
+    public Integer approveDonation(String accessToken, DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException {
 
-        // TODO: 관리자인지 확인'
+        User user = convertAccessTokenToUser(accessToken);
+
+        if (user.getUserCode() != UserCode.ADMIN) return 0;
 
         Donation donation = donationRepository.findById(donationApproveRequestDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 이미 승인
-        if (donation.isApproved()) return 2;
+        if (donation.isApproved()) return 1;
 
         // 거절
         if (!donationApproveRequestDTO.isApproved()) {
@@ -295,7 +304,7 @@ public class DonationServiceImpl implements DonationService {
 
             donationRepository.save(donation);
 
-            return 0;
+            return 2;
         }
 
         // 신청 승인 및 시작 시간 설정
@@ -305,7 +314,7 @@ public class DonationServiceImpl implements DonationService {
 
         donationRepository.save(donation);
 
-        return 1;
+        return 3;
 
     }
 
@@ -370,6 +379,15 @@ public class DonationServiceImpl implements DonationService {
         donation.changeViews();
 
         donationRepository.save(donation);
+
+    }
+
+    public User convertAccessTokenToUser(String accessToken) {
+
+        String token = accessToken.split(" ")[1];
+        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+
+        return userRepository.findByUserAccount(userAccount).orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
 
     }
 

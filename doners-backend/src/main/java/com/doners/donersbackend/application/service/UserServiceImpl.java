@@ -1,13 +1,15 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.UserInfoSetRequestDTO;
-import com.doners.donersbackend.application.dto.response.*;
-import com.doners.donersbackend.domain.dao.Community;
-import com.doners.donersbackend.domain.dao.epilouge.Epilouge;
-import com.doners.donersbackend.domain.dao.Image;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
+import com.doners.donersbackend.application.dto.response.user.*;
+import com.doners.donersbackend.domain.dao.community.Community;
+import com.doners.donersbackend.domain.dao.email.EmailConfirmation;
+import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
+import com.doners.donersbackend.domain.dao.image.Image;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
-import com.doners.donersbackend.domain.repository.epilouge.EpilougeRepository;
+import com.doners.donersbackend.domain.repository.EmailConfirmationRepository;
+import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +29,11 @@ public class UserServiceImpl implements UserService {
 
     private final ImageRepository imageRepository;
 
+    private final EmailConfirmationRepository emailConfirmationRepository;
+
     private final CommunityRepository communityRepository;
 
-    private final EpilougeRepository epilougeRepository;
+    private final EpilogueRepository epilogueRepository;
 
     private final AwsS3Service awsS3Service;
 
@@ -103,12 +108,13 @@ public class UserServiceImpl implements UserService {
     // 닉네임 중복 체크
     @Override
     public Integer checkNickname(String userNickname) {
-        if(userRepository.findByUserNickname(userNickname).isPresent())
+        if(userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false).isPresent())
             return 409;
 
         return 200;
     }
 
+    @Transactional
     @Override
     public void deleteUser(String accessToken) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
@@ -118,6 +124,16 @@ public class UserServiceImpl implements UserService {
 
         user.deleteUser();
         userRepository.save(user);
+
+        EmailConfirmation emailConfirmation = emailConfirmationRepository.findByEmailAddress(user.getUserEmail())
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일 인증 정보를 찾을 수 없습니다."));
+
+        try {
+            emailConfirmationRepository.delete(emailConfirmation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -190,32 +206,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserMyPageEpilougeHistoryWrapperResponseDTO getEpilougeHistoryList(String accessToken) {
+    public UserMyPageEpilogueHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
 
-        List<Epilouge> epilougeList = epilougeRepository
-                .findByUserAndEpilougeIsDeletedOrderByEpilougeCreateTimeDesc(user, false)
+        List<Epilogue> epilogueList = epilogueRepository
+                .findByUserAndEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(user, false)
                 .orElseThrow(() -> new IllegalArgumentException("작성한 감사 글이 존재하지 않습니다."));
 
-        List<UserMyPageEpilougeHistoryResponseDTO> list = new ArrayList<>();
+        List<UserMyPageEpilogueHistoryResponseDTO> list = new ArrayList<>();
 
         try {
-            epilougeList.forEach(epilouge -> {
+            epilogueList.forEach(epilogue -> {
                 list.add(
-                        UserMyPageEpilougeHistoryResponseDTO.builder()
-                                .epilougeId(epilouge.getId())
-                                .epilougeTitle(epilouge.getEpilougeTitle())
-                                .epilougeCreateTime(epilouge.getEpilougeCreateTime()).build()
+                        UserMyPageEpilogueHistoryResponseDTO.builder()
+                                .epilogueId(epilogue.getId())
+                                .epilogueTitle(epilogue.getEpilogueTitle())
+                                .epilogueCreateTime(epilogue.getEpilogueCreateTime()).build()
                 );
             });
         } catch (Exception e) {
             return null;
         }
 
-        return UserMyPageEpilougeHistoryWrapperResponseDTO.builder()
-                .userMyPageEpilougeHistoryResponseDTOList(list).build();
+        return UserMyPageEpilogueHistoryWrapperResponseDTO.builder()
+                .userMyPageEpilogueHistoryResponseDTOList(list).build();
     }
 
     @Override

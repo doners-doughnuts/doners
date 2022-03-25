@@ -1,7 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.response.donation.NotificationResponseDTO;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.Notification;
 import com.doners.donersbackend.domain.enums.NotificationCode;
@@ -27,14 +27,12 @@ public class NotificationServiceImpl implements NotificationService {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Override
-    public NotificationResponseDTO getNotification(String accessToken, int index) {
+    public NotificationResponseDTO getNotification(String accessToken) {
 
-        // userAccount
         String token = accessToken.split(" ")[1];
 
         String userAccount = jwtAuthenticationProvider.getUserAccount(token);
 
-        // 회원 정보
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
 
@@ -42,11 +40,20 @@ public class NotificationServiceImpl implements NotificationService {
         Donation donation = donationRepository.findByUserAndIsDeleted(user, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
-        // 알림 공통코드
-        NotificationCode[] notificationCodes = NotificationCode.values();
+        // 종료 시간 지났으면
+        if (donation.getEndTime() != null && LocalDateTime.now().isAfter(donation.getEndTime())) return createNotification(donation, "종료", NotificationCode.PROGRESS);
 
-        // 기존 알림 존재 여부 확인
-        Notification notification = notificationRepository.findByDonationAndNotificationCodeAndIsRead(donation, notificationCodes[index], false).orElse(null);
+        // 승인되었으면
+        if (donation.isApproved()) return createNotification(donation, "승인", NotificationCode.APPROVAL);
+
+        return null;
+
+    }
+
+    public NotificationResponseDTO createNotification(Donation donation, String status, NotificationCode notificationCode) {
+
+        // 읽지 않은 알림 존재 여부 확인
+        Notification notification = notificationRepository.findByDonationAndNotificationCodeAndIsRead(donation, notificationCode, false).orElse(null);
 
         // 기존 알림이 있다면
         if (notification != null) {
@@ -57,27 +64,7 @@ public class NotificationServiceImpl implements NotificationService {
                     .build();
         }
 
-        // 승인 여부
-        if (index == 0) {
-            // 승인되었으면
-            if (donation.isApproved()) {
-                return createNotification(donation, "승인", notificationCodes[index]);
-            }
-        // 종료 여부
-        } else {
-            // 종료 시간 지났으면
-            if (LocalDateTime.now().isAfter(donation.getEndTime())) {
-                return createNotification(donation, "종료", notificationCodes[index]);
-            }
-        }
-
-        return null;
-
-    }
-
-    public NotificationResponseDTO createNotification(Donation donation, String status, NotificationCode notificationCode) {
-
-        Notification notification = Notification.builder()
+        Notification notificationInfo = Notification.builder()
                 .description("기부글이 " + status + "되었습니다.")
                 .isRead(false)
                 .notificationCode(notificationCode)
@@ -87,8 +74,8 @@ public class NotificationServiceImpl implements NotificationService {
 
         return NotificationResponseDTO.builder()
                 .donationId(donation.getId())
-                .description(notification.getDescription())
-                .createTime(notification.getCreateTime())
+                .description(notificationInfo.getDescription())
+                .createTime(notificationInfo.getCreateTime())
                 .build();
 
     }

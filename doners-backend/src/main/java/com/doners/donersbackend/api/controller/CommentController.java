@@ -1,7 +1,7 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.application.dto.request.CommentChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.CommentRegisterPostDTO;
+import com.doners.donersbackend.application.dto.request.comment.CommentChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.comment.CommentRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.service.CommentService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
@@ -95,15 +95,15 @@ public class CommentController {
         return ResponseEntity.ok(CommentGetListWrapperResponseDTO.of(200,"커뮤니티 댓글 목록 조회 성공", commentService.getCommunityCommentList(communityId)));
     }
 
-    @GetMapping("/appreciation/{appreciationId}")
+    @GetMapping("/epilogue/{epilogueId}")
     @ApiOperation(value="필수 댓글 정보 입력 - 글 id")
     @ApiResponses({
             @ApiResponse(code=200, message="필수 댓글 정보 조회에 성공했습니다."),
     })
-    public ResponseEntity<? extends BaseResponseDTO> getAppreciationComment(
-            @PathVariable("appreciationId") @ApiParam(value="글id", required=true) String appreciationId) {
+    public ResponseEntity<? extends BaseResponseDTO> getEpilogueComment(
+            @PathVariable("epilogueId") @ApiParam(value="글id", required=true) String epilogueId) {
 
-        return ResponseEntity.ok(CommentGetListWrapperResponseDTO.of(200,"감사 글 댓글 목록 조회 성공", commentService.getEpilougeCommentList(appreciationId)));
+        return ResponseEntity.ok(CommentGetListWrapperResponseDTO.of(200,"감사 글 댓글 목록 조회 성공", commentService.getEpilogueCommentList(epilogueId)));
     }
 
     @GetMapping("/subComment/{commentId}")

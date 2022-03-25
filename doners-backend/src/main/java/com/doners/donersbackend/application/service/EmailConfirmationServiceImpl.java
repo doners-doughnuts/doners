@@ -1,6 +1,7 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.domain.dao.EmailConfirmation;
+import com.doners.donersbackend.application.dto.request.email.EmailConfirmationCreateRequestDTO;
+import com.doners.donersbackend.domain.dao.email.EmailConfirmation;
 import com.doners.donersbackend.domain.repository.EmailConfirmationRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
@@ -33,8 +35,11 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
     private static final long EMAIL_TOKEN_EXPIRATION_TIME = 5L; // 만료 기간 5분
 
     // 이메일 인증을 위해 이메일 생성 메서드
+    @Transactional
     @Override
-    public void createEmailConfirmation(String emailAddress) throws Exception {
+    public void createEmailConfirmation(EmailConfirmationCreateRequestDTO emailConfirmationCreateRequestDTO) throws Exception {
+        String emailAddress = emailConfirmationCreateRequestDTO.getEmailAddress();
+
         if(userRepository.findByUserEmailAndUserIsDeleted(emailAddress, false).isPresent() ||
         emailConfirmationRepository.findByEmailAddressAndEmailConfirmationIsConfirmed(emailAddress, false).isPresent()) {
             throw new Exception("이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다.");
