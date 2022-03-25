@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.repository;
 
-import com.doners.donersbackend.domain.dao.Image;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.image.Image;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import org.springframework.data.jpa.repository.JpaRepository;
 

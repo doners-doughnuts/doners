@@ -1,4 +1,4 @@
-package com.doners.donersbackend.application.dto.request;
+package com.doners.donersbackend.application.dto.request.epilogue;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
@@ -8,19 +8,18 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("CommunityChangePatchDTO")
+@ApiModel("EpilogueChangePatchDTO")
 @NoArgsConstructor
 @Getter
-public class CommunityChangePatchDTO {
+public class EpilogueChangePatchDTO {
 
     @NotBlank
     @NotNull
     @ApiModelProperty(name="글 제목")
-    private String communityTitle;
+    private String epilogueTitle;
 
     @NotBlank
     @NotNull
     @ApiModelProperty(name="글 내용")
-    private String communityDescription;
-
+    private String epilogueDescription;
 }

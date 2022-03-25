@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.dao.donation;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import lombok.*;

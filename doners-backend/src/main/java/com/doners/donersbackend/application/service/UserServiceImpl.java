@@ -1,11 +1,11 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.UserInfoSetRequestDTO;
-import com.doners.donersbackend.application.dto.response.*;
-import com.doners.donersbackend.domain.dao.Community;
+import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
+import com.doners.donersbackend.application.dto.response.user.*;
+import com.doners.donersbackend.domain.dao.community.Community;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
-import com.doners.donersbackend.domain.dao.Image;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.image.Image;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserMyPageEpilougeHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken) {
+    public UserMyPageEpilogueHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
@@ -199,23 +199,23 @@ public class UserServiceImpl implements UserService {
                 .findByUserAndEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(user, false)
                 .orElseThrow(() -> new IllegalArgumentException("작성한 감사 글이 존재하지 않습니다."));
 
-        List<UserMyPageEpilougeHistoryResponseDTO> list = new ArrayList<>();
+        List<UserMyPageEpilogueHistoryResponseDTO> list = new ArrayList<>();
 
         try {
             epilogueList.forEach(epilogue -> {
                 list.add(
-                        UserMyPageEpilougeHistoryResponseDTO.builder()
-                                .epilougeId(epilogue.getId())
-                                .epilougeTitle(epilogue.getEpilougeTitle())
-                                .epilougeCreateTime(epilogue.getEpilougeCreateTime()).build()
+                        UserMyPageEpilogueHistoryResponseDTO.builder()
+                                .epilogueId(epilogue.getId())
+                                .epilogueTitle(epilogue.getEpilogueTitle())
+                                .epilogueCreateTime(epilogue.getEpilogueCreateTime()).build()
                 );
             });
         } catch (Exception e) {
             return null;
         }
 
-        return UserMyPageEpilougeHistoryWrapperResponseDTO.builder()
-                .userMyPageEpilougeHistoryResponseDTOList(list).build();
+        return UserMyPageEpilogueHistoryWrapperResponseDTO.builder()
+                .userMyPageEpilogueHistoryResponseDTOList(list).build();
     }
 
     @Override

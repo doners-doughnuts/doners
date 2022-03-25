@@ -1,7 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.response.donation.NotificationResponseDTO;
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.Notification;
 import com.doners.donersbackend.domain.enums.NotificationCode;

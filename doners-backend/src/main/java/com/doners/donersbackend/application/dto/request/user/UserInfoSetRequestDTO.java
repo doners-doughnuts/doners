@@ -1,4 +1,4 @@
-package com.doners.donersbackend.application.dto.request;
+package com.doners.donersbackend.application.dto.request.user;
 
 import com.doners.donersbackend.domain.enums.UserCode;
 import io.swagger.annotations.ApiModel;
