@@ -1,9 +1,9 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.CommunityChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.CommunityRegisterPostDTO;
-import com.doners.donersbackend.application.dto.response.CommunityGetListWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.CommunityResponseDTO;
+import com.doners.donersbackend.application.dto.request.community.CommunityChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.community.CommunityRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.community.CommunityGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.community.CommunityResponseDTO;
 
 public interface CommunityService {
     // 글 작성 : 필수 글 정보 입력 - 제목, 내용

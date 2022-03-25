@@ -1,12 +1,12 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.CommentChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.CommentRegisterPostDTO;
+import com.doners.donersbackend.application.dto.request.comment.CommentChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.comment.CommentRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentResponseDTO;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
-import com.doners.donersbackend.domain.dao.Comment;
-import com.doners.donersbackend.domain.dao.Community;
+import com.doners.donersbackend.domain.dao.comment.Comment;
+import com.doners.donersbackend.domain.dao.community.Community;
 import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.CommentRepository;
 import com.doners.donersbackend.domain.repository.CommunityRepository;

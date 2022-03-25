@@ -12,13 +12,13 @@ import javax.persistence.*;
 @Getter
 @ToString
 public class EpilogueBudget extends BaseEntity {
-    @Column(name = "epilouge_budget_plan")
-    private String epilougeBudgetPlan;
+    @Column(name = "epilogue_budget_plan")
+    private String epilogueBudgetPlan;
 
-    @Column(name = "epilouge_budget_amount")
-    private long epilougeBudgetAmount;
+    @Column(name = "epilogue_budget_amount")
+    private long epilogueBudgetAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "epilouge_id")
-    private Epilogue epilouge;
+    @JoinColumn(name = "epilogue_id")
+    private Epilogue epilogue;
 }

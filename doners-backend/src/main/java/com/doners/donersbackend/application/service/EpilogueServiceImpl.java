@@ -1,12 +1,12 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.EpilogueChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.EpilogueRegisterPostDTO;
-import com.doners.donersbackend.application.dto.response.EpilogueBudgetResponseDTO;
-import com.doners.donersbackend.application.dto.response.EpilogueGetListResponseDTO;
-import com.doners.donersbackend.application.dto.response.EpilogueGetListWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.EpilogueResponseDTO;
-import com.doners.donersbackend.domain.dao.Image;
+import com.doners.donersbackend.application.dto.request.epilogue.EpilogueChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.epilogue.EpilogueRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueBudgetResponseDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListResponseDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
+import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.epilogue.EpilogueBudget;
 import com.doners.donersbackend.domain.repository.ImageRepository;
@@ -38,19 +38,19 @@ public class EpilogueServiceImpl implements EpilogueService {
     public void epilogueRegister(EpilogueRegisterPostDTO epilogueRegisterPostDTO,MultipartFile image) {
         // 글작성 정보 추가할 것
         Epilogue epilogue = Epilogue.builder()
-                .epilougeTitle(epilogueRegisterPostDTO.getEpilougeTitle())
-                .epilougeDescription(epilogueRegisterPostDTO.getEpilougeDescription())
+                .epilogueTitle(epilogueRegisterPostDTO.getEpilogueTitle())
+                .epilogueDescription(epilogueRegisterPostDTO.getEpilogueDescription())
                 .user(userRepository.findByUserAccount(epilogueRegisterPostDTO.getUserAccount()).
                         orElseThrow(()->new IllegalArgumentException("해당 사용자를 찾을 수 없습니다.")))
-                .epilougeCreateTime(LocalDateTime.now()).build();
+                .epilogueCreateTime(LocalDateTime.now()).build();
 
         // 활동 내역 추가
-        epilogueRegisterPostDTO.getEpilougeBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
+        epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
                 epilogueBudgetRepository.save(
                         EpilogueBudget.builder()
-                                .epilougeBudgetPlan(epilogueBudgetRequestDTO.getEpilougeBudgetPlan())
-                                .epilougeBudgetAmount(epilogueBudgetRequestDTO.getEpilougeBudgetAmount())
-                                .epilouge(epilogue)
+                                .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
+                                .epilogueBudgetAmount(epilogueBudgetRequestDTO.getEpilogueBudgetAmount())
+                                .epilogue(epilogue)
                                 .build()
                 )
         );
@@ -65,7 +65,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
 
         try {
-            epilogue.changeEpilouge(epilogueChangePatchDTO.getEpilougeTitle(),epilogueChangePatchDTO.getEpilougeDescription());
+            epilogue.changeEpilogue(epilogueChangePatchDTO.getEpilogueTitle(),epilogueChangePatchDTO.getEpilogueDescription());
         } catch(Exception e) {
             return 409;
         }
@@ -80,7 +80,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
 
         try {
-            epilogue.deleteEpilouge();
+            epilogue.deleteEpilogue();
         } catch(Exception e) {
             return 409;
         }
@@ -98,18 +98,18 @@ public class EpilogueServiceImpl implements EpilogueService {
         epilogueList.forEach(epilogue -> {
             epilogueGetListResponseDTOList.add(
                     EpilogueGetListResponseDTO.builder()
-                            .epilougeId(epilogue.getId())
-                            .epilougeTitle(epilogue.getEpilougeTitle())
-                            .epilougeDescription(epilogue.getEpilougeDescription())
-                            .epilougeCreateTime(epilogue.getEpilougeCreateTime())
-                            .epilougeViews(epilogue.getEpilougeViews())
-                            .epilougeWriter(epilogue.getUser().getUserNickname())
+                            .epilogueId(epilogue.getId())
+                            .epilogueTitle(epilogue.getEpilogueTitle())
+                            .epilogueDescription(epilogue.getEpilogueDescription())
+                            .epilogueCreateTime(epilogue.getEpilogueCreateTime())
+                            .epilogueViews(epilogue.getEpilogueViews())
+                            .epilogueWriter(epilogue.getUser().getUserNickname())
                             .build()
             );
         });
 
         return EpilogueGetListWrapperResponseDTO.builder()
-                .epilougeGetListResponseDTOList(epilogueGetListResponseDTOList)
+                .epilogueGetListResponseDTOList(epilogueGetListResponseDTOList)
                 .build();
     }
 
@@ -125,19 +125,19 @@ public class EpilogueServiceImpl implements EpilogueService {
         epilogueBudgetList.forEach(epilogueBudget ->
                 epilogueBudgetResponseDTOList.add(
                         EpilogueBudgetResponseDTO.builder()
-                                .epilougeBudgetPlan(epilogueBudget.getEpilougeBudgetPlan())
-                                .epilougeBudgetAmount(epilogueBudget.getEpilougeBudgetAmount())
+                                .epilogueBudgetPlan(epilogueBudget.getEpilogueBudgetPlan())
+                                .epilogueBudgetAmount(epilogueBudget.getEpilogueBudgetAmount())
                                 .build()
                 )
         );
 
         increaseViews(epilogue);
         return EpilogueResponseDTO.builder()
-                .epilougeTitle(epilogue.getEpilougeTitle())
-                .epilougeDescription(epilogue.getEpilougeDescription())
-                .epilougeCreateTime(epilogue.getEpilougeCreateTime())
-                .epilougeViews(epilogue.getEpilougeViews())
-                .epilougeWriter(epilogue.getUser().getUserNickname())
+                .epilogueTitle(epilogue.getEpilogueTitle())
+                .epilogueDescription(epilogue.getEpilogueDescription())
+                .epilogueCreateTime(epilogue.getEpilogueCreateTime())
+                .epilogueViews(epilogue.getEpilogueViews())
+                .epilogueWriter(epilogue.getUser().getUserNickname())
                 .build();
     }
 
