@@ -1,9 +1,9 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.application.dto.request.CommunityChangePatchDTO;
-import com.doners.donersbackend.application.dto.request.CommunityRegisterPostDTO;
-import com.doners.donersbackend.application.dto.response.CommunityGetListWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.CommunityResponseDTO;
+import com.doners.donersbackend.application.dto.request.community.CommunityChangePatchDTO;
+import com.doners.donersbackend.application.dto.request.community.CommunityRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.community.CommunityGetListWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.community.CommunityResponseDTO;
 import com.doners.donersbackend.application.service.CommunityService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.*;

@@ -1,6 +1,6 @@
 package com.doners.donersbackend.domain.repository.donation;
 
-import com.doners.donersbackend.domain.dao.User;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, String> {
-
-    Optional<Donation> findByUserIdAndIsDeleted(String userId, boolean delete);
 
     Optional<List<Donation>> findByCategoryCodeAndIsDeleted(CategoryCode categoryCode, boolean delete);
 

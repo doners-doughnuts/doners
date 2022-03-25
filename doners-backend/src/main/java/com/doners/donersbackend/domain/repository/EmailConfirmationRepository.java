@@ -1,6 +1,6 @@
 package com.doners.donersbackend.domain.repository;
 
-import com.doners.donersbackend.domain.dao.EmailConfirmation;
+import com.doners.donersbackend.domain.dao.email.EmailConfirmation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

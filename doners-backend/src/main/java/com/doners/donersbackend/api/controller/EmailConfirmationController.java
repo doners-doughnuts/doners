@@ -1,5 +1,7 @@
 package com.doners.donersbackend.api.controller;
 
+import com.doners.donersbackend.application.dto.request.email.EmailConfirmationCreateRequestDTO;
+import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.application.service.EmailConfirmationService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.*;
@@ -16,18 +18,18 @@ public class EmailConfirmationController {
 
     private final EmailConfirmationService emailConfirmationService;
 
-    @PostMapping("/{emailAddress}")
+    @PostMapping
     @ApiOperation(value="이메일 인증 요청")
     @ApiResponses({
             @ApiResponse(code=201, message="인증 메일이 전송되었습니다. 해당 이메일 계정을 확인해주세요."),
-            @ApiResponse(code=409, message="인증 메일 요청에 실패했습니다."),
+            @ApiResponse(code=409, message="이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> createEmailConfirmation(
-            @PathVariable("emailAddress") @ApiParam(value="이메일 주소", required=true) String emailAddress) {
+            @RequestBody @ApiParam(value="이메일 주소", required=true) EmailConfirmationCreateRequestDTO emailConfirmationCreateRequestDTO) {
         try {
-            emailConfirmationService.createEmailConfirmation(emailAddress);
+            emailConfirmationService.createEmailConfirmation(emailConfirmationCreateRequestDTO);
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(BaseResponseDTO.of("인증 메일 전송 실패했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다.", 409));
         }
 
         return ResponseEntity.status(201).body(BaseResponseDTO.of("인증 메일이 전송되었습니다. 해당 이메일 계정을 확인해주세요.", 201));
