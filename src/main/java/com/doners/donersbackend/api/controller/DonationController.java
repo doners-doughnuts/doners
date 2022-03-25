@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +40,7 @@ public class DonationController {
     })
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponseDTO> register(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @ApiParam(value = "기부 신청 정보", required = true) @Valid @RequestPart DonationInfoRequestDTO donationInfoRequestDTO,
             @ApiParam(value = "관계증명서") @Valid @RequestPart(value = "certificate", required = false) MultipartFile certificate,
             @ApiParam(value = "대표 사진") @Valid @RequestPart(value = "image", required = false) MultipartFile image,
@@ -46,7 +48,7 @@ public class DonationController {
     ) {
 
         try {
-            if (!donationService.createDonation(donationInfoRequestDTO, certificate, image, evidence)) {
+            if (!donationService.createDonation(accessToken, donationInfoRequestDTO, certificate, image, evidence)) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("신청자에 대한 기부글이 이미 존재합니다.", 409));
             }
         } catch (IllegalArgumentException e) {
@@ -116,13 +118,14 @@ public class DonationController {
     })
     @GetMapping("/recommend/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @ApiParam(value = "기부글 ID", required = true) @NotBlank @PathVariable String donationId
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
         try {
-            donationRecommendResponseDTO = donationService.recommendDonation(donationId);
+            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationId);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
@@ -163,22 +166,26 @@ public class DonationController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "기부글 신청이 승인되었습니다."),
             @ApiResponse(code = 200, message = "기부글 신청이 거절되었습니다."),
+            @ApiResponse(code = 401, message = "기부글 승인 권한이 없습니다."),
             @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
             @ApiResponse(code = 409, message = "이미 승인된 기부글 입니다."),
             @ApiResponse(code = 409, message = "기부글 신청 승인에 실패했습니다.")
     })
     @PatchMapping("/approve")
     public ResponseEntity<? extends BaseResponseDTO> approve(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @ApiParam(value = "기부글 승인 정보", required = true) @Valid @RequestBody DonationApproveRequestDTO donationApproveRequestDTO
     ) {
 
         try {
-            Integer result = donationService.approveDonation(donationApproveRequestDTO);
+            Integer result = donationService.approveDonation(accessToken, donationApproveRequestDTO);
 
             if (result == 0) {
-                return ResponseEntity.ok(BaseResponseDTO.of("기부글 신청이 거절되었습니다.", 200));
-            } else if (result == 2) {
+                return ResponseEntity.status(401).body(BaseResponseDTO.of("기부글 승인 권한이 없습니다.", 401));
+            } else if (result == 1) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 승인된 기부글 입니다.", 409));
+            } else if (result == 2) {
+                return ResponseEntity.ok(BaseResponseDTO.of("기부글 신청이 거절되었습니다.", 200));
             }
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
