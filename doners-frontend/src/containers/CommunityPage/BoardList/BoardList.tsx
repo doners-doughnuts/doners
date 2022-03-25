@@ -13,9 +13,11 @@ const BoardList = () => {
         <div className={cx('col-lg-12')}>
           <div className={cx('btn-row')}>
             <div className={cx('btn')}>
-              <Button color="secondary" size="small" fullWidth>
-                글 작성
-              </Button>
+              <Link to="write">
+                <Button color="secondary" size="small" fullWidth>
+                  글 작성
+                </Button>
+              </Link>
             </div>
           </div>
           <Link to="1">
