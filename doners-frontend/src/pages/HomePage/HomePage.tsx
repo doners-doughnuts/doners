@@ -1,11 +1,15 @@
-import styles from './HomePage.module.css';
-import character from 'assets/images/character.png';
-import Button from 'components/common/Button/Button';
+import IntroductionNFT from 'containers/HomePage/IntroductionNFT/IntroductionNFT';
+import LandingHero from 'containers/HomePage/LandingHero/LandingHero';
 
 const HomePage = () => {
   return (
-    <div>
-      <section className={`${styles.Introduction} ${styles.section}`}>
+    <>
+      <LandingHero />
+      <IntroductionNFT />
+    </>
+  );
+
+  /* <section className={`${styles.Introduction} ${styles.section}`}>
         <div className={`${styles.container} ${styles['vertical-center']}`}>
           <div className={styles['Introduction-box']}>
             <h1 className={styles.slogan}>
@@ -147,9 +151,8 @@ const HomePage = () => {
         <div>
           <span className={styles.teamName}>든킨</span>
         </div>
-      </section>
-    </div>
-  );
+      </section> */
+  // );
 };
 
 export default HomePage;

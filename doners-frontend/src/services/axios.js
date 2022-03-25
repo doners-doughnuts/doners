@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  // TODO timeout 설정
+  timeout: 30000,
   Headers: {
     'Content-type': 'application/json',
   },
@@ -43,7 +45,7 @@ instance.interceptors.response.use(
     } else {
       // ex. 서버 키지 않은 경우
     }
-    return Promise.reject(error.response.data);
+    return Promise.reject(error);
   }
 );
 

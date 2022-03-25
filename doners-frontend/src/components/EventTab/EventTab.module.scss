@@ -1,0 +1,16 @@
+@import 'assets/styles/main';
+
+.event-name {
+  @include flexbox;
+  .icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .icon > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}

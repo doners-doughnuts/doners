@@ -1,0 +1,41 @@
+@import 'assets/styles/main';
+
+.btn-img {
+  display: block;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 50%;
+  border: 2px solid $black;
+  width: 80px;
+  height: 80px;
+  padding: 13px;
+
+  &.shadow {
+    box-shadow: $btn-shadow;
+  }
+
+  &.active {
+    background-color: $green;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// .avatar-small {
+//   @extend %avatar-base;
+//   width: 24px;
+//   height: 24px;
+// }
+
+// .avatar-large {
+//   @extend %avatar-base;
+//   width: 32px;
+//   height: 32px;
+// }

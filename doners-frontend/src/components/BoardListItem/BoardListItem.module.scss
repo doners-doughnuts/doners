@@ -1,0 +1,47 @@
+@import 'assets/styles/main';
+
+.article-row {
+  @include flexbox(start, center);
+  padding: 10px;
+  border-bottom: 1px solid $gray-3;
+  .article {
+    width: 100%;
+    margin-left: 30px;
+  }
+}
+
+.title {
+  h1 {
+    @include text-style(18);
+    font-weight: 400;
+  }
+}
+
+.sub {
+  @include flexbox(between, center);
+
+  .sub-left {
+    @include flexbox(between, center);
+    width: 11%;
+  }
+
+  .sub-right {
+    @include flexbox(between, center);
+    width: 20%;
+  }
+  .icon {
+    margin-right: 5px;
+  }
+}
+
+.sub-text {
+  @include text-style(14);
+  color: gray;
+  font-weight: 400;
+  // margin-left: 5px;
+}
+
+.views,
+.comment {
+  @include flexbox;
+}
