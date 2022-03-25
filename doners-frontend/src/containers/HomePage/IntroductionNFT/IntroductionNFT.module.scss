@@ -1,0 +1,57 @@
+@import 'assets/styles/main';
+
+// .row {
+//   overflow: hidden;
+// }
+
+.container {
+  position: relative;
+}
+
+.nft {
+  width: 285px;
+  height: 285px;
+}
+
+.img {
+  width: 285px;
+  height: 285px;
+  position: absolute;
+}
+
+.theme-container {
+  width: 100%;
+  height: 285px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+}
+.theme-wrap {
+  display: flex;
+  animation: move 10s infinite alternate;
+  animation-timing-function: ease-in-out;
+}
+
+.theme {
+  width: 285px;
+  height: 285px;
+}
+
+@keyframes move {
+  /* circle이라는 애니메이션 키프래임 만들기*/
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-285px, 0);
+  }
+  50% {
+    transform: translate(-570px, 0);
+  }
+  75% {
+    transform: translate(-855px, 0);
+  }
+  100% {
+    transform: translate(-1140px, 0);
+  }
+}
