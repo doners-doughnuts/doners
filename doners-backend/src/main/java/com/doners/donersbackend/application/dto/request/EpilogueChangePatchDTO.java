@@ -7,12 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
-@ApiModel("EpilougeRegisterPostDTO")
+@ApiModel("EpilougeChangePatchDTO")
 @NoArgsConstructor
 @Getter
-public class EpilougeRegisterPostDTO {
+public class EpilogueChangePatchDTO {
 
     @NotBlank
     @NotNull
@@ -23,12 +22,4 @@ public class EpilougeRegisterPostDTO {
     @NotNull
     @ApiModelProperty(name="글 내용")
     private String epilougeDescription;
-
-    @NotBlank
-    @NotNull
-    @ApiModelProperty(name="작성자 유저 주소")
-    private String userAccount;
-
-    @ApiModelProperty(name = "모금액 활용 계획")
-    private List<EpilougeBudgetRequestDTO> epilougeBudgetRequestDTOList;
 }

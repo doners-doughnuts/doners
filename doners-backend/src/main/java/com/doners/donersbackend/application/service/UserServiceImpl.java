@@ -3,11 +3,11 @@ package com.doners.donersbackend.application.service;
 import com.doners.donersbackend.application.dto.request.UserInfoSetRequestDTO;
 import com.doners.donersbackend.application.dto.response.*;
 import com.doners.donersbackend.domain.dao.Community;
-import com.doners.donersbackend.domain.dao.epilouge.Epilouge;
+import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.Image;
 import com.doners.donersbackend.domain.dao.User;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
-import com.doners.donersbackend.domain.repository.epilouge.EpilougeRepository;
+import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final CommunityRepository communityRepository;
 
-    private final EpilougeRepository epilougeRepository;
+    private final EpilogueRepository epilogueRepository;
 
     private final AwsS3Service awsS3Service;
 
@@ -190,24 +190,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserMyPageEpilougeHistoryWrapperResponseDTO getEpilougeHistoryList(String accessToken) {
+    public UserMyPageEpilougeHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
 
-        List<Epilouge> epilougeList = epilougeRepository
-                .findByUserAndEpilougeIsDeletedOrderByEpilougeCreateTimeDesc(user, false)
+        List<Epilogue> epilogueList = epilogueRepository
+                .findByUserAndEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(user, false)
                 .orElseThrow(() -> new IllegalArgumentException("작성한 감사 글이 존재하지 않습니다."));
 
         List<UserMyPageEpilougeHistoryResponseDTO> list = new ArrayList<>();
 
         try {
-            epilougeList.forEach(epilouge -> {
+            epilogueList.forEach(epilogue -> {
                 list.add(
                         UserMyPageEpilougeHistoryResponseDTO.builder()
-                                .epilougeId(epilouge.getId())
-                                .epilougeTitle(epilouge.getEpilougeTitle())
-                                .epilougeCreateTime(epilouge.getEpilougeCreateTime()).build()
+                                .epilougeId(epilogue.getId())
+                                .epilougeTitle(epilogue.getEpilougeTitle())
+                                .epilougeCreateTime(epilogue.getEpilougeCreateTime()).build()
                 );
             });
         } catch (Exception e) {

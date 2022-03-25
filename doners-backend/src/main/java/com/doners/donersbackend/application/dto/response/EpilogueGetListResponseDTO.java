@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ApiModel("epilougeGetListResponseDTO")
 @Getter
 @ToString
-public class EpilougeGetListResponseDTO {
+public class EpilogueGetListResponseDTO {
     @ApiModelProperty(name = "감사 글 ID")
     private String epilougeId;
 
@@ -31,7 +31,7 @@ public class EpilougeGetListResponseDTO {
     private String epilougeWriter;
 
     @Builder
-    public EpilougeGetListResponseDTO(String epilougeId, String epilougeTitle, String epilougeDescription,
+    public EpilogueGetListResponseDTO(String epilougeId, String epilougeTitle, String epilougeDescription,
                                       LocalDateTime epilougeCreateTime, long epilougeViews, String epilougeWriter) {
         this.epilougeId = epilougeId;
         this.epilougeTitle = epilougeTitle;

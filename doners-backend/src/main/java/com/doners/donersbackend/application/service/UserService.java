@@ -26,7 +26,7 @@ public interface UserService {
 
     UserMyPageCommunityHistoryWrapperResponseDTO getCommunityHistoryList(String accessToken);
 
-    UserMyPageEpilougeHistoryWrapperResponseDTO getEpilougeHistoryList(String accessToken);
+    UserMyPageEpilougeHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken);
 
     String getUserAccountFromAccessToken(String accessToken);
 }

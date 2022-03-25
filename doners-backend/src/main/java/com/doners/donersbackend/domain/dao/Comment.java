@@ -1,6 +1,6 @@
 package com.doners.donersbackend.domain.dao;
 
-import com.doners.donersbackend.domain.dao.epilouge.Epilouge;
+import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="epilouge_id")
-    private Epilouge epilouge;
+    private Epilogue epilouge;
 
     // 댓글 수정
     public void changeComment(String commentDescription) {
@@ -55,7 +55,7 @@ public class Comment extends BaseEntity {
     }
 
     // 감사 글 아이디 수정
-    public void changeEpilougeId(Epilouge epilouge) {
+    public void changeEpilougeId(Epilogue epilouge) {
         this.epilouge = epilouge;
     }
 
