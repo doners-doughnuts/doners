@@ -12,7 +12,7 @@ import java.util.List;
 @ApiModel("EpilougeResponseDTO")
 @Getter
 @ToString
-public class EpilougeResponseDTO extends BaseResponseDTO {
+public class EpilogueResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "감사 글 제목")
     private String epilougeTitle;
 
@@ -32,12 +32,12 @@ public class EpilougeResponseDTO extends BaseResponseDTO {
     private String epilougeWriter;
 
     @ApiModelProperty(name = "댓글 리스트")
-    private List<EpilougeBudgetResponseDTO> epilougeBudgetResponseDTOList;
+    private List<EpilogueBudgetResponseDTO> epilougeBudgetResponseDTOList;
 
     @Builder
-    public EpilougeResponseDTO(String epilougeTitle, long epilougeViews, String epilougeDescription,
+    public EpilogueResponseDTO(String epilougeTitle, long epilougeViews, String epilougeDescription,
                                LocalDateTime epilougeCreateTime, List<CommentResponseDTO> commentResponseDTOList, String epilougeWriter
-    , List<EpilougeBudgetResponseDTO> epilougeBudgetResponseDTOList) {
+    , List<EpilogueBudgetResponseDTO> epilougeBudgetResponseDTOList) {
         this.epilougeTitle = epilougeTitle;
         this.epilougeViews = epilougeViews;
         this.epilougeDescription = epilougeDescription;
@@ -47,8 +47,8 @@ public class EpilougeResponseDTO extends BaseResponseDTO {
         this.epilougeBudgetResponseDTOList = epilougeBudgetResponseDTOList;
     }
 
-    public static EpilougeResponseDTO of(String message, Integer statusCode, EpilougeResponseDTO epilougeResponseDTO) {
-        EpilougeResponseDTO res = epilougeResponseDTO;
+    public static EpilogueResponseDTO of(String message, Integer statusCode, EpilogueResponseDTO epilougeResponseDTO) {
+        EpilogueResponseDTO res = epilougeResponseDTO;
         res.setMessage(message);
         res.setStatusCode(statusCode);
 

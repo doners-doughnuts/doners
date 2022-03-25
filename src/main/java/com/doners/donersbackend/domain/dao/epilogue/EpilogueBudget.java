@@ -1,7 +1,6 @@
-package com.doners.donersbackend.domain.dao.epilouge;
+package com.doners.donersbackend.domain.dao.epilogue;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
-import com.doners.donersbackend.domain.dao.epilouge.Epilouge;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @ToString
-public class EpilougeBudget extends BaseEntity {
+public class EpilogueBudget extends BaseEntity {
     @Column(name = "epilouge_budget_plan")
     private String epilougeBudgetPlan;
 
@@ -21,5 +20,5 @@ public class EpilougeBudget extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "epilouge_id")
-    private Epilouge epilouge;
+    private Epilogue epilouge;
 }

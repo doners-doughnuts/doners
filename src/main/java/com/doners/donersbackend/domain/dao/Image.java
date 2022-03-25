@@ -1,6 +1,7 @@
 package com.doners.donersbackend.domain.dao;
 
 import com.doners.donersbackend.domain.dao.donation.Donation;
+import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,22 +25,23 @@ public class Image extends BaseEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-//    @ManyToOne(fetch=FetchType.LAZY)
-//    @JoinColumn(name="appreciation_id")
-//    private Appreciation appreciation;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="epilogue_id")
+    private Epilogue epilogue;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="donation_id")
     private Donation donation;
 
     @Builder
-    public Image(String imageOriginFileName, String imageNewFileName, boolean imageIsResized, User user, Donation donation) {
+    public Image(String imageOriginFileName, String imageNewFileName, boolean imageIsResized, User user, Donation donation,Epilogue epilogue) {
         super();
         this.imageOriginFileName = imageOriginFileName;
         this.imageNewFileName = imageNewFileName;
         this.imageIsResized = imageIsResized;
         this.user = user;
         this.donation = donation;
+        this.epilogue = epilogue;
     }
 
     public void changeImage(String imageOriginFileName, String imageNewFileName) {

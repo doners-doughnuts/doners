@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class EpilougeBudgetRequestDTO {
+public class EpilogueBudgetRequestDTO {
 
     @ApiModelProperty(name = "활용 계획")
     private String epilougeBudgetPlan;
