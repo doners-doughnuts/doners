@@ -1,9 +1,15 @@
-import { emailConfirm, checkNickname, signupcheck } from 'services/api/UserApi';
+import {
+  emailConfirm,
+  checkNickname,
+  signupcheck,
+  emailcheck,
+} from 'services/api/UserApi';
 
 type SignUpValidationProps = {
   realname?: string;
   authmail?: string;
   nickname?: string;
+  email?: string;
 };
 
 const kOREAN_ENGLISH_REGEX = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|]+$/;
@@ -12,15 +18,28 @@ export default function SignUpValidation({
   realname,
   nickname,
   authmail,
+  email,
 }: SignUpValidationProps) {
   const errors: SignUpValidationProps = {};
-
-  const testtt = (nickname: any) => {
+  const nickvali = async (nickname: any) => {
     try {
-      const response = checkNickname(nickname);
+      console.log('닉네임 중복확인');
+      const response = await checkNickname(nickname);
+      console.log(response);
+      return true;
+    } catch (error) {
+      console.log('에러!');
+      errors.nickname = '중복된 닉네임!!!!! 입니다.';
+      return true;
+    }
+  };
+
+  const emailvalicheck = (email: any) => {
+    try {
+      const response = emailcheck(email);
       console.log(response);
     } catch (error) {
-      console.log('테스트코인;');
+      console.log('error emailcheck');
       return false;
     }
   };
@@ -34,6 +53,7 @@ export default function SignUpValidation({
   } else if (!kOREAN_ENGLISH_REGEX.test(realname)) {
     errors.realname = '한글과 영어로만 가능합니다.';
   }
+
   if (!nickname) {
     errors.nickname = '닉네임을 입력해주세요.';
   } else if (nickname.length < 2) {
@@ -42,13 +62,21 @@ export default function SignUpValidation({
     errors.nickname = '10자 이하의 닉네임을 사용해야 합니다.';
   } else if (!nICKNAME_REGEX.test(nickname)) {
     errors.nickname = '특수기호는 불가능합니다.';
-  } else if (!testtt(nickname)) {
-    errors.nickname = '중복된 닉네임 입니다.';
+  } else if (!nickvali(nickname)) {
+    errors.nickname = '중복된 닉네임!! 입니다.';
   }
 
   if (!authmail) {
     errors.authmail = '이메일 인증을 해주세요.';
+  } else {
+    //이메일 인증이 전송된 상태
+    if (!email) {
+      errors.authmail = '이메일 인증을 완료해주세요.';
+    }
   }
 
   return errors;
+}
+function getPromise() {
+  throw new Error('Function not implemented.');
 }

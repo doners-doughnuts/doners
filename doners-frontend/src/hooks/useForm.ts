@@ -43,6 +43,7 @@ function useForm({ initialValues, onSubmit, validate }: useFormProps) {
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     setIsLoading(true);
+
     event.preventDefault();
     await new Promise((r) => setTimeout(r, 1000));
     setErrors(validate(values));
