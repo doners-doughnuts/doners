@@ -36,11 +36,11 @@ const Header = () => {
     }; //  window 에서 스크롤을 감시를 종료
   });
 
-  // useEffect(() => {
-  //   const localStorageUserInfo = getLoggedUserInfo();
-  //   console.log(localStorageUserInfo);
-  //   if (localStorageUserInfo) setLoggedUserInfo(true);
-  // }, [getLoggedUserInfo()]);
+  useEffect(() => {
+    const localStorageUserInfo = getLoggedUserInfo();
+    console.log(localStorageUserInfo);
+    if (localStorageUserInfo) setLoggedUserInfo(true);
+  }, [getLoggedUserInfo()]);
 
   return (
     <div
