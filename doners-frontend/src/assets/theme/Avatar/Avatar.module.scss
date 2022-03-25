@@ -19,12 +19,12 @@
 
 .avatar-small {
   @extend %avatar-base;
-  width: 24px;
-  height: 24px;
+  width: 60px;
+  height: 60px;
 }
 
 .avatar-large {
   @extend %avatar-base;
-  width: 32px;
-  height: 32px;
+  width: 90px;
+  height: 90px;
 }
