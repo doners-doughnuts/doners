@@ -1,10 +1,10 @@
 import styles from './Footer.module.scss';
 import Logo from 'assets/images/logo.png';
 
-import GitHubIcon from '@mui/icons-material/GitHub';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
+// import GitHubIcon from '@mui/icons-material/GitHub';
+// import YouTubeIcon from '@mui/icons-material/YouTube';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import InstagramIcon from '@mui/icons-material/Instagram';
 
 const Footer = () => {
   return (
@@ -30,7 +30,7 @@ const Footer = () => {
           </div>
         </div>
         <div className={styles.icons}>
-          <GitHubIcon
+          {/* <GitHubIcon
             style={{
               width: '50px',
               height: '50px',
@@ -53,7 +53,7 @@ const Footer = () => {
               width: '50px',
               height: '50px',
             }}
-          />
+          /> */}
         </div>
         <div className={styles.copyright}>
           <span>

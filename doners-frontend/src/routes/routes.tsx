@@ -11,6 +11,7 @@ import MyPage from 'pages/MyPage/MyPage';
 import Test from 'pages/Test/Test';
 
 import { Navigate, useRoutes } from 'react-router';
+import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
 
 export default function Router() {
   return useRoutes([
@@ -48,7 +49,7 @@ export default function Router() {
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
         { path: 'board/:post_seq', element: <BoardDetail /> },
-        // { path: 'board/write', element: <CommunityRegistPage /> },
+        { path: 'board/write', element: <BoardEditPage /> },
         { path: 'about', element: <CommunityPage focus={4} /> },
       ],
     },
