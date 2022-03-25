@@ -18,10 +18,6 @@ import java.util.List;
 public class DonationInfoRequestDTO {
 
     @NotBlank
-    @ApiModelProperty(name = "회원 ID")
-    private String userId;
-
-    @NotBlank
     @ApiModelProperty(name = "본인 / 대리인 전화번호")
     private String phone;
 

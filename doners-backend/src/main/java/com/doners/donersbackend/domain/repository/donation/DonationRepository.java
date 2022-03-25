@@ -12,8 +12,6 @@ import java.util.Optional;
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, String> {
 
-    Optional<Donation> findByUserIdAndIsDeleted(String userId, boolean delete);
-
     Optional<List<Donation>> findByCategoryCodeAndIsDeleted(CategoryCode categoryCode, boolean delete);
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
