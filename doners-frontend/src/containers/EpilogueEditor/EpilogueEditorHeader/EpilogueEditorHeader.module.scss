@@ -1,4 +1,5 @@
 @import 'assets/styles/main';
+
 .header {
   @include flexbox(start, center);
   .info {
