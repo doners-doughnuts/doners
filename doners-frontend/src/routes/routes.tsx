@@ -13,6 +13,7 @@ import Test from 'pages/Test/Test';
 
 import { Navigate, useRoutes } from 'react-router';
 import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
+import EpilogueEditPage from 'pages/EditPage/Epilogue/EpilogueEditPage';
 
 export default function Router() {
   return useRoutes([
@@ -48,6 +49,7 @@ export default function Router() {
         { path: '', element: <Navigate to="membership" replace /> },
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
+        { path: 'epilogue/write', element: <EpilogueEditPage /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
         { path: 'board/:post_seq', element: <BoardDetail /> },
         { path: 'board/write', element: <BoardEditPage /> },
