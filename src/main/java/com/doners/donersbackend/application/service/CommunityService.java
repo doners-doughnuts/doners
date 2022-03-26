@@ -13,7 +13,7 @@ public interface CommunityService {
     // 글 변경
     Integer deleteCommunity(String communityId);
     // 커뮤니티 글 목록 조회
-    CommunityGetListWrapperResponseDTO getCommunityList();
+    CommunityGetListWrapperResponseDTO getCommunityList(int sequence);
     // 커뮤니티 글 목록 조회
     CommunityResponseDTO getCommunity(String communityId);
 }
