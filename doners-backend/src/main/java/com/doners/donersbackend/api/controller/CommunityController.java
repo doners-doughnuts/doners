@@ -10,6 +10,7 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -85,14 +86,16 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseDTO.of("글 삭제에 성공했습니다.", 200));
     }
 
-    @GetMapping
+    @GetMapping("/list/{sequence}")
     @ApiOperation(value="커뮤니티 글 목록 조회")
     @ApiResponses({
             @ApiResponse(code=200, message="글 목록 조회에 성공했습니다."),
     })
-    public ResponseEntity<? extends BaseResponseDTO> getCommunityList() {
+    public ResponseEntity<? extends BaseResponseDTO> getCommunityList(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @PathVariable("sequence") @ApiParam(value="", required=true) int sequence) {
 
-        return ResponseEntity.ok(CommunityGetListWrapperResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunityList()));
+        return ResponseEntity.ok(CommunityGetListWrapperResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunityList(sequence)));
     }
 
     @GetMapping("/{communityId}")
