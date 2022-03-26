@@ -16,7 +16,6 @@
     width: 100%;
     height: 60px;
     padding: 0 #{$grid-margin - $lnb-link-padding};
-    margin-left: -#{$grid-margin};
     white-space: nowrap;
     border: 2px solid $gray-4;
     border-radius: 8px;
@@ -35,18 +34,5 @@
       // border-bottom-color: $blue;
       // }
     }
-
-    // a {
-    //   @include inline-flexbox;
-    //   @include text-style(13, $dark);
-    //   height: $lnb-height-sm;
-    //   padding: 0 $lnb-link-padding;
-    //   font-weight: 700;
-    //   border-bottom: 2px solid transparent;
-
-    //   &:hover {
-    //     color: $blue;
-    //   }
-    // }
   }
 }

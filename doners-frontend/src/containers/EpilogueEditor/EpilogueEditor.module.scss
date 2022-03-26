@@ -11,14 +11,14 @@
   background-color: $white;
   padding: 50px;
 
-  .editor {
-    margin-bottom: 50px;
-    .title {
-      @include text-style(24);
-      resize: none;
-      width: 100%;
-    }
-  }
+  // .editor {
+  //   margin-bottom: 50px;
+  //   .title {
+  //     @include text-style(24);
+  //     resize: none;
+  //     width: 100%;
+  //   }
+  // }
 
   .btn-row {
     @include flexbox;
@@ -26,12 +26,5 @@
     .regist-btn {
       width: 200px;
     }
-  }
-}
-
-.user-info {
-  @include flexbox(start, center);
-  .name {
-    margin-left: 10px;
   }
 }
