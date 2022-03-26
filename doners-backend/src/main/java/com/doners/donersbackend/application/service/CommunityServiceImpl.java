@@ -10,6 +10,8 @@ import com.doners.donersbackend.domain.repository.CommentRepository;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,7 +33,8 @@ public class CommunityServiceImpl implements CommunityService{
         Community community = Community.builder()
                 .communityTitle(communityRegisterPostDTO.getCommunityTitle())
                 .communityDescription(communityRegisterPostDTO.getCommunityDescription())
-                .user(userRepository.findByUserAccount(communityRegisterPostDTO.getUserAccount()).get())
+                .user(userRepository.findByUserAccountAndUserIsDeleted(communityRegisterPostDTO.getUserAccount(), false).get())
+                .communityViews(0L)
                 .communityCreateTime(LocalDateTime.now()).build();
 
         communityRepository.save(community);
@@ -68,9 +71,10 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public CommunityGetListWrapperResponseDTO getCommunityList() {
-        List<Community> communityList = communityRepository.findByCommunityIsDeleted(false).orElse(null);
-
+    public CommunityGetListWrapperResponseDTO getCommunityList(int sequence) {
+        System.out.println("sequence : " + sequence);
+        List<Community> communityList = communityRepository.findByCommunityIsDeletedOrderByCommunityCreateTimeDesc(false, PageRequest.of(sequence-1, 10, Sort.Direction.DESC, "communityCreateTime")).orElse(null);
+        System.out.println("communityList : " + communityList.size());
         List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
 
         communityList.forEach(community -> {
