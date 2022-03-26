@@ -23,3 +23,8 @@
   @extend %font-base;
   color: $gray-4;
 }
+
+.text-green {
+  @extend %font-base;
+  color: $green;
+}

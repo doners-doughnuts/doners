@@ -18,30 +18,9 @@ import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import styles from './BoardEditor.module.scss';
 import Button from 'assets/theme/Button/Button';
+import EditorForm from 'components/Editor/EditorForm';
 
 const cx = classNames.bind(styles);
-
-interface PostData {
-  boardId: number;
-  boardName: string;
-  content: string;
-  createdDate: string;
-  id: number;
-  viewId: number;
-  isLiked: boolean;
-  isNotice: boolean;
-  isUsers: boolean;
-  likeCnt: number;
-  modifiedDate: string;
-  title: string;
-  roleType: string;
-  viewCnt: number;
-}
-
-type PostDataType = {
-  detailData?: PostData;
-  boardId: number;
-};
 
 function BoardEditor() {
   const [title, setTitle] = useState<string>('');
@@ -78,11 +57,11 @@ function BoardEditor() {
   //   return () => {};
   // }, [editorRef]);
 
-  const contentHandler = () => {
-    setContent(editorRef.current?.getInstance().getMarkdown() || '');
-    // setContent(editorRef.current?.getInstance().getHTML() || '');
-    console.log(content);
-  };
+  // const contentHandler = () => {
+  //   setContent(editorRef.current?.getInstance().getMarkdown() || '');
+  //   // setContent(editorRef.current?.getInstance().getHTML() || '');
+  //   console.log(content);
+  // };
 
   return (
     <section className={cx('container')}>
@@ -98,7 +77,8 @@ function BoardEditor() {
                 <P>이학성</P>
               </div>
             </div> */}
-            <div className={cx('editor')}>
+            <EditorForm />
+            {/* <div className={cx('editor')}>
               <textarea
                 className={cx('title')}
                 placeholder="제목을 입력하세요."
@@ -116,7 +96,7 @@ function BoardEditor() {
                 onChange={contentHandler}
                 ref={editorRef}
               />
-            </div>
+            </div> */}
             <div className={cx('btn-row')}>
               <div className={cx('regist-btn')}>
                 <Button color="primary" fullWidth>
