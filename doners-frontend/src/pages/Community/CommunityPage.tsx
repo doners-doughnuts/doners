@@ -1,4 +1,5 @@
 import BoardList from 'containers/CommunityPage/BoardList/BoardList';
+import Epilogue from 'containers/CommunityPage/Epilogue/Epilogue';
 import AdditionalMembership from 'containers/CommunityPage/Membership/AdditionalMembership/AdditionalMembership';
 import PopularMembership from 'containers/CommunityPage/Membership/PopularMembership/PopularMembership';
 import CommunityTab from 'containers/CommunityPage/Tab/CommunityTab';
@@ -16,6 +17,8 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
           <PopularMembership />
           <AdditionalMembership />
         </>
+      ) : focus === 2 ? (
+        <Epilogue />
       ) : focus === 3 ? (
         <BoardList />
       ) : null}

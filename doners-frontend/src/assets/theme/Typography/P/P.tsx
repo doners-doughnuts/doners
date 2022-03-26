@@ -3,7 +3,7 @@ import styles from './P.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-type TextColor = 'black' | 'yellow' | 'gray' | 'orange';
+type TextColor = 'black' | 'yellow' | 'gray' | 'orange' | 'green';
 
 type TextType = {
   children: string;

@@ -1,10 +1,6 @@
-import BoardEditor from 'containers/Editor/BoardEditor';
+import BoardEditor from 'containers/BoardEditor/BoardEditor';
 
 const BoardEditPage = () => {
-  return (
-    <div>
-      <BoardEditor />
-    </div>
-  );
+  return <BoardEditor />;
 };
 export default BoardEditPage;
