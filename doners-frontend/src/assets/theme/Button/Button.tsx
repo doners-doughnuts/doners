@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Button.module.scss';
 const cx = classNames.bind(styles);
 
-type ButtonSize = 'small' | 'large';
+type ButtonSize = 'small' | 'default' | 'large';
 type ButtonColor = 'primary' | 'secondary' | 'alternate';
 type BtnType = 'button' | 'submit' | 'reset';
 type ButtonType = {
@@ -18,7 +18,7 @@ type ButtonType = {
 };
 
 const Button = ({
-  size = 'large',
+  size = 'default',
   color,
   fullWidth = false,
   shadow = false,
