@@ -20,6 +20,10 @@
   //   }
   // }
 
+  .donate-receipt {
+    @include flexbox(between, start);
+  }
+
   .btn-row {
     @include flexbox;
 

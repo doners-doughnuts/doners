@@ -5,11 +5,11 @@
   border: 2px solid $black;
   width: 100%;
   padding: 13px;
-
+  height: 40px;
   &:focus {
-    border-color: $blue;
+    border-color: $green;
   }
-  
+
   &.error {
     background-color: $red;
   }
