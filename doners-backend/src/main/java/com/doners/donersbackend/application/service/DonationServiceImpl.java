@@ -251,7 +251,7 @@ public class DonationServiceImpl implements DonationService {
                 break;
             // 닉네임
             case "n":
-                donationList = donationRepository.findByUser(userRepository.findByUserNickname(keyword).orElse(null))
+                donationList = donationRepository.findByUser(userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
         }

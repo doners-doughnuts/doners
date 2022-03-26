@@ -10,9 +10,13 @@ import { ReactComponent as ViewsIcon } from 'assets/images/icon/views.svg';
 import { ReactComponent as CommentIcon } from 'assets/images/icon/comment.svg';
 import H3 from 'assets/theme/Typography/H3/H3';
 import Avatar from 'assets/theme/Avatar/Avatar';
+import { Viewer } from '@toast-ui/react-editor';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 const BoardContents = () => {
+  const [title, setTitle] = useState('게시글 제목');
+  const [contents, setContents] = useState('');
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
@@ -29,7 +33,7 @@ const BoardContents = () => {
                   </CustomButton>
                 </div>
               </div>
-              <H1>게시글 제목</H1>
+              <H1>{title}</H1>
               <div className={cx('info-wrap')}>
                 <div className={cx('article-info')}>
                   <div>
@@ -57,7 +61,8 @@ const BoardContents = () => {
               </div>
             </header>
             <main className={cx('content')}>
-              <H3>"덕분에 따뜻한 외투를 살 수 있었어요!"</H3>
+              <Viewer initialValue={contents} />
+              {/* <H3>"덕분에 따뜻한 외투를 살 수 있었어요!"</H3>
               <P>
                 안녕하세요·부산광역시 서구에 위치한 더불어 살아가는 건강하고
                 아름다운 노후의 희망 파트너 부민 노인복지관입니다.
@@ -86,7 +91,7 @@ const BoardContents = () => {
                 노력하겠습니다. 부민노인복지관의 이웃과 함께 가는 길에
                 카카오같이가치 기부자님도 함께 해주셔서 감사합니다. 2022년
                 가정의 행복과 평안을 빕니다. 감사합니다.
-              </P>
+              </P> */}
             </main>
           </div>
         </div>
