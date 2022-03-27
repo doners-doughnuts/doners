@@ -6,14 +6,16 @@ import com.doners.donersbackend.application.dto.response.community.CommunityGetL
 import com.doners.donersbackend.application.dto.response.community.CommunityResponseDTO;
 
 public interface CommunityService {
-    // 글 작성 : 필수 글 정보 입력 - 제목, 내용
-    void communityRegister(CommunityRegisterPostDTO communityRegisterPostDTO);
+    // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자 , 코드
+    void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO);
     // 글 변경
     Integer changeCommunity(String communityId,CommunityChangePatchDTO communityChangePatchDTO);
     // 글 변경
     Integer deleteCommunity(String communityId);
     // 커뮤니티 글 목록 조회
-    CommunityGetListWrapperResponseDTO getCommunityList();
+    CommunityGetListWrapperResponseDTO getCommunityList(int sequence);
     // 커뮤니티 글 목록 조회
     CommunityResponseDTO getCommunity(String communityId);
+
+    String getUserAccountFromAccessToken(String accessToken);
 }

@@ -1,0 +1,14 @@
+@import 'assets/styles/main';
+
+.history-item {
+  @include flexbox(between, center);
+  margin-bottom: 8px;
+  .value {
+    @include flexbox;
+
+    .icon {
+      @include flexbox;
+      margin-left: 10px;
+    }
+  }
+}

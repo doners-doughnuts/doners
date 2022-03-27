@@ -51,12 +51,13 @@ export const signupcheck = async (
 };
 
 /* 이메일 인증 메일 발송 */
-export const emailConfirm = async (userEmail: any) => {
-  const response = await instance.post(`/email/${userEmail}`, {
-    params: {
-      userEmail: userEmail,
-    },
-  });
+export const emailConfirm = async (
+  emailAddress: string
+) => {
+  const dataset = {
+    emailAddress
+  };
+  const response = await instance.post(`/email`, dataset);
   console.log(response.data);
   return response.data;
 };
