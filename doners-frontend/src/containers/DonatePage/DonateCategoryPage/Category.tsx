@@ -5,6 +5,7 @@ import covid19 from 'assets/images/img-covid19-category.png';
 import rare_diseases from 'assets/images/img-rare-diseases-category.png';
 import veteran from 'assets/images/img-veteran-category.png';
 import single_mom from 'assets/images/img-single-mom-category.png';
+import { Link } from 'react-router-dom';
 // import ImgButton from 'assets/theme/ImgButton/ImgButton';
 
 const cx = classNames.bind(styles);
@@ -13,10 +14,12 @@ const Category = () => {
   return (
     <div className={cx('category')}>
       <h1>Do-Nation!</h1>
-      <div className={cx('category-item', 'item-1')}>
-        <img src={covid19} alt="covid19 category" />
-        <div className={cx('category-desc')}>코로나 19 모금으로 바로가기</div>
-      </div>
+      <Link to="/fundraisings/list/1">
+        <div className={cx('category-item', 'item-1')}>
+          <img src={covid19} alt="covid19 category" />
+          <div className={cx('category-desc')}>코로나 19 모금으로 바로가기</div>
+        </div>
+      </Link>
       <div className={cx('category-item', 'item-2')}>
         <img src={rare_diseases} alt="rare_diseases category" />
         <div className={cx('category-desc')}>희귀질환 모금으로 바로가기</div>

@@ -1,0 +1,9 @@
+@import 'assets/styles/main';
+
+.outer-container {
+  background-color: $yellow;
+
+  .row {
+    padding: 50px 0;
+  }
+}
