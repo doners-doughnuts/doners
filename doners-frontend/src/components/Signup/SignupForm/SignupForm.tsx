@@ -7,7 +7,7 @@ import styles from './SignupForm.module.scss';
 import Input from 'assets/theme/Input/Input';
 import EmailAuthValidation from './EmailAuthValidation';
 import SignUpValidation from './SignUpValidation';
-import { emailConfirm, checkNickname, signupcheck } from 'services/api/UserApi';
+import { checkNickname, signupcheck } from 'services/api/UserApi';
 import { signupState } from 'atoms/atoms';
 import { useRecoilValue } from 'recoil';
 import useEmailAuth from 'hooks/useEmailAuth';
@@ -33,8 +33,8 @@ const SignupForm = () => {
       console.log(submitValues);
       alert('회원가입 시도');
       // console.log(checkNickname(submitValues.nickname));
-      const result = handlesignup();
-      console.log(result);
+      //const result = handlesignup();
+      // console.log(result);
       console.log('회원가입 완료');
       alert('회원가입 완료');
       navigate(-1);
@@ -52,23 +52,23 @@ const SignupForm = () => {
   //   } catch (error) {}
   // };
 
-  const handlesignup = () => {
-    try {
-      const result = signupcheck(
-        values.realname,
-        values.email,
-        signupvisible,
-        values.nickname
-      );
-      console.log(result);
-    } catch (error) {}
-  };
+  // const handlesignup = () => {
+  //   try {
+  //     const result = signupcheck(
+  //       values.realname,
+  //       values.email,
+  //       signupvisible,
+  //       values.nickname
+  //     );
+  //     console.log(result);
+  //   } catch (error) {}
+  // };
 
   const handleEmailSend = async (email: any) => {
     try {
-      const result = await emailConfirm(email);
+      //const result = await emailConfirm(email);
       Setemailsendmsg('전송된 메일의 링크를 눌러주세요.');
-      console.log(result);
+      //    console.log(result);
     } catch (error) {
       Setemailsendmsg('이미 메일을 전송하였습니다. 메일을 확인해주세요');
     }
