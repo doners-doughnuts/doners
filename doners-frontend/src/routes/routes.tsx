@@ -33,7 +33,8 @@ export default function Router() {
       path: '/fundraisings',
       element: <ScrollLayout />,
       children: [
-        { path: 'list', element: <DonateListPage /> },
+        // { path: 'list', element: <DonateListPage /> },
+        { path: 'list/:category_id', element: <DonateListPage /> },
         { path: 'apply', element: <DonateRegistPage /> },
         { path: ':donate_seq', element: <DonateDetailPage /> },
       ],

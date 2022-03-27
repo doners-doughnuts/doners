@@ -1,0 +1,15 @@
+@import 'assets/styles/main';
+
+.btn-wrap {
+  @include flexbox;
+  margin-bottom: 50px;
+
+  .btn-row {
+    @include flexbox(between);
+    width: 450px;
+  }
+}
+
+.title {
+  @include column-flexbox;
+}

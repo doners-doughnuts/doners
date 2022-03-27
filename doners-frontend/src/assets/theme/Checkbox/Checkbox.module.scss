@@ -1,0 +1,11 @@
+@import 'assets/styles/main';
+
+.checkbox-form {
+  @include flexbox(start, center);
+  height: 100%;
+  .checkbox {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+  }
+}
