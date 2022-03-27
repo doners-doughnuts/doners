@@ -22,7 +22,9 @@ function EpilogueEditor() {
             <EpilogueEditorHeader />
             <EditorForm />
             <div className={cx('donate-receipt')}>
-              <TotalDonate />
+              <div className={cx('total-donate')}>
+                <TotalDonate />
+              </div>
               <ReceiptEditor />
             </div>
             <div className={cx('btn-row')}>

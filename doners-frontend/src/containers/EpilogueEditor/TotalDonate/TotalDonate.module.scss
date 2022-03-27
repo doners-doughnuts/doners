@@ -1,12 +1,6 @@
 @import 'assets/styles/main';
 
 .form {
-  width: 38%;
-  height: 270px;
-  border: 2px solid $black;
-  border-radius: 8px;
-  padding: 50px 30px;
-
   .achieved-money {
     @include flexbox(center, end);
   }
