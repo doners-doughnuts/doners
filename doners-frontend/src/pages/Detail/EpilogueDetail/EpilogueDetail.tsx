@@ -1,11 +1,11 @@
 import CommentForm from 'containers/Detail/BoardDetail/BoardComments/CommentForm';
 import Comments from 'containers/Detail/BoardDetail/BoardComments/Comments';
-import BoardContents from 'containers/Detail/BoardDetail/BoardContents/BoardContents';
+import EpilogueContents from 'containers/Detail/EpilogueDetail/EpilogueContents/EpilogueContents';
 
 const EpilogueDetail = () => {
   return (
     <>
-      <BoardContents />
+      <EpilogueContents />
       <CommentForm />
       <Comments />
     </>
