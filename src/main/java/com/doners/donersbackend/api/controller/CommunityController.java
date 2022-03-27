@@ -73,6 +73,7 @@ public class CommunityController {
             @ApiResponse(code=409, message="글 삭제에 실패했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> deleteCommunity(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @PathVariable("communityId") @ApiParam(value="글id", required=true) String communityId) {
 
         try {
@@ -105,6 +106,7 @@ public class CommunityController {
             @ApiResponse(code=200, message="글 조회에 성공했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> getCommunity(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @PathVariable("communityId") @ApiParam(value="글id", required=true) String communityId) {
 
         return ResponseEntity.ok(CommunityResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunity(communityId)));
