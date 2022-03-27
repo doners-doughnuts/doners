@@ -6,9 +6,12 @@ import com.doners.donersbackend.application.dto.response.community.CommunityGetL
 import com.doners.donersbackend.application.dto.response.community.CommunityGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.community.CommunityResponseDTO;
 import com.doners.donersbackend.domain.dao.community.Community;
+import com.doners.donersbackend.domain.dao.user.User;
+import com.doners.donersbackend.domain.enums.CommunityCode;
 import com.doners.donersbackend.domain.repository.CommentRepository;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
+import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,24 +21,39 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.doners.donersbackend.domain.enums.CommunityCode.GENERAL;
+import static com.doners.donersbackend.domain.enums.CommunityCode.NOTICE;
+
 @Service
 @RequiredArgsConstructor
 public class CommunityServiceImpl implements CommunityService{
 
     private final CommunityRepository communityRepository;
+
     private final UserRepository userRepository;
+
     private final CommentRepository commentRepository;
+
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자
     @Override
-    public void communityRegister(CommunityRegisterPostDTO communityRegisterPostDTO) {
+    public void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccount(userAccount).get();
+
+        CommunityCode communityCode;
+        communityCode = user.getUserCode().getCode().equals("U01") ? NOTICE : GENERAL;
+
         // 글작성 정보 추가할 것
         Community community = Community.builder()
                 .communityTitle(communityRegisterPostDTO.getCommunityTitle())
                 .communityDescription(communityRegisterPostDTO.getCommunityDescription())
                 .user(userRepository.findByUserAccountAndUserIsDeleted(communityRegisterPostDTO.getUserAccount(), false).get())
                 .communityViews(0L)
-                .communityCreateTime(LocalDateTime.now()).build();
+                .communityCreateTime(LocalDateTime.now())
+                .communityCode(communityCode).build();
 
         communityRepository.save(community);
     }
@@ -73,7 +91,7 @@ public class CommunityServiceImpl implements CommunityService{
     @Override
     public CommunityGetListWrapperResponseDTO getCommunityList(int sequence) {
         System.out.println("sequence : " + sequence);
-        List<Community> communityList = communityRepository.findByCommunityIsDeletedOrderByCommunityCreateTimeDesc(false, PageRequest.of(sequence-1, 10, Sort.Direction.DESC, "communityCreateTime")).orElse(null);
+        List<Community> communityList = communityRepository.findByCommunityIsDeletedOrderByCommunityCodeAscCommunityCreateTimeDesc(false, PageRequest.of(sequence-1, 10, Sort.Direction.ASC, "communityCode")).orElse(null);
         System.out.println("communityList : " + communityList.size());
         List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
 
@@ -86,6 +104,7 @@ public class CommunityServiceImpl implements CommunityService{
                             .communityCreateTime(community.getCommunityCreateTime())
                             .communityViews(community.getCommunityViews())
                             .communityWriter(community.getUser().getUserNickname())
+                            .communityCode(community.getCommunityCode())
                             .build()
             );
         });
@@ -116,5 +135,11 @@ public class CommunityServiceImpl implements CommunityService{
         community.updateViews();
 
         communityRepository.save(community);
+    }
+
+    @Override
+    public String getUserAccountFromAccessToken(String accessToken) {
+        String token = accessToken.split(" ")[1];
+        return jwtAuthenticationProvider.getUserAccount(token);
     }
 }

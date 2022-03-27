@@ -2,6 +2,7 @@ package com.doners.donersbackend.application.dto.response.community;
 
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentResponseDTO;
+import com.doners.donersbackend.domain.enums.CommunityCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -33,15 +34,19 @@ public class CommunityResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "커뮤니티 글 작성자 이름")
     private String communityWriter;
 
+    @ApiModelProperty(name = "커뮤니티 코드")
+    private CommunityCode communityCode;
+
     @Builder
     public CommunityResponseDTO(String communityTitle, long communityViews, String communityDescription,
-                                LocalDateTime communityCreateTime, List<CommentResponseDTO> commentResponseDTOList, String communityWriter) {
+                                LocalDateTime communityCreateTime, List<CommentResponseDTO> commentResponseDTOList, String communityWriter, CommunityCode communityCode) {
         this.communityTitle = communityTitle;
         this.communityViews = communityViews;
         this.communityDescription = communityDescription;
         this.communityCreateTime = communityCreateTime;
         this.commentResponseDTOList = commentResponseDTOList;
         this.communityWriter = communityWriter;
+        this.communityCode = communityCode;
     }
 
     public static CommunityResponseDTO of(String message, Integer statusCode, CommunityResponseDTO communityResponseDTO) {
