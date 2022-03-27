@@ -50,7 +50,7 @@ public class CommunityServiceImpl implements CommunityService{
         Community community = Community.builder()
                 .communityTitle(communityRegisterPostDTO.getCommunityTitle())
                 .communityDescription(communityRegisterPostDTO.getCommunityDescription())
-                .user(userRepository.findByUserAccountAndUserIsDeleted(communityRegisterPostDTO.getUserAccount(), false).get())
+                .user(user)
                 .communityViews(0L)
                 .communityCreateTime(LocalDateTime.now())
                 .communityCode(communityCode).build();
@@ -59,7 +59,7 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public Integer changeCommunity(String communityId,CommunityChangePatchDTO communityChangePatchDTO) {
+    public Integer changeCommunity(String communityId, CommunityChangePatchDTO communityChangePatchDTO) {
         Community community = communityRepository.findById(communityId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
 
@@ -90,9 +90,8 @@ public class CommunityServiceImpl implements CommunityService{
 
     @Override
     public CommunityGetListWrapperResponseDTO getCommunityList(int sequence) {
-        System.out.println("sequence : " + sequence);
         List<Community> communityList = communityRepository.findByCommunityIsDeletedOrderByCommunityCodeAscCommunityCreateTimeDesc(false, PageRequest.of(sequence-1, 10, Sort.Direction.ASC, "communityCode")).orElse(null);
-        System.out.println("communityList : " + communityList.size());
+
         List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
 
         communityList.forEach(community -> {
@@ -117,7 +116,7 @@ public class CommunityServiceImpl implements CommunityService{
     @Override
     public CommunityResponseDTO getCommunity(String communityId) {
 
-        Community community = communityRepository.findById(communityId)
+        Community community = communityRepository.findByIdAndCommunityIsDeleted(communityId, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 커뮤니티 글을 찾을 수 없습니다."));
 
         increaseViews(community);

@@ -22,10 +22,4 @@ public class CommunityRegisterPostDTO {
     @NotNull
     @ApiModelProperty(name="글 내용")
     private String communityDescription;
-
-    @NotBlank
-    @NotNull
-    @ApiModelProperty(name="작성자 유저 주소")
-    private String userAccount;
-
 }
