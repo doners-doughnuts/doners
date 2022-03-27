@@ -30,9 +30,10 @@ public class CommunityController {
             @ApiResponse(code=409, message="필수 게시글 정보 입력에 실패했습니다.")
     })
     public ResponseEntity<? extends BaseResponseDTO> setCommunityRegister(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) CommunityRegisterPostDTO communityRegisterPostDTO) {
         try {
-            communityService.communityRegister(communityRegisterPostDTO);
+            communityService.communityRegister(accessToken, communityRegisterPostDTO);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(BaseResponseDTO.of("필수 게시글 정보 입력에 실패했습니다.", 409));

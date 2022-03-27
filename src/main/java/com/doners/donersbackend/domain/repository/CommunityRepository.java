@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface CommunityRepository extends JpaRepository<Community,String> {
     Optional<List<Community>> findByCommunityIsDeleted(boolean isDeleted);
-    Optional<List<Community>> findByCommunityIsDeletedOrderByCommunityCreateTimeDesc(boolean isDeleted, Pageable pageable);
+    Optional<List<Community>> findByCommunityIsDeletedOrderByCommunityCodeAscCommunityCreateTimeDesc(boolean isDeleted, Pageable pageable);
     Optional<List<Community>> findByUserAndCommunityIsDeletedOrderByCommunityCreateTimeDesc(User user, boolean isDeleted);
 }
