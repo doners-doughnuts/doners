@@ -387,7 +387,8 @@ public class DonationServiceImpl implements DonationService {
         String token = accessToken.split(" ")[1];
         String userAccount = jwtAuthenticationProvider.getUserAccount(token);
 
-        return userRepository.findByUserAccount(userAccount).orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+        return userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
 
     }
 
