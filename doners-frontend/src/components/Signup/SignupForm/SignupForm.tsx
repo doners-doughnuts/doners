@@ -130,6 +130,7 @@ const SignupForm = () => {
         <Input
           placeholder="이메일"
           value={values.email}
+          id="email"
           type="email"
           name="email"
           error={errors.authmail ? true : false}
@@ -146,35 +147,6 @@ const SignupForm = () => {
           {isLoading ? '진행중' : '회원가입 완료'}
         </Button>
       </form>
-
-      {/* <section className={cx('container')}>
-        <div className={cx('row')}>
-          <div className={cx('col-lg-12')}>
-            <div className={cx('inner-container')}>
-              <div className={cx('text-wrapper')}>
-                <h1 className={cx('slogan')}>
-                  For the New ones ...
-                  <br />
-                  회원정보 입력 <br />
-                </h1>
-                <div className={cx('description')}>
-                  <span>
-                    도너스의 회원이 되신 것을 환영합니다!
-                    <br />
-                    서비스를 이용하기 위해서는 회원님의 정보가 필요해요.
-                  </span>
-                </div>
-              </div>
-              <div className={cx('buttonRow')}>
-                <Button color="primary" shadow fullWidth>
-                  회원가입 완료
-                </Button>
-              </div>
-              <div className={cx('character')}></div>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </div>
   );
 };
