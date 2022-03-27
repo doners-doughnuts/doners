@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Button from 'assets/theme/Button/Button';
 import styles from './AccountCheck.module.scss';
+import character from 'assets/images/charactor-fox.png';
 import { login } from 'services/api/UserApi';
 import { isLoggedState, signupState } from 'atoms/atoms';
 import { useSetRecoilState } from 'recoil';
@@ -80,25 +81,28 @@ const AccountCheck = () => {
             <div className={cx('inner-container')}>
               <div className={cx('text-wrapper')}>
                 <h1 className={cx('slogan')}>
-                  Connect to <span>MetaMask</span>
-                </h1>
-                <div className={cx('description')}>
-                  <span>
-                    {account !== ''
-                      ? localStorage.getItem('user')
-                        ? '이미 로그인 된 상태입니다.'
-                        : '존재하지 않는 회원입니다.'
-                      : '연결하기 버튼을 눌러 연결해주세요 '}
-                    <br />
-                    <span>{account}</span>
-                  </span>
-                </div>
+                  Connect to <span>MetaMask</span>{' '}
+                </h1>{' '}
+                <img className={cx('character')} src={character} />
+                <div className={cx('comment-form')}>
+                  <div className={cx('description')}>
+                    <span>
+                      {account !== ''
+                        ? localStorage.getItem('user')
+                          ? '이미 로그인 된 상태입니다.'
+                          : '존재하지 않는 회원입니다.'
+                        : '연결하기 버튼을 눌러 연결해주세요.'}
+                      <br />
+                      <span>{account}</span>
+                    </span>
+                  </div>
+                </div>{' '}
+                <a>지갑 사용방법이 궁금하다면?</a>
               </div>
               <div className={cx('buttonRow')}>
                 <Button color="primary" onClick={getAccount} fullWidth>
                   연결하기
                 </Button>
-                <a>지갑 사용방법이 궁금하다면?</a>
               </div>
             </div>
           </div>

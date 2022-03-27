@@ -1,8 +1,15 @@
 @import 'assets/styles/main';
 
 .inner-container {
-  padding: 250px 0;
+  padding: 200px 0 150px 0;
   position: relative;
+}
+
+.comment-form {
+  border: 2px solid $black;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
 }
 
 .text-wrapper {
@@ -18,10 +25,12 @@
     @include text-style(48, $orange);
   }
 }
-
+.character {
+  width: 50px;
+  height: 50px;
+}
 .description {
   @include text-style(18, $gray-4);
-  margin-bottom: 32px;
 }
 
 .buttonRow {
@@ -33,7 +42,7 @@
   width: 300px;
   height: 300px;
   position: absolute;
-  top: 0;
-  right: -100px;
-  transform: rotate(30deg);
+  top: 130px;
+  right: -50px;
+  transform: scaleX(-1);
 }

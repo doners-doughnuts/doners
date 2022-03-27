@@ -10,6 +10,7 @@ type InputType = {
   name?: string;
   value?: string;
   disabled?: boolean;
+  id?: string;
   onChange?: (...args: any[]) => void;
 };
 
@@ -22,10 +23,12 @@ const Input = ({
   name,
   value,
   disabled,
+  id,
 }: InputType) => {
   return (
     <input
       className={cx('input-form', { error, success })}
+      id={id}
       placeholder={placeholder}
       onChange={onChange}
       type={type}

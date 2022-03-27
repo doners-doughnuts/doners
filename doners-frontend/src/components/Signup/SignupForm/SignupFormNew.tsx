@@ -6,6 +6,13 @@ import styles from './SignupForm.module.scss';
 import Input from 'assets/theme/Input/Input';
 import EmailAuthValidation from './EmailAuthValidation';
 import SignUpValidation from './SignUpValidation';
+import H2 from 'assets/theme/Typography/H2/H2';
+import H3 from 'assets/theme/Typography/H3/H3';
+import H4 from 'assets/theme/Typography/H4/H4';
+import H5 from 'assets/theme/Typography/H5/H5';
+import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
+import Avatar from 'assets/theme/Avatar/Avatar';
+import P from 'assets/theme/Typography/P/P';
 import {
   checkNickname,
   emailSend,
@@ -96,7 +103,7 @@ const SignupFormNew = () => {
         } else if (value.length < 2 && value.length > 0) {
           setRealnameMsg('2자 이상의 실명을 입력해주세요.');
         } else if (value.length > 10) {
-          setNicknameMsg('15자 이하의 실명을 입력해주세요.');
+          setRealnameMsg('15자 이하의 실명을 입력해주세요.');
         } else {
           setRealnameMsg('');
           setRealnameCheck(true);
@@ -201,9 +208,8 @@ const SignupFormNew = () => {
         } else {
           console.log(response);
           alert('회원가입 완료');
+          navigate(-1);
         }
-
-        //navigate(-1);
       } catch (error) {
         alert('회원가입에 실패했습니다. 새로고침 후 다시 시도해주세요');
       }
@@ -212,94 +218,143 @@ const SignupFormNew = () => {
 
   return (
     <div className={signupAccount ? cx('formvis') : cx('forminvis')}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.inputArea}>
-          {/* 유저아이디 */}
-          <div className={styles.inputRow}>
-            <div>{/* <IdIcon fill="#EEE" width="20" height="20" /> */}</div>
-            <div className={styles.input}>
-              <div className={styles.inputWithBtn}>
-                <input
-                  //ref={idRef}
-                  autoComplete="off"
-                  className={styles.inputData}
-                  id="nickname"
-                  value={nickname}
-                  type="text"
-                  placeholder="닉네임"
-                  disabled={nicknameConfirm ? true : false}
-                  onChange={handleInput}
-                />
-                <button
-                  type="button"
-                  className={styles.checkBtn}
-                  onClick={handleNicknameCheck}
-                  disabled={nicknameCheck ? false : true}
-                >
-                  확인
-                </button>
-              </div>
-              {nicknameConfirm ? (
-                <p className={styles.validMsg}>{nicknameMsg}</p>
-              ) : (
-                <p className={styles.invalidMsg}>{nicknameMsg}</p>
-              )}
-            </div>
-          </div>
-          {/* 이메일 */}
-          <div className={styles.inputRow}>
-            <div>{/* <EmailIcon fill="#EEE" width="20" height="20" /> */}</div>
-            <div className={styles.input}>
-              <div className={styles.inputWithBtn}>
-                <input
-                  autoComplete="off"
-                  id="email"
-                  className={styles.inputData}
-                  value={email}
-                  type="email"
-                  placeholder="이메일"
-                  disabled={emailConfirm ? true : false}
-                  // ref={emailRef}
-                  onChange={handleInput}
-                />
-                <button
-                  type="button"
-                  className={styles.checkBtn}
-                  onClick={handleEmailSendCheck}
-                  disabled={emailCheck ? false : true}
-                >
-                  전송
-                </button>
-              </div>
-              <p className={styles.invalidMsg}>{emailConfirmMsg}</p>
-              {/* {emailConfirm ? (
-                <p className={styles.validMsg}>{emailConfirmMsg}</p>
+      <section className={cx('container')}>
+        <H2>For the New ones ...</H2>
+        <div className={cx('row')}>
+          <div className={cx('col-lg-12')}>
+            <div className={cx('inner-container')}>
+              <header className={cx('article-header')}>
+                <div className={cx('button-wrap')}>
+                  <div className={cx('buttons')}></div>
+                </div>{' '}
+                <div>
+                  <H3>회원정보 입력</H3>
+                </div>
+                <div className={cx('info-wrap')}>
+                  <div className={cx('article-info')}>
+                    <div>
+                      <div>
+                        <H4>도너스의 회원이 되신 것을 환영합니다!</H4>
+                      </div>
+                      <div>
+                        <H4>
+                          서비스를 이용하기 위해서는 회원님의 정보가 필요해요.
+                        </H4>
+                      </div>
+                      <div className={cx('sub-info')}>
+                        <div className={cx('views')}>
+                          {/* <span className={cx('sub-text')}>조회수 3409</span> */}
+                        </div>
+                        <div className={cx('comment')}>
+                          {/* <span className={cx('sub-text')}>댓글 800</span> */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form className={styles.form} onSubmit={handleSubmit}>
+                    <div className={styles.inputArea}>
+                      {/* 유저아이디 */}
+                      <div className={styles.inputRow}>
+                        <div>
+                          {/* <IdIcon fill="#EEE" width="20" height="20" /> */}
+                        </div>
+                        <div className={styles.input}>
+                          <div className={styles.inputWithBtn}>
+                            <Input
+                              //ref={idRef}
+                              // autoComplete="off"
+                              //className={styles.inputData}
+                              id="nickname"
+                              value={nickname}
+                              type="text"
+                              placeholder="닉네임"
+                              disabled={nicknameConfirm ? true : false}
+                              onChange={handleInput}
+                            />
+                            <div className={styles.inputBtn}>
+                              <Button
+                                type="button"
+                                color="secondary"
+                                onClick={handleNicknameCheck}
+                                disabled={nicknameCheck ? false : true}
+                              >
+                                확인
+                              </Button>
+                            </div>
+                          </div>
+                          {nicknameConfirm ? (
+                            <p className={styles.validMsg}>{nicknameMsg}</p>
+                          ) : (
+                            <p className={styles.invalidMsg}>{nicknameMsg}</p>
+                          )}
+                        </div>
+                      </div>
+                      {/* 이메일 */}
+                      <div className={styles.inputRow}>
+                        <div>
+                          {/* <EmailIcon fill="#EEE" width="20" height="20" /> */}
+                        </div>
+                        <div className={styles.input}>
+                          <div className={styles.inputWithBtn}>
+                            <Input
+                              //autoComplete="off"
+                              // className={styles.inputData}
+                              id="email"
+                              value={email}
+                              type="email"
+                              name="naver"
+                              placeholder="이메일"
+                              disabled={isSend ? true : false}
+                              // ref={emailRef}
+                              onChange={handleInput}
+                            />
+                            <div className={styles.inputBtn}>
+                              <Button
+                                type="button"
+                                color="secondary"
+                                onClick={handleEmailSendCheck}
+                                disabled={emailCheck ? false : true}
+                              >
+                                전송
+                              </Button>
+                            </div>
+                          </div>
+                          <p>{emailMsg}</p>
+                          <p>{emailConfirmMsg}</p>
+                          {/* {emailConfirm ? (
+                <p className={styles.validMsg}>{emailMsg}</p>
               ) : (
                 <p className={styles.invalidMsg}>{emailConfirmMsg}</p>
               )} */}
+                        </div>
+                      </div>
+                      {/* 이름 */}
+                      <div className={styles.inputRow}>
+                        <div className={styles.input}>
+                          <Input
+                            //autoComplete="off"
+                            id="realname"
+                            value={realname}
+                            type="text"
+                            placeholder="실명"
+                            // ref={nameRef}
+                            onChange={handleInput}
+                          />
+                          <p className={styles.invalidMsg}>{realnameMsg}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button color="primary" type="submit">
+                      회원가입 완료
+                    </Button>
+                  </form>
+                </div>
+              </header>
+              <main className={cx('content')}></main>
             </div>
           </div>
-          {/* 이름 */}
-          <div className={styles.inputRow}>
-            <div className={styles.input}>
-              <input
-                autoComplete="off"
-                id="realname"
-                className={styles.inputData}
-                value={realname}
-                type="text"
-                placeholder="실명"
-                // ref={nameRef}
-                onChange={handleInput}
-              />
-              <p className={styles.invalidMsg}>{realnameMsg}</p>
-            </div>
-          </div>
-          <button className={styles.registBtn} type="submit">
-            회원가입
-          </button>
         </div>
-      </form>
+      </section>
     </div>
   );
 };
