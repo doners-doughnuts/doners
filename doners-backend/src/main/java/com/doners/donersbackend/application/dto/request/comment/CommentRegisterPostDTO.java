@@ -13,10 +13,10 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class CommentRegisterPostDTO {
 
-    @ApiModelProperty(name="감사글 id")
+    @ApiModelProperty(name="에필로그 ID")
     private String epilougeId;
 
-    @ApiModelProperty(name="커뮤니티 id")
+    @ApiModelProperty(name="커뮤니티 ID")
     private String communityId;
 
     @ApiModelProperty(name="댓글 id")
@@ -26,9 +26,4 @@ public class CommentRegisterPostDTO {
     @NotNull
     @ApiModelProperty(name="댓글 내용")
     private String commentDescription;
-
-    @NotBlank
-    @NotNull
-    @ApiModelProperty(name="작성자 유저 주소")
-    private String userAccount;
 }
