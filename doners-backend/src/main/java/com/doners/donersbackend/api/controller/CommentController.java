@@ -9,6 +9,7 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -27,10 +28,11 @@ public class CommentController {
             @ApiResponse(code=201, message="필수 댓글 정보 입력에 성공했습니다."),
             @ApiResponse(code=409, message="필수 댓글 정보 입력에 실패했습니다.")
     })
-    public ResponseEntity<? extends BaseResponseDTO> setCommentRegister(
+    public ResponseEntity<? extends BaseResponseDTO> registerComment(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) CommentRegisterPostDTO commentRegisterPostDTO) {
         try {
-            commentService.registerComment(commentRegisterPostDTO);
+            commentService.registerComment(accessToken, commentRegisterPostDTO);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(409).body(BaseResponseDTO.of("필수 댓글 정보 입력에 실패했습니다.", 409));
