@@ -57,7 +57,7 @@ public class EmailConfirmationController {
         return ResponseEntity.status(200).body(BaseResponseDTO.of("이메일 인증이 완료되었습니다. 회원가입을 진행해주세요.", 200));
     }
 
-    @GetMapping("/check/email/{emailAddress}")
+    @GetMapping("/check/{emailAddress}")
     @ApiOperation(value="이메일 인증 완료 여부 확인")
     @ApiResponses({
             @ApiResponse(code=200, message="인증이 완료된 이메일입니다."),

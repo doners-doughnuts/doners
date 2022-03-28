@@ -42,7 +42,8 @@ public class CommunityServiceImpl implements CommunityService{
     public void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
 
-        User user = userRepository.findByUserAccount(userAccount).get();
+        User user = userRepository.findByUserAccount(userAccount)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
 
         CommunityCode communityCode;
         communityCode = user.getUserCode().getCode().equals("U01") ? NOTICE : GENERAL;
@@ -60,12 +61,17 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public Integer changeCommunity(String communityId, CommunityChangePatchDTO communityChangePatchDTO) {
-        Community community = communityRepository.findById(communityId)
+    public Integer changeCommunity(String accessToken, CommunityChangePatchDTO communityChangePatchDTO) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccount(userAccount)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+
+        Community community = communityRepository.findById(communityChangePatchDTO.getCommunityId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
 
         try {
-            community.changeCommunity(communityChangePatchDTO.getCommunityTitle(),communityChangePatchDTO.getCommunityDescription());
+            community.changeCommunity(communityChangePatchDTO.getCommunityTitle(), communityChangePatchDTO.getCommunityDescription());
         } catch(Exception e) {
             return 409;
         }

@@ -2,11 +2,12 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
 import com.doners.donersbackend.application.service.DonationService;
-import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -69,12 +70,14 @@ public class DonationController {
     })
     @GetMapping
     public ResponseEntity<? extends BaseResponseDTO> getList(
-            @ApiParam(value = "카테고리", required = true) @NotNull CategoryCode category) {
+            @ApiParam(value = "카테고리", required = true) @NotNull CategoryCode category,
+            @ApiParam(value = "페이지 번호", required = true) int page
+    ) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
 
         try {
-            donationGetListWrapperResponseDTO = donationService.getDonationList(category);
+            donationGetListWrapperResponseDTO = donationService.getDonationList(category, page);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글 목록을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
@@ -116,16 +119,16 @@ public class DonationController {
             @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
             @ApiResponse(code = 409, message = "기부글 추천에 실패했습니다.")
     })
-    @GetMapping("/recommend/{donationId}")
+    @PatchMapping("/recommend")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부글 ID", required = true) @NotBlank @PathVariable String donationId
+            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationRecommendPatchDTO donationRecommendPatchDTO
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
         try {
-            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationId);
+            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationRecommendPatchDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
@@ -145,13 +148,14 @@ public class DonationController {
     @GetMapping("/search")
     public ResponseEntity<? extends BaseResponseDTO> search(
             @ApiParam(value = "검색 유형", required = true) @NotBlank @RequestParam String type,
-            @ApiParam(value = "검색어", required = true) @NotBlank @RequestParam String keyword
+            @ApiParam(value = "검색어", required = true) @NotBlank @RequestParam String keyword,
+            @ApiParam(value = "페이지 번호", required = true) int page
     ) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
 
         try {
-            donationGetListWrapperResponseDTO = donationService.searchDonation(type, keyword);
+            donationGetListWrapperResponseDTO = donationService.searchDonation(type, keyword, page);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {

@@ -24,7 +24,7 @@ public class EpilogueController {
 
     private final EpilogueService epilogueService;
 
-    @PostMapping("/register")
+    @PostMapping
     @ApiOperation(value="필수 게시글 정보 입력 - 제목, 내용, 작성자 유저 주소")
     @ApiResponses({
             @ApiResponse(code=201, message="필수 게시글 정보 입력에 성공했습니다."),
