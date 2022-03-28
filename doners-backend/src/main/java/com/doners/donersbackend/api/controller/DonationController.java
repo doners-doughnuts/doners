@@ -7,7 +7,7 @@ import com.doners.donersbackend.application.dto.response.donation.DonationRecomm
 import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
 import com.doners.donersbackend.application.service.DonationService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
-import com.doners.donersbackend.domain.dao.comment.enums.CategoryCode;
+import com.doners.donersbackend.domain.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

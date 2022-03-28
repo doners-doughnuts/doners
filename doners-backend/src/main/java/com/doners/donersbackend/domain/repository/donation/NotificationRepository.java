@@ -2,7 +2,7 @@ package com.doners.donersbackend.domain.repository.donation;
 
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.Notification;
-import com.doners.donersbackend.domain.dao.comment.enums.NotificationCode;
+import com.doners.donersbackend.domain.enums.NotificationCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

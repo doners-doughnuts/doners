@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.dto.request.user;
 
-import com.doners.donersbackend.domain.dao.comment.enums.UserCode;
+import com.doners.donersbackend.domain.enums.UserCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
