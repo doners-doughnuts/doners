@@ -37,6 +37,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public void registerComment(String accessToken, CommentRegisterPostDTO commentRegisterPostDTO) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
+
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
 
@@ -60,9 +61,18 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Integer changeComment(String commentId, CommentChangePatchDTO commentChangePatchDTO) {
-        Comment comment = commentRepository.findById(commentId)
+    public Integer changeComment(String accessToken, CommentChangePatchDTO commentChangePatchDTO) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
+        Comment comment = commentRepository.findByIdAndCommentIsDeleted(commentChangePatchDTO.getCommentId(), false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
+
+        if(!user.getUserAccount().equals(comment.getUser().getId())) {
+            return 401;
+        }
 
         try {
             comment.changeComment(commentChangePatchDTO.getCommentDescription());
@@ -75,9 +85,18 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Integer deleteComment(String commentId) {
+    public Integer deleteComment(String accessToken, String commentId) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
+
+        if(!user.getUserAccount().equals(comment.getUser().getId())) {
+            return 401;
+        }
 
         try {
             comment.deleteComment();
@@ -90,8 +109,14 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentGetListWrapperResponseDTO getEpilogueCommentList(String id) {
+    public CommentGetListWrapperResponseDTO getEpilogueCommentList(String accessToken, String id) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
         List<CommentResponseDTO> list = new ArrayList<>();
+
         Epilogue epilogue = epilogueRepository.findById(id).get();
 
         for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
@@ -102,8 +127,14 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentGetListWrapperResponseDTO getCommunityCommentList(String id) {
+    public CommentGetListWrapperResponseDTO getCommunityCommentList(String accessToken, String id) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
         List<CommentResponseDTO> list = new ArrayList<>();
+
         Community community = communityRepository.findById(id).get();
 
         for(Comment c : commentRepository.findAllByCommunityAndCommentIsDeletedOrderByCommentCreateTime(community, false).get()) {
@@ -114,7 +145,12 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentGetListWrapperResponseDTO getSubCommentList(String parentId) {
+    public CommentGetListWrapperResponseDTO getSubCommentList(String accessToken, String parentId) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
         List<CommentResponseDTO> list = new ArrayList<>();
 
         Comment comment = commentRepository.findById(parentId).get();

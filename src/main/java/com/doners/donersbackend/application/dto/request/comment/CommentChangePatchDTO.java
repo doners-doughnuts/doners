@@ -15,6 +15,11 @@ public class CommentChangePatchDTO {
 
     @NotBlank
     @NotNull
+    @ApiModelProperty(name="댓글 ID")
+    private String commentId;
+
+    @NotBlank
+    @NotNull
     @ApiModelProperty(name="댓글 내용")
     private String commentDescription;
 
