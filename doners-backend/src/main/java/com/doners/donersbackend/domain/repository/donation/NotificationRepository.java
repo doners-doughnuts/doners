@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, String> {
 
-    // 기부글, 알림 코드, 가장 최근 것
-    Optional<Notification> findByDonationAndNotificationCodeAndIsRead(Donation donation, NotificationCode notificationCode, boolean isRead);
+    Optional<Notification> findByDonationAndNotificationCode(Donation donation, NotificationCode notificationCode);
 
 }

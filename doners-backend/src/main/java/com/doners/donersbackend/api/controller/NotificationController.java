@@ -1,16 +1,16 @@
 package com.doners.donersbackend.api.controller;
 
+import com.doners.donersbackend.application.dto.request.donation.NotificationReadDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.NotificationResponseDTO;
 import com.doners.donersbackend.application.service.NotificationService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import javax.validation.Valid;
 
 @Api(value = "Notification API", tags = {"Notification"})
 @CrossOrigin("*")
@@ -42,12 +42,37 @@ public class NotificationController {
                 return ResponseEntity.status(200).body(NotificationResponseDTO.of("알림이 없습니다.", 200));
             }
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 409));
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("알림 확인에 실패했습니다.", 409));
         }
 
         return ResponseEntity.ok(NotificationResponseDTO.of("알림이 있습니다.", 200, notificationResponseDTO));
+
+    }
+
+    @ApiOperation(value = "알림 확인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "알림이 있습니다."),
+            @ApiResponse(code = 204, message = "알림이 없습니다."),
+            @ApiResponse(code = 404, message = "알림 확인에 필요한 정보를 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "알림 확인에 실패했습니다.")
+    })
+    @PatchMapping
+    public ResponseEntity<? extends BaseResponseDTO> read(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @ApiParam @Valid @RequestBody NotificationReadDTO notificationReadDTO
+    ) {
+
+        try {
+            notificationService.readNotification(accessToken, notificationReadDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("알림 확인에 실패했습니다.", 409));
+        }
+
+        return ResponseEntity.ok(BaseResponseDTO.of("알림을 확인했습니다.", 200));
 
     }
 
