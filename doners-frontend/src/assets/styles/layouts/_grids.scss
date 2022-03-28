@@ -6,6 +6,7 @@
   .row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   [class^='col-'] {
@@ -32,10 +33,9 @@
   @include responsive(D) {
     max-width: $lg-max-container;
     padding: 0;
-
     @for $i from 1 through $lg-columns {
       .col-lg-#{$i} {
-        width: ($lg-unit + $gutter) * $i;
+        width: ($lg-unit + $gutter) * $i - 10px;
       }
     }
   }

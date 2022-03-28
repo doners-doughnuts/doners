@@ -2,6 +2,7 @@ import Checkbox from 'assets/theme/Checkbox/Checkbox';
 import classNames from 'classnames/bind';
 import DonationCard from 'components/DonationCard/DonationCard';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import DonateListSortTab from '../DonateListSortTab/DonateListSortTab';
 import styles from './DonateListContents.module.scss';
 const cx = classNames.bind(styles);
@@ -25,7 +26,9 @@ const DonateListContents = () => {
             <DonateListSortTab />
           </div>
           <div className={cx('col-lg-4')}>
-            <DonationCard />
+            <Link to={'/fundraisings/1'}>
+              <DonationCard />
+            </Link>
           </div>
           <div className={cx('col-lg-4')}>
             <DonationCard />

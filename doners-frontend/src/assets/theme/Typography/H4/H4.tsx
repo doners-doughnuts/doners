@@ -3,7 +3,14 @@ import styles from './H4.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-type TextColor = 'black' | 'yellow' | 'gray' | 'orange' | 'blue';
+type TextColor =
+  | 'black'
+  | 'yellow'
+  | 'gray'
+  | 'orange'
+  | 'blue'
+  | 'green'
+  | 'red';
 
 type TextType = {
   children: string;
