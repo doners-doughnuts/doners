@@ -102,7 +102,7 @@ public class EpilogueController {
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @PathVariable("sequence") @ApiParam(value="", required=true) int sequence) {
 
-        return ResponseEntity.ok(EpilogueGetListWrapperResponseDTO.of("에필로그 목록 조회 성공", 200, epilogueService.getEpilogueList(accessToken)));
+        return ResponseEntity.ok(EpilogueGetListWrapperResponseDTO.of("에필로그 목록 조회 성공", 200, epilogueService.getEpilogueList(accessToken, sequence)));
     }
 
     @GetMapping("/{epilogueId}")
