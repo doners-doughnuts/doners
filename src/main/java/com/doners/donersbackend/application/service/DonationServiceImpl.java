@@ -102,9 +102,9 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode) {
+    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page) {
 
-        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(0, 9))
+        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
                 .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
 
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
@@ -237,29 +237,29 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO searchDonation(String type, String keyword) {
+    public DonationGetListWrapperResponseDTO searchDonation(String type, String keyword, int page) {
 
         List<Donation> donationList = new ArrayList<>();
 
         switch (type) {
             // 제목 + 사연
             case "td":
-                donationList = donationRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword, PageRequest.of(0, 9))
+                donationList = donationRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword, PageRequest.of(page, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 제목
             case "t":
-                donationList = donationRepository.findByTitleContaining(keyword, PageRequest.of(0, 9))
+                donationList = donationRepository.findByTitleContaining(keyword, PageRequest.of(page, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 사연
             case "d":
-                donationList = donationRepository.findByDescriptionContaining(keyword, PageRequest.of(0, 9))
+                donationList = donationRepository.findByDescriptionContaining(keyword, PageRequest.of(page, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 닉네임
             case "n":
-                donationList = donationRepository.findByUser(userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(0, 9))
+                donationList = donationRepository.findByUser(userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(page, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
         }
