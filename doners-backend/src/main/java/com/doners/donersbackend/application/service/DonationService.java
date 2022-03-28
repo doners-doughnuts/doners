@@ -2,7 +2,7 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRecommendDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
@@ -24,7 +24,7 @@ public interface DonationService {
     DonationResponseDTO getDonation(String donationId);
 
     // 기부글 추천
-    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendDTO donationRecommendDTO);
+    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO);
 
     // 기부글 검색
     DonationGetListWrapperResponseDTO searchDonation(String type, String keyword, int page);
