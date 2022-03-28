@@ -1,4 +1,4 @@
-package com.doners.donersbackend.domain.dao.comment.enums;
+package com.doners.donersbackend.domain.enums;
 
 import lombok.Getter;
 

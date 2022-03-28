@@ -6,7 +6,7 @@ import com.doners.donersbackend.application.dto.response.donation.DonationGetLis
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
 import com.doners.donersbackend.domain.dao.donation.Donation;
-import com.doners.donersbackend.domain.dao.comment.enums.CategoryCode;
+import com.doners.donersbackend.domain.enums.CategoryCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

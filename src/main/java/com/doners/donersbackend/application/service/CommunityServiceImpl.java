@@ -8,7 +8,7 @@ import com.doners.donersbackend.application.dto.response.community.CommunityResp
 import com.doners.donersbackend.domain.dao.comment.Comment;
 import com.doners.donersbackend.domain.dao.community.Community;
 import com.doners.donersbackend.domain.dao.user.User;
-import com.doners.donersbackend.domain.dao.comment.enums.CommunityCode;
+import com.doners.donersbackend.domain.enums.CommunityCode;
 import com.doners.donersbackend.domain.repository.CommentRepository;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
@@ -22,8 +22,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.doners.donersbackend.domain.dao.comment.enums.CommunityCode.GENERAL;
-import static com.doners.donersbackend.domain.dao.comment.enums.CommunityCode.NOTICE;
+import static com.doners.donersbackend.domain.enums.CommunityCode.GENERAL;
+import static com.doners.donersbackend.domain.enums.CommunityCode.NOTICE;
 
 @Service
 @RequiredArgsConstructor

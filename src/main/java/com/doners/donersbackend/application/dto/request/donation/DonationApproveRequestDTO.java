@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.dto.request.donation;
 
-import com.doners.donersbackend.domain.dao.comment.enums.ApprovalStatusCode;
+import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
