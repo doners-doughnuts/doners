@@ -17,7 +17,7 @@ public interface DonationService {
     Boolean createDonation(String accessToken, DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence);
 
     // 기부글 목록 조회
-    DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode);
+    DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page);
 
     // 기부글 상세 조회
     DonationResponseDTO getDonation(String donationId);
@@ -26,7 +26,7 @@ public interface DonationService {
     DonationRecommendResponseDTO recommendDonation(String accessToken, String donationId);
 
     // 기부글 검색
-    DonationGetListWrapperResponseDTO searchDonation(String type, String keyword);
+    DonationGetListWrapperResponseDTO searchDonation(String type, String keyword, int page);
 
     // 기부글 승인
     Integer approveDonation(String accessToken, DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException;
