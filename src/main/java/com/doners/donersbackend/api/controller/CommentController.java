@@ -22,7 +22,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/register")
+    @PostMapping
     @ApiOperation(value="필수 댓글 정보 입력 - 내용,글 id ,작성자 유저 주소")
     @ApiResponses({
             @ApiResponse(code=201, message="필수 댓글 정보 입력에 성공했습니다."),
