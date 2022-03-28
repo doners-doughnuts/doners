@@ -5,8 +5,8 @@ import com.doners.donersbackend.application.dto.response.donation.NotificationRe
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.Notification;
 import com.doners.donersbackend.domain.dao.user.User;
-import com.doners.donersbackend.domain.dao.comment.enums.ApprovalStatusCode;
-import com.doners.donersbackend.domain.dao.comment.enums.NotificationCode;
+import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
+import com.doners.donersbackend.domain.enums.NotificationCode;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationRepository;
 import com.doners.donersbackend.domain.repository.donation.NotificationRepository;

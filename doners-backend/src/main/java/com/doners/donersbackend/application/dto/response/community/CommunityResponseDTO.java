@@ -2,7 +2,7 @@ package com.doners.donersbackend.application.dto.response.community;
 
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.comment.CommentResponseDTO;
-import com.doners.donersbackend.domain.dao.comment.enums.CommunityCode;
+import com.doners.donersbackend.domain.enums.CommunityCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
