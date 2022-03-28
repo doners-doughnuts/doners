@@ -31,3 +31,23 @@ import {
  * - 오늘 거래된 SSF 총향
  * - transaction stages (SSF)
  */
+
+type NftApiProps = {};
+
+enum NftEditions {
+  covid = 1,
+  single = 2,
+  warrior = 3,
+  patient = 4,
+}
+
+export const getMetadata = async (edition: NftEditions) => {
+  switch (edition) {
+    case 1:
+      (await DonersDoughnutsCovid()).methods.foo().call();
+      break;
+  }
+};
+
+// TODO 파일 옮기기
+export const getSSFBalance = async () => {};
