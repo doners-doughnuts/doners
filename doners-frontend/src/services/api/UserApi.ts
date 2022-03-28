@@ -19,13 +19,13 @@ export const login = async (userAccount: any) => {
   });
   console.log(response);
   // 아직 JWT TOKEN없어서
-  if (response.data.statusCode === 200) {
-    localStorage.setItem('user', userAccount);
-  }
+  // if (response.data.statusCode === 200) {
+  //   localStorage.setItem('user', userAccount);
+  // }
 
   if (response.data.accessToken) {
     // save JWT token
-    // localStorage.setItem('user', JSON.stringify(response.data));
+    localStorage.setItem('user', JSON.stringify(response.data));
   }
   return response.data;
 };

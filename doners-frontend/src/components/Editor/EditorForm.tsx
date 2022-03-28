@@ -22,6 +22,14 @@ const EditorForm = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const editorRef = useRef<Editor>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
+  const titleHandler = () => {
+    if (titleRef.current) {
+      setTitle(titleRef.current.value);
+      console.log(titleRef.current.value);
+    }
+  };
 
   const contentHandler = () => {
     setContent(editorRef.current?.getInstance().getMarkdown() || '');
@@ -34,6 +42,8 @@ const EditorForm = () => {
         className={cx('title')}
         placeholder="제목을 입력하세요."
         maxLength={50}
+        ref={titleRef}
+        onChange={titleHandler}
       />
       <Editor
         previewStyle="vertical"
