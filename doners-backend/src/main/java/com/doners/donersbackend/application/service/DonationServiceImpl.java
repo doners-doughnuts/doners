@@ -244,22 +244,22 @@ public class DonationServiceImpl implements DonationService {
         switch (type) {
             // 제목 + 사연
             case "td":
-                donationList = donationRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword, PageRequest.of(page, 9))
+                donationList = donationRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword, PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 제목
             case "t":
-                donationList = donationRepository.findByTitleContaining(keyword, PageRequest.of(page, 9))
+                donationList = donationRepository.findByTitleContaining(keyword, PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 사연
             case "d":
-                donationList = donationRepository.findByDescriptionContaining(keyword, PageRequest.of(page, 9))
+                donationList = donationRepository.findByDescriptionContaining(keyword, PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 닉네임
             case "n":
-                donationList = donationRepository.findByUser(userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(page, 9))
+                donationList = donationRepository.findByUser(userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
         }
