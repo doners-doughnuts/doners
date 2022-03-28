@@ -2,6 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
@@ -121,13 +122,13 @@ public class DonationController {
     @GetMapping("/recommend/{donationId}")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부글 ID", required = true) @NotBlank @PathVariable String donationId
+            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationRecommendDTO donationRecommendDTO
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
         try {
-            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationId);
+            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationRecommendDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
