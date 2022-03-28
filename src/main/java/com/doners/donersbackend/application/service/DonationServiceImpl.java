@@ -2,7 +2,7 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRecommendDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.donation.Donation;
@@ -219,11 +219,11 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendDTO donationRecommendDTO) {
+    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO) {
 
         convertAccessTokenToUser(accessToken);
 
-        Donation donation = donationRepository.findById(donationRecommendDTO.getDonationId())
+        Donation donation = donationRepository.findById(donationRecommendPatchDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 추천수 업데이트
