@@ -1,23 +1,18 @@
-import React, { createRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Button from 'assets/theme/Button/Button';
 import styles from './SignupForm.module.scss';
 import Input from 'assets/theme/Input/Input';
-import EmailAuthValidation from './EmailAuthValidation';
-import SignUpValidation from './SignUpValidation';
 import H2 from 'assets/theme/Typography/H2/H2';
 import H3 from 'assets/theme/Typography/H3/H3';
 import H4 from 'assets/theme/Typography/H4/H4';
-import H5 from 'assets/theme/Typography/H5/H5';
-import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
-import Avatar from 'assets/theme/Avatar/Avatar';
-import P from 'assets/theme/Typography/P/P';
 import {
   checkNickname,
   emailSend,
   signupcheck,
   emailcheck,
+  login,
 } from 'services/api/UserApi';
 import { signupState } from 'atoms/atoms';
 import { useRecoilValue } from 'recoil';
@@ -26,13 +21,6 @@ import { useSetRecoilState } from 'recoil';
 
 const cx = classNames.bind(styles);
 const SignupFormNew = () => {
-  const idRef = createRef();
-  const pwdRef = createRef();
-  const confirmPwdRef = createRef();
-  const emailRef = createRef();
-  const confirmEmailRef = createRef();
-  const nameRef = createRef();
-
   // 입력 폼 데이터
   const [realname, setRealname] = useState('');
   const [email, setEmail] = useState('');
@@ -140,10 +128,10 @@ const SignupFormNew = () => {
       if (!data) {
         setEmailMsg('이미 인증된 이메일 입니다.');
       } else {
+        console.log(';2;');
         setIsSend(true);
         setEmailMsg('이메일이 발송되었습니다.');
       }
-
       // setEmailConfirmCodeMsg(data.message);
     } catch ({ response }) {
       setEmailMsg('메일 전송에 실패하였습니다. 새로고침 해주세요.');
@@ -153,7 +141,7 @@ const SignupFormNew = () => {
   const handleEmailCheck = async () => {
     try {
       const data = await emailcheck(email);
-      console.log(data);
+      console.log('data', data);
       if (!data) {
         setEmailConfirmMsg('메일을 확인해주세요.');
       } else {
@@ -172,6 +160,7 @@ const SignupFormNew = () => {
       const data = await emailcheck(email);
       console.log(data);
       if (!data) {
+        console.log('뀨?');
         setEmailConfirmMsg('메일을 확인해주세요.');
       } else {
         setEmailConfirm(true);
@@ -319,13 +308,15 @@ const SignupFormNew = () => {
                               </Button>
                             </div>
                           </div>
-                          <p>{emailMsg}</p>
-                          <p>{emailConfirmMsg}</p>
-                          {/* {emailConfirm ? (
-                <p className={styles.validMsg}>{emailMsg}</p>
-              ) : (
-                <p className={styles.invalidMsg}>{emailConfirmMsg}</p>
-              )} */}
+                          {/* <p>{emailMsg}</p>
+                          <p>{emailConfirmMsg}</p> */}
+                          {!isSend ? (
+                            <p className={styles.validMsg}>{emailMsg}</p>
+                          ) : (
+                            <p className={styles.invalidMsg}>
+                              {emailConfirmMsg}
+                            </p>
+                          )}
                         </div>
                       </div>
                       {/* 이름 */}
