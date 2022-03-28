@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getBalance } from 'services/blockchain/SsfApi';
+import { getSSFBalance } from 'services/blockchain/SsfApi';
 
 export default function Test() {
   // async function foo() {
@@ -7,7 +7,7 @@ export default function Test() {
   //   const accounts = Web3Client.eth.requestAccounts().then(console.log).catch(console.log);
   //   console.log(accounts)
   // }
-  useEffect(() => { getBalance('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367') }, []);
+  useEffect(() => { getSSFBalance('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367') }, []);
 
   return <></>
 }
