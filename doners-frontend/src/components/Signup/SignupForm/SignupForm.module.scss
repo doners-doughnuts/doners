@@ -7,40 +7,54 @@
   display: none;
 }
 
-.inner-container {
-  padding: 250px 0;
-  position: relative;
-}
-
-.text-wrapper {
-  text-align: left;
-  margin-bottom: 120px;
-}
-
-.slogan {
-  @include text-style(48);
-  margin-bottom: 30px;
-
-  span {
-    @include text-style(48, $orange);
+.inputWithBtn {
+  @include flexbox;
+  .inputBtn {
+    margin-left: 5px;
+    width: 20%;
   }
 }
+.inner-container {
+  border: 2px solid $black;
+  box-shadow: $btn-shadow;
+  padding: 50px;
+  margin-bottom: 150px;
+  .article-header {
+    margin-bottom: 50px;
+  }
+  .button-wrap {
+    @include flexbox(end, center);
 
-.description {
-  @include text-style(18, $gray-4);
-  margin-bottom: 32px;
-}
+    .buttons {
+      @include flexbox(between, center);
+      width: 180px;
+    }
+  }
 
-.buttonRow {
-  width: 188px;
-  margin: 0 auto;
-}
+  .info-wrap {
+    @include flexbox(between, center);
 
-.character {
-  width: 300px;
-  height: 300px;
-  position: absolute;
-  top: 0;
-  right: -100px;
-  transform: rotate(30deg);
+    .sub-info {
+      @include flexbox;
+
+      .views,
+      .comment {
+        @include flexbox;
+      }
+
+      .views {
+        margin-right: 30px;
+      }
+      .icon {
+        margin-right: 5px;
+      }
+    }
+
+    .author {
+      @include flexbox;
+      .name {
+        margin-left: 5px;
+      }
+    }
+  }
 }

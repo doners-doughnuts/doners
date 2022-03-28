@@ -1,5 +1,5 @@
 import {
-  emailConfirm,
+  //emailConfirm,
   checkNickname,
   signupcheck,
   emailcheck,

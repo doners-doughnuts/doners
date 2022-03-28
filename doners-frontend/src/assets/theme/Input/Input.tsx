@@ -1,4 +1,3 @@
-// import { BackdropProps } from '@mui/material';
 import classNames from 'classnames/bind';
 import styles from './Input.module.scss';
 const cx = classNames.bind(styles);
@@ -11,6 +10,7 @@ type InputType = {
   name?: string;
   value?: string;
   disabled?: boolean;
+  id?: string;
   onChange?: (...args: any[]) => void;
 };
 
@@ -23,10 +23,12 @@ const Input = ({
   name,
   value,
   disabled,
+  id,
 }: InputType) => {
   return (
     <input
       className={cx('input-form', { error, success })}
+      id={id}
       placeholder={placeholder}
       onChange={onChange}
       type={type}
