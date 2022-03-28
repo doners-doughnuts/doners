@@ -1,8 +1,8 @@
 package com.doners.donersbackend.application.dto.response.donation;
 
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
-import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
-import com.doners.donersbackend.domain.enums.CategoryCode;
+import com.doners.donersbackend.domain.dao.comment.enums.ApprovalStatusCode;
+import com.doners.donersbackend.domain.dao.comment.enums.CategoryCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

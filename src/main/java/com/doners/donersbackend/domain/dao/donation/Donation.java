@@ -2,8 +2,8 @@ package com.doners.donersbackend.domain.dao.donation;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.dao.user.User;
-import com.doners.donersbackend.domain.enums.CategoryCode;
-import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
+import com.doners.donersbackend.domain.dao.comment.enums.CategoryCode;
+import com.doners.donersbackend.domain.dao.comment.enums.ApprovalStatusCode;
 import lombok.*;
 
 import javax.persistence.*;

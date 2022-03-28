@@ -1,6 +1,6 @@
 package com.doners.donersbackend.util.converter;
 
-import com.doners.donersbackend.domain.enums.CommunityCode;
+import com.doners.donersbackend.domain.dao.comment.enums.CommunityCode;
 
 import javax.persistence.Converter;
 

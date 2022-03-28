@@ -2,7 +2,7 @@ package com.doners.donersbackend.domain.dao.community;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.dao.user.User;
-import com.doners.donersbackend.domain.enums.CommunityCode;
+import com.doners.donersbackend.domain.dao.comment.enums.CommunityCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
