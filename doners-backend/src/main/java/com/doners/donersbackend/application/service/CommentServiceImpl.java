@@ -7,10 +7,12 @@ import com.doners.donersbackend.application.dto.response.comment.CommentResponse
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.comment.Comment;
 import com.doners.donersbackend.domain.dao.community.Community;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.CommentRepository;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
+import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +25,29 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
+
     private final CommunityRepository communityRepository;
+
     private final EpilogueRepository epilogueRepository;
+
     private final UserRepository userRepository;
 
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
+
     @Override
-    public void registerComment(CommentRegisterPostDTO commentRegisterPostDTO) {
+    public void registerComment(String accessToken, CommentRegisterPostDTO commentRegisterPostDTO) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
         Comment parentComment = null;
-        if(commentRepository.findById(commentRegisterPostDTO.getCommentId()).isPresent()){
+        if(commentRepository.findByIdAndCommentIsDeleted(commentRegisterPostDTO.getCommentId(), false).isPresent()){
             parentComment = commentRepository.findById(commentRegisterPostDTO.getCommentId()).get();
         }
         // 댓글 작성 정보
         Comment comment = Comment.builder()
                 .commentDescription(commentRegisterPostDTO.getCommentDescription())
-                .user(userRepository.findByUserAccount(commentRegisterPostDTO.getUserAccount()).get())
+                .user(user)
                 .parentCommentId(parentComment)
                 .commentCreateTime(LocalDateTime.now()).build();
 
@@ -114,4 +125,9 @@ public class CommentServiceImpl implements CommentService{
         return new CommentGetListWrapperResponseDTO(list);
     }
 
+    @Override
+    public String getUserAccountFromAccessToken(String accessToken) {
+        String token = accessToken.split(" ")[1];
+        return jwtAuthenticationProvider.getUserAccount(token);
+    }
 }
