@@ -307,9 +307,9 @@ public class DonationServiceImpl implements DonationService {
 
         // 거절
         if (!donationApproveRequestDTO.isApproved()) {
-            if (donationApproveRequestDTO.getApprovalStatusCode() == null) throw new NullPointerException();
+            if (donationApproveRequestDTO.getRejectionCode() == null) throw new NullPointerException();
 
-            donation.changeApprovalStatusCode(donationApproveRequestDTO.getApprovalStatusCode());
+            donation.changeApprovalStatusCode(donationApproveRequestDTO.getRejectionCode());
 
             donationRepository.save(donation);
 
