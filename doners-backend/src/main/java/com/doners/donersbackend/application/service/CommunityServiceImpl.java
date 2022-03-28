@@ -5,6 +5,7 @@ import com.doners.donersbackend.application.dto.request.community.CommunityRegis
 import com.doners.donersbackend.application.dto.response.community.CommunityGetListResponseDTO;
 import com.doners.donersbackend.application.dto.response.community.CommunityGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.community.CommunityResponseDTO;
+import com.doners.donersbackend.domain.dao.comment.Comment;
 import com.doners.donersbackend.domain.dao.community.Community;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.CommunityCode;
@@ -95,6 +96,9 @@ public class CommunityServiceImpl implements CommunityService{
         List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
 
         communityList.forEach(community -> {
+            List<Comment> commentList = commentRepository.findAllByCommunityAndCommentIsDeleted(community, false).orElse(null);
+            long comments = commentList == null ? 0L : commentList.size();
+
             communityGetListResponseDTOList.add(
                     CommunityGetListResponseDTO.builder()
                             .communityId(community.getId())
@@ -104,6 +108,7 @@ public class CommunityServiceImpl implements CommunityService{
                             .communityViews(community.getCommunityViews())
                             .communityWriter(community.getUser().getUserNickname())
                             .communityCode(community.getCommunityCode())
+                            .comments(comments)
                             .build()
             );
         });
