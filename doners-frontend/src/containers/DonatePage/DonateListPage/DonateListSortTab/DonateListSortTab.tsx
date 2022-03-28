@@ -1,8 +1,5 @@
-import { Link } from 'react-router-dom';
-
 import classNames from 'classnames/bind';
 import styles from './DonateListSortTab.module.scss';
-import H3 from 'assets/theme/Typography/H3/H3';
 import H4 from 'assets/theme/Typography/H4/H4';
 const cx = classNames.bind(styles);
 

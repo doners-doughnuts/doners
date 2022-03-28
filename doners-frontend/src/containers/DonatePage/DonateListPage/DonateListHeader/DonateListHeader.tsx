@@ -6,7 +6,6 @@ import disease from 'assets/images/icon/disease.svg';
 
 import classNames from 'classnames/bind';
 import styles from './DonateListHeader.module.scss';
-import H3 from 'assets/theme/Typography/H3/H3';
 import P from 'assets/theme/Typography/P/P';
 import H2 from 'assets/theme/Typography/H2/H2';
 

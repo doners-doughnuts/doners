@@ -1,0 +1,56 @@
+@import 'assets/styles/main';
+
+.info-form {
+  border: 2px solid $black;
+  border-radius: 8px;
+  padding: 30px;
+  margin: 10px 0;
+  .title {
+    margin-bottom: 30px;
+  }
+
+  .date-wrap {
+    margin-bottom: 30px;
+    .date-row {
+      @include flexbox(start);
+
+      .date-title {
+        margin-right: 10px;
+      }
+    }
+    .value-row {
+      @include flexbox(start, end);
+      margin-top: 20px;
+      .value-title {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .progress-info {
+    margin-bottom: 30px;
+    .progress-rate {
+      @include flexbox(end);
+    }
+  }
+
+  .donate-title {
+    margin-bottom: 20px;
+  }
+
+  .donate-plan {
+    border: 2px solid $black;
+    border-radius: 8px;
+    padding: 10px;
+
+    .detail-plan {
+      @include flexbox(between);
+      .ocBtn {
+        cursor: pointer;
+      }
+    }
+    .history-items {
+      margin-top: 10px;
+    }
+  }
+}

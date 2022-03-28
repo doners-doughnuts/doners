@@ -27,3 +27,11 @@
   @extend %font-base;
   color: $blue;
 }
+.text-green {
+  @extend %font-base;
+  color: $green;
+}
+.text-red {
+  @extend %font-base;
+  color: $red;
+}
