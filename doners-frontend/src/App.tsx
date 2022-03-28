@@ -1,9 +1,9 @@
 import { RecoilRoot } from 'recoil';
 import Router from 'routes/routes';
 // TODO
-import styles from './App.module.css';
+// import styles from './App.module.css';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
-import Fest from 'services/nft/Fest';
+import Test from 'services/nft/Test';
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
       {/* Recoil을 사용하는 component들은 <RecoilRoot>로 감싸야 함 */}
       <RecoilRoot>
         <ScrollToTop />
-        <Fest />
+        <Test />
 
         <Router />
       </RecoilRoot>

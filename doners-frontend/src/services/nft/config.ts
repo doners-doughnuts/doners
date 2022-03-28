@@ -1,26 +1,40 @@
 // ? 왜 .ts 파일에서는 import가 되지 않는가. js만 지원?
 import Web3 from 'web3';
-
-// const web3 = new Web3('ws://localhost:8546');
+import { AbiItem } from 'web3-utils';
 
 const HTTP_PROVIDER = 'http://20.196.209.2:8545';
-const PROVIDER = 'ws://20.196.209.2:6174';
+const WEBSOCKET_PROVIDER = 'ws://20.196.209.2:6174';
+const CHAIN_ID = '31221';
 
 //* Remote Node Provider
 // Using a remote node provider, like Alchemy (https://www.alchemyapi.io/supernode), is simple.
 const Web3Client = new Web3(
-  Web3.givenProvider || new Web3.providers.HttpProvider(PROVIDER)
+  Web3.givenProvider || new Web3.providers.HttpProvider(HTTP_PROVIDER)
 );
+// const Web3Client = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider(WEBSOCKET_PROVIDER));
 
 // TODO 따로 환경변수 파일에 정의 (4종류)
 const COVID_CONTRACT_ADDRESS = '0x94B52272d82689d17785FF5956D099F56612Eba8';
 
 // todo
-const CONTRACT_ABI = '';
+const CONTRACT_ABI: AbiItem | AbiItem[] = [];
 
 /* Config for 'covid' NFT editions  */
-export const DonersDoughnutsCovid = () => {
-  // return new Web3.eth.Contract(abi, COVID_CONTRACT_ADDRESS);
+export const DonersDoughnutsCovid = async () => {
+  const accounts = await Web3Client.eth
+    .requestAccounts()
+    .then(console.log)
+    .catch(console.log);
+  console.log(accounts);
+  // const account = accounts[0];
+
+  const contractList = await new Web3Client.eth.Contract(
+    CONTRACT_ABI,
+    COVID_CONTRACT_ADDRESS
+  );
+
+  return contractList;
+  // return new Web3Client.eth.Contract(CONTRACT_ABI, COVID_CONTRACT_ADDRESS);
 };
 
 /* Config for 'single' NFT editions  */
