@@ -1,6 +1,6 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.application.dto.request.donation.NotificationReadDTO;
+import com.doners.donersbackend.application.dto.request.donation.NotificationReadPatchDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.NotificationResponseDTO;
 import com.doners.donersbackend.application.service.NotificationService;
@@ -61,11 +61,11 @@ public class NotificationController {
     @PatchMapping
     public ResponseEntity<? extends BaseResponseDTO> read(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam @Valid @RequestBody NotificationReadDTO notificationReadDTO
+            @ApiParam(value = "알림 정보", required = true) @Valid @RequestBody NotificationReadPatchDTO notificationReadPatchDTO
     ) {
 
         try {
-            notificationService.readNotification(accessToken, notificationReadDTO);
+            notificationService.readNotification(accessToken, notificationReadPatchDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {

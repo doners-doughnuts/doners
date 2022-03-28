@@ -7,10 +7,10 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("NotificationReadDTO")
+@ApiModel("NotificationReadPatchDTO")
 @Getter
 @ToString
-public class NotificationReadDTO {
+public class NotificationReadPatchDTO {
 
     @ApiModelProperty(name = "알림 ID")
     @NotBlank
