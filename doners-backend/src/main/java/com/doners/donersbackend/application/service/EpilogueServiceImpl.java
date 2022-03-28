@@ -16,6 +16,8 @@ import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -121,13 +123,14 @@ public class EpilogueServiceImpl implements EpilogueService {
     }
 
     @Override
-    public EpilogueGetListWrapperResponseDTO getEpilogueList(String accessToken) {
+    public EpilogueGetListWrapperResponseDTO getEpilogueList(String accessToken, int sequence) {
         String token = getUserAccountFromAccessToken(accessToken);
 
         User user = userRepository.findByUserAccount(token)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
 
-        List<Epilogue> epilogueList = epilogueRepository.findByEpilogueIsDeleted(false).orElse(null);
+        List<Epilogue> epilogueList = epilogueRepository.findByEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(false, PageRequest.of(sequence-1, 9, Sort.Direction.DESC, "epilogueCreateTime"))
+                .orElseThrow(() -> new IllegalArgumentException("에필로그가 없습니다."));
 
         List<EpilogueGetListResponseDTO> epilogueGetListResponseDTOList = new ArrayList<>();
 

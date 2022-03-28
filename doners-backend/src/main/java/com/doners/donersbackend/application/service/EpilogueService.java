@@ -17,7 +17,7 @@ public interface EpilogueService {
 
     Integer deleteEpilogue(String accessToken, String epilogueId);
 
-    EpilogueGetListWrapperResponseDTO getEpilogueList(String accessToken);
+    EpilogueGetListWrapperResponseDTO getEpilogueList(String accessToken, int sequence);
 
     EpilogueResponseDTO getEpilogue(String accessToken, String epilogueId);
 
