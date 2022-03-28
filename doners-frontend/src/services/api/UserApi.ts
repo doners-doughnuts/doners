@@ -20,7 +20,7 @@ export const login = async (userAccount: any) => {
   console.log(response);
   // 아직 JWT TOKEN없어서
   if (response.data.statusCode === 200) {
-    localStorage.setItem('user', userAccount);
+    localStorage.setItem('user', response.data.accessToken);
   }
 
   if (response.data.accessToken) {

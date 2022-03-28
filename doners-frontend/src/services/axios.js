@@ -44,7 +44,6 @@ instance.interceptors.response.use(
         case 409:
           console.log('409error!');
           return false;
-          break;
         default:
       }
     } else {
