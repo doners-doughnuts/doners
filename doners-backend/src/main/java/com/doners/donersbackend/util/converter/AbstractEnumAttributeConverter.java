@@ -1,6 +1,6 @@
 package com.doners.donersbackend.util.converter;
 
-import com.doners.donersbackend.domain.enums.CommonType;
+import com.doners.donersbackend.domain.dao.comment.enums.CommonType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
