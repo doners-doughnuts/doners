@@ -1,4 +1,4 @@
-import { Web3Client, SsfContract } from 'services/web3';
+import { Web3Client } from 'services/web3';
 /**
  * 필요한 기능
  * [Doation(SSF)]
@@ -9,7 +9,7 @@ import { Web3Client, SsfContract } from 'services/web3';
  */
 
 /* Wallet balance 조회 */
-export const getSsfBalance = async (walletAddress: string) => {
+export const getSSFBalance = async (walletAddress: string) => {
   const balance = await Web3Client.eth.getBalance(walletAddress);
   console.log(balance, 'SSF');
   // TIL: (위 2줄과 동일함, 그냥 값 찍어보는 용도라면 await 안 걸고 then()에서 찍어봐도 됨)
