@@ -55,8 +55,12 @@ export default function Router() {
         { path: 'epilogue/:epilogue_seq', element: <EpilogueDetail /> },
         { path: 'epilogue/write', element: <EpilogueEditPage /> },
         { path: 'board', element: <CommunityPage focus={3} /> },
-        { path: 'board/:post_seq', element: <BoardDetail /> },
+        { path: 'board/:community_id', element: <BoardDetail /> },
         { path: 'board/write', element: <BoardEditPage /> },
+        {
+          path: 'board/modify/:community_id',
+          element: <BoardEditPage modify />,
+        },
         { path: 'about', element: <CommunityPage focus={4} /> },
       ],
     },
