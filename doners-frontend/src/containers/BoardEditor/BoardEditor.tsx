@@ -19,6 +19,8 @@ import classNames from 'classnames/bind';
 import styles from './BoardEditor.module.scss';
 import Button from 'assets/theme/Button/Button';
 import EditorForm from 'components/Editor/EditorForm';
+import { registBoard } from 'services/api/Board';
+import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +28,41 @@ function BoardEditor() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const editorRef = useRef<Editor>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
   const currentUrl = window.location.href;
+  const navigate = useNavigate();
+
+  const titleHandler = () => {
+    if (titleRef.current) {
+      setTitle(titleRef.current.value);
+      console.log(titleRef.current.value);
+    }
+  };
+
+  const contentHandler = () => {
+    setContent(editorRef.current?.getInstance().getMarkdown() || '');
+    console.log(content);
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    registApi();
+  };
+
+  const registApi = async () => {
+    const body = {
+      communityDescription: content,
+      communityTitle: title,
+    };
+
+    try {
+      const response = await registBoard(body);
+      navigate('/community/board');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // useEffect(() => {
   //   if (editorRef.current) {
@@ -71,18 +107,14 @@ function BoardEditor() {
             <H1>Write Something...</H1>
           </div>
           <div className={cx('inner-container')}>
-            {/* <div className={cx('user-info')}>
-              <Avatar size="small" />
-              <div className={cx('name')}>
-                <P>이학성</P>
-              </div>
-            </div> */}
-            <EditorForm />
-            {/* <div className={cx('editor')}>
+            {/* <EditorForm /> */}
+            <div className={cx('editor')}>
               <textarea
                 className={cx('title')}
                 placeholder="제목을 입력하세요."
-                maxLength={30}
+                maxLength={50}
+                ref={titleRef}
+                onChange={titleHandler}
               />
               <Editor
                 previewStyle="vertical"
@@ -96,10 +128,10 @@ function BoardEditor() {
                 onChange={contentHandler}
                 ref={editorRef}
               />
-            </div> */}
+            </div>
             <div className={cx('btn-row')}>
               <div className={cx('regist-btn')}>
-                <Button color="primary" fullWidth>
+                <Button color="primary" fullWidth onClick={handleSubmit}>
                   작성 완료
                 </Button>
               </div>
