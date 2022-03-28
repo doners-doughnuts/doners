@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.dao.user;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
-import com.doners.donersbackend.domain.enums.UserCode;
+import com.doners.donersbackend.domain.dao.comment.enums.UserCode;
 import lombok.*;
 
 import javax.persistence.Column;

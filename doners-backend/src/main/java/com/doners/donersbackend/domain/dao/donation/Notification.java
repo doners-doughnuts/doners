@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.dao.donation;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
-import com.doners.donersbackend.domain.enums.NotificationCode;
+import com.doners.donersbackend.domain.dao.comment.enums.NotificationCode;
 import lombok.*;
 
 import javax.persistence.*;

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EpilogueRepository extends JpaRepository<Epilogue,String> {
+    Optional<Epilogue> findByIdAndEpilogueIsDeleted(String epilogueId, boolean isDeleted);
     Optional<List<Epilogue>> findByEpilogueIsDeleted(boolean isDeleted);
     Optional<List<Epilogue>> findByUserAndEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(User user, boolean isDeleted);
 }

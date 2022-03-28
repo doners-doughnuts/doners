@@ -24,11 +24,6 @@ public class EpilogueRegisterPostDTO {
     @ApiModelProperty(name="글 내용")
     private String epilogueDescription;
 
-    @NotBlank
-    @NotNull
-    @ApiModelProperty(name="작성자 유저 주소")
-    private String userAccount;
-
     @ApiModelProperty(name = "모금액 활용 계획")
     private List<EpilogueBudgetRequestDTO> epilogueBudgetRequestDTOList;
 }

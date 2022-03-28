@@ -1,4 +1,4 @@
-package com.doners.donersbackend.domain.enums;
+package com.doners.donersbackend.domain.dao.comment.enums;
 
 public interface CommonType {
 

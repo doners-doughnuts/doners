@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.dto.request.donation;
 
-import com.doners.donersbackend.domain.enums.CategoryCode;
+import com.doners.donersbackend.domain.dao.comment.enums.CategoryCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

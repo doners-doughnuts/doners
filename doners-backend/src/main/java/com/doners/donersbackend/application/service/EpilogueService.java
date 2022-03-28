@@ -7,17 +7,21 @@ import com.doners.donersbackend.application.dto.response.epilogue.EpilogueRespon
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+
 public interface EpilogueService {
-    // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자
-    void epilogueRegister(EpilogueRegisterPostDTO epilogueRegisterPostDTO,MultipartFile image);
+    @Transactional
+    void registerEpilogue(String accessToken, EpilogueRegisterPostDTO epilogueRegisterPostDTO, MultipartFile image);
 
     Integer changeEpilogue(String epilogueId, EpilogueChangePatchDTO epilogueChangePatchDTO);
 
-    Integer deleteEpilogue(String epilogueId);
+    Integer deleteEpilogue(String accessToken, String epilogueId);
 
-    EpilogueGetListWrapperResponseDTO getEpilogueList();
+    EpilogueGetListWrapperResponseDTO getEpilogueList(String accessToken);
 
-    EpilogueResponseDTO getEpilogue(String epilogueId);
+    EpilogueResponseDTO getEpilogue(String accessToken, String epilogueId);
 
-    void uploadDonationFile(Epilogue epilogue, MultipartFile image);
+    void uploadEpilogueImage(Epilogue epilogue, MultipartFile image);
+
+    String getUserAccountFromAccessToken(String accessToken);
 }
