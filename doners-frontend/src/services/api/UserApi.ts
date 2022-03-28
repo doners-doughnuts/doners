@@ -2,6 +2,14 @@ import instance from 'services/axios';
 
 //const COMMON = '/user';
 
+type SignUpValidationProps = {
+  userAccount?: string;
+  userCode?: string;
+  userEmail?: string;
+  userName?: string;
+  userNickname?: string;
+};
+
 export const login = async (userAccount: any) => {
   console.log(userAccount);
   const response = await instance.get(`/user/${userAccount}`, {
@@ -24,60 +32,32 @@ export const login = async (userAccount: any) => {
 
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: any) => {
-  const response = await instance.get(`/user/check/${userNickname}`, {
-    params: {
-      userNickname: userNickname,
-    },
-  });
-  console.log('??');
-  return response;
+  try {
+    const response = await instance.get(`/user/check/${userNickname}`, {});
+    console.log(response);
+    return response;
+  } catch (error) {
+    return false;
+  }
 };
 
-export const signupcheck = async (
-  username: any,
-  useremail: any,
-  useraccount: any,
-  usernickname: any
-) => {
-  const dataset = {
-    userAccount: useraccount,
-    userEmail: useremail,
-    userName: username,
-    userNickname: usernickname,
-  };
-  const response = await instance.post(`/user`, dataset);
+export const signupcheck = async (dataSet: SignUpValidationProps) => {
+  console.log('dataSet', dataSet);
+  const response = await instance.post(`/user`, dataSet);
   console.log(response);
   return response;
 };
 
 /* 이메일 인증 메일 발송 */
-export const emailConfirm = async (
-  emailAddress: string
-) => {
-  const dataset = {
-    emailAddress
-  };
-  const response = await instance.post(`/email`, dataset);
-  console.log(response.data);
-  return response.data;
+  return response;
+export const emailSend = async (userEmail: any) => {
+  const response = await instance.post(`/email`, { emailAddress: userEmail });
+  console.log(response);
 };
 
 /* 이메일 인증 완료 여부 확인 */
 export const emailcheck = async (userEmail: any) => {
-  const response = await instance.get(`/email/check/email/${userEmail}`, {
-    params: {
-      userEmail: userEmail,
-    },
-  });
-  console.log(response.data);
-  return response.data;
+  const response = await instance.get(`/email/check/email/${userEmail}`, {});
+  console.log(response);
+  return response;
 };
-
-// /* 회원 정보 불러오기 */
-// export const getUserInfo = async (userId: any) => {
-//   const response = await instance.get(COMMON + '/info' + `/${userId}`, {
-//     profileUserId: userId,
-//     loginUserId: getLoggedUserId(),
-//   });
-//   return response.data;
-// };

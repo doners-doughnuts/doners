@@ -24,7 +24,8 @@ instance.interceptors.request.use(
     return config;
   },
   (err) => {
-    return Promise.reject(err);
+    // return Promise.reject(err);
+    return false;
   }
 );
 
@@ -40,12 +41,17 @@ instance.interceptors.response.use(
         case 401:
           // console.log(error.response);
           break;
+        case 409:
+          console.log('409error!');
+          return false;
+          break;
         default:
       }
     } else {
       // ex. 서버 키지 않은 경우
     }
-    return Promise.reject(error);
+    //return Promise.reject(error);
+    return false;
   }
 );
 
