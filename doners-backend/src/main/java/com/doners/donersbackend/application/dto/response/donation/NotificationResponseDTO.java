@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @ToString
 public class NotificationResponseDTO extends BaseResponseDTO {
 
+    @ApiModelProperty(name = "알림 ID")
+    private String notificationId;
+
     @ApiModelProperty(name = "기부글 ID")
     private String donationId;
 
@@ -24,7 +27,8 @@ public class NotificationResponseDTO extends BaseResponseDTO {
     private LocalDateTime createTime;
 
     @Builder
-    public NotificationResponseDTO(String donationId, String description, LocalDateTime createTime) {
+    public NotificationResponseDTO(String notificationId, String donationId, String description, LocalDateTime createTime) {
+        this.notificationId = notificationId;
         this.donationId = donationId;
         this.description = description;
         this.createTime = createTime;
