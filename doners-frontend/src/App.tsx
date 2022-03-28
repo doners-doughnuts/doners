@@ -1,7 +1,7 @@
 import { RecoilRoot } from 'recoil';
 import Router from 'routes/routes';
 // TODO
-import styles from './App.module.css';
+import './App.module.scss';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 
 export default function App() {

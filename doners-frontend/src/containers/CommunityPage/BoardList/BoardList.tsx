@@ -7,9 +7,19 @@ import { getBoardList } from 'services/api/Board';
 import styles from './BoardList.module.scss';
 
 const cx = classNames.bind(styles);
-
+type ListItemType = {
+  communityCode: string;
+  communityCreateTime: string;
+  communityDescription: string;
+  communityId: string;
+  communityTitle: string;
+  communityViews: number;
+  communityWriter: string;
+  comments: number;
+};
 const BoardList = () => {
   const [sequence, setSequence] = useState(1);
+  const [listItems, setListItems] = useState<ListItemType[]>([]);
 
   useEffect(() => {
     getList();
@@ -17,28 +27,30 @@ const BoardList = () => {
 
   const getList = async () => {
     const response = await getBoardList(sequence);
-    console.log(response);
+    console.log(response.data);
+    const data = response.data.communityGetListResponseDTOList;
+    setListItems((prev) => [...prev, ...data]);
   };
 
   return (
-    <section className={cx('container')}>
-      <div className={cx('row')}>
-        <div className={cx('col-lg-12')}>
-          <div className={cx('btn-row')}>
-            <div className={cx('btn')}>
-              <Link to="write">
-                <Button color="secondary" size="small" fullWidth>
-                  글 작성
-                </Button>
-              </Link>
-            </div>
-          </div>
-          <Link to="1">
-            <BoardListItem />
+    <>
+      <div className={cx('btn-row')}>
+        <div className={cx('btn')}>
+          <Link to="write">
+            <Button color="secondary" size="small" fullWidth>
+              글 작성
+            </Button>
           </Link>
         </div>
       </div>
-    </section>
+      {listItems.map((data) => {
+        return (
+          <Link to={data.communityId} key={data.communityId}>
+            <BoardListItem data={data} />
+          </Link>
+        );
+      })}
+    </>
   );
 };
 
