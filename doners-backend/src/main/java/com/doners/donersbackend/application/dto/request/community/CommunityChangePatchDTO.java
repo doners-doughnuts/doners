@@ -15,12 +15,17 @@ public class CommunityChangePatchDTO {
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="글 제목")
+    @ApiModelProperty(name="커뮤니티 ID")
+    private String communityId;
+
+    @NotBlank
+    @NotNull
+    @ApiModelProperty(name="커뮤니티 제목")
     private String communityTitle;
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="글 내용")
+    @ApiModelProperty(name="커뮤니티 내용")
     private String communityDescription;
 
 }

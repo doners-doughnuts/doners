@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.donation.NotificationReadDTO;
+import com.doners.donersbackend.application.dto.request.donation.NotificationReadPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.NotificationResponseDTO;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.Notification;
@@ -60,7 +60,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void readNotification(String accessToken, NotificationReadDTO notificationReadDTO) {
+    public void readNotification(String accessToken, NotificationReadPatchDTO notificationReadPatchDTO) {
 
         String token = accessToken.split(" ")[1];
 
@@ -69,7 +69,7 @@ public class NotificationServiceImpl implements NotificationService {
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
 
-        Notification notification = notificationRepository.findById(notificationReadDTO.getNotificationId())
+        Notification notification = notificationRepository.findById(notificationReadPatchDTO.getNotificationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 알림을 찾을 수 없습니다."));
 
         notification.changeIsRead();

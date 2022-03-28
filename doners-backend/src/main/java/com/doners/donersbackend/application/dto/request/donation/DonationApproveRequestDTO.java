@@ -25,7 +25,7 @@ public class DonationApproveRequestDTO {
     private boolean approved;
 
     @ApiModelProperty(name = "거절 사유 코드")
-    private ApprovalStatusCode approvalStatusCode;
+    private ApprovalStatusCode rejectionCode;
 
 }
 

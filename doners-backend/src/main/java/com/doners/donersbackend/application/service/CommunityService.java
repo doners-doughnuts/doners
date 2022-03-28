@@ -9,7 +9,7 @@ public interface CommunityService {
     // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자 , 코드
     void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO);
     // 글 변경
-    Integer changeCommunity(String communityId,CommunityChangePatchDTO communityChangePatchDTO);
+    Integer changeCommunity(String accessToken, CommunityChangePatchDTO communityChangePatchDTO);
     // 글 변경
     Integer deleteCommunity(String communityId);
     // 커뮤니티 글 목록 조회
