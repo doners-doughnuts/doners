@@ -14,7 +14,7 @@ type ButtonType = {
   children: string;
   type?: BtnType;
   onChange?: (...args: any[]) => void;
-  onClick?: (...args: any[]) => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 const Button = ({

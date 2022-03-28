@@ -25,7 +25,7 @@ export const login = async (userAccount: any) => {
 
   if (response.data.accessToken) {
     // save JWT token
-    // localStorage.setItem('user', JSON.stringify(response.data));
+    localStorage.setItem('user', JSON.stringify(response.data));
   }
   return response.data;
 };
