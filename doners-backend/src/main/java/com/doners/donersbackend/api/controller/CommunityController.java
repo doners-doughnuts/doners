@@ -65,7 +65,7 @@ public class CommunityController {
         return ResponseEntity.status(200).body(BaseResponseDTO.of("글 변경에 성공했습니다.", 200));
     }
 
-    @DeleteMapping("/delete/{communityId}")
+    @DeleteMapping("/{communityId}")
     @ApiOperation(value="글 삭제 , 필수 정보 - 글id")
     @ApiResponses({
             @ApiResponse(code=200, message="글 삭제에 성공했습니다."),
