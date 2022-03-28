@@ -49,10 +49,10 @@ export const signupcheck = async (dataSet: SignUpValidationProps) => {
 };
 
 /* 이메일 인증 메일 발송 */
-  return response;
 export const emailSend = async (userEmail: any) => {
   const response = await instance.post(`/email`, { emailAddress: userEmail });
   console.log(response);
+  return response;
 };
 
 /* 이메일 인증 완료 여부 확인 */
