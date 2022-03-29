@@ -9,3 +9,8 @@ export const isLoggedState = atom({
   key: 'isLoggedState',
   default: false,
 });
+
+export const nicknameState = atom({
+  key: 'nicknameState',
+  default: '',
+});
