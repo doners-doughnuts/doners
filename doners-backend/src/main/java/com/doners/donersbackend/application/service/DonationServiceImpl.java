@@ -133,17 +133,13 @@ public class DonationServiceImpl implements DonationService {
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
         donationList.forEach(donation -> {
-            // 대표 사진
-            Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
+            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
                     .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
-            image.put(img.getImageOriginFileName(), imgUrl);
 
             donationGetListResponseDTOList.add(
                     DonationGetListResponseDTO.builder()
                             .donationId(donation.getId())
-                            .image(image)
+                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
                             .title(donation.getTitle())
                             .beneficiaryName(donation.getBeneficiaryName())
                             .targetAmount(donation.getAmount())
@@ -291,17 +287,13 @@ public class DonationServiceImpl implements DonationService {
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
         donationList.forEach(donation -> {
-            // 대표 사진
-            Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
+            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
                     .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
-            image.put(img.getImageOriginFileName(), imgUrl);
 
             donationGetListResponseDTOList.add(
                     DonationGetListResponseDTO.builder()
                             .donationId(donation.getId())
-                            .image(image)
+                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
                             .title(donation.getTitle())
                             .beneficiaryName(donation.getBeneficiaryName())
                             .targetAmount(donation.getAmount())
