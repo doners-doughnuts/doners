@@ -57,6 +57,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .epilogueTitle(epilogueRegisterPostDTO.getEpilogueTitle())
                 .epilogueDescription(epilogueRegisterPostDTO.getEpilogueDescription())
                 .user(user)
+                .epilogueViews(0L)
                 .epilogueCreateTime(LocalDateTime.now()).build();
 
         epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
