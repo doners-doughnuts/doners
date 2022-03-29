@@ -52,7 +52,7 @@ public class CommentServiceImpl implements CommentService{
                 .parentCommentId(parentComment)
                 .commentCreateTime(LocalDateTime.now()).build();
 
-        if(commentRegisterPostDTO.getCommunityId().length()==0){// 감사 글 댓글
+        if(commentRegisterPostDTO.getCommunityId()==null){// 감사 글 댓글
             comment.changeEpilogueId(epilogueRepository.findById(commentRegisterPostDTO.getEpilogueId()).get());
         }else{// 커뮤니티 글 댓글
             comment.changeCommunityId(communityRepository.findById(commentRegisterPostDTO.getCommunityId()).get());
