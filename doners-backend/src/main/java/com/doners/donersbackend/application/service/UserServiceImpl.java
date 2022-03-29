@@ -177,6 +177,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getProfileImage(String accessToken, String userNickname) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User requestUser = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("요청을 보낸 유저 정보가 존재하지 않습니다."));
+
+        User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 닉네임을 가진 유저 정보가 존재하지 않습니다."));
+
+        Image profileImage = imageRepository.findByUserAndImageIsResized(user, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 프로필 이미지가 없습니다."));
+
+        return "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + profileImage.getImageNewFileName();
+    }
+
+    @Override
     public UserMyPageCommunityHistoryWrapperResponseDTO getCommunityHistoryList(String accessToken) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
         User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
