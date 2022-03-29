@@ -57,10 +57,10 @@ public class Donation extends BaseEntity {
     private boolean isReceived;
 
     @Column(name = "donation_views")
-    private int views;
+    private long views;
 
     @Column(name = "donation_recommendations")
-    private int recommendations;
+    private long recommendations;
 
     @Column(name = "donation_is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
@@ -69,7 +69,7 @@ public class Donation extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // 수여자
+    // 수혜자 정보
     public void changeBeneficiary(String beneficiaryName, String beneficiaryPhone) {
         this.beneficiaryName = beneficiaryName;
         this.beneficiaryPhone = beneficiaryPhone;
