@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   // TODO timeout 설정
   timeout: 30000,
-  Headers: {
+  headers: {
     'Content-type': 'application/json',
   },
 });
