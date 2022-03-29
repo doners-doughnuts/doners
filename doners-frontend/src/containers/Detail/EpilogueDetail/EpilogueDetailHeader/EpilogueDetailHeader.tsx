@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './EpilogueDetailHeader.module.scss';
-import src from 'assets/images/character.png';
 import Tag from 'assets/theme/Tag/Tag';
 import H5 from 'assets/theme/Typography/H5/H5';
 import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
@@ -14,8 +13,22 @@ import Span from 'assets/theme/Typography/Span/Span';
 import { ReactComponent as ClipIcon } from 'assets/images/icon/clip.svg';
 
 const cx = classNames.bind(styles);
-
-const EpilogueDetailHeader = () => {
+type headerType = {
+  title: string;
+  date: string;
+  writer: string;
+  src: string;
+  onDelete: (...args: any[]) => void;
+  onModify: (...args: any[]) => void;
+};
+const EpilogueDetailHeader = ({
+  title,
+  date,
+  writer,
+  src,
+  onDelete,
+  onModify,
+}: headerType) => {
   return (
     <div className={cx('header')}>
       <div className={cx('thumbnail')}>
@@ -26,23 +39,31 @@ const EpilogueDetailHeader = () => {
       </div>
       <div className={cx('epilogue-info')}>
         <div className={cx('top')}>
-          <div className={cx('category-date')}>
-            <Tag color="black">Category</Tag>
-            <Span color="gray">작성일: 2022.03.22</Span>
-          </div>
+          <Tag color="black">Category</Tag>
           <div className={cx('button-wrap')}>
             <div className={cx('buttons')}>
-              <CustomButton src={editIcon} color="yellow" shadow size="small">
+              <CustomButton
+                src={editIcon}
+                color="yellow"
+                shadow
+                size="small"
+                onClick={onModify}
+              >
                 수정
               </CustomButton>
-              <CustomButton src={deleteIcon} shadow size="small">
+              <CustomButton
+                src={deleteIcon}
+                shadow
+                size="small"
+                onClick={onDelete}
+              >
                 삭제
               </CustomButton>
             </div>
           </div>
         </div>
         <div>
-          <H1>감사후기 제목</H1>
+          <H1>{title}</H1>
           <div className={cx('donation-info')}>
             <H5>모금 진행 기간 : 21/12/24 ~ 22/03/01</H5>
             <Link to="">
@@ -54,7 +75,7 @@ const EpilogueDetailHeader = () => {
           <div className={cx('user-info')}>
             <Avatar />
             <div className={cx('name')}>
-              <P>이학성</P>
+              <P>{writer}</P>
             </div>
           </div>
         </div>

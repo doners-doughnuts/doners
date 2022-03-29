@@ -5,7 +5,7 @@ import TotalDonate from 'containers/EpilogueEditor/TotalDonate/TotalDonate';
 import styles from './EpilogueDetailReceipt.module.scss';
 const cx = classNames.bind(styles);
 
-const EpilogueDetailReceipt = () => {
+const EpilogueDetailReceipt = ({ history }: any) => {
   return (
     <div className={cx('receipt')}>
       <div className={cx('badge')}>
@@ -13,11 +13,10 @@ const EpilogueDetailReceipt = () => {
       </div>
       <TotalDonate />
       <div className={cx('history')}>
-        <HistoryItem />
-        <HistoryItem />
-        <HistoryItem />
-        <HistoryItem />
-        <HistoryItem />
+        {history.map((data: any, idx: number) => {
+          console.log(data);
+          return <HistoryItem value={data} key={idx} />;
+        })}
       </div>
     </div>
   );
