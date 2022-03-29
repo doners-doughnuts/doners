@@ -120,7 +120,7 @@ public class CommentServiceImpl implements CommentService{
         Epilogue epilogue = epilogueRepository.findById(id).get();
 
         for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
-            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
+            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription(), c.getUser().getUserNickname()));
         }
 
         return new CommentGetListWrapperResponseDTO(list);
@@ -138,7 +138,7 @@ public class CommentServiceImpl implements CommentService{
         Community community = communityRepository.findById(id).get();
 
         for(Comment c : commentRepository.findAllByCommunityAndCommentIsDeletedOrderByCommentCreateTime(community, false).get()) {
-            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
+            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription(), c.getUser().getUserNickname()));
         }
 
         return new CommentGetListWrapperResponseDTO(list);
@@ -155,7 +155,7 @@ public class CommentServiceImpl implements CommentService{
 
         Comment comment = commentRepository.findById(parentId).get();
         for(Comment c : commentRepository.findAllByParentCommentIdAndCommentIsDeletedOrderByCommentCreateTime(comment, false).get()) {
-            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription()));
+            list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription(), c.getUser().getUserNickname()));
         }
 
         return new CommentGetListWrapperResponseDTO(list);

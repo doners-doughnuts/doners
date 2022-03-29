@@ -5,6 +5,7 @@ import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeR
 import com.doners.donersbackend.application.dto.response.user.UserLoginResponseDTO;
 import com.doners.donersbackend.application.dto.response.user.UserMyPageCommunityHistoryWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.user.UserMyPageEpilogueHistoryWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.user.UserProfileImageResponseDTO;
 import com.doners.donersbackend.application.service.UserService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
@@ -153,6 +154,33 @@ public class UserController {
         }
 
         return ResponseEntity.status(201).body(BaseResponseDTO.of("프로필 이미지 등록에 성공했습니다.", 201));
+    }
+
+    @GetMapping("/image/{userNickname}")
+    @ApiOperation(value="프로필 이미지 불러오기")
+    @ApiResponses({
+            @ApiResponse(code=200, message="프로필 이미지 주소를 불러왔습니다."),
+            @ApiResponse(code=404, message="해당 유저 정보나 프로필 이미지 정보를 찾을 수 없습니다."),
+            @ApiResponse(code=409, message="프로필 이미지 주소를 불러오는데에 실패했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> getProfileImage(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @PathVariable("userNickname") @ApiParam(value="유저 닉네임", required=true) String userNickname) {
+        String profileImage = null;
+
+        try {
+            profileImage = userService.getProfileImage(accessToken, userNickname);
+
+            UserProfileImageResponseDTO userProfileImageResponseDTO = UserProfileImageResponseDTO.builder().profileImage(profileImage).build();
+
+            return ResponseEntity.status(200).body(UserProfileImageResponseDTO.of("프로필 이미지 주소를 불러왔습니다.", 200, userProfileImageResponseDTO));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 유저 정보나 프로필 이미지 정보를 찾을 수 없습니다.", 404));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("프로필 이미지 주소를 불러오는데에 실패했습니다.", 409));
+        }
     }
 
     @DeleteMapping()
