@@ -222,6 +222,7 @@ public class DonationServiceImpl implements DonationService {
                 .title(donation.getTitle())
                 .categoryCode(donation.getCategoryCode())
                 .views(donation.getViews())
+                .recommendations(donation.getRecommendations())
                 .description(donation.getDescription())
                 .image(image)
                 .startTime(donation.getStartTime())
