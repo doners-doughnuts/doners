@@ -1,6 +1,7 @@
 // ? [해결] 왜 .ts 파일에서는 import가 되지 않는가. js만 지원?
 import { FundraiserABI } from 'assets/abi/FundraiserABI';
 import { FundraiserFactoryABI } from 'assets/abi/FundraiserFactoryABI';
+import { SsfABI } from 'assets/abi/SsfABI';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 
@@ -8,6 +9,8 @@ import { AbiItem } from 'web3-utils';
 const HTTP_PROVIDER = 'http://20.196.209.2:8545';
 const WEBSOCKET_PROVIDER = 'ws://20.196.209.2:6174';
 const CHAIN_ID = '31221';
+
+const SSF_ERC20_CONTRACT_ADDRESS = '0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333';
 
 //* Remote Node Provider
 // Using a remote node provider, like Alchemy (https://www.alchemyapi.io/supernode), is simple.
@@ -23,6 +26,11 @@ export const FundraiserContract = (contractAddress: string) => {
 export const FundraiserFactoryContract = (contractAddress: string) => {
   return new Web3Client.eth.Contract(FundraiserFactoryABI, contractAddress);
 };
+
+export const SSFContract = new Web3Client.eth.Contract(
+  SsfABI,
+  SSF_ERC20_CONTRACT_ADDRESS
+);
 
 // TODO 삭제
 // The minimum ABI required to get the ERC20 Token balance
