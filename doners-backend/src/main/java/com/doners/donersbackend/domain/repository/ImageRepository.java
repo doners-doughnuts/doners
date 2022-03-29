@@ -1,5 +1,6 @@
 package com.doners.donersbackend.domain.repository;
 
+import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
@@ -14,5 +15,7 @@ public interface ImageRepository extends JpaRepository<Image, String> {
     Optional<Image> findByUserAndImageIsResized(User user, boolean isResized);
 
     Optional<Image> findByDonationAndImageIsResized(Donation donation, boolean isResized);
+
+    Optional<Image> findByEpilogueAndImageIsResized(Epilogue epilogue, boolean isResized);
 
 }
