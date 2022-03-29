@@ -6,7 +6,17 @@ import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 const DonationHistory = () => {
-  return <div>DonationHistory!</div>;
+  return (
+    <div>
+      <div>총 기부액</div>
+      <div>ETH</div>
+      <div>(500,000원)</div>
+
+      <div>
+        <div>모금 참여 이력</div>
+      </div>
+    </div>
+  );
 };
 
 export default DonationHistory;

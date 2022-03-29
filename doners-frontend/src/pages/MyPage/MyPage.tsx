@@ -1,6 +1,5 @@
 import React from 'react';
 import UserProfile from 'containers/ProfilePage/UserProfile/UserProfile';
-import MyNFT from 'containers/ProfilePage/MyNFT/MyNFT';
 import ProfileDetail from 'containers/ProfilePage/ProfileDetail/ProfileDetail';
 import PopularMembership from 'containers/CommunityPage/Membership/PopularMembership/PopularMembership';
 import CommunityTab from 'containers/CommunityPage/Tab/CommunityTab';
