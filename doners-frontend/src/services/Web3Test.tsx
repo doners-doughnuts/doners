@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { check, getSSFBalance } from 'services/blockchain/SsfApi';
 
-export default function Test() {
+//! DELETE AFTER USE
+export default function Web3Test() {
   // async function foo() {
   //   console.log(Web3Client.eth)
   //   const accounts = Web3Client.eth.requestAccounts().then(console.log).catch(console.log);
