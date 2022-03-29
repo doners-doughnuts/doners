@@ -16,7 +16,7 @@ public class DonationGetListResponseDTO {
     @ApiModelProperty(name = "기부글 ID")
     private String donationId;
 
-    @ApiModelProperty(name = "썸네일 이미지 주소")
+    @ApiModelProperty(name = "썸네일 주소")
     private String thumbnail;
 
     @ApiModelProperty(name = "제목")
