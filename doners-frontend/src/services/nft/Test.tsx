@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getSSFBalance, withdraw } from 'services/blockchain/SsfApi';
+import { check, getSSFBalance } from 'services/blockchain/SsfApi';
 
 export default function Test() {
   // async function foo() {
@@ -8,8 +8,9 @@ export default function Test() {
   //   console.log(accounts)
   // }
   useEffect(() => {
-    // getSSFBalance('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
-    withdraw();
+    getSSFBalance('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    // withdraw();
+    check();
   }, []);
 
   return <></>
