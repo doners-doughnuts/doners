@@ -7,7 +7,7 @@ import { getBoardList } from 'services/api/Board';
 import styles from './BoardList.module.scss';
 
 const cx = classNames.bind(styles);
-type ListItemType = {
+export type ListItemType = {
   communityCode: string;
   communityCreateTime: string;
   communityDescription: string;

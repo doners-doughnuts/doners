@@ -9,10 +9,7 @@ import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import { deleteComments } from 'services/api/Comment';
 
 const cx = classNames.bind(styles);
-// type dataType = {
-
-// }
-const Comment = ({ id, date, content }: any) => {
+const Comment = ({ id, date, content, nickname, onDelete }: any) => {
   // const handleModifyClick = () => {};
   const handleDeleteClick = () => {
     delComment();
@@ -20,8 +17,11 @@ const Comment = ({ id, date, content }: any) => {
 
   const delComment = async () => {
     const result = await deleteComments(id);
+    onDelete(id);
     console.log(result);
   };
+
+  // 프로필 가져오는 api
 
   return (
     <div className={cx('inner-container')}>
@@ -29,7 +29,7 @@ const Comment = ({ id, date, content }: any) => {
         <div className={cx('comment-info')}>
           <Avatar size="small" />
           <div className={cx('sub-info')}>
-            <H4>한지우</H4>
+            <H4>{nickname}</H4>
             <Span>{date}</Span>
           </div>
         </div>
