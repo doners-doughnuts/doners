@@ -33,11 +33,11 @@ public class EpilogueController {
     })
     public ResponseEntity<? extends BaseResponseDTO> registerEpilogue(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @RequestBody @Valid @ApiParam(value="필수 게시글 정보", required=true) EpilogueRegisterPostDTO epilogueRegisterPostDTO,
-            @ApiParam(value = "썸네일 사진") @Valid @RequestPart(value = "image", required = false) MultipartFile image) {
+            @Valid @ApiParam(value="필수 게시글 정보", required=true) @RequestPart EpilogueRegisterPostDTO epilogueRegisterPostDTO,
+            @ApiParam(value = "썸네일 사진") @Valid @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile) {
 
         try {
-            epilogueService.registerEpilogue(accessToken, epilogueRegisterPostDTO, image);
+            epilogueService.registerEpilogue(accessToken, epilogueRegisterPostDTO, multipartFile);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 작성자 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {
