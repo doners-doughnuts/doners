@@ -45,8 +45,8 @@ public class Comment extends BaseEntity {
     private Community community;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="epilouge_id")
-    private Epilogue epilouge;
+    @JoinColumn(name="epilogue_id")
+    private Epilogue epilogue;
 
     // 댓글 수정
     public void changeComment(String commentDescription) {
@@ -58,8 +58,8 @@ public class Comment extends BaseEntity {
     }
 
     // 감사 글 아이디 수정
-    public void changeEpilougeId(Epilogue epilouge) {
-        this.epilouge = epilouge;
+    public void changeEpilogueId(Epilogue epilogue) {
+        this.epilogue = epilogue;
     }
 
     // 댓글 삭제
