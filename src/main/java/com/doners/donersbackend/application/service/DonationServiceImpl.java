@@ -20,6 +20,7 @@ import com.doners.donersbackend.domain.repository.donation.DonationRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,23 +59,23 @@ public class DonationServiceImpl implements DonationService {
         if (donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null) return false;
 
         Donation donation = Donation.builder()
-                    .phone(donationInfoRequestDTO.getPhone())
-                    .isDeputy(donationInfoRequestDTO.isDeputy())
-                    .beneficiaryName(donationInfoRequestDTO.getBeneficiaryName())
-                    .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
-                    .title(donationInfoRequestDTO.getTitle())
-                    .categoryCode(donationInfoRequestDTO.getCategoryCode())
-                    .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
-                    .description(donationInfoRequestDTO.getDescription())
-                    .amount(donationInfoRequestDTO.getTargetAmount())
+                .phone(donationInfoRequestDTO.getPhone())
+                .isDeputy(donationInfoRequestDTO.isDeputy())
+                .beneficiaryName(donationInfoRequestDTO.getBeneficiaryName())
+                .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
+                .title(donationInfoRequestDTO.getTitle())
+                .categoryCode(donationInfoRequestDTO.getCategoryCode())
+                .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
+                .description(donationInfoRequestDTO.getDescription())
+                .amount(donationInfoRequestDTO.getTargetAmount())
 //                .endTime(donationInfoRequestDTO.getEndTime())
-                    .user(user)
-                    .build();
+                .user(user)
+                .build();
 
         // 대리인
         if (donationInfoRequestDTO.isDeputy()) {
             donation.changeBeneficiary(donationInfoRequestDTO.getBeneficiaryName(), donationInfoRequestDTO.getBeneficiaryPhone());
-        // 본인
+            // 본인
         } else {
             donation.changeBeneficiary(user.getUserName(), donationInfoRequestDTO.getPhone());
         }
@@ -103,10 +104,31 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page) {
+    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, String sort) {
 
-        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
-                .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+        List<Donation> donationList = null;
+
+        switch (sort) {
+            // 최신 순
+            case "start":
+                donationList = donationRepository
+                        .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+            // 참여 미달 순
+            // TODO: 보류 (달성률을 어떻게 할 것인지)
+            case "achieve":
+                donationList = donationRepository
+                        .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+            // 마감 임박 순
+            case "end":
+                donationList = donationRepository
+                        .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                break;
+        }
 
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
