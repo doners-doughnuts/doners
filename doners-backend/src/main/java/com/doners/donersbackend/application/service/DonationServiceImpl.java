@@ -133,17 +133,13 @@ public class DonationServiceImpl implements DonationService {
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
         donationList.forEach(donation -> {
-            // 대표 사진
-            Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
+            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
                     .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
-            image.put(img.getImageOriginFileName(), imgUrl);
 
             donationGetListResponseDTOList.add(
                     DonationGetListResponseDTO.builder()
                             .donationId(donation.getId())
-                            .image(image)
+                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
                             .title(donation.getTitle())
                             .beneficiaryName(donation.getBeneficiaryName())
                             .targetAmount(donation.getAmount())
@@ -165,12 +161,8 @@ public class DonationServiceImpl implements DonationService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 대표 사진
-        Map<String, String> image = new HashMap<>();
-
-        Image img = imageRepository.findByDonationAndImageIsResized(donation, false)
+        Image image = imageRepository.findByDonationAndImageIsResized(donation, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-
-        image.put(img.getImageOriginFileName(), awsS3Service.getFilePath(img.getImageNewFileName()));
 
         // 예산안
         List<DonationBudget> donationBudgetList = donationBudgetRepository.findByDonation(donation)
@@ -224,7 +216,7 @@ public class DonationServiceImpl implements DonationService {
                 .views(donation.getViews())
                 .recommendations(donation.getRecommendations())
                 .description(donation.getDescription())
-                .image(image)
+                .image("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + image.getImageNewFileName())
                 .startTime(donation.getStartTime())
                 .endTime(donation.getEndTime())
                 .targetAmount(donation.getAmount())
@@ -291,17 +283,13 @@ public class DonationServiceImpl implements DonationService {
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
         donationList.forEach(donation -> {
-            // 대표 사진
-            Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
+            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
                     .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
-            image.put(img.getImageOriginFileName(), imgUrl);
 
             donationGetListResponseDTOList.add(
                     DonationGetListResponseDTO.builder()
                             .donationId(donation.getId())
-                            .image(image)
+                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
                             .title(donation.getTitle())
                             .beneficiaryName(donation.getBeneficiaryName())
                             .targetAmount(donation.getAmount())
@@ -356,24 +344,22 @@ public class DonationServiceImpl implements DonationService {
         if (image != null) {
             String fileName = awsS3Service.uploadImage(image);
 
-            Image img = Image.builder()
+            imageRepository.save(Image.builder()
                     .imageOriginFileName(image.getOriginalFilename())
                     .imageNewFileName(fileName)
                     .donation(donation)
-                    .build();
-
-            imageRepository.save(img);
+                    .build());
 
             String thumbNailFileName = awsS3Service.uploadThumbnailImage(fileName, image);
 
-            Image thumbNailImg = Image.builder()
+            Image thumbNail = Image.builder()
                     .imageOriginFileName(image.getOriginalFilename())
                     .imageNewFileName(thumbNailFileName)
                     .imageIsResized(true)
                     .donation(donation)
                     .build();
 
-            imageRepository.save(thumbNailImg);
+            imageRepository.save(thumbNail);
         }
 
         evidence.forEach(file -> {
@@ -417,6 +403,7 @@ public class DonationServiceImpl implements DonationService {
     public User convertAccessTokenToUser(String accessToken) {
 
         String token = accessToken.split(" ")[1];
+
         String userAccount = jwtAuthenticationProvider.getUserAccount(token);
 
         return userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
