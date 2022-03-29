@@ -1,5 +1,7 @@
 import React from 'react';
-import ProfileTab from 'containers/ProfilePage/Tab/ProfileTab';
+import UserProfile from 'containers/ProfilePage/UserProfile/UserProfile';
+import MyNFT from 'containers/ProfilePage/MyNFT/MyNFT';
+import ProfileDetail from 'containers/ProfilePage/ProfileDetail/ProfileDetail';
 import PopularMembership from 'containers/CommunityPage/Membership/PopularMembership/PopularMembership';
 import CommunityTab from 'containers/CommunityPage/Tab/CommunityTab';
 import Avatar from 'assets/theme/Avatar/Avatar';
@@ -9,21 +11,16 @@ interface ProfilePageProps {
 const Mypage: React.FC<ProfilePageProps> = ({ focus }) => {
   return (
     <div>
-      <>
-        <Avatar />
-        <ProfileTab focus={focus} />
-        {focus === 1 ? (
-          <>
-            <PopularMembership />
-          </>
-        ) : focus === 2 ? (
-          <div>
-            <PopularMembership />
-          </div>
-        ) : focus === 3 ? (
-          <div>ㅇㅇㅇ</div>
-        ) : null}
-      </>
+      <UserProfile />
+      {focus === 1 ? (
+        <div>
+          <ProfileDetail focus={focus} />
+        </div>
+      ) : focus === 2 ? (
+        <ProfileDetail focus={focus} />
+      ) : focus === 3 ? (
+        <ProfileDetail focus={focus} />
+      ) : null}
     </div>
   );
 };

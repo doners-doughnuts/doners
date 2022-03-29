@@ -98,7 +98,7 @@ const Header = () => {
                 </li>
                 <div className="btn">
                   {loggedUserInfo ? (
-                    <Link to={`/profile/${mynickname}`}>
+                    <Link to={`/profile/mynft/${mynickname}`}>
                       <Button size="small" fullWidth color={'alternate'}>
                         Profile
                       </Button>
