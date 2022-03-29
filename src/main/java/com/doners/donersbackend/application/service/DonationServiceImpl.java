@@ -106,7 +106,7 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, String sort) {
 
-        List<Donation> donationList = null;
+        List<Donation> donationList = new ArrayList<>();
 
         switch (sort) {
             // 최신 순
@@ -130,26 +130,7 @@ public class DonationServiceImpl implements DonationService {
                 break;
         }
 
-        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
-
-        donationList.forEach(donation -> {
-            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-
-            donationGetListResponseDTOList.add(
-                    DonationGetListResponseDTO.builder()
-                            .donationId(donation.getId())
-                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
-                            .title(donation.getTitle())
-                            .beneficiaryName(donation.getBeneficiaryName())
-                            .targetAmount(donation.getAmount())
-                            .build()
-            );
-        });
-
-        return DonationGetListWrapperResponseDTO.builder()
-                .donationGetListResponseDTOList(donationGetListResponseDTOList)
-                .build();
+        return convertDonationListToDTO(donationList);
 
     }
 
@@ -208,7 +189,9 @@ public class DonationServiceImpl implements DonationService {
         );
 
         // 조회수 증가
-        increaseViews(donation);
+        donation.changeViews();
+
+        donationRepository.save(donation);
 
         return DonationResponseDTO.builder()
                 .title(donation.getTitle())
@@ -280,26 +263,7 @@ public class DonationServiceImpl implements DonationService {
                 break;
         }
 
-        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
-
-        donationList.forEach(donation -> {
-            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-
-            donationGetListResponseDTOList.add(
-                    DonationGetListResponseDTO.builder()
-                            .donationId(donation.getId())
-                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
-                            .title(donation.getTitle())
-                            .beneficiaryName(donation.getBeneficiaryName())
-                            .targetAmount(donation.getAmount())
-                            .build()
-            );
-        });
-
-        return DonationGetListWrapperResponseDTO.builder()
-                .donationGetListResponseDTOList(donationGetListResponseDTOList)
-                .build();
+        return convertDonationListToDTO(donationList);
 
     }
 
@@ -391,12 +355,28 @@ public class DonationServiceImpl implements DonationService {
 
     }
 
-    public void increaseViews(Donation donation) {
+    public DonationGetListWrapperResponseDTO convertDonationListToDTO(List<Donation> donationList) {
 
-        // 조회수 업데이트
-        donation.changeViews();
+        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
-        donationRepository.save(donation);
+        donationList.forEach(donation -> {
+            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 썸네일을 찾을 수 없습니다."));
+
+            donationGetListResponseDTOList.add(
+                    DonationGetListResponseDTO.builder()
+                            .donationId(donation.getId())
+                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
+                            .title(donation.getTitle())
+                            .beneficiaryName(donation.getBeneficiaryName())
+                            .targetAmount(donation.getAmount())
+                            .build()
+            );
+        });
+
+        return DonationGetListWrapperResponseDTO.builder()
+                .donationGetListResponseDTOList(donationGetListResponseDTOList)
+                .build();
 
     }
 
