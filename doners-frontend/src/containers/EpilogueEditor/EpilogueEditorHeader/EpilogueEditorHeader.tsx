@@ -6,10 +6,34 @@ import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import styles from './EpilogueEditorHeader.module.scss';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
+import { useEffect, useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const EpilogueEditorHeader = () => {
+const EpilogueEditorHeader = ({ onChange }: any) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [imgFile, setImgFile] = useState('');
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadBtnClick = () => {
+    inputRef.current?.click();
+  };
+
+  const handleUploadImage = async (event: any) => {
+    setIsLoading(true);
+    const file = event.target.files;
+    onChange(file);
+    setImgFile(URL.createObjectURL(file[0]));
+    console.log(imgFile);
+    const formData = new FormData();
+    formData.append('file', file[0]);
+    console.log(formData);
+  };
+
+  // useEffect(() => {
+  //   console.log(imgFile);
+  // }, [imgFile]);
   return (
     <div className={cx('header')}>
       <div className={cx('info')}>
@@ -36,10 +60,26 @@ const EpilogueEditorHeader = () => {
       </div>
 
       <div className={cx('thumbnail')}>
-        <div className={cx('default')}>
-          <ImageIcon width={42} height={42} />
-          <H4 color="blue">이미지를 업로드하세요.</H4>
-          <P color="gray">여기를 클릭하거나 파일을 마우스로 끌어보세요.</P>
+        <div className={cx('default')} onClick={handleUploadBtnClick}>
+          <input
+            type="file"
+            id="inputImage"
+            className={cx('upload-image')}
+            onChange={handleUploadImage}
+            ref={inputRef}
+            accept="image/*"
+          />
+          {imgFile ? (
+            <div className={cx('preview-img')}>
+              <img src={imgFile} alt="preview" />
+            </div>
+          ) : (
+            <div className={cx('upload')}>
+              <ImageIcon width={42} height={42} />
+              <H4 color="blue">이미지를 업로드하세요.</H4>
+              <P color="gray">여기를 클릭하거나 파일을 마우스로 끌어보세요.</P>
+            </div>
+          )}
         </div>
         {/* <img src={src} alt="ex" /> */}
       </div>

@@ -12,12 +12,17 @@ export const registComment = async (body: commentType) => {
   return result;
 };
 
-export const getComments = async (community_id: string) => {
+export const getBoardComments = async (community_id: string) => {
   const result = await instance.get(`/comment/community/${community_id}`);
   return result;
 };
 
 export const deleteComments = async (comment_id: string) => {
   const result = await instance.delete(`/comment/delete/${comment_id}`);
+  return result;
+};
+
+export const getEpilogueComments = async (epilogue_id: string) => {
+  const result = await instance.get(`/comment/epilogue/${epilogue_id}`);
   return result;
 };

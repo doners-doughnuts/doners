@@ -6,12 +6,15 @@ import { ReactComponent as RemoveIcon } from 'assets/images/icon/remove.svg';
 
 const cx = classNames.bind(styles);
 
-const HistoryItem = () => {
+const HistoryItem = ({ value }: any) => {
+  const money = Number(value.epilogueBudgetAmount);
+  const cmoney = money.toLocaleString();
+  console.log(cmoney);
   return (
     <div className={cx('history-item')}>
-      <P>(활용 내역1)</P>
+      <P>{value.epilogueBudgetPlan}</P>
       <div className={cx('value')}>
-        <P>120,000 KRW</P>
+        <P>{`${cmoney}KRW`}</P>
         <div className={cx('icon')}>
           <RemoveIcon />
         </div>

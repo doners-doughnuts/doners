@@ -7,23 +7,29 @@ import Span from 'assets/theme/Typography/Span/Span';
 import H5 from 'assets/theme/Typography/H5/H5';
 const cx = classNames.bind(styles);
 
-const EpilogueCard = () => {
+const EpilogueCard = ({ data }: any) => {
   return (
     // <div className={cx('col-lg-4')}>
     <div className={cx('card')}>
       <div className={cx('card-header')}>
         <div className={cx('user-info')}>
           <Avatar />
-          <div className={cx('name')}>이학성</div>
+          <div className={cx('name')}>{data.epilogueWriter}</div>
         </div>
         <div>
-          <Span>12일 전</Span>
+          <Span>{data.epilogueCreateTime}</Span>
         </div>
       </div>
       <div className={cx('title')}>
-        <H5>코로나로 인해 꿈을 잃었습니다.</H5>
+        <H5>{data.epilogueTitle}</H5>
       </div>
-      <div className={cx('img-wrap')}></div>
+      <div className={cx('img-wrap')}>
+        <img
+          src={data.epilogueThumbnailImage}
+          alt="thumbnail"
+          className={cx('thumbnail')}
+        />
+      </div>
     </div>
     // </div>
   );
