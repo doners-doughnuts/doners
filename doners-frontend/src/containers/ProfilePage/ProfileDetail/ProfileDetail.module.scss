@@ -1,0 +1,20 @@
+@import 'assets/styles/main';
+.container {
+  z-index: 0;
+}
+.inner-container {
+  margin-top: -80px;
+  border: 2px solid $black;
+  padding: 50px;
+  .article-header {
+    margin-bottom: 50px;
+  }
+  .button-wrap {
+    @include flexbox(end, center);
+
+    .buttons {
+      @include flexbox(between, center);
+      width: 180px;
+    }
+  }
+}
