@@ -8,14 +8,14 @@ import Button from 'assets/theme/Button/Button';
 import Logo from 'assets/images/header-logo.svg';
 import { getLoggedUserInfo } from 'utils/loggedUser';
 import { useRecoilValue } from 'recoil';
-import { isLoggedState } from '../../atoms/atoms';
+import { isLoggedState, nicknameState } from '../../atoms/atoms';
 
 const cx = classNames.bind(styles);
 const Header = () => {
   const [loggedUserInfo, setLoggedUserInfo] = useState(false);
   const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
-
+  const mynickname = useRecoilValue(nicknameState);
   function handleScroll() {
     if (ScrollY > 45) {
       setScrollY(window.pageYOffset);
@@ -39,7 +39,10 @@ const Header = () => {
   useEffect(() => {
     const localStorageUserInfo = getLoggedUserInfo();
     console.log(localStorageUserInfo);
-    if (localStorageUserInfo) setLoggedUserInfo(true);
+    if (localStorageUserInfo) {
+      setLoggedUserInfo(true);
+      console.log(mynickname);
+    }
   }, [getLoggedUserInfo()]);
 
   return (
@@ -95,7 +98,7 @@ const Header = () => {
                 </li>
                 <div className="btn">
                   {loggedUserInfo ? (
-                    <Link to="/profile">
+                    <Link to={`/profile/${mynickname}`}>
                       <Button size="small" fullWidth color={'alternate'}>
                         Profile
                       </Button>
