@@ -13,13 +13,15 @@ const instance = axios.create({
 // HTTP request interceptor
 instance.interceptors.request.use(
   (config) => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    //
-    if (user && user.accessToken) {
-      // For Spring Boot back-end
-      config.headers.Authorization = 'Bearer ' + user.accessToken;
-      // for Node.js Express back-end
-      //// return { 'x-access-token': user.accessToken };
+    const item = localStorage.getItem('user');
+    if (typeof item === 'string') {
+      const user = JSON.parse(item);
+      if (user.accessToken) {
+        // For Spring Boot back-end
+        config.headers!.Authorization = 'Bearer ' + user.accessToken;
+        // for Node.js Express back-end
+        //// return { 'x-access-token': user.accessToken };
+      }
     }
     return config;
   },
