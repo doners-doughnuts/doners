@@ -22,7 +22,6 @@ const ProfileDetail = ({ focus }: ProfileType) => {
             <ProfileTab focus={focus} />
             <div className={cx('inner-container')}>
               <main className={cx('content')}>
-                ProfileDetail!{focus}
                 {focus === 1 ? (
                   <div>
                     <MyNFT />
