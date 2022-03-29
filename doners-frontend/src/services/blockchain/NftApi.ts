@@ -1,19 +1,3 @@
-// import Web3 from 'web3';
-import {
-  DonersDoughnutsCovid,
-  DonersDoughnutsPatient,
-  DonersDoughnutsSingle,
-  DonersDoughnutsWarrior,
-} from './config';
-
-// for each NFT edition
-// DonersDoughnutsCovid.methods.call();
-// DonersDoughnutsSingle.methods.call();
-// DonersDoughnutsWarrior.methods.call();
-// DonersDoughnutsPatient.methods.call();
-
-// root Doners NFT Contract
-
 /**
  * 필요한 기능
  * [NFT(DD)]
