@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService{
                 .commentCreateTime(LocalDateTime.now()).build();
 
         if(commentRegisterPostDTO.getCommunityId().length()==0){// 감사 글 댓글
-            comment.changeEpilougeId(epilogueRepository.findById(commentRegisterPostDTO.getEpilougeId()).get());
+            comment.changeEpilogueId(epilogueRepository.findById(commentRegisterPostDTO.getEpilogueId()).get());
         }else{// 커뮤니티 글 댓글
             comment.changeCommunityId(communityRepository.findById(commentRegisterPostDTO.getCommunityId()).get());
         }
@@ -119,7 +119,7 @@ public class CommentServiceImpl implements CommentService{
 
         Epilogue epilogue = epilogueRepository.findById(id).get();
 
-        for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
+        for(Comment c : commentRepository.findAllByEpilogueAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
             list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription(), c.getUser().getUserNickname()));
         }
 
