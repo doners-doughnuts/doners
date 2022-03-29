@@ -140,9 +140,10 @@ const SignupForm = () => {
         <div>{errors.authmail}</div>
         <div>{emailvailerrormsg}</div>
         <div>{emailsendmsg}</div>
-        <Button type="button" color="alternate" onClick={emailAuthentication}>
+        <Button type="button" color="alternate">
           인증
         </Button>
+        {/* Button 안에 onClick={emailAuthentication} 함수 있었음 */}
         <Button type="submit" disabled={isLoading} color="primary">
           {isLoading ? '진행중' : '회원가입 완료'}
         </Button>

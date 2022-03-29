@@ -1,5 +1,5 @@
 import DonateInfo from 'containers/DonatePage/DonateDetailPage/DonateInfo/DonateInfo';
-import styles from './DonateDetailPage.module.scss';
+import styles from '../page.module.scss';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);

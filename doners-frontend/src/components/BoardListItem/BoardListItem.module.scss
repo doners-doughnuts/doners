@@ -22,7 +22,6 @@
 
   .sub-left {
     @include flexbox(between, center);
-    width: 11%;
   }
 
   .sub-right {
@@ -41,7 +40,11 @@
   // margin-left: 5px;
 }
 
+.date {
+  margin-left: 10px;
+}
 .views,
 .comment {
   @include flexbox;
+  width: 50%;
 }

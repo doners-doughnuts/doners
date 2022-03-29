@@ -18,15 +18,97 @@ import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import styles from './BoardEditor.module.scss';
 import Button from 'assets/theme/Button/Button';
-import EditorForm from 'components/Editor/EditorForm';
+import { getBoardDetail, modifyBoard, registBoard } from 'services/api/Board';
+import { useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 
 const cx = classNames.bind(styles);
 
-function BoardEditor() {
+type EditType = {
+  modify?: boolean;
+};
+
+function BoardEditor({ modify = false }: EditType) {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+
   const editorRef = useRef<Editor>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
+  const { community_id } = useParams<string>();
   const currentUrl = window.location.href;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (modify && isLoading) {
+      getDetail();
+    }
+  }, [isLoading]);
+
+  const getDetail = async () => {
+    if (typeof community_id === 'string') {
+      try {
+        const response = await getBoardDetail(community_id);
+
+        setContent(response.data.communityDescription);
+        setTitle(response.data.communityTitle);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const titleHandler = () => {
+    if (titleRef.current) {
+      setTitle(titleRef.current.value);
+    }
+  };
+
+  const contentHandler = () => {
+    setContent(editorRef.current?.getInstance().getMarkdown() || '');
+  };
+
+  const handleRegistSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    registApi();
+  };
+
+  const handleModifySubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    modifyApi();
+  };
+
+  const registApi = async () => {
+    const body = {
+      communityDescription: content,
+      communityTitle: title,
+    };
+
+    try {
+      // const response = await registBoard(body);
+      await registBoard(body);
+      navigate('/community/board');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const modifyApi = async () => {
+    const body = {
+      communityDescription: content,
+      communityTitle: title,
+      communityId: community_id,
+    };
+
+    try {
+      // const response = await registBoard(body);
+      await modifyBoard(body);
+      navigate(`/community/board/${community_id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // useEffect(() => {
   //   if (editorRef.current) {
@@ -68,40 +150,53 @@ function BoardEditor() {
       <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
           <div className={cx('header')}>
-            <H1>Write Something...</H1>
+            {modify ? <H1>Modify Here...</H1> : <H1>Write Something...</H1>}
           </div>
           <div className={cx('inner-container')}>
-            {/* <div className={cx('user-info')}>
-              <Avatar size="small" />
-              <div className={cx('name')}>
-                <P>이학성</P>
-              </div>
-            </div> */}
-            <EditorForm />
-            {/* <div className={cx('editor')}>
+            {/* <EditorForm /> */}
+            <div className={cx('editor')}>
               <textarea
                 className={cx('title')}
                 placeholder="제목을 입력하세요."
-                maxLength={30}
+                maxLength={50}
+                ref={titleRef}
+                onChange={titleHandler}
+                value={title}
               />
-              <Editor
-                previewStyle="vertical"
-                height="79vh"
-                initialEditType="wysiwyg"
-                // initialValue=""
-                plugins={[
-                  colorSyntax,
-                  [codeSyntaxHighlight, { highlighter: Prism }],
-                ]}
-                onChange={contentHandler}
-                ref={editorRef}
-              />
-            </div> */}
+              {(!modify || !isLoading) && (
+                <Editor
+                  previewStyle="vertical"
+                  height="79vh"
+                  initialEditType="wysiwyg"
+                  initialValue={content}
+                  plugins={[
+                    colorSyntax,
+                    [codeSyntaxHighlight, { highlighter: Prism }],
+                  ]}
+                  onChange={contentHandler}
+                  ref={editorRef}
+                />
+              )}
+            </div>
             <div className={cx('btn-row')}>
               <div className={cx('regist-btn')}>
-                <Button color="primary" fullWidth>
-                  작성 완료
-                </Button>
+                {modify ? (
+                  <Button
+                    color="primary"
+                    fullWidth
+                    onClick={handleModifySubmit}
+                  >
+                    수정 완료
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    fullWidth
+                    onClick={handleRegistSubmit}
+                  >
+                    작성 완료
+                  </Button>
+                )}
               </div>
             </div>
           </div>

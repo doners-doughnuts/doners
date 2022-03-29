@@ -15,11 +15,16 @@ public class EpilogueChangePatchDTO {
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="글 제목")
+    @ApiModelProperty(name="에필로그 ID")
+    private String epilogueId;
+
+    @NotBlank
+    @NotNull
+    @ApiModelProperty(name="에필로그 제목")
     private String epilogueTitle;
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="글 내용")
+    @ApiModelProperty(name="에필로그 내용")
     private String epilogueDescription;
 }

@@ -24,6 +24,8 @@ public interface UserService {
 
     void deleteUser(String accessToken);
 
+    String getProfileImage(String accessToken, String userNickname);
+
     UserMyPageCommunityHistoryWrapperResponseDTO getCommunityHistoryList(String accessToken);
 
     UserMyPageEpilogueHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken);
