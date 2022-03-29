@@ -1,4 +1,5 @@
-import { FundraiserContract, Web3Client } from 'services/web3';
+import { SSFContract, FundraiserContract, Web3Client } from 'services/web3';
+
 /**
  * 필요한 기능
  * [Doation(SSF)]
@@ -46,15 +47,18 @@ export const check = async () => {
   //   .then(console.log)
   //   .catch(console.log);
 
-  const kkk = await FundraiserContract(
-    '0xFacc3F3032642F08F239F8f2e1f0Cf70c855933b'
-  )
-    .methods.name()
+  const kk = await SSFContract.methods
+    .balanceOf('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
     .call();
+  // const kkk = await FundraiserContract(
+  //   '0xFacc3F3032642F08F239F8f2e1f0Cf70c855933b'
+  // )
+  //   .methods.name()
+  //   .call();
   // ;fundraisers(10, 0).call();
 
   // const kkk = await SsfContract.methods.fundraisersCount().call();
   // .then(console.log)
   // .catch(console.log);
-  console.log('TOTAL:   ', kkk);
+  console.log('TOTAL:   ', kk);
 };
