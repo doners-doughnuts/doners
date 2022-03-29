@@ -110,7 +110,7 @@ public class DonationServiceImpl implements DonationService {
 
         switch (sort) {
             // 최신 순
-            case "start":
+            case "recent":
                 donationList = donationRepository
                         .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
