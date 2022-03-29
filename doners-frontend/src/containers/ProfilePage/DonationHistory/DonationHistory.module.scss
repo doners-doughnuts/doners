@@ -1,1 +1,22 @@
 @import 'assets/styles/main';
+
+.total_donation {
+  text-align: center;
+  margin: 0 0 50px 0;
+}
+
+.donation_list {
+  margin: 30px 0 0 0;
+}
+.selectbox {
+  width: 200px;
+}
+.title {
+  margin: 0 50px 0 0;
+  @include text-style(24);
+  font-family: $font-sub;
+  font-weight: 700;
+}
+.selectboxlist {
+  @include flexbox(start);
+}
