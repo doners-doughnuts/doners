@@ -14,11 +14,11 @@ import java.util.List;
 @ToString
 public class UserMyPageDonationHistoryWrapperResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "해당 유저가 신청한 기부 글 목록")
-    private List<UserMyPageDonationHistoryResponseDTO> UserMyPageDonationHistoryResponseDTOList;
+    private List<UserMyPageDonationHistoryResponseDTO> userMyPageDonationHistoryResponseDTOList;
 
     @Builder
-    public UserMyPageDonationHistoryWrapperResponseDTO(List<UserMyPageDonationHistoryResponseDTO> UserMyPageDonationHistoryResponseDTOList) {
-        this.UserMyPageDonationHistoryResponseDTOList = UserMyPageDonationHistoryResponseDTOList;
+    public UserMyPageDonationHistoryWrapperResponseDTO(List<UserMyPageDonationHistoryResponseDTO> userMyPageDonationHistoryResponseDTOList) {
+        this.userMyPageDonationHistoryResponseDTOList = userMyPageDonationHistoryResponseDTOList;
     }
 
     public static UserMyPageDonationHistoryWrapperResponseDTO of(String message, Integer statusCode, UserMyPageDonationHistoryWrapperResponseDTO userMyPageDonationHistoryWrapperResponseDTO) {
