@@ -2,10 +2,11 @@
 
 .inner-container {
   border-bottom: 1px solid $gray-3;
-  padding: 10px 0 30px;
+  // padding: 10px 0 30px;
+  margin-bottom: 30px;
 
   .comment-header {
-    @include flexbox(between, center);
+    @include flexbox(between, end);
     margin-bottom: 30px;
     .comment-info {
       @include flexbox(start);
@@ -25,9 +26,26 @@
   }
 
   .comment-form {
+    .comment-input {
+      border: 2px solid $black;
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+      height: 120px;
+      resize: none;
+
+      &:focus {
+        border-color: $green;
+      }
+    }
+    .disabled {
+      border: none;
+      height: fit-content;
+    }
+
     .modify-completeBtn {
       @include flexbox(end, center);
-
+      margin-bottom: 30px;
       .buttons {
         @include flexbox(between, center);
         width: 170px;

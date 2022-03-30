@@ -29,7 +29,7 @@ const Textarea = ({
 
   useEffect(() => {
     setInputValue(value);
-  }, [value]);
+  }, [disabled, value]);
 
   // const handleInputChange = () => {
   //   if (inputRef.current) {

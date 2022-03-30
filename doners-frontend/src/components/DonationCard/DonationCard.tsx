@@ -7,7 +7,7 @@ import Tag from 'assets/theme/Tag/Tag';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 const cx = classNames.bind(styles);
 
-const DonationCard = () => {
+const DonationCard = ({ data }: any) => {
   return (
     <div className={cx('card')}>
       <div className={cx('card-header')}>

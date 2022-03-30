@@ -7,6 +7,11 @@ import H5 from 'assets/theme/Typography/H5/H5';
 const cx = classNames.bind(styles);
 
 const EpilogueCard = ({ data }: any) => {
+  function formatDate(value: string) {
+    const date = new Date(value);
+    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
+  }
+
   return (
     // <div className={cx('col-lg-4')}>
     <div className={cx('card')}>
@@ -16,7 +21,7 @@ const EpilogueCard = ({ data }: any) => {
           <div className={cx('name')}>{data.epilogueWriter}</div>
         </div>
         <div>
-          <Span>{data.epilogueCreateTime}</Span>
+          <Span>{formatDate(data.epilogueCreateTime)}</Span>
         </div>
       </div>
       <div className={cx('title')}>

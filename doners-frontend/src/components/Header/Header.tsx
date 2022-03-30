@@ -8,7 +8,7 @@ import Button from 'assets/theme/Button/Button';
 import Logo from 'assets/images/header-logo.svg';
 import { getLoggedUserInfo } from 'utils/loggedUser';
 import { useRecoilValue } from 'recoil';
-import { isLoggedState } from '../../atoms/atoms';
+import { isLoggedState, nicknameState } from '../../atoms/atoms';
 
 const cx = classNames.bind(styles);
 const Header = () => {
@@ -24,7 +24,7 @@ const Header = () => {
   //     setScrollY(window.pageYOffset);
   //   if (ScrollY > 45) {
   //   } else {
-  // const mynickname = useRecoilValue(nicknameState);
+  const mynickname = useRecoilValue(nicknameState);
 
   // useEffect(() => {
   //   function scrollListener() {
@@ -41,7 +41,7 @@ const Header = () => {
     console.log(localStorageUserInfo);
     if (localStorageUserInfo) {
       setLoggedUserInfo(true);
-      console.log(mynickname);
+      // console.log(mynickname);
     }
   }, [getLoggedUserInfo()]);
 

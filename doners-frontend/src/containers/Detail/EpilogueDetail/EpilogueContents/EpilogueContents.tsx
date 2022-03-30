@@ -29,18 +29,14 @@ const EpilogueContents = () => {
 
   const getEpilogue = async () => {
     if (typeof epilogue_id === 'string') {
-      try {
-        const response = await getEpilogueDetail(epilogue_id);
-        console.log(response.data);
-        setTitle(response.data.epilogueTitle);
-        setContents(response.data.epilogueDescription);
-        setCreateTime(response.data.epilogueCreateTime);
-        setWriter(response.data.epilogueWriter);
-        setThumbnail(response.data.epilogueImage);
-        setHistoryList(response.data.epilogueBudgetResponseDTOList);
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await getEpilogueDetail(epilogue_id);
+      console.log(response.data);
+      setTitle(response.data.epilogueTitle);
+      setContents(response.data.epilogueDescription);
+      setCreateTime(response.data.epilogueCreateTime);
+      setWriter(response.data.epilogueWriter);
+      setThumbnail(response.data.epilogueImage);
+      setHistoryList(response.data.epilogueBudgetResponseDTOList);
     }
   };
 

@@ -84,6 +84,11 @@ const BoardContents = () => {
     }
   };
 
+  function formatDate(value: string) {
+    const date = new Date(value);
+    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
+  }
+
   return (
     <div className={cx('inner-container')}>
       <header className={cx('article-header')}>
@@ -109,7 +114,7 @@ const BoardContents = () => {
         <div className={cx('info-wrap')}>
           <div className={cx('article-info')}>
             <div>
-              <P color="gray">{`작성일: ${createTime}`}</P>
+              <P color="gray">{`작성일: ${formatDate(createTime)}`}</P>
               <div className={cx('sub-info')}>
                 <div className={cx('views')}>
                   <ViewsIcon className={cx('icon')} fill="gray" />

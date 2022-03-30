@@ -47,15 +47,11 @@ function BoardEditor({ modify = false }: EditType) {
 
   const getDetail = async () => {
     if (typeof community_id === 'string') {
-      try {
-        const response = await getBoardDetail(community_id);
+      const response = await getBoardDetail(community_id);
 
-        setContent(response.data.communityDescription);
-        setTitle(response.data.communityTitle);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      setContent(response.data.communityDescription);
+      setTitle(response.data.communityTitle);
+      setIsLoading(false);
     }
   };
   const titleHandler = () => {
