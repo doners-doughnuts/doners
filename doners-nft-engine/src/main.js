@@ -107,9 +107,9 @@ const layersSetup = (layersOrder) => {
   return layers;
 };
 
-const saveImage = (_editionCount) => {
+const saveImage = (_tokenIdCount) => {
   fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
+    `${buildDir}/images/${_tokenIdCount}.png`,
     canvas.toBuffer("image/png")
   );
 };
@@ -125,19 +125,21 @@ const drawBackground = () => {
   ctx.fillRect(0, 0, format.width, format.height);
 };
 
-const addMetadata = (_dna, _edition) => {
+const addMetadata = (_dna, _tokenId) => {
   let dateTime = Date.now();
   let tempMetadata = {
-    name: `${namePrefix} #${_edition}`,
+    name: `${namePrefix} #${_tokenId}`,
     description: description,
-    file_url: `${baseUri}/${_edition}.png`,
-    image: `${baseUri}/${_edition}.png`,
+    file_url: `${baseUri}/${_tokenId}.png`,
+    image: `${baseUri}/${_tokenId}.png`,
     attributes: attributesList,
     custom_fields: {
       dna: sha1(_dna),
-      edition: _edition,
+      tokenId: _tokenId,
       date: dateTime,
-      compiler: "HashLips Art Engine - codeSTACKr Modified",
+      compiler: "Doners NFT Engine",
+      //! NFT 카테고리 (총 4종류: covid / warrior / single / patient)
+      edition: 'corona', // by layer configurations
     },
     ...extraMetadata,
   };
@@ -152,7 +154,7 @@ const addMetadata = (_dna, _edition) => {
       image: `image.png`,
       //Added metadata for solana
       external_url: solanaMetadata.external_url,
-      edition: _edition,
+      tokenId: _tokenId,
       ...extraMetadata,
       attributes: tempMetadata.attributes,
       properties: {
@@ -199,18 +201,18 @@ const drawElement = (_renderObject, _index, _layersLen) => {
   ctx.globalCompositeOperation = _renderObject.layer.blend;
   text.only
     ? addText(
-        `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
-        text.xGap,
-        text.yGap * (_index + 1),
-        text.size
-      )
+      `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
+      text.xGap,
+      text.yGap * (_index + 1),
+      text.size
+    )
     : ctx.drawImage(
-        _renderObject.loadedImage,
-        0,
-        0,
-        format.width,
-        format.height
-      );
+      _renderObject.loadedImage,
+      0,
+      0,
+      format.width,
+      format.height
+    );
 
   addAttributes(_renderObject);
 };
@@ -289,8 +291,7 @@ const createDna = (_layers) => {
       random -= layer.elements[i].weight;
       if (random < 0) {
         return randNum.push(
-          `${layer.elements[i].id}:${layer.elements[i].filename}${
-            layer.bypassDNA ? "?bypassDNA=true" : ""
+          `${layer.elements[i].id}:${layer.elements[i].filename}${layer.bypassDNA ? "?bypassDNA=true" : ""
           }`
         );
       }
@@ -303,15 +304,15 @@ const writeMetaData = (_data) => {
   fs.writeFileSync(`${buildDir}/json/_metadata.json`, _data);
 };
 
-const saveMetaDataSingleFile = (_editionCount) => {
-  let metadata = metadataList.find((meta) => meta.custom_fields.edition == _editionCount);
+const saveMetaDataSingleFile = (_tokenIdCount) => {
+  let metadata = metadataList.find((meta) => meta.custom_fields.tokenId == _tokenIdCount);
   debugLogs
     ? console.log(
-        `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`
-      )
+      `Writing metadata for ${_tokenIdCount}: ${JSON.stringify(metadata)}`
+    )
     : null;
   fs.writeFileSync(
-    `${buildDir}/json/${_editionCount}.json`,
+    `${buildDir}/json/${_tokenIdCount}.json`,
     JSON.stringify(metadata, null, 2)
   );
 };
@@ -332,12 +333,12 @@ function shuffle(array) {
 
 const startCreating = async () => {
   let layerConfigIndex = 0;
-  let editionCount = 1;
+  let tokenIdCount = 1;
   let failedCount = 0;
   let abstractedIndexes = [];
   for (
     let i = network == NETWORK.sol ? 0 : 1;
-    i <= layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
+    i <= layerConfigurations[layerConfigurations.length - 1].growTokenSizeTo;
     i++
   ) {
     abstractedIndexes.push(i);
@@ -346,14 +347,14 @@ const startCreating = async () => {
     abstractedIndexes = shuffle(abstractedIndexes);
   }
   debugLogs
-    ? console.log("Editions left to create: ", abstractedIndexes)
+    ? console.log("Tokens left to create: ", abstractedIndexes)
     : null;
   while (layerConfigIndex < layerConfigurations.length) {
     const layers = layersSetup(
       layerConfigurations[layerConfigIndex].layersOrder
     );
     while (
-      editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
+      tokenIdCount <= layerConfigurations[layerConfigIndex].growTokenSizeTo
     ) {
       let newDna = createDna(layers);
       if (isDnaUnique(dnaList, newDna)) {
@@ -365,13 +366,20 @@ const startCreating = async () => {
         });
 
         await Promise.all(loadedElements).then((renderObjectArray) => {
+          //! 03.31 tokenId의 형태를 x000000 + (기존 tokenId)로 바꿈. 4개의 카테고리를 하나로 묶기 위해서
+          // 1xxxxx: covid
+          // 2xxxxx: single
+          // 3xxxxx: warrior
+          // 4xxxxx: patient
+          const tokenId = 1000000 + abstractedIndexes[0];
+
           debugLogs ? console.log("Clearing canvas") : null;
           ctx.clearRect(0, 0, format.width, format.height);
           if (gif.export) {
             hashlipsGiffer = new HashlipsGiffer(
               canvas,
               ctx,
-              `${buildDir}/gifs/${abstractedIndexes[0]}.gif`,
+              `${buildDir}/gifs/${tokenId}.gif`,
               gif.repeat,
               gif.quality,
               gif.delay
@@ -395,26 +403,26 @@ const startCreating = async () => {
             hashlipsGiffer.stop();
           }
           debugLogs
-            ? console.log("Editions left to create: ", abstractedIndexes)
+            ? console.log("Tokens left to create: ", abstractedIndexes)
             : null;
-          saveImage(abstractedIndexes[0]);
-          addMetadata(newDna, abstractedIndexes[0]);
-          saveMetaDataSingleFile(abstractedIndexes[0]);
+          saveImage(tokenId);
+          addMetadata(newDna, tokenId);
+          saveMetaDataSingleFile(tokenId);
           console.log(
-            `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
+            `Created tokenId: ${tokenId}, with DNA: ${sha1(
               newDna
             )}`
           );
         });
         dnaList.add(filterDNAOptions(newDna));
-        editionCount++;
+        tokenIdCount++;
         abstractedIndexes.shift();
       } else {
         console.log("DNA exists!");
         failedCount++;
         if (failedCount >= uniqueDnaTorrance) {
           console.log(
-            `You need more layers or elements to grow your edition to ${layerConfigurations[layerConfigIndex].growEditionSizeTo} artworks!`
+            `You need more layers or elements to grow your tokens to ${layerConfigurations[layerConfigIndex].growTokenSizeTo} artworks!`
           );
           process.exit();
         }

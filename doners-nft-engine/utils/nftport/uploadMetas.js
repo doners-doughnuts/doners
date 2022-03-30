@@ -29,7 +29,7 @@ async function main() {
     if (regex.test(file)) {
       let jsonFile = fs.readFileSync(`${readDir}/${file}`);
       let metaData = JSON.parse(jsonFile);
-      const uploadedMeta = `${writeDir}/${metaData.custom_fields.edition}.json`;
+      const uploadedMeta = `${writeDir}/${metaData.custom_fields.tokenId}.json`;
 
       try {
         fs.accessSync(uploadedMeta);
@@ -75,7 +75,7 @@ async function main() {
     }
     readDir = `${basePath}/build/genericJson`;
     writeDir = `${basePath}/build/ipfsMetasGeneric`;
-    
+
     genericUploaded = true;
     main();
   }

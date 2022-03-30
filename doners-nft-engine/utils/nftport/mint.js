@@ -31,7 +31,7 @@ async function main() {
     default: null,
   });
 
-  if(!ok) {
+  if (!ok) {
     console.log("Exiting...");
     process.exit(0);
   }
@@ -43,18 +43,18 @@ async function main() {
   const ipfsMetas = JSON.parse(fs.readFileSync(ipfsMetasFile));
 
   for (const meta of ipfsMetas) {
-    const edition = meta.custom_fields.edition;
+    const tokenId = meta.custom_fields.tokenId;
     if (START && END) {
-      if (edition < START || edition > END) {
+      if (tokenId < START || tokenId > END) {
         continue;
       }
     } else if (START) {
-      if (edition < START) {
+      if (tokenId < START) {
         continue;
       }
     }
 
-    const mintFile = `${basePath}/build/minted/${edition}.json`;
+    const mintFile = `${basePath}/build/minted/${tokenId}.json`;
 
     try {
       fs.accessSync(mintFile);
@@ -68,10 +68,10 @@ async function main() {
           console.log(
             `Response: ${mintedMeta.mintData.response}`,
             `Error: ${mintedMeta.mintData.error}`,
-            `Retrying Edition #${edition}`
+            `Retrying TokenId #${tokenId}`
           );
-          throw "Edition not minted";
-        } else if(mintedMeta.mintData.transaction_verified === true) {
+          throw "TokenId not minted";
+        } else if (mintedMeta.mintData.transaction_verified === true) {
           console.log(`${meta.name} already minted`);
         } else {
           let check = await txnCheck(
@@ -79,26 +79,26 @@ async function main() {
           );
           if (check.includes("Success")) {
             mintedMeta.mintData.transaction_verified = true;
-            fs.writeFileSync(mintFile,JSON.stringify(mintedMeta, null, 2));
+            fs.writeFileSync(mintFile, JSON.stringify(mintedMeta, null, 2));
             console.log(`${meta.name} already minted`);
           } else if (check.includes("Fail")) {
             console.log(
-              `Transaction failed or not found, will retry Edition #${edition}`
+              `Transaction failed or not found, will retry TokenIdId #${tokenId}`
             );
-            throw `Transaction failed, will retry Edition #${edition}`;
-          } else if(check.includes("Pending")) {
+            throw `Transaction failed, will retry TokenId #${tokenId}`;
+          } else if (check.includes("Pending")) {
             console.log(
-              `Transaction transaction still pending for Edition #${edition}`
+              `Transaction transaction still pending for TokenIdId #${tokenId}`
             );
           } else {
             console.log(
-              `Transaction unknown, please manually check Edition #${edition}`,
+              `Transaction unknown, please manually check TokenIdId #${tokenId}`,
               `Directory: ${mintFile}`
             );
           }
         }
       } else {
-        throw `Edition #${edition} not minted`;
+        throw `TokenIdId #${tokenId} not minted`;
       }
     } catch (err) {
       try {
@@ -108,7 +108,7 @@ async function main() {
           contract_address: CONTRACT_ADDRESS,
           metadata_uri: meta.metadata_uri,
           mint_to_address: MINT_TO_ADDRESS,
-          token_id: edition,
+          token_id: tokenId,
         };
         const url = 'https://api.nftport.xyz/v0/mints/customizable';
         const options = {
@@ -124,7 +124,7 @@ async function main() {
           mintData: mintData,
         };
         fs.writeFileSync(
-          `${basePath}/build/minted/${edition}.json`,
+          `${basePath}/build/minted/${tokenId}.json`,
           JSON.stringify(combinedData, null, 2)
         );
 

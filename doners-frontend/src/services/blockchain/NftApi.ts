@@ -29,11 +29,11 @@ enum NftEditions {
   patient = 4,
 }
 
-export const nftTest = async () => {
+export const nftTest = async (walletAddress: string) => {
   const result = await DDHelperContract.methods
-    .isMembership('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+    .getTokensByOwner(walletAddress)
     .call();
-  console.log('NFT testing: ', result);
+  console.log('보유 NFT 목록: ', result);
 };
 
 export const getMetadata = async (edition: NftEditions, tokenId: number) => {
@@ -122,4 +122,13 @@ export const isMembership = async (walletAddress: string) => {
     .isMembership(walletAddress)
     .call();
   console.log('도너스 커뮤니티 멤버: ', result);
+};
+
+/* 사용자 보유 NFT(DD) 리스트 */
+// (https://ethereum.stackexchange.com/a/98495)
+export const getUserNFTList = async (walletAddress: string) => {
+  const result = await DDHelperContract.methods.userOwnedTokens.call(
+    walletAddress
+  );
+  console.log('보유 NFT 목록: ', result);
 };
