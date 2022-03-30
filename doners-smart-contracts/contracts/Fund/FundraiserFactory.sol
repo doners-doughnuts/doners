@@ -21,6 +21,8 @@ contract FundraiserFactory {
         string memory url,
         string memory imageURL,
         string memory description,
+        uint256 donationsGoal,
+        uint256 fundRaisingCloses,
         address payable beneficiary
     ) public {
         Fundraiser fundraiser = new Fundraiser(
@@ -28,6 +30,8 @@ contract FundraiserFactory {
             url,
             imageURL,
             description,
+            donationsGoal,
+            fundRaisingCloses,
             beneficiary,
             msg.sender
         );
