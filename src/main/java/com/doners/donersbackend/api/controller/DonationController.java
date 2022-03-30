@@ -72,13 +72,14 @@ public class DonationController {
     public ResponseEntity<? extends BaseResponseDTO> getList(
             @ApiParam(value = "카테고리", required = true) @NotNull @RequestParam CategoryCode category,
             @ApiParam(value = "페이지 번호", required = true) @RequestParam(defaultValue = "1") int page,
-            @ApiParam(value = "정렬 기준", required = true) @RequestParam(defaultValue = "recent") String sort
+            @ApiParam(value = "정렬 기준", required = true) @RequestParam(defaultValue = "recent") String sort,
+            @ApiParam(value = "보기 기준", required = true) @RequestParam(defaultValue = "all") String view
     ) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
 
         try {
-            donationGetListWrapperResponseDTO = donationService.getDonationList(category, page, sort);
+            donationGetListWrapperResponseDTO = donationService.getDonationList(category, page, sort, view);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글 목록을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
