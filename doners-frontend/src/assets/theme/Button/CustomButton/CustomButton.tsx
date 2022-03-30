@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import { Component } from 'react';
 import styles from './CustomButton.module.scss';
 const cx = classNames.bind(styles);
 

@@ -1,5 +1,4 @@
 import P from 'assets/theme/Typography/P/P';
-import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import styles from './HistoryItem.module.scss';
 import { ReactComponent as RemoveIcon } from 'assets/images/icon/remove.svg';

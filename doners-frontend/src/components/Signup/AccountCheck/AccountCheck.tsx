@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Button from 'assets/theme/Button/Button';
 import styles from './AccountCheck.module.scss';
 import character from 'assets/images/charactor-fox.png';
 import { login } from 'services/api/UserApi';
 import { isLoggedState, signupState } from 'atoms/atoms';
 import { useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
 

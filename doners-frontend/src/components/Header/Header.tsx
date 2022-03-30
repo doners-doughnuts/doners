@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import H5 from 'assets/theme/Typography/H5/H5';
 import styles from './Header.module.scss';
@@ -7,13 +7,11 @@ import classNames from 'classnames/bind';
 import Button from 'assets/theme/Button/Button';
 import Logo from 'assets/images/header-logo.svg';
 import { getLoggedUserInfo } from 'utils/loggedUser';
-import { useRecoilValue } from 'recoil';
-import { isLoggedState } from '../../atoms/atoms';
 
 const cx = classNames.bind(styles);
 const Header = () => {
   const [loggedUserInfo, setLoggedUserInfo] = useState(false);
-  const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
+  // const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
 
   // function handleScroll() {

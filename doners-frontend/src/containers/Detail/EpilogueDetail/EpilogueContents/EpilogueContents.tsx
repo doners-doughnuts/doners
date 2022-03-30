@@ -36,7 +36,6 @@ const EpilogueContents = () => {
         setContents(response.data.epilogueDescription);
         setCreateTime(response.data.epilogueCreateTime);
         setWriter(response.data.epilogueWriter);
-        setViews(response.data.epilogueViews);
         setThumbnail(response.data.epilogueImage);
         setHistoryList(response.data.epilogueBudgetResponseDTOList);
       } catch (error) {
