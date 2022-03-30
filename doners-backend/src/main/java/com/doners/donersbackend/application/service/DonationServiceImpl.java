@@ -1,20 +1,21 @@
 package com.doners.donersbackend.application.service;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
-import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
 import com.doners.donersbackend.domain.dao.donation.DonationHistory;
 import com.doners.donersbackend.domain.dao.donation.File;
+import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import com.doners.donersbackend.domain.enums.UserCode;
-import com.doners.donersbackend.domain.repository.*;
+import com.doners.donersbackend.domain.repository.FileRepository;
+import com.doners.donersbackend.domain.repository.ImageRepository;
+import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationBudgetRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationHistoryRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationRepository;
