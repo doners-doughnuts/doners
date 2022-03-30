@@ -25,7 +25,7 @@ const UserProfile = () => {
       </div>
       <div className={cx('myaccount')}>
         <image />
-        0x5efA2dABa3237495F3bC2CBbD7f48b192b003270
+        UserAccount
       </div>
       <ProfileModal open={modalOpen} close={closeModal} />
     </div>

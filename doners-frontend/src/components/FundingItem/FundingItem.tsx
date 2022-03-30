@@ -8,12 +8,22 @@ import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import styles from './FundingItem.module.scss';
 import Tag from 'assets/theme/Tag/Tag';
+import Button from 'assets/theme/Button/Button';
+import FundModal from 'containers/ProfilePage/FundModal/FundModal';
 const cx = classNames.bind(styles);
 
 const FundingItem = () => {
   const [target, setTarget] = useState(3.89);
   const [current, setCurrent] = useState(1.0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   let rate = Math.floor((current / target) * 100);
+
   return (
     <div>
       <div className={cx('history-item')}>
@@ -28,6 +38,10 @@ const FundingItem = () => {
         <div className={cx('img-wrap')}></div>
         <div className={cx('date-wrap')}>
           <Tag color="green">모금 진행중</Tag>
+          <Button color={'primary'} onClick={openModal}>
+            수령 모달
+          </Button>
+          <FundModal open={modalOpen} close={closeModal} />
           <div className={cx('date-row')}>
             <div className={cx('date-title')}>
               <H4>신청일: </H4>
