@@ -25,4 +25,5 @@ public class DonationBudgetRequestDTO {
 
     @ApiModelProperty(name = "Budget 순서")
     private long sequence;
+
 }

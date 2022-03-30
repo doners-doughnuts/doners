@@ -18,7 +18,7 @@ public interface DonationService {
     Boolean createDonation(String accessToken, DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence);
 
     // 기부글 목록 조회
-    DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, String sort);
+    DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, String sort, String view);
 
     // 기부글 상세 조회
     DonationResponseDTO getDonation(String donationId);
