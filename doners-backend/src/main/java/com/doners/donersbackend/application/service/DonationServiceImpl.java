@@ -90,6 +90,7 @@ public class DonationServiceImpl implements DonationService {
                         DonationBudget.builder()
                                 .plan(donationBudgetRequestDTO.getPlan())
                                 .amount(donationBudgetRequestDTO.getAmount())
+                                .sequence(donationBudgetRequestDTO.getSequence())
                                 .donation(donation)
                                 .build()
                 )
@@ -153,6 +154,7 @@ public class DonationServiceImpl implements DonationService {
                         DonationBudgetResponseDTO.builder()
                                 .plan(donationBudget.getPlan())
                                 .amount(donationBudget.getAmount())
+                                .sequence(donationBudget.getSequence())
                                 .build()
                 )
         );
