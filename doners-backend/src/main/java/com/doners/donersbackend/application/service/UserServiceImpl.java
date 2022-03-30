@@ -186,10 +186,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 닉네임을 가진 유저 정보가 존재하지 않습니다."));
 
-        Image profileImage = imageRepository.findByUserAndImageIsResized(user, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 프로필 이미지가 없습니다."));
+        Image profileImage = imageRepository.findByUserAndImageIsResized(user, false).orElse(null);
 
-        return "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + profileImage.getImageNewFileName();
+        return profileImage == null ? "" : "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + profileImage.getImageNewFileName();
     }
 
     @Override

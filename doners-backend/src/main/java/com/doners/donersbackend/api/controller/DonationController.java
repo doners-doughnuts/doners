@@ -148,6 +148,7 @@ public class DonationController {
     })
     @GetMapping("/search")
     public ResponseEntity<? extends BaseResponseDTO> search(
+            @ApiParam(value = "카테고리", required = true) @NotNull @RequestParam CategoryCode category,
             @ApiParam(value = "검색 유형", required = true) @NotBlank @RequestParam String type,
             @ApiParam(value = "검색어", required = true) @NotBlank @RequestParam String keyword,
             @ApiParam(value = "페이지 번호", required = true) int page
@@ -156,7 +157,7 @@ public class DonationController {
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
 
         try {
-            donationGetListWrapperResponseDTO = donationService.searchDonation(type, keyword, page);
+            donationGetListWrapperResponseDTO = donationService.searchDonation(category, type, keyword, page);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
