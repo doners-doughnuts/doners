@@ -1,0 +1,96 @@
+@import 'assets/styles/main';
+
+.history-item {
+  border: 2px solid $black;
+  border-radius: 8px;
+  padding: 30px 30px 0 30px;
+  margin: 10px 0 50px 0;
+  display: flex;
+
+  .image {
+    margin: 0 30px 0 0;
+    .card {
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: $btn-shadow;
+      border: 2px solid $black;
+      border-radius: 8px;
+      position: relative;
+      background-color: $white;
+      height: 200px;
+      width: 300px;
+
+      .img-wrap {
+        width: 100%;
+        height: 100%;
+        background-color: $red;
+        // background-image: url('../../assets/images/character.png');
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 8px;
+      }
+      .tag {
+        text-align: center;
+        bottom: 3%;
+        right: 3%;
+        position: absolute;
+      }
+    }
+  }
+
+  .title {
+    @include text-style(24);
+    margin: 10px 0 0 0;
+    font-family: $font-sub;
+    font-weight: 700;
+  }
+}
+
+.date-wrap {
+  width: 100%;
+  margin-bottom: 30px;
+
+  .date-row {
+    @include flexbox(start);
+    .date-title {
+      margin-right: 10px;
+    }
+  }
+  .value-row {
+    @include flexbox(start, end);
+    margin-top: 5px;
+    .value-title {
+      margin-right: 10px;
+    }
+  }
+}
+
+.progress-info {
+  margin-bottom: 30px;
+  .progress-rate {
+    right: 0%;
+    @include flexbox(end);
+  }
+}
+
+.donate-title {
+  @include flexbox(start);
+  margin-bottom: 20px;
+}
+
+.donate-plan {
+  border: 2px solid $black;
+  border-radius: 8px;
+  padding: 10px;
+
+  .detail-plan {
+    @include flexbox(between);
+    .ocBtn {
+      cursor: pointer;
+    }
+  }
+  .history-items {
+    margin-top: 10px;
+  }
+}
