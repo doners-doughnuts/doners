@@ -19,6 +19,9 @@ public class DonationBudget extends BaseEntity {
     @Column(name = "donation_budget_amount")
     private long amount;
 
+    @Column(name = "donation_budget_sequence")
+    private long sequence;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donation_id")
     private Donation donation;
