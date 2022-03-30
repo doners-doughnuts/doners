@@ -1,8 +1,9 @@
 import Button from 'assets/theme/Button/Button';
+import Textarea from 'assets/theme/Textarea/Textarea';
 import H3 from 'assets/theme/Typography/H3/H3';
 import classNames from 'classnames/bind';
 import Comment from 'components/Comment/Comment';
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import {
   getBoardComments,
@@ -18,14 +19,13 @@ type commentType = {
   commentId: string;
   nickname: string;
 };
+type TextareaChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
 const CommentsForm = () => {
   const [comment, setComment] = useState('');
   const [commentList, setCommentList] = useState<commentType[]>([]);
   const [id, setId] = useState('');
   const [paramName, setParamName] = useState('');
-
-  const commentRef = useRef<HTMLTextAreaElement>(null);
 
   const params = useParams();
 
@@ -37,15 +37,11 @@ const CommentsForm = () => {
       setId(params.epilogue_id);
       setParamName('epilogueId');
     }
-    console.log(paramName);
-    console.log(id);
     getCommentsApi();
   }, [id]);
 
-  const handleInput = () => {
-    if (commentRef.current) {
-      setComment(commentRef.current.value);
-    }
+  const handleInput = (event: TextareaChangeEvent) => {
+    setComment(event.currentTarget.value);
   };
   const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -57,37 +53,34 @@ const CommentsForm = () => {
       commentDescription: comment,
       [paramName]: id,
     };
-    console.log(body);
 
-    try {
-      await registComment(body);
-      setComment('');
-      getCommentsApi();
-    } catch (error) {}
+    await registComment(body);
+    setComment('');
+    getCommentsApi();
   };
 
   const getCommentsApi = async () => {
     if (typeof id === 'string' && id !== '') {
-      console.log(id);
-      console.log(paramName);
       if (paramName === 'communityId') {
         const response = await getBoardComments(id);
-        console.log(response);
+        console.log(response.data.commentResponseDTOList);
         setCommentList(response.data.commentResponseDTOList);
       } else {
         const response = await getEpilogueComments(id);
-        console.log(response);
         setCommentList(response.data.commentResponseDTOList);
       }
     }
   };
-  // useEffect(() => {
-  //   getCommentsApi();
-  // }, []);
 
   const handleDelete = (id: string) => {
     setCommentList(commentList.filter((comment) => comment.commentId !== id));
   };
+
+  const handleModify = () => {
+    console.log('수정 완료.');
+    getCommentsApi();
+  };
+
   return (
     <>
       <div className={cx('comments-count')}>
@@ -95,10 +88,8 @@ const CommentsForm = () => {
         <H3 color="red">{String(commentList.length)}</H3>
       </div>
       <form className={cx('comment-form')}>
-        <textarea
-          className={cx('comment-input')}
+        <Textarea
           placeholder="댓글을 작성해주세요"
-          ref={commentRef}
           value={comment}
           onChange={handleInput}
         />
@@ -118,6 +109,7 @@ const CommentsForm = () => {
               content={data.commentDescription}
               nickname={data.nickname}
               onDelete={handleDelete}
+              onModify={handleModify}
             />
           );
         })}

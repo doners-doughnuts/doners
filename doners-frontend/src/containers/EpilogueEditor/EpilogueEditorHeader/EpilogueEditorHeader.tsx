@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-const EpilogueEditorHeader = ({ onChange }: any) => {
+const EpilogueEditorHeader = ({ onChange, src }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
 
@@ -24,16 +24,22 @@ const EpilogueEditorHeader = ({ onChange }: any) => {
     setIsLoading(true);
     const file = event.target.files;
     onChange(file);
+    console.log(file);
     setImgFile(URL.createObjectURL(file[0]));
-    console.log(imgFile);
     const formData = new FormData();
     formData.append('file', file[0]);
     console.log(formData);
   };
 
-  // useEffect(() => {
-  //   console.log(imgFile);
-  // }, [imgFile]);
+  useEffect(() => {
+    console.log(src);
+    setImgFile(src);
+  }, [src]);
+
+  useEffect(() => {
+    console.log(imgFile);
+  }, [imgFile]);
+
   return (
     <div className={cx('header')}>
       <div className={cx('info')}>
