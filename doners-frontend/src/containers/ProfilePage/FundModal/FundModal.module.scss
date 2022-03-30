@@ -29,7 +29,7 @@
   border: 2px solid $black;
   box-shadow: $btn-shadow;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   border-radius: 0.3rem;
   background-color: #fff;
@@ -65,8 +65,42 @@
     display: flex;
   }
   Input {
-    width: 300px;
     margin: 0 20px 0 0;
+  }
+}
+
+.date-row {
+  @include flexbox(start);
+  .date-title {
+    margin: 0 20px;
+  }
+}
+.value-row {
+  @include flexbox(start, end);
+  margin-top: 5px;
+  justify-content: center;
+  .value-title {
+    margin-right: 10px;
+  }
+}
+
+.date-row {
+  width: 200px;
+}
+
+.people-row {
+  @include flexbox(start, end);
+  margin: 10px;
+  .value-title {
+    margin-right: 10px;
+  }
+}
+
+.progress-info {
+  margin-bottom: 30px;
+  .progress-rate {
+    right: 0%;
+    @include flexbox(end);
   }
 }
 
@@ -76,6 +110,7 @@
 }
 .modal > section > footer button {
   border: 2px solid $black;
+  width: 200px;
 }
 
 .openModal {
