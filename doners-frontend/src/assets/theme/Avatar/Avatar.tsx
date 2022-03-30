@@ -8,12 +8,13 @@ type AvatarSize = 'default' | 'small' | 'large';
 type AvatarType = {
   size?: AvatarSize;
   src?: string;
+  onClick?: (...args: any[]) => void;
 };
 
-const Avatar = ({ size = 'default', src }: AvatarType) => {
+const Avatar = ({ size = 'default', src, onClick }: AvatarType) => {
   return (
     <div className={cx(`avatar-${size}`)}>
-      {src ? <img src={src} alt="avatar-img" /> : null}
+      {src ? <img src={src} alt="avatar-img" onClick={onClick} /> : null}
     </div>
   );
 };
