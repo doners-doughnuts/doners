@@ -64,7 +64,9 @@ const Header = () => {
                   </li>
                 </Link>
                 <li>
-                  <H5>기부신청</H5>
+                  <Link to="/apply">
+                    <H5>기부신청</H5>
+                  </Link>
                 </li>
                 <Link to="/category">
                   <li>
