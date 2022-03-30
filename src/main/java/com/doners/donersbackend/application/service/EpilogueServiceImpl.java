@@ -65,6 +65,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                         EpilogueBudget.builder()
                                 .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
                                 .epilogueBudgetAmount(epilogueBudgetRequestDTO.getEpilogueBudgetAmount())
+                                .epilogueBudgetSequence(epilogueBudgetRequestDTO.getEpilogueBudgetSequence())
                                 .epilogue(epilogue)
                                 .build()
                 )
@@ -179,6 +180,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                         EpilogueBudgetResponseDTO.builder()
                                 .epilogueBudgetPlan(epilogueBudget.getEpilogueBudgetPlan())
                                 .epilogueBudgetAmount(epilogueBudget.getEpilogueBudgetAmount())
+                                .epilogueBudgetSequence(epilogueBudget.getEpilogueBudgetSequence())
                                 .build()
                 )
         );
