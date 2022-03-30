@@ -1,0 +1,13 @@
+@import 'assets/styles/main';
+@import 'assets/styles/main';
+
+.container {
+  margin: 0 auto;
+  .profileimage {
+    @include flexbox;
+    justify-content: center;
+  }
+  .myaccount {
+    margin-left: 45rem;
+  }
+}

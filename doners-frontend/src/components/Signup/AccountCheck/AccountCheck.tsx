@@ -5,13 +5,14 @@ import Button from 'assets/theme/Button/Button';
 import styles from './AccountCheck.module.scss';
 import character from 'assets/images/charactor-fox.png';
 import { login } from 'services/api/UserApi';
-import { isLoggedState, signupState } from 'atoms/atoms';
+import { isLoggedState, signupState, nicknameState } from 'atoms/atoms';
 import { useSetRecoilState } from 'recoil';
 
 const cx = classNames.bind(styles);
 
 const AccountCheck = () => {
   const navigate = useNavigate();
+  const setNicknameState = useSetRecoilState(nicknameState);
   const setSignupState = useSetRecoilState(signupState);
   const setIsLoggedState = useSetRecoilState(isLoggedState);
 
@@ -61,6 +62,8 @@ const AccountCheck = () => {
         //   userNickname: result.userNickname,
         // });setIsLoggedState
         setIsLoggedState(true);
+        console.log(result.userNickname);
+        setNicknameState(result.userNickname);
         // 이전으로 돌아갈 수 있어야 하므로 history 유지
         alert('로그인 성공! ');
         navigate(-1);
