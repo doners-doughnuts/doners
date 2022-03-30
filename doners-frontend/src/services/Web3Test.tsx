@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { check, getSSFBalance } from 'services/blockchain/SsfApi';
+import { nftTest } from './blockchain/NftApi';
 
 //! DELETE AFTER USE
 export default function Web3Test() {
@@ -13,7 +14,7 @@ export default function Web3Test() {
     // withdraw();
     check();
 
-
+    nftTest();
   }, []);
 
   return <></>
