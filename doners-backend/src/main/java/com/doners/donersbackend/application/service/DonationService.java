@@ -27,7 +27,7 @@ public interface DonationService {
     DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO);
 
     // 기부글 검색
-    DonationGetListWrapperResponseDTO searchDonation(String type, String keyword, int page);
+    DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page);
 
     // 기부글 승인
     Integer approveDonation(String accessToken, DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException;
