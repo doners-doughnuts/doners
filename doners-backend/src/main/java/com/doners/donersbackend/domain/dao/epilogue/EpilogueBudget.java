@@ -18,6 +18,9 @@ public class EpilogueBudget extends BaseEntity {
     @Column(name = "epilogue_budget_amount")
     private long epilogueBudgetAmount;
 
+    @Column(name = "epilogue_budget_sequence")
+    private long epilogueBudgetSequence;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "epilogue_id")
     private Epilogue epilogue;
