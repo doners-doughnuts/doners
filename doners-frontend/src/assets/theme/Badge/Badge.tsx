@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import H3 from '../Typography/H3/H3';
-import H4 from '../Typography/H4/H4';
 import styles from './Badge.module.scss';
 const cx = classNames.bind(styles);
 

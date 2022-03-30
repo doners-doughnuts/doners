@@ -1,8 +1,7 @@
-import CommentForm from 'containers/Detail/BoardDetail/BoardComments/CommentForm';
-import Comments from 'containers/Detail/BoardDetail/BoardComments/Comments';
 import EpilogueContents from 'containers/Detail/EpilogueDetail/EpilogueContents/EpilogueContents';
 import styles from '../../page.module.scss';
 import classNames from 'classnames/bind';
+import CommentsForm from 'components/CommentForm/CommentForm';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +11,7 @@ const EpilogueDetail = () => {
       <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
           <EpilogueContents />
-          <CommentForm />
+          <CommentsForm />
           {/* <Comments /> */}
         </div>
       </div>

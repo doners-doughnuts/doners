@@ -12,7 +12,7 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-import { createRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import H1 from 'assets/theme/Typography/H1/H1';
 
 import classNames from 'classnames/bind';
@@ -47,15 +47,11 @@ function BoardEditor({ modify = false }: EditType) {
 
   const getDetail = async () => {
     if (typeof community_id === 'string') {
-      try {
-        const response = await getBoardDetail(community_id);
+      const response = await getBoardDetail(community_id);
 
-        setContent(response.data.communityDescription);
-        setTitle(response.data.communityTitle);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      setContent(response.data.communityDescription);
+      setTitle(response.data.communityTitle);
+      setIsLoading(false);
     }
   };
   const titleHandler = () => {
