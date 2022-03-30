@@ -137,6 +137,18 @@ public class DonationServiceImpl implements DonationService {
 
     }
 
+    @Override
+    public DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken) {
+        User user = convertAccessTokenToUser(accessToken);
+
+        List<Donation> pendingDonationList = new ArrayList<>();
+
+        pendingDonationList = donationRepository.findByIsApproved(false)
+                .orElseThrow(() -> new IllegalArgumentException("미승인 기부 요청이 없습니다."));
+
+        return convertDonationListToDTO(pendingDonationList);
+    }
+
     @Transactional
     @Override
     public DonationResponseDTO getDonation(String donationId) {
