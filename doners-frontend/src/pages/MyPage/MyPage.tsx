@@ -7,7 +7,7 @@ import Avatar from 'assets/theme/Avatar/Avatar';
 interface ProfilePageProps {
   focus: number;
 }
-const Mypage: React.FC<ProfilePageProps> = ({ focus }) => {
+const Mypage = ({ focus }: ProfilePageProps) => {
   return (
     <div>
       <UserProfile />

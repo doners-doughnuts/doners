@@ -62,15 +62,13 @@ function EpilogueEditor({ modify = false }: EditType) {
 
   const getDetail = async () => {
     if (typeof epilogue_id === 'string') {
-      try {
-        const response = await getEpilogueDetail(epilogue_id);
-
-        setContent(response.data.communityDescription);
-        setTitle(response.data.communityTitle);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await getEpilogueDetail(epilogue_id);
+      console.log(response);
+      setContent(response.data.epilogueDescription);
+      setTitle(response.data.epilogueTitle);
+      setImgFile(response.data.epilogueImage);
+      setHistoryList(response.data.epilogueBudgetResponseDTOList);
+      setIsLoading(false);
     }
   };
   const titleHandler = () => {
@@ -150,12 +148,14 @@ function EpilogueEditor({ modify = false }: EditType) {
   const handleUploadImage = async (file: any) => {
     setIsLoading(true);
     setImgFile(file);
-    console.log(imgFile);
   };
 
   const handleUploadPlan = (data: any) => {
     setHistoryList((prev) => [...prev, data]);
   };
+
+  // const handleDeletePlan = (id) => {};
+
   useEffect(() => {
     console.log(historyList);
   }, [historyList]);
@@ -174,7 +174,7 @@ function EpilogueEditor({ modify = false }: EditType) {
         )}
       </div>
       <div className={cx('inner-container')}>
-        <EpilogueEditorHeader onChange={handleUploadImage} />
+        <EpilogueEditorHeader onChange={handleUploadImage} src={imgFile} />
         <div className={cx('editor')}>
           <textarea
             className={cx('title')}
@@ -204,7 +204,7 @@ function EpilogueEditor({ modify = false }: EditType) {
           <div className={cx('total-donate')}>
             <TotalDonate />
           </div>
-          <ReceiptEditor onChange={handleUploadPlan} />
+          <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
         </div>
         <div className={cx('btn-row')}>
           <div className={cx('regist-btn')}>

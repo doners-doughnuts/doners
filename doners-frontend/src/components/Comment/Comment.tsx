@@ -7,16 +7,19 @@ import H4 from 'assets/theme/Typography/H4/H4';
 import Span from 'assets/theme/Typography/Span/Span';
 import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import { deleteComments, modifyComment } from 'services/api/Comment';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
 import Textarea from 'assets/theme/Textarea/Textarea';
 
 const cx = classNames.bind(styles);
-const Comment = ({ id, date, content, nickname, onDelete }: any) => {
+const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
   const [isOwn, setIsOwn] = useState(false);
   const [imgSrc, setImgSrc] = useState('');
+  const [comment, setComment] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-  // const handleModifyClick = () => {};
+
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+
   const handleDeleteClick = () => {
     delComment();
   };
@@ -34,7 +37,6 @@ const Comment = ({ id, date, content, nickname, onDelete }: any) => {
       if (nickname === Juser.userNickname) {
         setIsOwn(true);
       }
-      // console.log(Juser.userNickname);
     }
   };
 
@@ -47,33 +49,42 @@ const Comment = ({ id, date, content, nickname, onDelete }: any) => {
   };
 
   const handleModifyClick = () => {
-    modComment();
     setIsDisabled(false);
   };
 
   const modComment = async () => {
     const body = {
       commentId: id,
-      commentDescription: content,
+      commentDescription: comment,
     };
     const result = await modifyComment(body);
     console.log(result);
+    onModify();
   };
 
   const handleCancelClick = () => {
+    console.log(content);
     setIsDisabled(true);
   };
+
   const handleModifyCompleteClick = () => {
     //api 호출
+    modComment();
     setIsDisabled(true);
   };
 
   useEffect(() => {
     checkUser();
     getProfileImg();
+    setComment(content);
   }, []);
 
-  // 프로필 가져오는 api
+  const handleInputChange = () => {
+    if (commentRef.current) {
+      setComment(commentRef.current.value);
+      console.log(comment);
+    }
+  };
 
   return (
     <div className={cx('inner-container')}>
@@ -108,7 +119,13 @@ const Comment = ({ id, date, content, nickname, onDelete }: any) => {
         </div>
       </div>
       <div className={cx('comment-form')}>
-        <Textarea value={content} disabled={isDisabled} />
+        <textarea
+          className={cx('comment-input', { disabled: isDisabled })}
+          ref={commentRef}
+          onChange={handleInputChange}
+          value={comment}
+          disabled={isDisabled}
+        />
         {!isDisabled ? (
           <div className={cx('modify-completeBtn')}>
             <div className={cx('buttons')}>

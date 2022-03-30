@@ -12,7 +12,7 @@ export const registComment = async (body: commentType) => {
   return result;
 };
 export const modifyComment = async (body: commentType) => {
-  const result = await instance.patch(`/comment`);
+  const result = await instance.patch(`/comment`, body);
   return result;
 };
 

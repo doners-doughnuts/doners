@@ -27,8 +27,6 @@ const CommentsForm = () => {
   const [id, setId] = useState('');
   const [paramName, setParamName] = useState('');
 
-  const commentRef = useRef<HTMLTextAreaElement>(null);
-
   const params = useParams();
 
   useEffect(() => {
@@ -39,8 +37,6 @@ const CommentsForm = () => {
       setId(params.epilogue_id);
       setParamName('epilogueId');
     }
-    console.log(paramName);
-    console.log(id);
     getCommentsApi();
   }, [id]);
 
@@ -57,37 +53,34 @@ const CommentsForm = () => {
       commentDescription: comment,
       [paramName]: id,
     };
-    console.log(body);
 
-    try {
-      await registComment(body);
-      setComment('');
-      getCommentsApi();
-    } catch (error) {}
+    await registComment(body);
+    setComment('');
+    getCommentsApi();
   };
 
   const getCommentsApi = async () => {
     if (typeof id === 'string' && id !== '') {
-      console.log(id);
-      console.log(paramName);
       if (paramName === 'communityId') {
         const response = await getBoardComments(id);
-        console.log(response);
+        console.log(response.data.commentResponseDTOList);
         setCommentList(response.data.commentResponseDTOList);
       } else {
         const response = await getEpilogueComments(id);
-        console.log(response);
         setCommentList(response.data.commentResponseDTOList);
       }
     }
   };
-  // useEffect(() => {
-  //   getCommentsApi();
-  // }, []);
 
   const handleDelete = (id: string) => {
     setCommentList(commentList.filter((comment) => comment.commentId !== id));
   };
+
+  const handleModify = () => {
+    console.log('수정 완료.');
+    getCommentsApi();
+  };
+
   return (
     <>
       <div className={cx('comments-count')}>
@@ -116,6 +109,7 @@ const CommentsForm = () => {
               content={data.commentDescription}
               nickname={data.nickname}
               onDelete={handleDelete}
+              onModify={handleModify}
             />
           );
         })}
