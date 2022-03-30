@@ -40,10 +40,7 @@ public class CommunityServiceImpl implements CommunityService{
     // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자
     @Override
     public void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(userAccount)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         CommunityCode communityCode;
         communityCode = user.getUserCode().getCode().equals("U01") ? NOTICE : GENERAL;
@@ -62,10 +59,7 @@ public class CommunityServiceImpl implements CommunityService{
 
     @Override
     public Integer changeCommunity(String accessToken, CommunityChangePatchDTO communityChangePatchDTO) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(userAccount)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Community community = communityRepository.findById(communityChangePatchDTO.getCommunityId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
@@ -81,7 +75,9 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public Integer deleteCommunity(String communityId) {
+    public Integer deleteCommunity(String accessToken, String communityId) {
+        User user = getUserFromAccessToken(accessToken);
+
         Community community = communityRepository.findById(communityId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
 
@@ -96,7 +92,9 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public CommunityGetListWrapperResponseDTO getCommunityList(int sequence) {
+    public CommunityGetListWrapperResponseDTO getCommunityList(String accessToken, int sequence) {
+        User user = getUserFromAccessToken(accessToken);
+
         List<Community> communityList = communityRepository.findByCommunityIsDeletedOrderByCommunityCodeAscCommunityCreateTimeDesc(false, PageRequest.of(sequence-1, 10, Sort.Direction.ASC, "communityCode")).orElse(null);
 
         List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
@@ -125,7 +123,8 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public CommunityResponseDTO getCommunity(String communityId) {
+    public CommunityResponseDTO getCommunity(String accessToken, String communityId) {
+        User user = getUserFromAccessToken(accessToken);
 
         Community community = communityRepository.findByIdAndCommunityIsDeleted(communityId, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 커뮤니티 글을 찾을 수 없습니다."));
@@ -148,8 +147,13 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public String getUserAccountFromAccessToken(String accessToken) {
+    public User getUserFromAccessToken(String accessToken) {
         String token = accessToken.split(" ")[1];
-        return jwtAuthenticationProvider.getUserAccount(token);
+        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+
+        User user = userRepository.findByUserAccount(userAccount)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+
+        return user;
     }
 }

@@ -2,10 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
 import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeRequestDTO;
-import com.doners.donersbackend.application.dto.response.user.UserLoginResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageCommunityHistoryWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageEpilogueHistoryWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserProfileImageResponseDTO;
+import com.doners.donersbackend.application.dto.response.user.*;
 import com.doners.donersbackend.application.service.UserService;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
@@ -225,12 +222,12 @@ public class UserController {
                 .of("커뮤니티 글 작성 내역을 정상적으로 불러왔습니다.", 200, communityHistoryWrapperResponseDTO));
     }
 
-    @GetMapping("/mypage/appreciation")
-    @ApiOperation(value="감사 글 작성 내역 조회")
+    @GetMapping("/mypage/epilogue")
+    @ApiOperation(value="에필로그 작성 내역 조회")
     @ApiResponses({
-            @ApiResponse(code=200, message="감사 글 작성 내역을 정상적으로 불러왔습니다."),
+            @ApiResponse(code=200, message="에필로그 작성 내역을 정상적으로 불러왔습니다."),
             @ApiResponse(code=404, message="조회하려는 정보가 존재하지 않습니다."),
-            @ApiResponse(code=409, message="감사 글 작성 내역을 불러오지 못했습니다."),
+            @ApiResponse(code=409, message="에필로그 작성 내역을 불러오지 못했습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> getEpilogueHistory(
             @ApiIgnore @RequestHeader("Authorization") String accessToken) {
@@ -241,11 +238,34 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("조회하려는 정보가 존재하지 않습니다.", 404));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("감사 글 작성 내역을 불러오지 못했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("에필로그 작성 내역을 불러오지 못했습니다.", 409));
         }
 
         return ResponseEntity.status(200).body(UserMyPageEpilogueHistoryWrapperResponseDTO
-                .of("감사 글 작성 내역을 정상적으로 불러왔습니다.", 200, epilogueHistoryWrapperResponseDTO));
+                .of("에필로그 작성 내역을 정상적으로 불러왔습니다.", 200, epilogueHistoryWrapperResponseDTO));
+    }
+
+    @GetMapping("/mypage/donation")
+    @ApiOperation(value="기부 신청 내역 조회")
+    @ApiResponses({
+            @ApiResponse(code=200, message="기부 신청 내역을 정상적으로 불러왔습니다."),
+            @ApiResponse(code=404, message="조회하려는 정보가 존재하지 않습니다."),
+            @ApiResponse(code=409, message="기부 신청 내역을 불러오지 못했습니다."),
+    })
+    public ResponseEntity<? extends BaseResponseDTO> getDonationHistory(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken) {
+        UserMyPageDonationHistoryWrapperResponseDTO donationHistoryWrapperResponseDTO = null;
+
+        try {
+            donationHistoryWrapperResponseDTO = userService.getDonationHistoryList(accessToken);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("조회하려는 정보가 존재하지 않습니다.", 404));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부 신청 내역을 불러오지 못했습니다.", 409));
+        }
+
+        return ResponseEntity.status(200).body(UserMyPageDonationHistoryWrapperResponseDTO
+                .of("기부 신청 내역을 정상적으로 불러왔습니다.", 200, donationHistoryWrapperResponseDTO));
     }
 
 }
