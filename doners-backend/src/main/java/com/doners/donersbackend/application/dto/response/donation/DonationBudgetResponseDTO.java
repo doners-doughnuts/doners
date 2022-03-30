@@ -17,10 +17,14 @@ public class DonationBudgetResponseDTO {
     @ApiModelProperty(name = "활용 금액")
     private long amount;
 
+    @ApiModelProperty(name = "Budget 순서")
+    private long sequence;
+
     @Builder
-    public DonationBudgetResponseDTO(String plan, long amount) {
+    public DonationBudgetResponseDTO(String plan, long amount, long sequence) {
         this.plan = plan;
         this.amount = amount;
+        this.sequence = sequence;
     }
 
 }
