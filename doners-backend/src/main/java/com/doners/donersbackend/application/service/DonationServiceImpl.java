@@ -4,16 +4,18 @@ import com.doners.donersbackend.application.dto.request.donation.DonationApprove
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
-import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
 import com.doners.donersbackend.domain.dao.donation.DonationHistory;
 import com.doners.donersbackend.domain.dao.donation.File;
+import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import com.doners.donersbackend.domain.enums.UserCode;
-import com.doners.donersbackend.domain.repository.*;
+import com.doners.donersbackend.domain.repository.FileRepository;
+import com.doners.donersbackend.domain.repository.ImageRepository;
+import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationBudgetRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationHistoryRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationRepository;
@@ -141,10 +143,6 @@ public class DonationServiceImpl implements DonationService {
         Donation donation = donationRepository.findById(donationId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
-        // 대표 사진
-        Image image = imageRepository.findByDonationAndImageIsResized(donation, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-
         // 예산안
         List<DonationBudget> donationBudgetList = donationBudgetRepository.findByDonation(donation)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 예산안을 찾을 수 없습니다."));
@@ -199,7 +197,7 @@ public class DonationServiceImpl implements DonationService {
                 .views(donation.getViews())
                 .recommendations(donation.getRecommendations())
                 .description(donation.getDescription())
-                .image("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + image.getImageNewFileName())
+                .image(getDonationImage(donation, false))
                 .startTime(donation.getStartTime())
                 .endTime(donation.getEndTime())
                 .targetAmount(donation.getAmount())
@@ -359,24 +357,29 @@ public class DonationServiceImpl implements DonationService {
 
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
 
-        donationList.forEach(donation -> {
-            Image thumbnail = imageRepository.findByDonationAndImageIsResized(donation, true)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 썸네일을 찾을 수 없습니다."));
-
-            donationGetListResponseDTOList.add(
-                    DonationGetListResponseDTO.builder()
-                            .donationId(donation.getId())
-                            .thumbnail("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnail.getImageNewFileName())
-                            .title(donation.getTitle())
-                            .beneficiaryName(donation.getBeneficiaryName())
-                            .targetAmount(donation.getAmount())
-                            .build()
-            );
-        });
+        donationList.forEach(donation ->
+                donationGetListResponseDTOList.add(
+                        DonationGetListResponseDTO.builder()
+                                .donationId(donation.getId())
+                                .thumbnail(getDonationImage(donation, true))
+                                .title(donation.getTitle())
+                                .beneficiaryName(donation.getBeneficiaryName())
+                                .targetAmount(donation.getAmount())
+                                .build()
+                )
+        );
 
         return DonationGetListWrapperResponseDTO.builder()
                 .donationGetListResponseDTOList(donationGetListResponseDTOList)
                 .build();
+
+    }
+
+    public String getDonationImage(Donation donation, boolean resized) {
+
+        Image image = imageRepository.findByDonationAndImageIsResized(donation, resized).orElse(null);
+
+        return image == null ? "" : "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + image.getImageNewFileName();
 
     }
 
