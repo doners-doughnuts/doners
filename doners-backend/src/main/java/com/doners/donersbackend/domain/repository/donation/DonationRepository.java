@@ -5,6 +5,7 @@ import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,13 +18,14 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
-    Optional<List<Donation>> findByTitleContainingOrDescriptionContaining(String title, String description, Pageable pageable);
+    @Query("SELECT d FROM Donation d WHERE d.categoryCode = :categoryCode AND (d.title LIKE %:title% OR d.description LIKE %:description%)")
+    Optional<List<Donation>> findByCategoryCodeAndTitleContainingOrDescriptionContaining(CategoryCode categoryCode, String title, String description, Pageable pageable);
 
-    Optional<List<Donation>> findByTitleContaining(String title, Pageable pageable);
+    Optional<List<Donation>> findByCategoryCodeAndTitleContaining(CategoryCode category, String title, Pageable pageable);
 
-    Optional<List<Donation>> findByDescriptionContaining(String description, Pageable pageable);
+    Optional<List<Donation>> findByCategoryCodeAndDescriptionContaining(CategoryCode category, String description, Pageable pageable);
 
-    Optional<List<Donation>> findByUser(User user, Pageable pageable);
+    Optional<List<Donation>> findByCategoryCodeAndUser(CategoryCode category, User user, Pageable pageable);
 
     Optional<Donation> findByUserAndIsDeleted(User user, boolean delete);
 
