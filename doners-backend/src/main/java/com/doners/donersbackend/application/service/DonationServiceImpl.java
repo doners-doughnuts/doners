@@ -107,30 +107,56 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, String sort) {
+    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, String sort, String view) {
 
         List<Donation> donationList = new ArrayList<>();
 
-        switch (sort) {
-            // 최신 순
-            case "recent":
-                donationList = donationRepository
-                        .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
-            // 참여 미달 순
-            // TODO: 보류 (달성률을 어떻게 할 것인지)
-            case "achieve":
-                donationList = donationRepository
-                        .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
-            // 마감 임박 순
-            case "end":
-                donationList = donationRepository
-                        .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
+        // 전체 보기
+        if (view.equals("all")) {
+            switch (sort) {
+                // 최신 순
+                case "recent":
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 참여 미달 순
+                // TODO: 보류 (달성률을 어떻게 할 것인지)
+                case "achieve":
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 마감 임박 순
+                case "end":
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+            }
+        // TODO: 모금 가능한 기부만 보기
+        } else if(view.equals("possible")) {
+            switch (sort) {
+                // 최신 순
+                case "recent":
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 참여 미달 순
+                // TODO: 보류 (달성률을 어떻게 할 것인지)
+                case "achieve":
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 마감 임박 순
+                case "end":
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+            }
         }
 
         return convertDonationListToDTO(donationList);
