@@ -70,7 +70,7 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = commentRepository.findByIdAndCommentIsDeleted(commentChangePatchDTO.getCommentId(), false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
 
-        if(!user.getUserAccount().equals(comment.getUser().getId())) {
+        if(!user.getId().equals(comment.getUser().getId())) {
             return 401;
         }
 
