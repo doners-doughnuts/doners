@@ -1,12 +1,11 @@
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
 import P from 'assets/theme/Typography/P/P';
-import Span from 'assets/theme/Typography/Span/Span';
 
 import classNames from 'classnames/bind';
 import styles from './ReceiptEditor.module.scss';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 

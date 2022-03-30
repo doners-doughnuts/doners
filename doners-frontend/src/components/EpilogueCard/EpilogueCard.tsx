@@ -1,5 +1,4 @@
 import Avatar from 'assets/theme/Avatar/Avatar';
-import H3 from 'assets/theme/Typography/H3/H3';
 import classNames from 'classnames/bind';
 import styles from './EpilogueCard.module.scss';
 // import src from 'assets/images/character.png';

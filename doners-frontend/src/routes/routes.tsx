@@ -1,6 +1,5 @@
 import BoardDetail from 'pages/Detail/BoardDetail/BoardDetail';
 import ScrollLayout from 'layouts/ScrollLayout/ScrollLayout';
-import NavLayout from 'layouts/ScrollLayout/ScrollLayout';
 import CommunityPage from 'pages/Community/CommunityPage';
 import DonateCategoryPage from 'pages/Donate/DonateCategoryPage';
 import DonateDetailPage from 'pages/Donate/DonateDetailPage';
@@ -14,7 +13,6 @@ import Test from 'pages/Test/Test';
 import { Navigate, useRoutes } from 'react-router';
 import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
 import EpilogueEditPage from 'pages/EditPage/Epilogue/EpilogueEditPage';
-import Epilogue from 'containers/CommunityPage/Epilogue/Epilogue';
 import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
 
 export default function Router() {

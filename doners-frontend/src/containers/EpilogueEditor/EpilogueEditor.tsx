@@ -18,7 +18,6 @@ import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import styles from './EpilogueEditor.module.scss';
 import Button from 'assets/theme/Button/Button';
-import EditorForm from 'components/Editor/EditorForm';
 import EpilogueEditorHeader from './EpilogueEditorHeader/EpilogueEditorHeader';
 import TotalDonate from './TotalDonate/TotalDonate';
 import ReceiptEditor from './ReceiptEditor/ReceiptEditor';

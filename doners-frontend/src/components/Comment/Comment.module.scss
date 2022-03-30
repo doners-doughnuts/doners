@@ -23,4 +23,15 @@
       }
     }
   }
+
+  .comment-form {
+    .modify-completeBtn {
+      @include flexbox(end, center);
+
+      .buttons {
+        @include flexbox(between, center);
+        width: 170px;
+      }
+    }
+  }
 }

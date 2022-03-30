@@ -1,8 +1,9 @@
 import Button from 'assets/theme/Button/Button';
+import Textarea from 'assets/theme/Textarea/Textarea';
 import H3 from 'assets/theme/Typography/H3/H3';
 import classNames from 'classnames/bind';
 import Comment from 'components/Comment/Comment';
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import {
   getBoardComments,
@@ -18,6 +19,7 @@ type commentType = {
   commentId: string;
   nickname: string;
 };
+type TextareaChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
 const CommentsForm = () => {
   const [comment, setComment] = useState('');
@@ -42,10 +44,8 @@ const CommentsForm = () => {
     getCommentsApi();
   }, [id]);
 
-  const handleInput = () => {
-    if (commentRef.current) {
-      setComment(commentRef.current.value);
-    }
+  const handleInput = (event: TextareaChangeEvent) => {
+    setComment(event.currentTarget.value);
   };
   const handleCommentSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -95,10 +95,8 @@ const CommentsForm = () => {
         <H3 color="red">{String(commentList.length)}</H3>
       </div>
       <form className={cx('comment-form')}>
-        <textarea
-          className={cx('comment-input')}
+        <Textarea
           placeholder="댓글을 작성해주세요"
-          ref={commentRef}
           value={comment}
           onChange={handleInput}
         />
