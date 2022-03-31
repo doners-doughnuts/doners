@@ -6,7 +6,7 @@ const ApprovalModal = () => {
   return (
     <div className={cx('card')}>
       <div className={cx('p')}>
-        sldkj
+        모달
       </div>
     </div>
   )

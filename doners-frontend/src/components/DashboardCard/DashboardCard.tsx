@@ -7,7 +7,7 @@ const DashboardCard = () => {
   return (
     <div className={cx('card')}>
       <div className={cx('p')}>
-        sldkj
+        sldkj33
       </div>
     </div>
   )
