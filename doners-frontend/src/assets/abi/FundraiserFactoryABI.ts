@@ -64,11 +64,6 @@ export const FundraiserFactoryABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'uint256',
-        name: 'nowCollectMoney',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
         name: 'fundRaisingCloses',
         type: 'uint256',
       },
