@@ -139,7 +139,7 @@ const addMetadata = (_dna, _tokenId) => {
       date: dateTime,
       compiler: "Doners NFT Engine",
       //! NFT 카테고리 (총 4종류: covid / warrior / single / patient)
-      edition: 'corona', // by layer configurations
+      edition: 'covid', // by layer configurations
     },
     ...extraMetadata,
   };
