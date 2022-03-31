@@ -72,8 +72,8 @@ public class DonationController {
     public ResponseEntity<? extends BaseResponseDTO> getList(
             @ApiParam(value = "카테고리", required = true) @NotNull @RequestParam CategoryCode category,
             @ApiParam(value = "페이지 번호", required = true) @RequestParam(defaultValue = "1") int page,
-            @ApiParam(value = "정렬 기준", required = true) @RequestParam(defaultValue = "recent") String sort,
-            @ApiParam(value = "보기 기준", required = true) @RequestParam(defaultValue = "all") String view
+            @ApiParam(value = "정렬 기준", required = true) @RequestParam(defaultValue = "1") int sort,
+            @ApiParam(value = "보기 기준", required = true) @RequestParam(defaultValue = "false") boolean view
     ) {
 
         DonationGetListWrapperResponseDTO donationGetListWrapperResponseDTO = null;
