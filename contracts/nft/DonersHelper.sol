@@ -22,20 +22,27 @@ contract DonersHelper is DonersOwnership {
     //     return result;
     // }
 
-    // 임시 테스팅 (Factory에서 생성된 NFT들이 잘 들어갔는지 확인하는 용도.)
-    function test() external view returns (uint256) {
-        return tokenIds.current();
-    }
-
     // get token
-    function getToken(uint256 tokenId) external view returns (DDToken) {
-        return _ddTokens[tokenId];
-    }
+    // function getToken(uint256 tokenId) external view returns (DDToken memory) {
+    //     DDToken memory token = DDToken(tokenId, ddTokens[tokenId]);
+    //     return token;
+    // }
 
-    // get metadata uri ("ipfs://"로 시작하는)
-    function getMetadataUri(uint256 tokenId) external view returns (string) {
-        return _ddTokens[tokenId].metadataUri;
-    }
+    // // get metadata uri ("ipfs://"로 시작하는)
+    // function getMetadataUri(uint256 tokenId)
+    //     external
+    //     view
+    //     returns (string memory)
+    // {
+    //     return ddTokens[tokenId];
+    // }
 
-    // NFT 잔여 수량
+    // NFT 잔여 수량을 위해 mint가 된 token 개수 반환
+    function getMintedTokenCount() external view returns (uint256) {
+        return
+            covidTokenIds.current() +
+            singleTokenIds.current() +
+            warriorTokenIds.current() +
+            patientTokenIds.current();
+    }
 }
