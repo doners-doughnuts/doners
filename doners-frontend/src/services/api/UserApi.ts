@@ -61,3 +61,10 @@ export const emailcheck = async (userEmail: any) => {
   console.log(response);
   return response;
 };
+
+/* 유저 프로필 */
+export const getUserProfile = async (nickname: string) => {
+  const response = await instance.get(`/user/image/${nickname}`);
+  console.log(response);
+  return response;
+};

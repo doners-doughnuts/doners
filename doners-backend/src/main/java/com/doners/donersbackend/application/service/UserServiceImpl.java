@@ -3,12 +3,14 @@ package com.doners.donersbackend.application.service;
 import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
 import com.doners.donersbackend.application.dto.response.user.*;
 import com.doners.donersbackend.domain.dao.community.Community;
+import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.email.EmailConfirmation;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.EmailConfirmationRepository;
+import com.doners.donersbackend.domain.repository.donation.DonationRepository;
 import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
@@ -30,6 +32,8 @@ public class UserServiceImpl implements UserService {
     private final ImageRepository imageRepository;
 
     private final EmailConfirmationRepository emailConfirmationRepository;
+
+    private final DonationRepository donationRepository;
 
     private final CommunityRepository communityRepository;
 
@@ -186,10 +190,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 닉네임을 가진 유저 정보가 존재하지 않습니다."));
 
-        Image profileImage = imageRepository.findByUserAndImageIsResized(user, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 프로필 이미지가 없습니다."));
+        Image profileImage = imageRepository.findByUserAndImageIsResized(user, false).orElse(null);
 
-        return "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + profileImage.getImageNewFileName();
+        return profileImage == null ? "" : "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + profileImage.getImageNewFileName();
     }
 
     @Override
@@ -248,6 +251,39 @@ public class UserServiceImpl implements UserService {
 
         return UserMyPageEpilogueHistoryWrapperResponseDTO.builder()
                 .userMyPageEpilogueHistoryResponseDTOList(list).build();
+    }
+
+    @Override
+    public UserMyPageDonationHistoryWrapperResponseDTO getDonationHistoryList(String accessToken) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
+        List<Donation> donationList = donationRepository
+                .findByUserAndIsDeletedOrderByStartTimeDesc(user, false)
+                .orElseThrow(() -> new IllegalArgumentException("기부 신청 내역이 존재하지 않습니다."));
+
+        List<UserMyPageDonationHistoryResponseDTO> list = new ArrayList<>();
+
+        try {
+            donationList.forEach(donation -> {
+                list.add(
+                        UserMyPageDonationHistoryResponseDTO.builder()
+                                .donationId(donation.getId())
+                                .donationCategoryCode(donation.getCategoryCode())
+                                .donationIsApproved(donation.isApproved())
+                                .donationApprovalStatusCode(donation.getApprovalStatusCode())
+                                .donationTitle(donation.getTitle())
+                                .donationIsReceived(donation.isReceived())
+                                .donationStartTime(donation.getStartTime()).build()
+                );
+            });
+        } catch (Exception e) {
+            return null;
+        }
+
+        return UserMyPageDonationHistoryWrapperResponseDTO.builder()
+                .userMyPageDonationHistoryResponseDTOList(list).build();
     }
 
     @Override

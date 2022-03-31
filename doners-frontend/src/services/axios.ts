@@ -38,14 +38,18 @@ instance.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
+      console.log(error.response);
       switch (error.response.status) {
         /* 'JWT expired' exeption */
         case 401:
-          // console.log(error.response);
+          console.log('401error!');
+          break;
+        case 404:
+          console.log('404error!');
           break;
         case 409:
           console.log('409error!');
-          return false;
+          break;
         default:
       }
     } else {

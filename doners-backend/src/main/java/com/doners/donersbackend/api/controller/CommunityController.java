@@ -77,7 +77,7 @@ public class CommunityController {
             @PathVariable("communityId") @ApiParam(value="글id", required=true) String communityId) {
 
         try {
-            Integer statusCode = communityService.deleteCommunity(communityId);
+            Integer statusCode = communityService.deleteCommunity(accessToken, communityId);
 
             if(statusCode == 409)
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("글 삭제에 실패했습니다.", 409));
@@ -97,7 +97,7 @@ public class CommunityController {
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @PathVariable("sequence") @ApiParam(value="", required=true) int sequence) {
 
-        return ResponseEntity.ok(CommunityGetListWrapperResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunityList(sequence)));
+        return ResponseEntity.ok(CommunityGetListWrapperResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunityList(accessToken, sequence)));
     }
 
     @GetMapping("/{communityId}")
@@ -109,6 +109,6 @@ public class CommunityController {
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @PathVariable("communityId") @ApiParam(value="글id", required=true) String communityId) {
 
-        return ResponseEntity.ok(CommunityResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunity(communityId)));
+        return ResponseEntity.ok(CommunityResponseDTO.of("커뮤니티 글 목록 조회 성공", 200, communityService.getCommunity(accessToken, communityId)));
     }
 }

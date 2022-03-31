@@ -1,13 +1,15 @@
 import Button from 'assets/theme/Button/Button';
+import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import BoardListItem from 'components/BoardListItem/BoardListItem';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getBoardList } from 'services/api/Board';
 import styles from './BoardList.module.scss';
+import src from 'assets/images/img-covid19-category.png';
 
 const cx = classNames.bind(styles);
-type ListItemType = {
+export type ListItemType = {
   communityCode: string;
   communityCreateTime: string;
   communityDescription: string;
@@ -43,13 +45,24 @@ const BoardList = () => {
           </Link>
         </div>
       </div>
-      {listItems.map((data) => {
-        return (
-          <Link to={data.communityId} key={data.communityId}>
-            <BoardListItem data={data} />
-          </Link>
-        );
-      })}
+      {listItems.length !== 0 ? (
+        listItems.map((data) => {
+          return (
+            <Link to={data.communityId} key={data.communityId}>
+              <BoardListItem data={data} />
+            </Link>
+          );
+        })
+      ) : (
+        <div className={cx('none-contents')}>
+          <div className={cx('none-text')}>
+            <H1>등록된 감사후기가 없습니다.</H1>
+          </div>
+          <div className={cx('none-img')}>
+            <img src={src} alt="no donation" />
+          </div>
+        </div>
+      )}
     </>
   );
 };

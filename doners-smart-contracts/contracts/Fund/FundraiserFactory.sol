@@ -1,53 +1,62 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >0.4.23;
+pragma solidity >0.8.0;
 
 import "./Fundraiser.sol";
 
 contract FundraiserFactory {
-    Fundraiser[] private _fundraisers;
-    uint256 constant maxLimit = 20;
+    address[] private _fundraisers; // 생성된 fundraiser contract 주소 배열
 
     event FundraiserCreated(
-        Fundraiser indexed fundraiser,
+        address indexed fundraiser,
         address indexed owner
     );
 
+    // fundraiser contract 배열 길이
     function fundraisersCount() public view returns (uint256) {
         return _fundraisers.length;
     }
 
     function createFundraiser(
-        string memory name,
+        string memory title,
         string memory url,
         string memory imageURL,
         string memory description,
+        uint256 donationsGoal,
+        uint256 nowCollectMoney,
+        uint256 fundRaisingCloses,
         address payable beneficiary
-    ) public {
+    ) public returns (address){
         Fundraiser fundraiser = new Fundraiser(
-            name,
+            title,
             url,
             imageURL,
             description,
+            donationsGoal,
+            nowCollectMoney,
+            fundRaisingCloses,
             beneficiary,
             msg.sender
         );
-        _fundraisers.push(fundraiser);
-        emit FundraiserCreated(fundraiser, msg.sender);
+        // fundraiser 컨트랙트 배열에 추가
+        _fundraisers.push(address(fundraiser));
+
+        // 모금 컨트랙트 이벤트 발생
+        emit FundraiserCreated(address(fundraiser), msg.sender);
+
+        return address(fundraiser);
     }
 
-    function fundraisers(uint256 limit, uint256 offset)
+    // fundraiser contract 배열
+    function getFundraisers()
         public
         view
-        returns (Fundraiser[] memory coll)
+        returns (address[] memory coll)
     {
-        require(offset <= fundraisersCount(), "offset out of bounds");
-        uint256 size = fundraisersCount() - offset;
-        size = size < limit ? size : limit;
-        size = size < maxLimit ? size : maxLimit;
-        coll = new Fundraiser[](size);
+        uint256 size = fundraisersCount();
+        coll = new address[](size);
 
         for (uint256 i = 0; i < size; i++) {
-            coll[i] = _fundraisers[offset + i];
+            coll[i] = _fundraisers[i];
         }
 
         return coll;

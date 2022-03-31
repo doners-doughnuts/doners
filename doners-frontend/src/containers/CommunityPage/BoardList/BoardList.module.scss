@@ -6,3 +6,20 @@
 .btn {
   width: 10%;
 }
+
+.none-contents {
+  @include column-flexbox;
+  .none-text {
+    @include flexbox;
+  }
+
+  .none-img {
+    width: 500px;
+    height: 500px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

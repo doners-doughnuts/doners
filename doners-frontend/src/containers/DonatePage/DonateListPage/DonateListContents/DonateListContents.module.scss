@@ -2,8 +2,25 @@
 
 .outer-container {
   background-color: $yellow;
-
+  min-height: 100vh;
   .row {
     padding: 50px 0;
+    .none-contents {
+      @include column-flexbox;
+      .none-text {
+        @include flexbox;
+        margin-top: 60px;
+      }
+
+      .none-img {
+        width: 500px;
+        height: 500px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
 }

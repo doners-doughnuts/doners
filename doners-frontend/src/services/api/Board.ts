@@ -3,6 +3,7 @@ import instance from 'services/axios';
 type boardType = {
   communityDescription: string;
   communityTitle: string;
+  communityId?: string;
 };
 
 export const registBoard = async (body: boardType) => {

@@ -128,7 +128,6 @@ const SignupFormNew = () => {
       if (!data) {
         setEmailMsg('이미 인증된 이메일 입니다.');
       } else {
-        console.log(';2;');
         setIsSend(true);
         setEmailMsg('이메일이 발송되었습니다.');
       }
@@ -160,7 +159,6 @@ const SignupFormNew = () => {
       const data = await emailcheck(email);
       console.log(data);
       if (!data) {
-        console.log('뀨?');
         setEmailConfirmMsg('메일을 확인해주세요.');
       } else {
         setEmailConfirm(true);
@@ -250,9 +248,6 @@ const SignupFormNew = () => {
                         <div className={styles.input}>
                           <div className={styles.inputWithBtn}>
                             <Input
-                              //ref={idRef}
-                              // autoComplete="off"
-                              //className={styles.inputData}
                               id="nickname"
                               value={nickname}
                               type="text"
@@ -278,7 +273,6 @@ const SignupFormNew = () => {
                           )}
                         </div>
                       </div>
-                      {/* 이메일 */}
                       <div className={styles.inputRow}>
                         <div>
                           {/* <EmailIcon fill="#EEE" width="20" height="20" /> */}

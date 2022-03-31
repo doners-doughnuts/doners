@@ -1,0 +1,20 @@
+@import 'assets/styles/main';
+
+.history-item {
+  @include flexbox(between, center);
+  margin-bottom: 8px;
+  .value {
+    @include flexbox;
+
+    .icon {
+      @include flexbox;
+      margin-left: 10px;
+    }
+  }
+  P {
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
