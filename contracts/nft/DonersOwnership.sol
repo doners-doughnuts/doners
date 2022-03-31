@@ -23,6 +23,7 @@ contract DonersOwnership is DonersDoughnutsFactory {
     Counters.Counter public patientTokenIds;
     // Mapping from token ID to owner address
     mapping(uint256 => address) public tokenOwners;
+    // -> TODO tokenOfOwnerByIndex()로 대체함, 리팩토링 때 삭제할 것
     // Mapping owner address to token count (https://ethereum.stackexchange.com/a/98495)
     mapping(address => uint256[]) public userOwnedTokens;
 
@@ -42,6 +43,7 @@ contract DonersOwnership is DonersDoughnutsFactory {
         return tokenId;
     }
 
+    //! 'payable'이 없어도 되는 것을 확인함. 이게 문제가 아니라 setApprovalForAll()이 해결책이었던듯.
     function mintSingleToken(address owner) public returns (uint256) {
         singleTokenIds.increment();
         uint256 tokenId = 2000000 + singleTokenIds.current();
@@ -80,29 +82,29 @@ contract DonersOwnership is DonersDoughnutsFactory {
 
     // 해당 account의 NFT 목록
     // -> 위의 "userOwnedTokens" getter 호출로 대체 (contractInstance.methods.userOwnedTokens.call(address) // THIS WILL RETURN AN ARRAY OF TOKEN IDs)
-    // function getTokensByOwner(address _owner)
-    //     public
-    //     view
-    //     returns (DDToken[] memory)
-    // {
-    //     uint256 totalCnt = mintedTokenIds.current();
-    //     uint256 tokenId = 0;
-    //     uint256 counter = 0;
-
-    //     // DDToken[] memory list;
-    //     DDToken[] memory list = new DDToken[](totalCnt);
-
-    //     for (uint256 i = 0; i < totalCnt; i++) {
-    //         // mint가 된 NFT && NFT의 owner가 해당 owner인지
-    //         if (_exists(tokenId) && ownerOf(tokenId) == _owner) {
-    //             string memory metadataUri = tokenURI(tokenId);
-    //             // list.push(DDToken(tokenId, metadataUri));
-    //             list[counter] = DDToken(counter, uri);
-    //         }
-    //         tokenId++;
-    //     }
-    //     return list;
-    // }
+    //// function getTokensByOwner(address _owner)
+    ////     public
+    ////     view
+    ////     returns (DDToken[] memory)
+    //// {
+    ////     uint256 totalCnt = mintedTokenIds.current();
+    ////     uint256 tokenId = 0;
+    ////     uint256 counter = 0;
+    //
+    ////     // DDToken[] memory list;
+    ////     DDToken[] memory list = new DDToken[](totalCnt);
+    //
+    ////     for (uint256 i = 0; i < totalCnt; i++) {
+    ////         // mint가 된 NFT && NFT의 owner가 해당 owner인지
+    ////         if (_exists(tokenId) && ownerOf(tokenId) == _owner) {
+    ////             string memory metadataUri = tokenURI(tokenId);
+    ////             // list.push(DDToken(tokenId, metadataUri));
+    ////             list[counter] = DDToken(counter, uri);
+    ////         }
+    ////         tokenId++;
+    ////     }
+    ////     return list;
+    //// }
     // (https://ethereum.stackexchange.com/a/112344)
     function getTokensByOwner(address _owner)
         public
@@ -111,14 +113,33 @@ contract DonersOwnership is DonersDoughnutsFactory {
     {
         uint256[] memory _tokensOfOwner = new uint256[](balanceOf(_owner));
 
+        // ERC721Enumerable을 상속받았기 때문에 사용가능한 'tokenOfOwnerByIndex()'
         for (uint256 i = 0; i < balanceOf(_owner); i++) {
             _tokensOfOwner[i] = tokenOfOwnerByIndex(_owner, i);
         }
         return (_tokensOfOwner);
     }
 
+    /* 해당 account의 NFT의 metadata 목록 */
+    function getTokenMetadatasByOwner(address _owner)
+        public
+        view
+        returns (string[] memory)
+    {
+        uint256[] memory _tokensOfOwner = getTokensByOwner(_owner);
+
+        string[] memory _tokenMetadatasOfOwner = new string[](
+            balanceOf(_owner)
+        );
+
+        for (uint256 i = 0; i < balanceOf(_owner); i++) {
+            _tokenMetadatasOfOwner[i] = _tokenURIs[_tokensOfOwner[i]];
+        }
+        return (_tokenMetadatasOfOwner);
+    }
+
     // TODO (필요없을 수도, 삭제가능)
-    // 전체 NFT 목록
+    /* 전체 NFT 목록 */
     function getAllTokens() public view returns (DDToken[] memory) {
         uint256 totalCnt = getTotalCnt();
         uint256 counter = 0;

@@ -21,7 +21,7 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
 
     Counters.Counter private _index;
     // tokenId to metadataUrl
-    mapping(uint256 => string) private _tokenURIs;
+    mapping(uint256 => string) internal _tokenURIs;
 
     // TODO 필요없으므로 삭제? createDougnut()의 2번쨰 줄도 같이 삭제해야함 삭제한다면.
     //// DDToken[] public ddTokens = new DDToken[](5000000);
