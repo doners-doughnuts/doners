@@ -29,10 +29,10 @@ const saveProjectPreviewImage = async (_data) => {
   const previewCtx = previewCanvas.getContext("2d");
 
   // Iterate all NFTs and insert thumbnail into preview image
-  // Don't want to rely on "edition" for assuming index
+  // Don't want to rely on "tokenId" for assuming index
   for (let index = 0; index < _data.length; index++) {
     const nft = _data[index];
-    await loadImage(`${buildDir}/images/${nft.custom_fields.edition}.png`).then((image) => {
+    await loadImage(`${buildDir}/images/${nft.custom_fields.tokenId}.png`).then((image) => {
       previewCtx.drawImage(
         image,
         thumbWidth * (index % thumbPerRow),
