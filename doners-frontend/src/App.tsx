@@ -3,7 +3,7 @@ import Router from 'routes/routes';
 // TODO
 // import styles from './App.module.css';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
-import Test from 'services/nft/Test';
+import Web3Test from 'services/Web3Test';
 
 export default function App() {
   return (
@@ -13,6 +13,8 @@ export default function App() {
       {/* Recoil을 사용하는 component들은 <RecoilRoot>로 감싸야 함 */}
       <RecoilRoot>
         <ScrollToTop />
+        {/* <Web3Test /> */}
+
         <Router />
       </RecoilRoot>
     </>

@@ -35,39 +35,36 @@
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Node.js-339939?style=for-the-badge&logo=Node.js&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <br>
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/GitLab-FCA121?style=for-the-badge&logo=GitLab&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <br/>
 
-<details><summary> <b> 상세 기술스택 및 버전</b> </summary>
+<details><summary> <b> 상세 기술 스택 및 버전</b> </summary>
 
-| 구분       | 기술스택                    | 상세내용                 | 버전          |
-| -------- | ----------------------- | -------------------- | ----------- |
-| 공통     | 형상관리                    | Gitlab               | \-          |
-|          | 이슈관리                    | Jira                 | \-          |
-|          | 커뮤니케이션                  | Mattermost, Notion   | \-          |
-| BackEnd  | DB                      | MySQL                | 5.7         |
-|          |                         | JPA                  | \-          |
-|          |                         | QueryDSL             | \-          |
-|          | Java                    | Zulu                 | 8.33.0.1    |
-|          | Spring                  | Spring               | 5.3.6       |
-|          |                         | Spring Boot          | 2.4.5       |
-|          | IDE                     | Eclipse              | JEE 2020-06 |
-|          | Cloud Storage           | AWS S3               | \-          |
-|          | Build                   | Gradle               | 7.3.2       |
-|          | API Docs                | Swagger2             | 3.0.0       |
-| FrontEnd | HTML5                   |                      | \-          |
-|          | CSS3                    |                      | \-          |
-|          | JavaScript(ES6)         |                      |\-           |
-|          | React                   | React                | 17.0.2      |
-|          | React                   | Redux                | 7.2.6       |
-|          | React                   | Redux-thunk          | 2.4.1       |
-|          |                         | styled-components    | 5.3.3       |
-|          |                         | framer-motion        | 6.0.0       |
-|          |                         | apexcharts           | 3.33.0      |
-|          |                         | toast-ui/react-editor      | 3.1.2       |
-|          |                         | toast-ui/react-calendar    | 1.0.6       |
-|          | IDE                     | Visual Studio Code   | 1.63.2      |
-| Server   | 서버                      | AWS EC2              | \-          |
-|          | 플랫폼                     | Ubuntu               | 20.04.3 LTS |
-|          | 배포                      | Docker               | 20.10.12    |
-|          | 배포                      | Jenkins              | 2.319.2     |
+| 구분           | 기술 스택                | 상세                  | 버전        |
+| -------------- | ----------------------- | --------------------- | ----------- |
+| 공통           | 버전 컨트롤               | Gitlab                | \-          |
+|                | 이슈 관리                | Jira                  | \-          |
+|                | 커뮤니케이션             | Mattermost, Notion    | \-          |
+| BackEnd        | DB                      | MySQL                 | 5.7         |
+|                |                         | JPA                   | \-          |
+|                | JAVA                    | Zulu                  | 8.33.0.1    |
+|                |                         | Spring Boot           | 2.6.4       |
+|                | IDE                     | IntelliJ              | 2021.3.1    |
+|                |                         | Eclipse               | JEE 2020-06 |
+|                | Cloud Storage           | AWS S3                | \-          |
+|                | 빌드 툴                  | Gradle                | 7.3.3       |
+|                | API Docs                | Swagger2              | 3.0.0       |
+| FrontEnd       | HTML5                   |                       | \-          |
+|                | CSS3                    |                       | \-          |
+|                | JavaScript(ES6)         |                       |\-           |
+|                | TypeScript              |                       |\-           |
+|                | React                   | React                 | 17.0.2      |
+|                |                         | Recoil                | 0.6.1       |
+|                |                         | toast-ui/react-editor | 3.1.2       |
+|                | IDE                     | Visual Studio Code    | 1.66.0      |
+| Server         | 서버                     | AWS EC2               | \-          |
+| DevOps         | CI/CD                   | Docker                | 20.10.12    |
+|                | CI/CD                   | Jenkins               | 2.319.2     |
+| Smart-Contract | Solidity                | Solidity              | ^0.8.0      |
+|                | Truffle                 | Truffle               | v5.5.6      |
+|                | Web3.js                 | Web3.js               | 1.7.1       |
 
 </details>
 

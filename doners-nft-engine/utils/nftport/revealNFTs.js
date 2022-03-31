@@ -67,18 +67,18 @@ async function reveal() {
     fs.readFileSync(`${basePath}/build/ipfsMetas/_ipfsMetas.json`)
   );
   for (const meta of ipfsMetas) {
-    const edition = meta.custom_fields.edition;
+    const tokenId = meta.custom_fields.version;
     if (START && END) {
-      if (edition < START || edition > END) {
+      if (tokenId < START || tokenId > END) {
         continue;
       }
     } else if (START) {
-      if (edition < START) {
+      if (tokenId < START) {
         continue;
       }
     }
-    if (!ownedNFTs.includes(edition)) {
-      const revealedFilePath = `${basePath}/build/revealed/${edition}.json`;
+    if (!ownedNFTs.includes(tokenId)) {
+      const revealedFilePath = `${basePath}/build/revealed/${tokenId}.json`;
       try {
         fs.accessSync(revealedFilePath);
         const revealedFile = fs.readFileSync(revealedFilePath);
@@ -86,7 +86,7 @@ async function reveal() {
           const revealedFileJson = JSON.parse(revealedFile);
           if (revealedFileJson.updateData.response !== "OK" || revealedFileJson.updateData.error !== null) {
             throw "not revealed";
-          } else if(revealedFileJson.updateData.transaction_verified === true) {
+          } else if (revealedFileJson.updateData.transaction_verified === true) {
             console.log(`${meta.name} already revealed.`);
           } else {
             let check = await txnCheck(
@@ -94,20 +94,20 @@ async function reveal() {
             );
             if (check.includes("Success")) {
               revealedFileJson.updateData.transaction_verified = true;
-              fs.writeFileSync(revealedFilePath,JSON.stringify(revealedFileJson, null, 2));
+              fs.writeFileSync(revealedFilePath, JSON.stringify(revealedFileJson, null, 2));
               console.log(`${meta.name} already revealed.`);
             } else if (check.includes("Fail")) {
               console.log(
-                `Transaction failed or not found, will retry revealing Edition #${edition}`
+                `Transaction failed or not found, will retry revealing Token #${tokenId}`
               );
-              throw `Transaction failed, will retry revealing Edition #${edition}`;
-            } else if(check.includes("Pending")) {
+              throw `Transaction failed, will retry revealing Token #${tokenId}`;
+            } else if (check.includes("Pending")) {
               console.log(
-                `Transaction transaction still pending for Edition #${edition}`
+                `Transaction transaction still pending for Token #${tokenId}`
               );
             } else {
               console.log(
-                `Transaction unknown, please manually check Edition #${edition}`,
+                `Transaction unknown, please manually check Token #${tokenId}`,
                 `Directory: ${mintFile}`
               );
             }
@@ -116,7 +116,7 @@ async function reveal() {
           throw "not revealed";
         }
       } catch (err) {
-        let  ok = true;
+        let ok = true;
         if (REVEAL_PROMPT) {
           ok = await yesno({
             question: `Reveal ${meta.name}? (y/n):`,
@@ -131,7 +131,7 @@ async function reveal() {
               chain: CHAIN.toLowerCase(),
               contract_address: CONTRACT_ADDRESS,
               metadata_uri: meta.metadata_uri,
-              token_id: meta.custom_fields.edition,
+              token_id: meta.custom_fields.tokenId,
             };
             const options = {
               method: "PUT",
@@ -142,15 +142,15 @@ async function reveal() {
             };
             let updateData = await fetchWithRetry(url, options);
 
-            
+
             const combinedData = {
               metaData: meta,
               updateData: updateData,
             };
             fs.writeFileSync(
-              `${basePath}/build/revealed/${meta.custom_fields.edition}.json`,
+              `${basePath}/build/revealed/${meta.custom_fields.tokenId}.json`,
               JSON.stringify(combinedData, null, 2)
-              );
+            );
             console.log(`Updated transaction created for ${meta.name}`);
           } catch (err) {
             console.log(err);
@@ -176,7 +176,7 @@ async function reveal() {
 if (START) {
   reveal();
 } else {
-  if(CHAIN === 'rinkeby') {
+  if (CHAIN === 'rinkeby') {
     console.log('Rinkeby is not supported for checking ownership of NFTs.');
     process.exit(1);
   }
