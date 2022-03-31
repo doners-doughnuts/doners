@@ -27,5 +27,15 @@ contract DonersHelper is DonersOwnership {
         return tokenIds.current();
     }
 
-    // get metadata??? uri ("ipfs://"로 시작하는)
+    // get token
+    function getToken(uint256 tokenId) external view returns (DDToken) {
+        return _ddTokens[tokenId];
+    }
+
+    // get metadata uri ("ipfs://"로 시작하는)
+    function getMetadataUri(uint256 tokenId) external view returns (string) {
+        return _ddTokens[tokenId].metadataUri;
+    }
+
+    // NFT 잔여 수량
 }
