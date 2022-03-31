@@ -150,8 +150,9 @@ export const DdHelperABI: AbiItem | AbiItem[] = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
+    payable: true,
   },
   {
     inputs: [

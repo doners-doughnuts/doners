@@ -29,15 +29,14 @@ enum NftEditions {
 }
 
 export const nftTest = async (walletAddress: string) => {
-  // const result = await DDHelperContract.methods
-  //   .getTokensByOwner(walletAddress)
-  //   .call();
   // const result = await getUserNFTList(walletAddress);
-  // const result = await DDHelperContract.methods
-  //   .setApprovalForAll(walletAddress, true)
-  //   .call();
+  //! mm setAppovalForAll 해야 ERC721 거래가능? 필요한가?
+  //* DDHelperContract.methods
+  //*   .setApprovalForAll(walletAddress, true)
+  //*   .call()
+  //*   .then(console.log);
   // Web3Client.eth
-  //   .getCode('0x63e3e2cE6C1Cf0CA2530A41E49C13Becc63cc49a')
+  //   .getCode('0x0c7Ba82be3ff4Bd9EeB5794245130f4eaFEd1c95')
   //   .then(console.log);
   // DDHelperContract.methods
   //   .getMetadataUri(2)
@@ -46,19 +45,19 @@ export const nftTest = async (walletAddress: string) => {
   //     console.log(res); //for example).then(console.log);
   //   });
   // console.log('보유 NFT 목록: ', result);
-  getMetadata(2);
 };
 
-export const getMetadata = async (tokenId: number) => {
-  // export const getMetadata = async (edition: NftEditions, tokenId: number) => {
-  // DDHelperContract.methods
-  //   .getMetadataUri(tokenId)
-  //   .call(function (err: string, res: string) {
-  //     //do something with res here
-  //     console.log(res); //for example).then(console.log);
-  //   });
-  // 위와 동일
+// export const getMetadata = async (edition: NftEditions, tokenId: number) => {
+// DDHelperContract.methods
+//   .getMetadataUri(tokenId)
+//   .call(function (err: string, res: string) {
+//     //do something with res here
+//     console.log(res); //for example).then(console.log);
+//   });
 
+/* Metadata 가져오기 */
+export const getMetadata = async (tokenId: number) => {
+  // 위와 동일
   var metadataURI = await DDHelperContract.methods
     .getMetadataUri(tokenId)
     .call();
@@ -69,15 +68,9 @@ export const getMetadata = async (tokenId: number) => {
   // 위의 url에서 JSON가져오기
   // (https://stackoverflow.com/a/55784549)
   var metadata: any = await (await fetch(metadataURI)).json();
-  // .then((res) => (metadata = res.json()))
-  // // .then((out) => console.log(out))
-  // .catch((err) => {
-  //   throw err;
-  // });
 
   console.log(metadata);
   return metadata;
-  // return { tokenId, metadataURI };
 };
 
 // //https://github.com/yusefnapora/minty/blob/master/src/index.js
@@ -151,16 +144,29 @@ export const isMembership = async (walletAddress: string) => {
 /* 사용자 보유 NFT(DD) 리스트 */
 // (https://ethereum.stackexchange.com/a/98495)
 export const getUserNFTList = async (walletAddress: string) => {
+  //? 성공
   const result = await DDHelperContract.methods
-    .userOwnedTokens(walletAddress, 0)
-    .call(walletAddress, { from: walletAddress })
-    .then((balance: any) => {
-      console.log(balance.toNumber());
-    })
-    .catch(console.log);
+    .getTokensByOwner(walletAddress)
+    .call();
+
+  //! (실패, 위에 성공)
+  // const result = await DDHelperContract.methods
+  //   .userOwnedTokens()
+  //   .call(walletAddress, { from: walletAddress })
+  //   .then((balance: any) => {
+  //     console.log(balance.toNumber());
+  //   })
+  //   .catch(console.log);
   console.log('보유 NFT 목록: ', result);
 };
 
+/* 총 발행된 NFT(DD) 개수 (관리자페이지용) */
+export const getTotalNFTCount = async () => {
+  const result = await DDHelperContract.methods.getTotalCnt().call();
+  console.log('총 발행된 NFT 개수: ', result);
+};
+
+/* 맨 초기에 DD Token creation (한번만 실행하면 된다) */
 // export const createDoughnut = async (metadata: Array<string>) => {
 export const createDoughnut = async () => {
   console.log('CREATING DD TOKENS...');
@@ -169,9 +175,14 @@ export const createDoughnut = async () => {
 
   for (let idx in Metadata) {
     DDHelperContract.methods
-      .mint(Metadata[idx].metadata_uri)
+      .createDoughnut(
+        Metadata[idx].custom_fields.tokenId,
+        Metadata[idx].metadata_uri
+      )
       .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' })
       .then(console.log)
       .catch(console.log);
   }
 };
+
+/* 사용자 보유 NFT 리스트 */
