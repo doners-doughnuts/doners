@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { check, getSSFBalance } from 'services/blockchain/SsfApi';
-import { createDoughnut, getMetadata, getTotalNFTCount, getUserNFTList, nftTest } from './blockchain/NftApi';
+import { createDoughnut, getMetadata, getTotalNFTCount, getUserNFTList, mint, nftTest } from './blockchain/NftApi';
 
 //! DELETE AFTER USE
 export default function Web3Test() {
@@ -23,10 +23,17 @@ export default function Web3Test() {
     // getMetadata(1234);
 
     //? (성공)
-    // getUserNFTList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    getUserNFTList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
 
     //? (성공)
     // getTotalNFTCount();
+
+    //? (4가지 모두 성공)
+    // mint("covid", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+    //! 'payable'이 없어도 되는 것을 확인함. 이게 문제가 아니라 setApprovalForAll()이 해결책이었던듯.
+    // mint("single", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+    // mint("warrior", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+    // mint("patient", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
 
   }, []);
 
