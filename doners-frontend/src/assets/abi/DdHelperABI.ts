@@ -155,25 +155,6 @@ export const DdHelperABI: AbiItem | AbiItem[] = [
     payable: true,
   },
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_uri',
-        type: 'string',
-      },
-    ],
-    name: 'createToken',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [],
     name: 'getAllTokens',
     outputs: [
@@ -321,20 +302,6 @@ export const DdHelperABI: AbiItem | AbiItem[] = [
   {
     inputs: [
       {
-        internalType: 'string',
-        name: '_uri',
-        type: 'string',
-      },
-    ],
-    name: 'mint',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-    payable: true,
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
         name: 'owner',
         type: 'address',
@@ -348,8 +315,9 @@ export const DdHelperABI: AbiItem | AbiItem[] = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
+    payable: true,
   },
   {
     inputs: [

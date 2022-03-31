@@ -20,16 +20,12 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
     constructor() ERC721("DonersDougnuts", "DD") {}
 
     Counters.Counter private _index;
+    // tokenId to metadataUrl
+    mapping(uint256 => string) private _tokenURIs;
 
     // TODO 필요없으므로 삭제? createDougnut()의 2번쨰 줄도 같이 삭제해야함 삭제한다면.
-    // mapping(uint256 => string) private _tokenURIs;
-    // 아래로 (mapping -> struct 배열)로 대체?
-    // DDToken[] public ddTokens = new DDToken[](5000000);
+    //// DDToken[] public ddTokens = new DDToken[](5000000);
     // DDToken[5000000] public ddTokens;
-
-    // tokenId to metadataUrl
-    // mapping(uint256 => string) public tokenURIs;
-    mapping(uint256 => string) private _tokenURIs;
 
     // 하나의 DD에 대한 stuct
     struct DDToken {
@@ -37,21 +33,21 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
         string metadataUri;
     }
 
-    function mint(string memory _uri) public payable {
-        uint256 mintIndex = totalSupply();
-        _safeMint(msg.sender, mintIndex);
-        _setTokenURI(mintIndex, _uri);
-    }
+    // function mint(string memory _uri) public payable {
+    //     uint256 mintIndex = totalSupply();
+    //     _safeMint(msg.sender, mintIndex);
+    //     _setTokenURI(mintIndex, _uri);
+    // }
 
-    function createToken(string memory _uri) public returns (uint256) {
-        _index.increment();
-        uint256 newItemId = _index.current();
+    // function createToken(string memory _uri) public returns (uint256) {
+    //     _index.increment();
+    //     uint256 newItemId = _index.current();
 
-        _safeMint(msg.sender, newItemId);
-        _setTokenURI(newItemId, _uri);
+    //     _safeMint(msg.sender, newItemId);
+    //     _setTokenURI(newItemId, _uri);
 
-        return newItemId;
-    }
+    //     return newItemId;
+    // }
 
     /* NFT 생성 */
     // doners-nft-engine에서 생성한 _ipfsMetas.json 파일들 4개로 NFT를 생성해
@@ -66,7 +62,8 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
         // ddTokens[tokenId] = DDToken(tokenId, _metadataUri));
 
         _setTokenURI(tokenId, _metadataUri);
-        _safeMint(msg.sender, tokenId);
+
+        // _safeMint(msg.sender, tokenId);
 
         // ddTokens[tokenId] = _metadataUri;
         _index.increment();
