@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { check, getSSFBalance } from 'services/blockchain/SsfApi';
-import { nftTest } from './blockchain/NftApi';
+import { createDoughnut, getUserNFTList, nftTest } from './blockchain/NftApi';
 
 //! DELETE AFTER USE
 export default function Web3Test() {
@@ -15,6 +15,8 @@ export default function Web3Test() {
     check();
 
     nftTest('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    // getUserNFTList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+    createDoughnut();
   }, []);
 
   return <></>
