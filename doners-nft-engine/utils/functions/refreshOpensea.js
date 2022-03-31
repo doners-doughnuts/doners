@@ -11,7 +11,7 @@ START = parseInt(START);
 END = parseInt(END);
 if (!START || !END) {
   console.log(
-    "Please provide a start and end edition number. Example: npm run refresh_os --start 1 --end 10"
+    "Please provide a start and end tokenId number. Example: npm run refresh_os --start 1 --end 10"
   );
   process.exit(1);
 }
@@ -53,7 +53,7 @@ async function main() {
 
       console.log(`Refreshed Edition: ${i}`);
     } catch (error) {
-      console.log(`Error refreshing edition ${i}: ${error}`);
+      console.log(`Error refreshing tokenId ${i}: ${error}`);
       errors.push(i);
     }
   }

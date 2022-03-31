@@ -29,7 +29,8 @@
     "mint": "node utils/nftport/mint %npm_config_start% %npm_config_end%",
     "reveal": "node utils/nftport/revealNFTs %npm_config_start% %npm_config_end%",
     "check_txns": "node utils/nftport/checkTxns %npm_config_dir%",
-    "refresh_os": "node utils/functions/refreshOpensea %npm_config_start% %npm_config_end%"
+    "refresh_os": "node utils/functions/refreshOpensea %npm_config_start% %npm_config_end%",
+    "create_dd": "node web3/createNFT.js"
   },
   "author": "Jesse Hall (codeSTACKr)",
   "license": "MIT",
@@ -44,6 +45,7 @@
     "puppeteer-extra-plugin-adblocker": "^2.12.0",
     "puppeteer-extra-plugin-stealth": "^2.9.0",
     "sha1": "^1.1.1",
+    "web3": "^1.7.1",
     "yesno": "^0.3.1"
   }
 }

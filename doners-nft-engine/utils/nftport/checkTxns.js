@@ -27,9 +27,9 @@ async function main() {
   for (const file of files) {
     try {
       if (regex.test(file)) {
-        const edition = path.parse(file).name;
+        const tokenId = path.parse(file).name;
         let jsonFile = fs.readFileSync(
-          `${basePath}/build/${dir}/${edition}.json`
+          `${basePath}/build/${dir}/${tokenId}.json`
         );
         let txnData = JSON.parse(jsonFile);
         const response =
@@ -48,17 +48,17 @@ async function main() {
             : txnData.updateData.transaction_external_url;
 
         if (response !== "OK" || err !== null) {
-          failed.push(edition);
-          console.log(`Edition #${edition}: Transaction failed`);
+          failed.push(tokenId);
+          console.log(`Edition #${tokenId}: Transaction failed`);
         } else if (verified === true) {
-          success.push(edition);
-          console.log(`Edition #${edition}: Transaction success!`);
+          success.push(tokenId);
+          console.log(`Edition #${tokenId}: Transaction success!`);
         } else {
           let check = await txnCheck(txUrl);
           if (check === "Failed") {
-            failed.push(edition);
+            failed.push(tokenId);
             console.log(
-              `Edition #${edition}: Transaction failed or not found.`
+              `Edition #${tokenId}: Transaction failed or not found.`
             );
           } else if (check.includes("Success")) {
             if (dir === "minted") {
@@ -67,26 +67,26 @@ async function main() {
               txnData.updateData.transaction_verified = true;
             }
             fs.writeFileSync(
-              `${basePath}/build/${dir}/${edition}.json`,
+              `${basePath}/build/${dir}/${tokenId}.json`,
               JSON.stringify(txnData, null, 2)
             );
-            success.push(edition);
-            console.log(`Edition #${edition}: Transaction success!`);
+            success.push(tokenId);
+            console.log(`Edition #${tokenId}: Transaction success!`);
           } else if (check.includes("Pending")) {
-            pending.push(edition);
+            pending.push(tokenId);
             console.log(
-              `Edition #${edition}: Transaction pending, check again in a few minutes..`
+              `Edition #${tokenId}: Transaction pending, check again in a few minutes..`
             );
           } else if (check.includes("Indexing")) {
-            pending.push(edition);
+            pending.push(tokenId);
             console.log(
-              `Edition #${edition}: Transaction indexing, check again in a few minutes..`
+              `Edition #${tokenId}: Transaction indexing, check again in a few minutes..`
             );
           } else {
-            unknown.push(edition);
+            unknown.push(tokenId);
             console.log(
-              `Edition #${edition}: Transaction unknown, please manually check Edition #${edition}`,
-              `Directory: ${`${basePath}/build/${dir}/${edition}.json`}`,
+              `Edition #${tokenId}: Transaction unknown, please manually check Edition #${tokenId}`,
+              `Directory: ${`${basePath}/build/${dir}/${tokenId}.json`}`,
               `Received: ${check}`
             );
           }
