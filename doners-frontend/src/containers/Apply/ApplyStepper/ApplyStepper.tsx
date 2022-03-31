@@ -17,7 +17,7 @@ const ApplyStepper = ({ applyStep }: applyStepType) => {
     <section className={cx('container')}>
       <Stepper activeStep={applyStep}>
         {titles.map((title) => (
-          <Step label={title} />
+          <Step label={title} key={title} />
         ))}
       </Stepper>
     </section>
