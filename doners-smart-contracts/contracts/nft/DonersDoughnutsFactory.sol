@@ -17,56 +17,15 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
 
     // ERC721.sol의 생성자를 호출
     // constructor(string memory tokenName, string memory symbol)
-    constructor() ERC721("DonersDougnuts", "DD") {
-        // 이미 doners-nft-engine에서 처리함
-        // _setBaseURI("ipfs://");
-    }
-
-    /* NFT 생성 */
-    // doners-nft-engine에서 생성한 _ipfsMetas.json 파일들 4개로 NFT를 생성해
-    // 이 'DonersDoughnutsFactory' Contract에 저장해둔다.
+    constructor() ERC721("DonersDougnuts", "DD") {}
 
     Counters.Counter private _index;
-
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId
-    ) internal override(ERC721, ERC721Enumerable) {
-        super._beforeTokenTransfer(from, to, tokenId);
-    }
-
-    function _burn(uint256 tokenId)
-        internal
-        override(ERC721, ERC721URIStorage)
-    {
-        super._burn(tokenId);
-    }
-
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721Enumerable)
-        returns (bool)
-    {
-        return super.supportsInterface(interfaceId);
-    }
-
-    function mint(string memory _uri) public payable {
-        uint256 mintIndex = totalSupply();
-        _safeMint(msg.sender, mintIndex);
-        _setTokenURI(mintIndex, _uri);
-    }
+    // tokenId to metadataUrl
+    mapping(uint256 => string) internal _tokenURIs;
 
     // TODO 필요없으므로 삭제? createDougnut()의 2번쨰 줄도 같이 삭제해야함 삭제한다면.
-    // mapping(uint256 => string) private _tokenURIs;
-    // 아래로 (mapping -> struct 배열)로 대체?
-    // DDToken[] public ddTokens = new DDToken[](5000000);
+    //// DDToken[] public ddTokens = new DDToken[](5000000);
     // DDToken[5000000] public ddTokens;
-
-    // tokenId to metadataUrl
-    // mapping(uint256 => string) public tokenURIs;
-    mapping(uint256 => string) private _tokenURIs;
 
     // 하나의 DD에 대한 stuct
     struct DDToken {
@@ -74,18 +33,28 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
         string metadataUri;
     }
 
-    function createToken(string memory _uri) public returns (uint256) {
-        _index.increment();
-        uint256 newItemId = _index.current();
+    // function mint(string memory _uri) public payable {
+    //     uint256 mintIndex = totalSupply();
+    //     _safeMint(msg.sender, mintIndex);
+    //     _setTokenURI(mintIndex, _uri);
+    // }
 
-        _safeMint(msg.sender, newItemId);
-        _setTokenURI(newItemId, _uri);
+    // function createToken(string memory _uri) public returns (uint256) {
+    //     _index.increment();
+    //     uint256 newItemId = _index.current();
 
-        return newItemId;
-    }
+    //     _safeMint(msg.sender, newItemId);
+    //     _setTokenURI(newItemId, _uri);
 
+    //     return newItemId;
+    // }
+
+    /* NFT 생성 */
+    // doners-nft-engine에서 생성한 _ipfsMetas.json 파일들 4개로 NFT를 생성해
+    // 이 'DonersDoughnutsFactory' Contract에 저장해둔다.
     function createDoughnut(uint256 tokenId, string memory _metadataUri)
         public
+        payable
         returns (uint256)
     {
         // (해결) "Operation push has changed behavior since since solidity 0.6. It no longer returns the length but a reference to the added element."
@@ -93,30 +62,14 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
         // ddTokens[tokenId] = DDToken(tokenId, _metadataUri));
 
         _setTokenURI(tokenId, _metadataUri);
+
+        // _safeMint(msg.sender, tokenId);
+
         // ddTokens[tokenId] = _metadataUri;
         _index.increment();
-        // _index++;
         return _index.current();
-
-        // _tokenURIs[id] = _metadataUri;
-        // require();
-        // uint256 id = donersDoughnuts.push(
-        //     DDToken(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)
-        // ) - 1;
-        // tokenOwners[id] = msg.sender;
-        // ownerTokenCount[msg.sender] = ownerTokenCount[msg.sender].add(1);
-        // emit NewDoughnut(___________);
     }
 
-    // 임시 테스팅 (Factory에서 생성된 NFT들이 잘 들어갔는지 확인하는 용도.)
-    // function test() external view returns (uint256) {
-    //     return _index.current();
-    // }
-
-    // ================================================================
-
-    // TODO DELETE
-    //// Counters.Counter public tokenIds;
     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
         internal
         override
@@ -148,6 +101,32 @@ contract DonersDoughnutsFactory is ERC721Enumerable, ERC721URIStorage {
     {
         require(_exists(tokenId));
         return _tokenURIs[tokenId];
+    }
+
+    // =========================== ERC721URIStorage 관련
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal override(ERC721, ERC721Enumerable) {
+        super._beforeTokenTransfer(from, to, tokenId);
+    }
+
+    function _burn(uint256 tokenId)
+        internal
+        override(ERC721, ERC721URIStorage)
+    {
+        super._burn(tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 
     // // owner === to
