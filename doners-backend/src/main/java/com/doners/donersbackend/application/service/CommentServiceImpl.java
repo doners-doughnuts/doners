@@ -52,8 +52,8 @@ public class CommentServiceImpl implements CommentService{
                 .parentCommentId(parentComment)
                 .commentCreateTime(LocalDateTime.now()).build();
 
-        if(commentRegisterPostDTO.getCommunityId().length()==0){// 감사 글 댓글
-            comment.changeEpilougeId(epilogueRepository.findById(commentRegisterPostDTO.getEpilougeId()).get());
+        if(commentRegisterPostDTO.getCommunityId()==null){// 감사 글 댓글
+            comment.changeEpilogueId(epilogueRepository.findById(commentRegisterPostDTO.getEpilogueId()).get());
         }else{// 커뮤니티 글 댓글
             comment.changeCommunityId(communityRepository.findById(commentRegisterPostDTO.getCommunityId()).get());
         }
@@ -70,7 +70,7 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = commentRepository.findByIdAndCommentIsDeleted(commentChangePatchDTO.getCommentId(), false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
 
-        if(!user.getUserAccount().equals(comment.getUser().getId())) {
+        if(!user.getId().equals(comment.getUser().getId())) {
             return 401;
         }
 
@@ -119,7 +119,7 @@ public class CommentServiceImpl implements CommentService{
 
         Epilogue epilogue = epilogueRepository.findById(id).get();
 
-        for(Comment c : commentRepository.findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
+        for(Comment c : commentRepository.findAllByEpilogueAndCommentIsDeletedOrderByCommentCreateTime(epilogue, false).get()) {
             list.add(new CommentResponseDTO(c.getId(), c.getCommentCreateTime(), c.getCommentDescription(), c.getUser().getUserNickname()));
         }
 

@@ -17,9 +17,13 @@ public class EpilogueBudgetResponseDTO {
     @ApiModelProperty(name = "활용 금액")
     private long epilogueBudgetAmount;
 
+    @ApiModelProperty(name = "Budget 순서")
+    private long epilogueBudgetSequence;
+
     @Builder
-    public EpilogueBudgetResponseDTO(String epilogueBudgetPlan, long epilogueBudgetAmount) {
+    public EpilogueBudgetResponseDTO(String epilogueBudgetPlan, long epilogueBudgetAmount, long epilogueBudgetSequence) {
         this.epilogueBudgetPlan = epilogueBudgetPlan;
         this.epilogueBudgetAmount = epilogueBudgetAmount;
+        this.epilogueBudgetSequence = epilogueBudgetSequence;
     }
 }

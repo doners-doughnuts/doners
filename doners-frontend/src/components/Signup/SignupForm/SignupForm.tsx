@@ -144,7 +144,12 @@ const SignupForm = () => {
           인증
         </Button>
         {/* Button 안에 onClick={emailAuthentication} 함수 있었음 */}
-        <Button type="submit" disabled={isLoading} color="primary">
+        <Button
+          type="submit"
+          disabled={isLoading}
+          color="primary"
+          // onClick={emailAuthentication}
+        >
           {isLoading ? '진행중' : '회원가입 완료'}
         </Button>
       </form>

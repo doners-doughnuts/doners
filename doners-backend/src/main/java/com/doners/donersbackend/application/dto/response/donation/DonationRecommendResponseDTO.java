@@ -13,10 +13,10 @@ import lombok.ToString;
 public class DonationRecommendResponseDTO extends BaseResponseDTO {
 
     @ApiModelProperty(name = "추천수")
-    private int recommendations;
+    private long recommendations;
 
     @Builder
-    public DonationRecommendResponseDTO(int recommendations) {
+    public DonationRecommendResponseDTO(long recommendations) {
         this.recommendations = recommendations;
     }
 

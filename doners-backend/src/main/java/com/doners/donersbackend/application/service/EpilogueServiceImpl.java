@@ -57,6 +57,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .epilogueTitle(epilogueRegisterPostDTO.getEpilogueTitle())
                 .epilogueDescription(epilogueRegisterPostDTO.getEpilogueDescription())
                 .user(user)
+                .epilogueViews(0L)
                 .epilogueCreateTime(LocalDateTime.now()).build();
 
         epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
@@ -64,6 +65,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                         EpilogueBudget.builder()
                                 .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
                                 .epilogueBudgetAmount(epilogueBudgetRequestDTO.getEpilogueBudgetAmount())
+                                .epilogueBudgetSequence(epilogueBudgetRequestDTO.getEpilogueBudgetSequence())
                                 .epilogue(epilogue)
                                 .build()
                 )
@@ -135,6 +137,9 @@ public class EpilogueServiceImpl implements EpilogueService {
         List<EpilogueGetListResponseDTO> epilogueGetListResponseDTOList = new ArrayList<>();
 
         epilogueList.forEach(epilogue -> {
+            Image epilogueThumbnailImage = imageRepository.findByEpilogueAndImageIsResized(epilogue, true)
+                            .orElseThrow(() -> new IllegalArgumentException("에필로그 썸네일 이미지가 없습니다."));
+
             epilogueGetListResponseDTOList.add(
                     EpilogueGetListResponseDTO.builder()
                             .epilogueId(epilogue.getId())
@@ -143,6 +148,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                             .epilogueCreateTime(epilogue.getEpilogueCreateTime())
                             .epilogueViews(epilogue.getEpilogueViews())
                             .epilogueWriter(epilogue.getUser().getUserNickname())
+                            .epilogueThumbnailImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueThumbnailImage.getImageNewFileName())
                             .build()
             );
         });
@@ -162,6 +168,9 @@ public class EpilogueServiceImpl implements EpilogueService {
         Epilogue epilogue = epilogueRepository.findByIdAndEpilogueIsDeleted(epilogueId, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 에필로그를 찾을 수 없습니다."));
 
+        Image epilogueImage = imageRepository.findByEpilogueAndImageIsResized(epilogue, false)
+                .orElseThrow(() -> new IllegalArgumentException("에필로그 이미지를 찾을 수 없습니다."));
+
         List<EpilogueBudget> epilogueBudgetList = epilogueBudgetRepository.findAllByEpilogue(epilogue)
                 .orElse(null); // 사용 내역이 없는 경우
         List<EpilogueBudgetResponseDTO> epilogueBudgetResponseDTOList = new ArrayList<>();
@@ -171,6 +180,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                         EpilogueBudgetResponseDTO.builder()
                                 .epilogueBudgetPlan(epilogueBudget.getEpilogueBudgetPlan())
                                 .epilogueBudgetAmount(epilogueBudget.getEpilogueBudgetAmount())
+                                .epilogueBudgetSequence(epilogueBudget.getEpilogueBudgetSequence())
                                 .build()
                 )
         );
@@ -182,6 +192,8 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .epilogueCreateTime(epilogue.getEpilogueCreateTime())
                 .epilogueViews(epilogue.getEpilogueViews())
                 .epilogueWriter(epilogue.getUser().getUserNickname())
+                .epilogueImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueImage.getImageNewFileName())
+                .epilogueBudgetResponseDTOList(epilogueBudgetResponseDTOList)
                 .build();
     }
 

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class CommentRegisterPostDTO {
 
     @ApiModelProperty(name="에필로그 ID")
-    private String epilougeId;
+    private String epilogueId;
 
     @ApiModelProperty(name="커뮤니티 ID")
     private String communityId;
