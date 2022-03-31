@@ -16,9 +16,11 @@ const DonateInfo = () => {
   const [target, setTarget] = useState(3.89);
   const [current, setCurrent] = useState(1.0);
   let rate = Math.floor((current / target) * 100);
-  const handleClick = (): void => {
+
+  const handleHistoryListClick = () => {
     setIsOpen((prev) => !prev);
   };
+
   return (
     <div className={cx('info-form')}>
       <div className={cx('title')}>
@@ -60,18 +62,14 @@ const DonateInfo = () => {
         <div className={cx('donate-plan')}>
           <div className={cx('detail-plan')}>
             <H4>모금 상세 계획</H4>
-            <div className={cx('ocBtn')} onClick={handleClick}>
+            <div className={cx('ocBtn')} onClick={handleHistoryListClick}>
               <H4 color="green">{isOpen ? '닫기' : '펼치기'}</H4>
             </div>
           </div>
           {isOpen ? (
             <div className={cx('history-items')}>
-              <HistoryItem />
-              <HistoryItem />
-              <HistoryItem />
-              <HistoryItem />
-              <HistoryItem />
-              <HistoryItem />
+              hello
+              {/* <HistoryItem /> */}
             </div>
           ) : null}
         </div>

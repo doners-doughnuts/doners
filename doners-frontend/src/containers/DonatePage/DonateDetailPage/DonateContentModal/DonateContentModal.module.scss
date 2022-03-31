@@ -1,0 +1,46 @@
+@import 'assets/styles/main';
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 0.5);
+
+  .modalForm {
+    width: 1000px;
+    height: fit-content;
+    padding: 30px;
+    border: 2px solid $black;
+    background-color: $white;
+    .header {
+      @include flexbox;
+      position: relative;
+      .title {
+        @include flexbox;
+      }
+      .close-btn {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
+}
+
+.openModal {
+  @include flexbox;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
