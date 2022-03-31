@@ -9,11 +9,12 @@ import SignupPage from 'pages/SignupPage/SignupPage';
 import HomePage from 'pages/HomePage/HomePage';
 import MyPage from 'pages/MyPage/MyPage';
 import Test from 'pages/Test/Test';
-
+import ApplyPage from 'pages/ApplyPage/ApplyPage';
 import { Navigate, useRoutes } from 'react-router';
 import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
 import EpilogueEditPage from 'pages/EditPage/Epilogue/EpilogueEditPage';
 import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
+import AdminPage from 'pages/AdminPage/AdminPage';
 
 export default function Router() {
   return useRoutes([
@@ -21,6 +22,11 @@ export default function Router() {
       path: '/signup',
       element: <ScrollLayout />,
       children: [{ path: '', element: <SignupPage /> }],
+    },
+    {
+      path: '/apply',
+      element: <ScrollLayout />,
+      children: [{ path: '', element: <ApplyPage /> }],
     },
     {
       path: '/category',
@@ -79,7 +85,7 @@ export default function Router() {
     {
       path: '/admin',
       element: <ScrollLayout />,
-      children: [{ path: '', element: <HomePage /> }],
+      children: [{ path: '', element: <AdminPage /> }],
     },
     {
       path: '/',

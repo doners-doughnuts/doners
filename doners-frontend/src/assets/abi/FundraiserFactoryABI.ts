@@ -7,7 +7,7 @@ export const FundraiserFactoryABI: AbiItem | AbiItem[] = [
     inputs: [
       {
         indexed: true,
-        internalType: 'contract Fundraiser',
+        internalType: 'address',
         name: 'fundraiser',
         type: 'address',
       },
@@ -39,7 +39,7 @@ export const FundraiserFactoryABI: AbiItem | AbiItem[] = [
     inputs: [
       {
         internalType: 'string',
-        name: 'name',
+        name: 'title',
         type: 'string',
       },
       {
@@ -58,33 +58,38 @@ export const FundraiserFactoryABI: AbiItem | AbiItem[] = [
         type: 'string',
       },
       {
+        internalType: 'uint256',
+        name: 'donationsGoal',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'fundRaisingCloses',
+        type: 'uint256',
+      },
+      {
         internalType: 'address payable',
         name: 'beneficiary',
         type: 'address',
       },
     ],
     name: 'createFundraiser',
-    outputs: [],
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'limit',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'offset',
-        type: 'uint256',
-      },
-    ],
-    name: 'fundraisers',
+    inputs: [],
+    name: 'getFundraisers',
     outputs: [
       {
-        internalType: 'contract Fundraiser[]',
+        internalType: 'address[]',
         name: 'coll',
         type: 'address[]',
       },

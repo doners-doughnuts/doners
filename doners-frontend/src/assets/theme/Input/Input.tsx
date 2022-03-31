@@ -14,6 +14,7 @@ type InputType = {
   value?: string;
   disabled?: boolean;
   id?: string;
+  multiple?: boolean;
   onChange?: (ev: InputChangeEvent) => void;
 };
 
@@ -27,6 +28,7 @@ const Input = ({
   value,
   disabled,
   id,
+  multiple,
 }: InputType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(value);
@@ -56,6 +58,7 @@ const Input = ({
       value={inputValue}
       disabled={disabled}
       ref={inputRef}
+      multiple={multiple}
     />
   );
 };

@@ -19,7 +19,7 @@ const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
 
     // prompt user to choose how to list nfts
     // 1. get top ## nfts
-    // 2. get a specific nft by edition
+    // 2. get a specific nft by tokenId
     const choice = await prompt(
       "Enter 1 to get top ## NFTs by rarity or 2 to get a specific NFTs rarity: "
     );
@@ -40,8 +40,8 @@ const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
         })
       );
     } else if (choice === "2") {
-      const nftEdition = await prompt("Enter the NFT Edition: ");
-      const nft = nfts.find((nft) => nft.custom_fields.edition === +nftEdition);
+      const nftEdition = await prompt("Enter the NFT Version: ");
+      const nft = nfts.find((nft) => nft.custom_fields.tokenId === +nftEdition);
       console.log({
         name: nft.name,
         rank: nft.rank,
@@ -50,7 +50,7 @@ const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
     } else {
       console.log("Invalid choice. Enter either 1 or 2.");
     }
-    
+
     // close readline
     rl.close();
   } catch (e) {

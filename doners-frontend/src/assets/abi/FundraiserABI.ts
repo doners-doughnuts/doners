@@ -6,7 +6,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     inputs: [
       {
         internalType: 'string',
-        name: '_name',
+        name: '_title',
         type: 'string',
       },
       {
@@ -23,6 +23,16 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         internalType: 'string',
         name: '_description',
         type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: '_donationsGoal',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_fundRaisingCloses',
+        type: 'uint256',
       },
       {
         internalType: 'address payable',
@@ -90,8 +100,33 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     type: 'event',
   },
   {
-    stateMutability: 'payable',
-    type: 'fallback',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: '_donations',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'date',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
@@ -147,12 +182,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'imageURL',
+    name: 'donationsGoal',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'uint256',
         name: '',
-        type: 'string',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -160,7 +195,33 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'name',
+    name: 'erc20Contract',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'fundRaisingCloses',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'imageURL',
     outputs: [
       {
         internalType: 'string',
@@ -193,12 +254,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'totalDonations',
+    name: 'title',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'string',
         name: '',
-        type: 'uint256',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -245,19 +306,25 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'myDonationsCount',
+    name: 'nowAddress',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'address',
         name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
     name: 'donate',
     outputs: [],
     stateMutability: 'payable',
@@ -265,7 +332,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'myDonations',
+    name: 'getDonations',
     outputs: [
       {
         internalType: 'uint256[]',
@@ -277,6 +344,11 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         name: 'dates',
         type: 'uint256[]',
       },
+      {
+        internalType: 'address[]',
+        name: 'accounts',
+        type: 'address[]',
+      },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -285,7 +357,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     inputs: [],
     name: 'withdraw',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
 ];

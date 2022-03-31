@@ -1,4 +1,9 @@
-import { SSFContract, FundraiserContract, Web3Client } from 'services/web3';
+import {
+  SSFContract,
+  FundraiserContract,
+  FundraiserFactoryContract,
+  Web3Client,
+} from 'services/web3';
 
 /**
  * 필요한 기능
@@ -11,54 +16,182 @@ import { SSFContract, FundraiserContract, Web3Client } from 'services/web3';
  * -
  */
 
-/* Wallet balance 조회 */
-export const getSSFBalance = async (walletAddress: string) => {
+/* Wallet ETH balance 조회 */
+export const getETHBalance = async (walletAddress: string) => {
   const balance = await Web3Client.eth.getBalance(walletAddress);
-  console.log(balance, 'SSF');
+  console.log(balance, 'ETH');
   // TIL: (위 2줄과 동일함, 그냥 값 찍어보는 용도라면 await 안 걸고 then()에서 찍어봐도 됨)
   //// Web3Client.eth.getBalance(walletAddress).then(console.log);
   // const result = await SsfContract.methods.balanceOf(walletAddress).call(); // 29803630997051883414242659
   // const format = Web3Client.utils.fromWei(result); // 29803630.997051883414242659
 };
 
+/* Wallet SSF(token) balance 조회 */
+export const getSSFBalance = async (walletAddress: string) => {
+  const balance = await SSFContract.methods.balanceOf(walletAddress).call();
+  console.log(balance, 'SSF');
+};
+
 /* 기부금 수령하기 */
 // export const withdraw = async () => {
 //   SsfContract.methods.withdraw().call().then(console.log);
 // };
+/* 기부금 만들기 */
+// fundRaisingCloses -> Date.now() + 마감기한 사용 초단위로 변환!!
+export const createFundraiser = async (
+  factoryAddress: string,
+  walletAddress: string,
+  title: string,
+  url: string,
+  imageURL: string,
+  description: string,
+  donationsGoal: number,
+  nowCollectMoney: number,
+  fundRaisingCloses: number,
+  beneficiary: string
+) => {
+  await FundraiserFactoryContract(factoryAddress)
+    .methods.createFundraiser(
+      title,
+      url,
+      imageURL,
+      description,
+      donationsGoal,
+      nowCollectMoney,
+      fundRaisingCloses,
+      beneficiary
+    )
+    .send({ from: walletAddress });
+  let AddressCount = await FundraiserFactoryContract(factoryAddress)
+    .methods.fundraisersCount()
+    .call();
+  let fundraisers = await FundraiserFactoryContract(factoryAddress)
+    .methods.getFundraisers()
+    .call();
+  let createFundraiserAddress = fundraisers[AddressCount - 1]; // 생성된 Fundraiser Contract 주소
+};
+
+// /* 기부 컨트랙트 배열 */
+export const getFundraiserFactoryArray = async (factoryAddress: string) => {
+  await FundraiserFactoryContract(factoryAddress)
+    .methods.getFundraisers()
+    .call();
+};
 
 // /* 기부 모금하기 */
-// export const donate = () => {
-//   SsfContract.methods.donate().call().then(console.log);
-// };
+export const donate = async (
+  fundraiserAddress: string,
+  walletAddress: string,
+  donateAmount: number
+) => {
+  //  contract에 송금 및 인출 가능하게 ssafycontract를 approve하는코드
+  await SSFContract.methods
+    .approve(fundraiserAddress, donateAmount)
+    .send({ from: walletAddress });
 
-let name = '신지우';
-let url =
-  'https://www.fnnews.com/resource/media/image/2022/02/04/202202041545370304_l.jpg';
-let imageURL =
-  'https://www.fnnews.com/resource/media/image/2022/02/04/202202041545370304_l.jpg';
-let description = 'test description 입니다람쥐';
-let beneficiary = '0x80585b94098034488F58ede15BFa106EF229d6Ea';
+  // 기부하는 코드
+  await FundraiserContract(fundraiserAddress)
+    .methods.donate(donateAmount)
+    .send({ from: walletAddress });
+};
 
+// /* 기부 수령하기 */
+export const withdraw = async (
+  fundraiserAddress: string,
+  walletAddress: string
+) => {
+  // 인출코드
+  await FundraiserContract(fundraiserAddress)
+    .methods.withdraw()
+    .send({ from: walletAddress });
+};
+// /* 현재 기부금 */
+export const now = async (fundraiserAddress: string) => {
+  await SSFContract.methods.balanceOf(fundraiserAddress).call();
+};
+
+// /* 현재 컨트랙트 기부한 내역 */
+export const nowFundraiserData = async (fundraiserAddress: string) => {
+  await FundraiserContract(fundraiserAddress).methods.getDonations().call();
+};
+
+// TOTO delete (test code)
+
+// let title = '정홍진에게 기부하시오2';
+// let url =
+//   'https://www.fnnews.com/resource/media/image/2022/02/04/202202041545370304_l.jpg';
+// let imageURL =
+//   'https://www.fnnews.com/resource/media/image/2022/02/04/202202041545370304_l.jpg';
+// let description = 'test description 입니다람쥐';
+// let donationsGoal = '10000';
+// let fundRaisingCloses = '51651651651651651651';
+// let beneficiary = '0x079dae51ae588fBe92163F75C18F030812A4979A';
+
+// TOTO delete (test code)
 export const check = async () => {
-  // await Web3Client.eth.requestAccounts().then(console.log).catch(console.log);
-  // SsfContract.methods
-  //   .createFundraiser(name, url, imageURL, description, beneficiary)
-  //   .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' })
-  //   .then(console.log)
-  //   .catch(console.log);
+  const account = await Web3Client.eth.requestAccounts();
 
-  const kk = await SSFContract.methods
-    .balanceOf('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
-    .call();
-  // const kkk = await FundraiserContract(
-  //   '0xFacc3F3032642F08F239F8f2e1f0Cf70c855933b'
+  // await FundraiserFactoryContract('0xBb3EACd17DbAcbd0E18B9677498A13E310333786')
+  //   .methods.createFundraiser(
+  //     title,
+  //     url,
+  //     imageURL,
+  //     description,
+  //     donationsGoal,
+  //     fundRaisingCloses,
+  //     beneficiary
+  //   )
+  //   .send({ from: account[0] });
+  // let tmp = await FundraiserFactoryContract(
+  //   '0xBb3EACd17DbAcbd0E18B9677498A13E310333786'
   // )
-  //   .methods.name()
+  //   .methods.fundraisersCount()
   //   .call();
-  // ;fundraisers(10, 0).call();
+  // console.log(
+  //   await FundraiserFactoryContract(
+  //     '0xBb3EACd17DbAcbd0E18B9677498A13E310333786'
+  //   )
+  //     .methods.getFundraisers()
+  //     .call()
+  // );
 
-  // const kkk = await SsfContract.methods.fundraisersCount().call();
-  // .then(console.log)
-  // .catch(console.log);
-  console.log('TOTAL:   ', kk);
+  // console.log(fundraisers[tmp - 1]);
+  // console.log(createFundraiser);
+  // console.log(
+  // await FundraiserFactoryContract(
+  //   '0xD67cCf7c2c3eEb4a0DA91609411f34E0805F8566'
+  // )
+  //   .methods.getFundraisers()
+  //   .call()
+  // );
+  //  contract에 송금 및 인출 가능하게 ssafycontract를 approve하는코드
+  // await SSFContract.methods
+  //   .approve('0x423D328409502228628d0cb2f5271b2729421b9F', 5)
+  //   .send({ from: account[0] });
+
+  // // 기부하는 코드
+  // await FundraiserContract('0x423D328409502228628d0cb2f5271b2729421b9F')
+  //   .methods.donate(5)
+  //   .send({ from: account[0] });
+
+  // console.log(
+  //   await SSFContract.methods
+  //     .balanceOf('0x423D328409502228628d0cb2f5271b2729421b9F')
+  //     .call()
+  // );
+
+  // console.log(
+  //   await FundraiserContract('0x423D328409502228628d0cb2f5271b2729421b9F')
+  //     .methods.getDonations()
+  //     .call()
+  // );
+
+  // await FundraiserContract('0x423D328409502228628d0cb2f5271b2729421b9F')
+  //   .methods.withdraw()
+  //   .send({ from: account[0] });
+
+  // const test = await SSFContract.methods.transfer(account[0], 10).send({
+  //   from: '0x0Bba35cf70aD080f8594B58006Bc18bf2c6B1DE6',
+  //   gas: 367760,
+  // });
 };
