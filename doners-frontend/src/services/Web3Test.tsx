@@ -16,7 +16,7 @@ export default function Web3Test() {
 
     // setApprovalForAll('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
 
-    nftTest('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    // nftTest('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // getUserNFTList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
     // createDoughnut();
     //? (성공)
@@ -28,10 +28,10 @@ export default function Web3Test() {
 
     //? (성공)
     // getUserNFTIdList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
-    getUserNFTMetadataList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+    // getUserNFTMetadataList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
 
     //? (성공)
-    getTotalNFTCount();
+    // getTotalNFTCount();
 
     //? (4가지 모두 성공)
     // mint("covid", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')

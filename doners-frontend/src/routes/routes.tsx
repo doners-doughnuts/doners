@@ -14,6 +14,7 @@ import { Navigate, useRoutes } from 'react-router';
 import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
 import EpilogueEditPage from 'pages/EditPage/Epilogue/EpilogueEditPage';
 import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
+import AdminPage from 'pages/AdminPage/AdminPage';
 
 export default function Router() {
   return useRoutes([
@@ -84,7 +85,7 @@ export default function Router() {
     {
       path: '/admin',
       element: <ScrollLayout />,
-      children: [{ path: '', element: <HomePage /> }],
+      children: [{ path: '', element: <AdminPage /> }],
     },
     {
       path: '/',
