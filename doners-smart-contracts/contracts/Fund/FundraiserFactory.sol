@@ -22,7 +22,6 @@ contract FundraiserFactory {
         string memory imageURL,
         string memory description,
         uint256 donationsGoal,
-        uint256 nowCollectMoney,
         uint256 fundRaisingCloses,
         address payable beneficiary
     ) public returns (address){
@@ -32,7 +31,6 @@ contract FundraiserFactory {
             imageURL,
             description,
             donationsGoal,
-            nowCollectMoney,
             fundRaisingCloses,
             beneficiary,
             msg.sender
