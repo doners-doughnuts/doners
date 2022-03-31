@@ -3,13 +3,14 @@
  * [NFT(DD)]
  * [x] setApprovalForAll: 회원가입과 동시에 한번만 호출해주면 됨. (필요없는 과정일수도? *테스트 필요*)
  * [x] metadata 호출해서 조회
- * - minting (각 카테고리 별)
+ * [x] minting (각 카테고리 별)
  * [x] 전체 NFT 개수 (전체 | 코로나 | 미혼모 | 참전용사 | 희귀병환자)
  * [x] 해당 account에서 보유하고 있는 NFT tokenId의 리스트
+ * [x] 해당 account에서 보유하고 있는 NFT metadata의 리스트
  * [x] isMembership (커뮤니티 입장 권한 확인용)
  * [x] 총 발급된 NFT 개수 (관리자 페이지)
  * - (burn)
- * - transaction stages (DD)
+ * - (transaction stages (DD))
  * [Doation(SSF)]
  * - dontating 모금 기능
  * - 현재 ETH 시세
@@ -30,6 +31,7 @@ import { Metadata } from 'assets/metadata/_ipfsMetadatas';
 //   'patient' = 4,
 // }
 
+// TODO DELETE AFTER USE
 export const nftTest = async (walletAddress: string) => {
   //! mm setAppovalForAll 해야 ERC721 거래가능? 필요한가?
   // setApprovalForAll(walletAddress);
@@ -40,7 +42,7 @@ export const nftTest = async (walletAddress: string) => {
 
 /* contract 권한 부여 */
 //! (mm에올라온 내용) setAppovalForAll 해야 ERC721 거래가능? 필요한가?
-const setApprovalForAll = async (walletAddress: string) => {
+export const setApprovalForAll = async (walletAddress: string) => {
   DDHelperContract.methods
     .setApprovalForAll(walletAddress, true)
     .call()
@@ -76,6 +78,7 @@ export const mint = async (edition: string, walletAddress: string) => {
       console.log(result);
       break;
   }
+  return result;
 };
 
 /* Metadata 가져오기 */
@@ -103,11 +106,12 @@ export const isMembership = async (walletAddress: string) => {
     .isMembership(walletAddress)
     .call();
   console.log('도너스 커뮤니티 멤버: ', result);
+  return result;
 };
 
-/* 사용자 보유 NFT(DD) 리스트 */
+/* 사용자 보유 NFT(DD) tokenId 리스트 */
 // (https://ethereum.stackexchange.com/a/98495)
-export const getUserNFTList = async (walletAddress: string) => {
+export const getUserNFTIdList = async (walletAddress: string) => {
   //? 성공
   const result = await DDHelperContract.methods
     .getTokensByOwner(walletAddress)
@@ -122,12 +126,31 @@ export const getUserNFTList = async (walletAddress: string) => {
   //   })
   //   .catch(console.log);
   console.log('보유 NFT 목록: ', result);
+  return result;
+};
+
+/* 사용자 보유 NFT(DD) metadata 리스트 (마이페이지 조회용) */
+// (https://ethereum.stackexchange.com/a/98495)
+export const getUserNFTMetadataList = async (walletAddress: string) => {
+  //? 성공
+  let result = await DDHelperContract.methods
+    .getTokenMetadatasByOwner(walletAddress)
+    .call();
+
+  // fetch()로 호출할 수 있게 uri 형태 변경
+  result = result.map((uri: string, idx: number) =>
+    uri.replace('ipfs://', 'https://ipfs.io/ipfs/')
+  );
+
+  console.log('보유 NFT의 Metadata 목록: ', result);
+  return result;
 };
 
 /* 총 발행된 NFT(DD) 개수 (관리자페이지용) */
 export const getTotalNFTCount = async () => {
   const result = await DDHelperContract.methods.getTotalCnt().call();
   console.log('총 발행된 NFT 개수: ', result);
+  return result;
 };
 
 /* 맨 초기에 DD Token creation (한번만 실행하면 된다) */
