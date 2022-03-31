@@ -6,7 +6,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     inputs: [
       {
         internalType: 'string',
-        name: '_name',
+        name: '_title',
         type: 'string',
       },
       {
@@ -23,6 +23,21 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         internalType: 'string',
         name: '_description',
         type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: '_donationsGoal',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_nowCollectMoney',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_fundRaisingCloses',
+        type: 'uint256',
       },
       {
         internalType: 'address payable',
@@ -90,10 +105,6 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     type: 'event',
   },
   {
-    stateMutability: 'payable',
-    type: 'fallback',
-  },
-  {
     inputs: [],
     name: 'beneficiary',
     outputs: [
@@ -147,6 +158,45 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
+    name: 'donationsGoal',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'erc20Contract',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'fundRaisingCloses',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'imageURL',
     outputs: [
       {
@@ -160,12 +210,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'name',
+    name: 'nowCollectMoney',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'uint256',
         name: '',
-        type: 'string',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -189,6 +239,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'title',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -258,6 +321,25 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
+    name: 'nowAddress',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
     name: 'donate',
     outputs: [],
     stateMutability: 'payable',
@@ -285,7 +367,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     inputs: [],
     name: 'withdraw',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
 ];
