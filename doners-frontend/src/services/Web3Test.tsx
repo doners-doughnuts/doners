@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { check, getSSFBalance } from 'services/blockchain/SsfApi';
-import { createDoughnut, getMetadata, getTotalNFTCount, getUserNFTList, mint, nftTest } from './blockchain/NftApi';
+import { createDoughnut, getMetadata, getMintedNFTCount, getTotalNFTCount, getUserNFTList, mint, nftTest } from './blockchain/NftApi';
 
 //! DELETE AFTER USE
 export default function Web3Test() {
@@ -21,6 +21,8 @@ export default function Web3Test() {
     // getMetadata(1000001);
     //? 없는 토큰 아이디일 경우 
     // getMetadata(1234);
+    //? metadata가 없이 들어가버린 토큰
+    // getMetadata(2000001);
 
     //? (성공)
     getUserNFTList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
@@ -34,6 +36,9 @@ export default function Web3Test() {
     // mint("single", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
     // mint("warrior", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
     // mint("patient", '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
+
+    //? 성공
+    // getMintedNFTCount();
 
   }, []);
 

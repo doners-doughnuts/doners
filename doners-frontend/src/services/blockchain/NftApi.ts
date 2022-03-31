@@ -7,6 +7,7 @@
  * [x] 전체 NFT 개수 (전체 | 코로나 | 미혼모 | 참전용사 | 희귀병환자)
  * [x] 해당 account에서 보유하고 있는 NFT tokenId의 리스트
  * [x] isMembership (커뮤니티 입장 권한 확인용)
+ * [x] 총 발급된 NFT 개수 (관리자 페이지)
  * - (burn)
  * - transaction stages (DD)
  * [Doation(SSF)]
@@ -36,6 +37,15 @@ export const nftTest = async (walletAddress: string) => {
 };
 
 // ==================================================================
+
+/* contract 권한 부여 */
+//! (mm에올라온 내용) setAppovalForAll 해야 ERC721 거래가능? 필요한가?
+const setApprovalForAll = async (walletAddress: string) => {
+  DDHelperContract.methods
+    .setApprovalForAll(walletAddress, true)
+    .call()
+    .then(console.log);
+};
 
 /* 각 카테고리 별 minting */
 export const mint = async (edition: string, walletAddress: string) => {
@@ -125,8 +135,7 @@ export const getTotalNFTCount = async () => {
 export const createDoughnut = async () => {
   console.log('CREATING DD TOKENS...');
 
-  /* 'Covid' EDITION */
-
+  /* All 4 EDITIONs */
   for (let idx in Metadata) {
     DDHelperContract.methods
       .createDoughnut(
@@ -139,11 +148,12 @@ export const createDoughnut = async () => {
   }
 };
 
-/* contract 권한 부여 */
-//! (mm에올라온 내용) setAppovalForAll 해야 ERC721 거래가능? 필요한가?
-const setApprovalForAll = async (walletAddress: string) => {
-  DDHelperContract.methods
-    .setApprovalForAll(walletAddress, true)
+/* 총 잔여 NFT 발급량 조회 */
+export const getMintedNFTCount = async () => {
+  const result = await DDHelperContract.methods
+    .getMintedTokenCount()
     .call()
     .then(console.log);
+
+  return result;
 };
