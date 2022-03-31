@@ -16,16 +16,10 @@
  * - transaction stages (SSF)
  */
 
-import chalk from 'chalk';
-import { DDHelperContract } from 'services/web3';
-import { MakeMinty } from './NftApiMintyTemp';
+import { DDHelperContract, Web3Client } from 'services/web3';
 //! metadata.json import 받아와서 loop 돌림
 // (https://nodejs.dev/learn/reading-files-with-nodejs)
-import fs from 'fs';
 import { Metadata } from 'assets/metadata/_ipfsMetadatas';
-const basePath = process.cwd();
-
-type NftApiProps = {};
 
 enum NftEditions {
   covid = 1,
@@ -42,28 +36,48 @@ export const nftTest = async (walletAddress: string) => {
   // const result = await DDHelperContract.methods
   //   .setApprovalForAll(walletAddress, true)
   //   .call();
-  DDHelperContract.methods.getContractName().call().then(console.log);
+  // Web3Client.eth
+  //   .getCode('0x63e3e2cE6C1Cf0CA2530A41E49C13Becc63cc49a')
+  //   .then(console.log);
+  // DDHelperContract.methods
+  //   .getMetadataUri(2)
+  //   .call(function (err: string, res: string) {
+  //     //do something with res here
+  //     console.log(res); //for example).then(console.log);
+  //   });
   // console.log('보유 NFT 목록: ', result);
+  getMetadata(2);
 };
 
-export const getMetadata = async (edition: NftEditions, tokenId: number) => {
-  let metadata, metadataURI;
+export const getMetadata = async (tokenId: number) => {
+  // export const getMetadata = async (edition: NftEditions, tokenId: number) => {
+  // DDHelperContract.methods
+  //   .getMetadataUri(tokenId)
+  //   .call(function (err: string, res: string) {
+  //     //do something with res here
+  //     console.log(res); //for example).then(console.log);
+  //   });
+  // 위와 동일
 
-  // switch (edition) {
-  //   case 1:
-  //     // (await DonersDoughnutsCovid()).methods.foo().call();
-  //     metadataURI = await DDHelperContract.methods.tokenURI(tokenId).call();
-  //     metadata = JSON.parse(await getIPFSJson(metadataURI));
-  //     break;
-  //   case 2:
-  //     break;
-  //   case 3:
-  //     break;
-  //   case 4:
-  //     break;
-  // }
+  var metadataURI = await DDHelperContract.methods
+    .getMetadataUri(tokenId)
+    .call();
 
-  return { metadata, metadataURI };
+  metadataURI = metadataURI.replace('ipfs://', 'https://ipfs.io/ipfs/');
+  console.log(metadataURI);
+
+  // 위의 url에서 JSON가져오기
+  // (https://stackoverflow.com/a/55784549)
+  var metadata: any = await (await fetch(metadataURI)).json();
+  // .then((res) => (metadata = res.json()))
+  // // .then((out) => console.log(out))
+  // .catch((err) => {
+  //   throw err;
+  // });
+
+  console.log(metadata);
+  return metadata;
+  // return { tokenId, metadataURI };
 };
 
 // //https://github.com/yusefnapora/minty/blob/master/src/index.js
