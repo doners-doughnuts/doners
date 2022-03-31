@@ -11,6 +11,7 @@ import ApplyStepper from '../ApplyStepper/ApplyStepper';
 import UserInfoForm from '../UserinfoForm/UserInfoForm';
 import ApplyDetailForm from '../ApplyDetailForm/ApplyDetailForm';
 import ApplyReasonForm from '../ApplyReasonForm/ApplyReasonForm';
+import ApplyComplete from '../ApplyComplete/ApplyComplete';
 
 const cx = classNames.bind(styles);
 const ApplyCard = () => {
@@ -46,7 +47,6 @@ const ApplyCard = () => {
         <div className={cx('col-lg-12')}>
           <div className={cx('inner-container')}>
             <div className={cx('stepper')}>
-              {' '}
               <div className={cx('stepperimg')}>
                 <ApplyStepper applyStep={applySteps} />
               </div>
@@ -86,6 +86,8 @@ const ApplyCard = () => {
                         setAmount={setAmount}
                       />
                     );
+                  case 3:
+                    return <ApplyComplete />;
                 }
               })()}
             </main>
