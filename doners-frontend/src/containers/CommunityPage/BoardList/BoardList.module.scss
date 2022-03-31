@@ -1,25 +1,28 @@
 @import 'assets/styles/main';
 
-.btn-row {
-  @include flexbox(end, center);
-}
-.btn {
-  width: 10%;
-}
-
-.none-contents {
-  @include column-flexbox;
-  .none-text {
-    @include flexbox;
+.inner-container {
+  min-height: 70vh;
+  .btn-row {
+    @include flexbox(end, center);
+  }
+  .btn {
+    width: 10%;
   }
 
-  .none-img {
-    width: 500px;
-    height: 500px;
+  .none-contents {
+    @include column-flexbox;
+    .none-text {
+      @include flexbox;
+    }
 
-    img {
-      width: 100%;
-      height: 100%;
+    .none-img {
+      width: 500px;
+      height: 500px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

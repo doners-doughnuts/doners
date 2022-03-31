@@ -204,7 +204,9 @@ function EpilogueEditor({ modify = false }: EditType) {
           <div className={cx('total-donate')}>
             <TotalDonate />
           </div>
-          <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
+          <div className={cx('receipt-editor')}>
+            <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
+          </div>
         </div>
         <div className={cx('btn-row')}>
           <div className={cx('regist-btn')}>

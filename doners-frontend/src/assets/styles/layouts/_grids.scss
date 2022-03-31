@@ -7,10 +7,6 @@
     flex-wrap: wrap;
   }
 
-  [class^='col-'] {
-    padding: 0 $gutter / 2;
-  }
-
   @for $i from 1 through $sm-columns {
     .col-sm-#{$i} {
       width: percentage($i / $sm-columns);
@@ -33,6 +29,8 @@
     padding: 0;
     @for $i from 1 through $lg-columns {
       .col-lg-#{$i} {
+        // width: percentage($i / $lg-columns);
+        padding: $gutter / 2;
         width: ($lg-unit + $gutter) * $i;
       }
     }
