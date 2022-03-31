@@ -228,6 +228,26 @@ export const DdHelperABI: AbiItem | AbiItem[] = [
         type: 'address',
       },
     ],
+    name: 'getTokenMetadatasByOwner',
+    outputs: [
+      {
+        internalType: 'string[]',
+        name: '',
+        type: 'string[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+    ],
     name: 'getTokensByOwner',
     outputs: [
       {
