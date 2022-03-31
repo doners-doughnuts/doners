@@ -3,9 +3,10 @@ import styles from '../page.module.scss';
 // ???? 
 import classNames from 'classnames/bind';
 import H2 from 'assets/theme/Typography/H2/H2';
-import DashboardCard from 'containers/Admin/DashboardCard/DashboardCard';
 import ApprovalList from 'containers/Admin/ApprovalList/ApprovalList';
 import TransactionList from 'containers/Admin/TransactionList/TransactionList';
+import DashboardPanel from 'containers/Admin/DashboardPanel/DashboardPanel';
+import DashboardCard from 'components/DashboardCard/DashboardCard';
 
 // ??? 무엇을 의미하는가
 const cx = classNames.bind(styles);
@@ -17,11 +18,12 @@ const AdminPage = () => {
         <div className={cx('col-lg-12')}>
           <H2>Dashboard</H2>
         </div>
-        <div className={cx('row')}>
+        <div className={cx('col-lg-12')}>
           <div className={cx('row')}>
-            <div className={cx('col-lg-4')}>
+            {/* <DashboardPanel /> */}
+            < div className={cx('col-lg-4')} >
               <DashboardCard />
-            </div><div className={cx('col-lg-4')}>
+            </div ><div className={cx('col-lg-4')}>
               <DashboardCard />
             </div><div className={cx('col-lg-4')}>
               <DashboardCard />
