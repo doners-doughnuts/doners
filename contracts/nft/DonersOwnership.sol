@@ -28,13 +28,15 @@ contract DonersOwnership is DonersDoughnutsFactory {
 
     /* NFT minting */
 
-    function mintCovidToken(address owner) public returns (uint256) {
+    function mintCovidToken(address owner) public payable returns (uint256) {
         covidTokenIds.increment();
         uint256 tokenId = 1000000 + covidTokenIds.current();
         _safeMint(owner, tokenId);
+
         // _setTokenURI(tokenId, metadataURI);
 
         // 따로 저장
+        // tokenOwners[tokenId].push(owner);
         userOwnedTokens[msg.sender].push(tokenId);
 
         return tokenId;
