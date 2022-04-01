@@ -15,57 +15,93 @@ import Input from 'assets/theme/Input/Input';
 import Selectbox from 'assets/theme/Selectbox/Selectbox';
 import classNames from 'classnames/bind';
 import styles from './ApplyReasonForm.module.scss';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import P from 'assets/theme/Typography/P/P';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import FileUploader from '../FileUploader/FileUploader';
 
-interface ReasonProps {
-  setApplyStep: (applyStep: number) => void;
-  setTitle: (phone: string) => void;
-  setCategory: (isdeputy: string) => void;
-  setEndTime: (name: string) => void;
-  setDescription: (email: string) => void;
-  setEvidence: (relationshipFile: []) => void;
-}
 const cx = classNames.bind(styles);
-const ApplyReasonForm = ({
-  setApplyStep,
-  setTitle,
-  setCategory,
-  setEndTime,
-  setDescription,
-  setEvidence,
-}: ReasonProps) => {
+
+const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
   const [content, setContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
+  const [fileList, setFileList] = useState(['']);
+  const [file, setFile] = useState('');
   const handleUploadBtnClick = () => {
     inputRef.current?.click();
   };
+
   const category = [
-    { value: '1', label: '참전용사' },
-    { value: '2', label: '희귀질환' },
-    { value: '3', label: '미혼모' },
-    { value: '4', label: '코로나19' },
+    { value: 'WARRIOR', label: '참전용사' },
+    { value: 'PATIENT', label: '희귀질환' },
+    { value: 'SINGLE', label: '미혼모' },
+    { value: 'COVID19', label: '코로나19' },
   ];
+
   const contentHandler = () => {
     setContent(editorRef.current?.getInstance().getMarkdown() || '');
+    setApply({ ...apply, description: content });
   };
 
   const handleUploadImage = async (event: any) => {
     setIsLoading(true);
     const file = event.target.files;
-    //onChange(file);
     setImgFile(URL.createObjectURL(file[0]));
+    setApply({ ...apply, image: URL.createObjectURL(file[0]) });
     console.log(imgFile);
-    const formData = new FormData();
-    formData.append('file', file[0]);
-    console.log(formData);
+    // const formData = new FormData();
+    // formData.append('image', file[0]);
+    // console.log(formData);
   };
+
+  // const handleUploadFile = (data: any) => {
+  //   setFileList((prev) => [...prev, data]);
+  //   console.log(fileList);
+  // };
+
+  const handleUploadFile = async (event: any) => {
+    const file = event.target.files;
+    console.log(file);
+    setFile(URL.createObjectURL(file[0]));
+    setFileList([URL.createObjectURL(file[0])]);
+
+    // const formData = new FormData();
+    // formData.append('file', file[0]);
+    // console.log(formData);
+  };
+
+  const setValue = () => {
+    setApply({ ...apply, evidence: fileList });
+    console.log(apply);
+    setApplyStep(2);
+  };
+
+  const setTime = (event: any) => {
+    let date = event.target.value;
+    let now = new Date();
+    const todaysDate = new Date(
+      now.getTime() - now.getTimezoneOffset() * 60000
+    ).toISOString();
+    console.log(todaysDate);
+    const datafm: string = date + todaysDate.substring(10, todaysDate.length);
+    console.log(datafm);
+    setApply({
+      ...apply,
+      endTime: datafm,
+    });
+  };
+  //2022-03-31T13:58:28.915Z
+  useEffect(() => {
+    console.log({ apply });
+    setApply({
+      ...apply,
+      categoryCode: category[0].value,
+    });
+  }, []);
 
   return (
     <div className={cx('containor')}>
@@ -103,14 +139,36 @@ const ApplyReasonForm = ({
         </div>
         <div className={cx('detail-data')}>
           <div className={cx('title')}>
-            <Input placeholder="모금 제목(최대 30자)" />
+            <Input
+              placeholder="모금 제목(최대 30자)"
+              value={apply.title}
+              onChange={(e) =>
+                setApply({
+                  ...apply,
+                  title: e.target.value,
+                })
+              }
+            />
           </div>
           <div className={cx('select-data')}>
             <div className={cx('select')}>
-              <Selectbox option={category} />
+              <Selectbox
+                onChange={(e) =>
+                  setApply({
+                    ...apply,
+                    categoryCode: e.value,
+                  })
+                }
+                option={category}
+              />
             </div>
             <div className={cx('date')}>
-              <Input placeholder="모금 마감일자" type="date" />
+              <Input
+                placeholder="모금 마감일자"
+                type="date"
+                value={''}
+                onChange={setTime}
+              />
             </div>
           </div>
         </div>
@@ -138,11 +196,24 @@ const ApplyReasonForm = ({
           </div>
         </div>
         <div className={cx('file')}>
-          <FileUploader />
+          {/* <FileUploader onChange={handleUploadFile} list={fileList} /> */}
+          <Input
+            onChange={handleUploadFile}
+            placeholder="file"
+            type="file"
+            value={''}
+          />
         </div>
       </div>
+
       <div className={cx('nextbtn')}>
-        <Button color={'alternate'}>다음단계</Button>
+        {apply.title !== '' ? (
+          <Button onClick={setValue} color={'alternate'}>
+            다음 단계
+          </Button>
+        ) : (
+          <Button color={'alternate'}>폼을 작성해주세요</Button>
+        )}
       </div>
     </div>
   );

@@ -11,17 +11,32 @@ import ApplyStepper from '../ApplyStepper/ApplyStepper';
 import UserInfoForm from '../UserinfoForm/UserInfoForm';
 import ApplyDetailForm from '../ApplyDetailForm/ApplyDetailForm';
 import ApplyReasonForm from '../ApplyReasonForm/ApplyReasonForm';
-import ApplyComplete from '../ApplyComplete/ApplyComplete';
 
 const cx = classNames.bind(styles);
 const ApplyCard = () => {
   // 입력 폼 데이터
   const [applySteps, setApplyStep] = useState(0);
 
+  //
+  const [apply, setApply] = useState({
+    beneficiaryPhone: '',
+    beneficiaryName: '',
+    certificate: '',
+    deputy: false,
+    title: '',
+    categoryCode: '',
+    endTime: '',
+    description: '',
+    image: '',
+    phone: '',
+    evidence: [],
+    targetAmount: 0,
+    budget: [{ amount: '', plan: '', sequence: '' }],
+  });
+
   //1단계
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [relationshipFile, setRelationshipFile] = useState('');
   const [deputy, setIsdeputy] = useState(false);
 
@@ -36,7 +51,12 @@ const ApplyCard = () => {
   const [amount, setAmount] = useState(0);
   const [budget, setBudget] = useState([{ amount: '', plan: '' }]);
 
-  const titlelist = ['사용자 정보 기입', '기부 신청 사유', '세부 설정 및 검토'];
+  const titlelist = [
+    '사용자 정보 기입',
+    '기부 신청 사유',
+    '세부 설정 및 검토',
+    '완료',
+  ];
 
   return (
     <section className={cx('container')}>
@@ -51,7 +71,6 @@ const ApplyCard = () => {
                 <ApplyStepper applyStep={applySteps} />
               </div>
             </div>
-
             <header className={cx('article-header')}></header>
             <main className={cx('content')}>
               {(() => {
@@ -60,34 +79,28 @@ const ApplyCard = () => {
                     return (
                       <UserInfoForm
                         setApplyStep={setApplyStep}
-                        setPhone={setPhone}
-                        setIsdeputy={setIsdeputy}
-                        setName={setName}
-                        setEmail={setEmail}
-                        setRelationshipFile={setRelationshipFile}
+                        apply={apply}
+                        setApply={setApply}
                       />
                     );
                   case 1:
                     return (
                       <ApplyReasonForm
                         setApplyStep={setApplyStep}
-                        setTitle={setTitle}
-                        setCategory={setCategory}
-                        setEndTime={setEndTime}
-                        setDescription={setDescription}
-                        setEvidence={setEvidence}
+                        apply={apply}
+                        setApply={setApply}
                       />
                     );
                   case 2:
                     return (
                       <ApplyDetailForm
                         setApplyStep={setApplyStep}
-                        setBudget={setBudget}
-                        setAmount={setAmount}
+                        apply={apply}
+                        setApply={setApply}
                       />
                     );
                   case 3:
-                    return <ApplyComplete />;
+                    return <div>헤헤 성공!</div>;
                 }
               })()}
             </main>
