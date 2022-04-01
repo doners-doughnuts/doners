@@ -21,7 +21,7 @@ public class DonationBudgetRequestDTO {
 
     @Positive
     @ApiModelProperty(name = "활용 금액")
-    private long amount;
+    private double amount;
 
     @ApiModelProperty(name = "Budget 순서")
     private long sequence;
