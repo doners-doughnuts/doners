@@ -39,7 +39,7 @@ public class Donation extends BaseEntity {
     private String description;
 
     @Column(name = "donation_amount")
-    private long amount;
+    private double amount;
 
     @Column(name = "donation_start_date")
     private LocalDate startDate;
