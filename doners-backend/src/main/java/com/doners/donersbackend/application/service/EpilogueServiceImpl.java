@@ -6,11 +6,13 @@ import com.doners.donersbackend.application.dto.response.epilogue.EpilogueBudget
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
+import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.epilogue.EpilogueBudget;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.ImageRepository;
+import com.doners.donersbackend.domain.repository.donation.DonationRepository;
 import com.doners.donersbackend.domain.repository.epilogue.EpilogueBudgetRepository;
 import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
@@ -38,6 +40,8 @@ public class EpilogueServiceImpl implements EpilogueService {
 
     private final EpilogueBudgetRepository epilogueBudgetRepository;
 
+    private final DonationRepository donationRepository;
+
     private final AwsS3Service awsS3Service;
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
@@ -52,13 +56,16 @@ public class EpilogueServiceImpl implements EpilogueService {
         User user = userRepository.findByUserAccount(token)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
 
+        Donation donation = donationRepository.findById(epilogueRegisterPostDTO.getDonationId()).orElse(null);
+
         // 글작성 정보 추가할 것
         Epilogue epilogue = Epilogue.builder()
                 .epilogueTitle(epilogueRegisterPostDTO.getEpilogueTitle())
                 .epilogueDescription(epilogueRegisterPostDTO.getEpilogueDescription())
                 .user(user)
                 .epilogueViews(0L)
-                .epilogueCreateTime(LocalDateTime.now()).build();
+                .epilogueCreateTime(LocalDateTime.now())
+                .donation(donation).build();
 
         epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
                 epilogueBudgetRepository.save(
@@ -193,6 +200,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .epilogueViews(epilogue.getEpilogueViews())
                 .epilogueWriter(epilogue.getUser().getUserNickname())
                 .epilogueImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueImage.getImageNewFileName())
+                .donationId(epilogue.getDonation().getId())
                 .epilogueBudgetResponseDTOList(epilogueBudgetResponseDTOList)
                 .build();
     }
