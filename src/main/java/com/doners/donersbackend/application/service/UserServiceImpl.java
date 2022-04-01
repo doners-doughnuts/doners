@@ -10,10 +10,10 @@ import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
 import com.doners.donersbackend.domain.repository.EmailConfirmationRepository;
-import com.doners.donersbackend.domain.repository.donation.DonationRepository;
-import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
+import com.doners.donersbackend.domain.repository.donation.DonationRepository;
+import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -260,7 +260,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
 
         List<Donation> donationList = donationRepository
-                .findByUserAndIsDeletedOrderByStartTimeDesc(user, false)
+                .findByUserAndIsDeletedOrderByStartDateDesc(user, false)
                 .orElseThrow(() -> new IllegalArgumentException("기부 신청 내역이 존재하지 않습니다."));
 
         List<UserMyPageDonationHistoryResponseDTO> list = new ArrayList<>();
@@ -275,7 +275,7 @@ public class UserServiceImpl implements UserService {
                                 .donationApprovalStatusCode(donation.getApprovalStatusCode())
                                 .donationTitle(donation.getTitle())
                                 .donationIsReceived(donation.isReceived())
-                                .donationStartTime(donation.getStartTime()).build()
+                                .donationStartDate(donation.getStartDate()).build()
                 );
             });
         } catch (Exception e) {

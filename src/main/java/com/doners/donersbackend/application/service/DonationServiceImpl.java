@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +71,7 @@ public class DonationServiceImpl implements DonationService {
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
                 .amount(donationInfoRequestDTO.getTargetAmount())
-                .endTime(donationInfoRequestDTO.getEndTime())
+                .endDate(donationInfoRequestDTO.getEndDate())
                 .user(user)
                 .build();
 
@@ -117,7 +118,7 @@ public class DonationServiceImpl implements DonationService {
                 // 최신 순
                 case 1:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
                 // 참여 미달 순
@@ -130,7 +131,7 @@ public class DonationServiceImpl implements DonationService {
                 // 마감 임박 순
                 case 3:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
@@ -140,7 +141,7 @@ public class DonationServiceImpl implements DonationService {
                 // 최신 순
                 case 1:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
                 // 참여 미달 순
@@ -153,7 +154,7 @@ public class DonationServiceImpl implements DonationService {
                 // 마감 임박 순
                 case 3:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
@@ -236,8 +237,8 @@ public class DonationServiceImpl implements DonationService {
                 .recommendations(donation.getRecommendations())
                 .description(donation.getDescription())
                 .image(getDonationImage(donation, false))
-                .startTime(donation.getStartTime())
-                .endTime(donation.getEndTime())
+                .startDate(donation.getStartDate())
+                .endDate(donation.getEndDate())
                 .targetAmount(donation.getAmount())
                 .budget(donationBudgetResponseDTOList)
                 .name(donation.getUser().getUserName())
@@ -334,7 +335,7 @@ public class DonationServiceImpl implements DonationService {
         // 신청 승인 및 시작 시간 설정
         donation.changeIsApproved();
         donation.changeApprovalStatusCode(ApprovalStatusCode.APPROVAL);
-        donation.changeStartTime();
+        donation.changeStartDate();
 
         donationRepository.save(donation);
 
