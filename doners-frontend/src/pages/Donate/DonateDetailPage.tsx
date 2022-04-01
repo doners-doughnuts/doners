@@ -1,31 +1,11 @@
-import DonateInfo from 'containers/DonatePage/DonateDetailPage/DonateInfo/DonateInfo';
 import styles from '../page.module.scss';
 import classNames from 'classnames/bind';
+import DonateDetail from 'containers/DonatePage/DonateDetailPage/DontateDetail/DonateDetail';
 
 const cx = classNames.bind(styles);
 
 const DonateDetailPage = () => {
-  return (
-    <section className={cx('container')}>
-      <div className={cx('row')}>
-        <div className={cx('col-lg-6')}>
-          <DonateInfo />
-        </div>
-        <div className={cx('col-lg-6')}>
-          <DonateInfo />
-        </div>
-        <div className={cx('col-lg-6')}>
-          <DonateInfo />
-        </div>
-        <div className={cx('col-lg-6')}>
-          <DonateInfo />
-        </div>
-        <div className={cx('col-lg-6')}>
-          <DonateInfo />
-        </div>
-      </div>
-    </section>
-  );
+  return <DonateDetail />;
 };
 
 export default DonateDetailPage;

@@ -18,18 +18,18 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
       <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
           <CommunityTab focus={focus} />
-          {focus === 1 ? (
-            <>
-              <PopularMembership />
-              <AdditionalMembership />
-            </>
-          ) : focus === 2 ? (
-            <Epilogue />
-          ) : focus === 3 ? (
-            <BoardList />
-          ) : null}
         </div>
       </div>
+      {focus === 1 ? (
+        <>
+          <PopularMembership />
+          <AdditionalMembership />
+        </>
+      ) : focus === 2 ? (
+        <Epilogue />
+      ) : focus === 3 ? (
+        <BoardList />
+      ) : null}
     </section>
   );
 };

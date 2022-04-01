@@ -12,8 +12,8 @@ export const getDonationList = async (
   page: number
 ) => {
   const result = await instance.get(
-    // `/donation?category=${category}&page=${page}&sort=${sort}`
-    `/donation?category=COVID19&page=1&sort=recent`
+    `/donation?category=${category}&page=${page}&sort=${sort}`
+    // `/donation?category=COVID19&page=1&sort=recent`
   );
   return result;
 };

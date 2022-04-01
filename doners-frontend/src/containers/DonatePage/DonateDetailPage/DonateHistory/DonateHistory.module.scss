@@ -1,0 +1,45 @@
+@import 'assets/styles/main';
+
+.inner-container {
+  position: relative;
+  height: 550px;
+}
+.background {
+  position: absolute;
+  width: 100%;
+  height: fit-content;
+  z-index: -1;
+}
+
+.header {
+  padding: 30px;
+  border-bottom: 2px solid $black;
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .donate-info {
+    @include flexbox(between, center);
+
+    .participant {
+      @include flexbox(start);
+    }
+
+    .money {
+      @include flexbox(start, end);
+    }
+  }
+}
+
+.history {
+  // border: 2px solid $black;
+  border-top: none;
+  padding: 30px;
+  max-height: 380px;
+  overflow: scroll;
+
+  .history-item {
+    @include flexbox(between, center);
+    padding: 10px 20px;
+  }
+}
