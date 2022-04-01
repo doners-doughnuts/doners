@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +38,10 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private String image;
 
     @ApiModelProperty(name = "신청일")
-    private LocalDateTime startTime;
+    private LocalDate startDate;
 
     @ApiModelProperty(name = "마감일")
-    private LocalDateTime endTime;
+    private LocalDate endDate;
 
     @ApiModelProperty(name = "목표 모금액")
     private long targetAmount;
@@ -56,6 +57,12 @@ public class DonationResponseDTO extends BaseResponseDTO {
 
     @ApiModelProperty(name = "신청자 전화번호")
     private String phone;
+
+    @ApiModelProperty(name = "대리인 여부")
+    private boolean deputy;
+
+    @ApiModelProperty(name = "수혜자 이름")
+    private String beneficiaryName;
 
     @ApiModelProperty(name = "기존 기부 신청 여부")
     private boolean exist;
@@ -73,20 +80,22 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private Map<String, String> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDateTime startTime, LocalDateTime endTime, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
         this.recommendations = recommendations;
         this.description = description;
         this.image = image;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.targetAmount = targetAmount;
         this.budget = budget;
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.deputy = deputy;
+        this.beneficiaryName = beneficiaryName;
         this.exist = exist;
         this.approvalStatusCode = approvalStatusCode;
         this.donors = donors;
@@ -100,6 +109,10 @@ public class DonationResponseDTO extends BaseResponseDTO {
         res.setStatusCode(statusCode);
 
         return res;
+    }
+
+    public void changeBeneficiaryName(String beneficiaryName) {
+        this.beneficiaryName = beneficiaryName;
     }
 
 }
