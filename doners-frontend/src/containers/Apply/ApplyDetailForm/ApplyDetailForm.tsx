@@ -16,7 +16,7 @@ type historyType = {
 const cx = classNames.bind(styles);
 const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
-  const [ssf, setSSF] = useState(100);
+  const [ssf, setSSF] = useState(0);
 
   let total = historyList
     .map((item) => Number(item.epilogueBudgetAmount))
@@ -28,11 +28,18 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   };
 
   const setValue = async () => {
+    console.log('===================');
+    console.log(ssf);
+    console.log(total);
     console.log(apply);
+
     const formData = new FormData();
     formData.append('certificate', apply.certificate);
-    formData.append('muitipart', apply.image);
-    formData.append('evidence', apply.evidence);
+    formData.append('image', apply.image);
+    const fileevi = apply.evidence;
+    fileevi.forEach((file: string | Blob) => {
+      formData.append('evidence', file);
+    });
 
     let result = historyList
       .map(({ epilogueBudgetPlan: plan, epilogueBudgetAmount: amount }) => ({
@@ -41,20 +48,19 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       }))
       .map((data, idx) => ({ ...data, sequence: idx }));
     console.log(result);
-
     formData.append(
       'donationInfoRequestDTO',
       new Blob(
         [
           JSON.stringify({
             beneficiaryName: apply.beneficiaryName,
-            beneficiaryPhone: apply.beneficiaryPhoney,
+            beneficiaryPhone: apply.beneficiaryPhone,
             categoryCode: apply.categoryCode,
             deputy: apply.deputy,
             description: apply.description,
-            endTime: apply.endTime,
+            endDate: apply.endDate,
             budget: result,
-            targetAmount: total,
+            targetAmount: ssf,
             title: apply.title,
             phone: apply.phone,
           }),
@@ -64,7 +70,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
         }
       )
     );
-    console.log(formData);
     const response = await postDonation(formData);
     console.log(response);
   };
@@ -72,16 +77,16 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     const ssftrans = total / 4000000;
     const temp1 = ssftrans * 10000;
     const temp2 = Math.ceil(temp1);
-    const result = temp2 / 10000;
-    setSSF(result);
-    setApply({ ...apply, targetAmount: total });
-    console.log(total);
-    console.log(apply.targetAmount);
-  }, [total]);
+    const ssfBalance = Number(temp2 / 10000);
 
-  useEffect(() => {
-    setApply({ ...apply, budget: historyList });
-  }, [historyList]);
+    setSSF(ssfBalance);
+    setApply({ ...apply, targetAmount: ssfBalance, budget: historyList });
+    console.log(total);
+  }, [total, historyList]);
+
+  console.log('------------------');
+  console.log(apply);
+  console.log('------------------');
 
   return (
     <div className={cx('containor')}>
