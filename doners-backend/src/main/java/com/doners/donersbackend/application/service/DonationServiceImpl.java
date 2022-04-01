@@ -134,7 +134,7 @@ public class DonationServiceImpl implements DonationService {
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
-        // TODO: 모금 가능한 기부만 보기
+            // TODO: 모금 가능한 기부만 보기
         } else {
             switch (sort) {
                 // 최신 순
@@ -229,7 +229,7 @@ public class DonationServiceImpl implements DonationService {
         // 조회수 업데이트
         increaseViews(donation);
 
-        return DonationResponseDTO.builder()
+        DonationResponseDTO donationResponseDTO = DonationResponseDTO.builder()
                 .title(donation.getTitle())
                 .categoryCode(donation.getCategoryCode())
                 .views(donation.getViews())
@@ -243,12 +243,18 @@ public class DonationServiceImpl implements DonationService {
                 .name(donation.getUser().getUserName())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
+                .deputy(donation.isDeputy())
                 .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
                 .approvalStatusCode(donation.getApprovalStatusCode())
                 .donors(donationHistoryResponseDTOList)
                 .achievementRate((double) amountSum / donation.getAmount() * 100)
                 .evidence(evidence)
                 .build();
+
+        // 대리인
+        if (donation.isDeputy()) donationResponseDTO.changeBeneficiaryName(donation.getBeneficiaryName());
+
+        return donationResponseDTO;
 
     }
 
