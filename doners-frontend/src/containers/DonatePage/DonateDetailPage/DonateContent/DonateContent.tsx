@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 const DonateContent = () => {
   const [openContentModal, setOpenContentModal] = useState(false);
-  const [contents, setContents] = useState('');
+  const [contents, setContents] = useState('asdfasefawefasdfa');
 
   const handleOpenModal = () => {
     setOpenContentModal(true);

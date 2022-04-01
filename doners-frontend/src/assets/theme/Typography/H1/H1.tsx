@@ -5,7 +5,7 @@ const cx = classNames.bind(styles);
 
 type TextColor = 'black' | 'yellow' | 'gray' | 'orange' | 'red';
 type TextType = {
-  children: string;
+  children: string | number;
   color?: TextColor;
 };
 

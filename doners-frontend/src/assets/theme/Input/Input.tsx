@@ -15,6 +15,7 @@ type InputType = {
   disabled?: boolean;
   id?: string;
   multiple?: boolean;
+  size?: string;
   onChange?: (ev: InputChangeEvent) => void;
 };
 
@@ -29,6 +30,7 @@ const Input = ({
   disabled,
   id,
   multiple,
+  size,
 }: InputType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(value);
@@ -49,7 +51,7 @@ const Input = ({
 
   return (
     <input
-      className={cx('input-form', { error, success })}
+      className={cx('input-form', { error, success, large: size === 'large' })}
       id={id}
       placeholder={placeholder}
       onChange={changeHandler}

@@ -17,6 +17,7 @@ const AccountCheck = () => {
   const setIsLoggedState = useSetRecoilState(isLoggedState);
 
   const [account, setAccount] = useState<string>('');
+
   const getAccount = async () => {
     try {
       if (window.ethereum) {
@@ -33,10 +34,12 @@ const AccountCheck = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     setSignupState('');
     setIsLoggedState(false);
   }, []);
+
   useEffect(() => {
     if (account) {
       console.log('metamask지갑주소');

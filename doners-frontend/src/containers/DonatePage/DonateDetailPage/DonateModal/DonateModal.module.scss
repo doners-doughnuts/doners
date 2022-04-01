@@ -1,0 +1,85 @@
+@import 'assets/styles/main';
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 0.5);
+
+  .modalForm {
+    width: 1000px;
+    height: 700px;
+    padding: 50px;
+    border: 2px solid $black;
+    background-color: $white;
+    .header {
+      @include flexbox(between, center);
+      position: relative;
+      margin-bottom: 50px;
+
+      .close-btn {
+        @include column-flexbox;
+        cursor: pointer;
+      }
+    }
+    .content {
+      min-height: 500px;
+    }
+    .title {
+      margin-bottom: 30px;
+    }
+    .wallet-row {
+      @include flexbox(start);
+      margin-bottom: 50px;
+      .wallet-account {
+        width: 80%;
+        margin-right: 20px;
+      }
+      .money {
+        @include flexbox(start, end);
+      }
+    }
+    .donate-form {
+      .donate-money-wrap {
+        @include flexbox;
+        width: 100%;
+        margin-bottom: 50px;
+
+        .donate-money-row {
+          @include flexbox(between, center);
+          width: 500px;
+          .donate-money-info {
+            @include column-flexbox;
+            .donate-money {
+              @include flexbox(center, end);
+            }
+          }
+        }
+      }
+      .btn-row {
+        @include flexbox;
+        .donate-btn {
+          width: 300px;
+        }
+      }
+    }
+  }
+}
+
+.openModal {
+  @include flexbox;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

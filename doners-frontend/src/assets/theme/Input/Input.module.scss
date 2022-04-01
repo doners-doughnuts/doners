@@ -6,6 +6,7 @@
   width: 100%;
   padding: 13px;
   height: 40px;
+
   &:focus {
     border-color: $green;
   }
@@ -14,7 +15,9 @@
     background-color: $red;
   }
 }
-
+.large {
+  height: 50px;
+}
 // .avatar-small {
 //   @extend %avatar-base;
 //   width: 24px;
