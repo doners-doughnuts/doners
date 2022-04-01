@@ -33,7 +33,7 @@ const Epilogue = () => {
     const response = await getEpilogueList(sequence);
     console.log(response.data);
     const data = response.data.epilogueGetListResponseDTOList;
-    // console.log(data);
+    console.log(data);
     setListItems((prev) => [...prev, ...data]);
     setTimeout(() => {
       setIsLoading(false);
