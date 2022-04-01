@@ -17,7 +17,7 @@ public class DonationBudget extends BaseEntity {
     private String plan;
 
     @Column(name = "donation_budget_amount")
-    private long amount;
+    private double amount;
 
     @Column(name = "donation_budget_sequence")
     private long sequence;

@@ -56,7 +56,7 @@ public class DonationInfoRequestDTO {
 
     @ApiModelProperty(name = "목표 모금액")
     @Positive
-    private long targetAmount;
+    private double targetAmount;
 
 }
 
