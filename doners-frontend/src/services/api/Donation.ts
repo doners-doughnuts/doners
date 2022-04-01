@@ -6,6 +6,20 @@ type donationType = {
   sort: string;
 };
 
+export const postDonation = async (formData: any) => {
+  console.log(formData);
+
+  for (let key of formData.keys()) {
+    console.log(key);
+  }
+  for (let value of formData.values()) {
+    console.log(value);
+  }
+
+  const result = await instance.post(`/donation`, formData);
+  return result;
+};
+
 export const getDonationList = async (
   category: string,
   sort: string,

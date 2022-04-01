@@ -19,7 +19,7 @@ const ReceiptEditor = ({ onChange, list }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [history, setHistory] = useState('');
   const [money, setMoney] = useState('');
-  // const [id, setId] = useState(0);
+  const [id, setId] = useState(0);
 
   const handleOnclick = () => {
     if (history && money) {
@@ -74,7 +74,6 @@ const ReceiptEditor = ({ onChange, list }: any) => {
             placeholder="활용 내역"
             onChange={(ev) => setHistory(ev.target.value)}
             value={history}
-            // ref={inputRef}
           />
         </div>
         <div className={cx('input-value')}>
