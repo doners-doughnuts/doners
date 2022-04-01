@@ -1,0 +1,16 @@
+@import 'assets/styles/main';
+
+.form {
+  .achieved-money {
+    @include flexbox(center, end);
+  }
+
+  .target-money {
+    @include flexbox(center, center);
+    margin-bottom: 30px;
+  }
+
+  .achived-rate {
+    @include flexbox(end, center);
+  }
+}

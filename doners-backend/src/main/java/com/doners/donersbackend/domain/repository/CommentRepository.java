@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment,String> {
-    Optional<List<Comment>> findAllByCommunityAndCommentIsDeletedOrderByCommentCreateTime(Community community,boolean isDeleted);
-    Optional<List<Comment>> findAllByEpilougeAndCommentIsDeletedOrderByCommentCreateTime(Epilogue epilouge, boolean isDeleted);
-    Optional<List<Comment>> findAllByParentCommentIdAndCommentIsDeletedOrderByCommentCreateTime(Comment comment,boolean isDeleted);
+    Optional<Comment> findByIdAndCommentIsDeleted(String commentId, boolean isDeleted);
+    Optional<List<Comment>> findAllByCommunityAndCommentIsDeleted(Community community, boolean isDeleted);
+    Optional<List<Comment>> findAllByCommunityAndCommentIsDeletedOrderByCommentCreateTime(Community community, boolean isDeleted);
+    Optional<List<Comment>> findAllByEpilogueAndCommentIsDeletedOrderByCommentCreateTime(Epilogue epilogue, boolean isDeleted);
+    Optional<List<Comment>> findAllByParentCommentIdAndCommentIsDeletedOrderByCommentCreateTime(Comment comment, boolean isDeleted);
 }

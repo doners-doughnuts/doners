@@ -2,6 +2,7 @@ package com.doners.donersbackend.domain.dao.community;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.dao.user.User;
+import com.doners.donersbackend.domain.enums.CommunityCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +32,9 @@ public class Community extends BaseEntity {
 
     @Column(name="community_is_deleted", columnDefinition="BOOLEAN DEFAULT false")
     private boolean communityIsDeleted;
+
+    @Column(name="community_code")
+    private CommunityCode communityCode;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="user_id")

@@ -16,6 +16,5 @@ export function checkUserLogged() {
 
 export function getLoggedUserInfo() {
   const user = localStorage.getItem('user');
-  console.log(user);
   return user;
 }

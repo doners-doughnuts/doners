@@ -16,6 +16,11 @@ public class EpilogueRegisterPostDTO {
 
     @NotBlank
     @NotNull
+    @ApiModelProperty(name="기부 ID")
+    private String donationId;
+
+    @NotBlank
+    @NotNull
     @ApiModelProperty(name="글 제목")
     private String epilogueTitle;
 
@@ -23,11 +28,6 @@ public class EpilogueRegisterPostDTO {
     @NotNull
     @ApiModelProperty(name="글 내용")
     private String epilogueDescription;
-
-    @NotBlank
-    @NotNull
-    @ApiModelProperty(name="작성자 유저 주소")
-    private String userAccount;
 
     @ApiModelProperty(name = "모금액 활용 계획")
     private List<EpilogueBudgetRequestDTO> epilogueBudgetRequestDTOList;

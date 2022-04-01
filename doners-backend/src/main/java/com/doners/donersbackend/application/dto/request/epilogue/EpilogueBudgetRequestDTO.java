@@ -17,4 +17,7 @@ public class EpilogueBudgetRequestDTO {
 
     @ApiModelProperty(name = "활용 금액")
     private long epilogueBudgetAmount;
+
+    @ApiModelProperty(name = "Budget 순서")
+    private long epilogueBudgetSequence;
 }

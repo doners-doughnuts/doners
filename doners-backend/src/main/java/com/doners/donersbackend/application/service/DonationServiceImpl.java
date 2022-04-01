@@ -2,26 +2,32 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
-import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
 import com.doners.donersbackend.domain.dao.donation.DonationHistory;
 import com.doners.donersbackend.domain.dao.donation.File;
+import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import com.doners.donersbackend.domain.enums.UserCode;
-import com.doners.donersbackend.domain.repository.*;
+import com.doners.donersbackend.domain.repository.FileRepository;
+import com.doners.donersbackend.domain.repository.ImageRepository;
+import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationBudgetRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationHistoryRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +61,6 @@ public class DonationServiceImpl implements DonationService {
 
         if (donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null) return false;
 
-        // 기부글
         Donation donation = Donation.builder()
                 .phone(donationInfoRequestDTO.getPhone())
                 .isDeputy(donationInfoRequestDTO.isDeputy())
@@ -66,9 +71,17 @@ public class DonationServiceImpl implements DonationService {
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
                 .amount(donationInfoRequestDTO.getTargetAmount())
-//                .endTime(donationInfoRequestDTO.getEndTime())
+                .endDate(donationInfoRequestDTO.getEndDate())
                 .user(user)
                 .build();
+
+        // 대리인
+        if (donationInfoRequestDTO.isDeputy()) {
+            donation.changeBeneficiary(donationInfoRequestDTO.getBeneficiaryName(), donationInfoRequestDTO.getBeneficiaryPhone());
+            // 본인
+        } else {
+            donation.changeBeneficiary(user.getUserName(), donationInfoRequestDTO.getPhone());
+        }
 
         donationRepository.save(donation);
 
@@ -78,6 +91,7 @@ public class DonationServiceImpl implements DonationService {
                         DonationBudget.builder()
                                 .plan(donationBudgetRequestDTO.getPlan())
                                 .amount(donationBudgetRequestDTO.getAmount())
+                                .sequence(donationBudgetRequestDTO.getSequence())
                                 .donation(donation)
                                 .build()
                 )
@@ -94,35 +108,71 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode) {
+    public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view) {
 
-        List<Donation> donationList = donationRepository.findByCategoryCodeAndIsDeleted(categoryCode, false)
-                .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+        List<Donation> donationList = new ArrayList<>();
 
-        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
+        // 전체 보기
+        if (!view) {
+            switch (sort) {
+                // 최신 순
+                case 1:
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 참여 미달 순
+                // TODO: 보류 (달성률을 어떻게 할 것인지)
+                case 2:
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 마감 임박 순
+                case 3:
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+            }
+            // TODO: 모금 가능한 기부만 보기
+        } else {
+            switch (sort) {
+                // 최신 순
+                case 1:
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 참여 미달 순
+                // TODO: 보류 (달성률을 어떻게 할 것인지)
+                case 2:
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 마감 임박 순
+                case 3:
+                    donationList = donationRepository
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+            }
+        }
 
-        donationList.forEach(donation -> {
-            // 대표 사진
-            Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
-            image.put(img.getImageOriginFileName(), imgUrl);
+        return convertDonationListToDTO(donationList);
 
-            donationGetListResponseDTOList.add(
-                    DonationGetListResponseDTO.builder()
-                            .donationId(donation.getId())
-                            .image(image)
-                            .title(donation.getTitle())
-                            .beneficiaryName(donation.getBeneficiaryName())
-                            .targetAmount(donation.getAmount())
-                            .build()
-            );
-        });
+    }
 
-        return DonationGetListWrapperResponseDTO.builder()
-                .donationGetListResponseDTOList(donationGetListResponseDTOList)
-                .build();
+    @Override
+    public DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken) {
+
+        User user = convertAccessTokenToUser(accessToken);
+
+        List<Donation> pendingDonationList = donationRepository.findByIsApproved(false)
+                .orElseThrow(() -> new IllegalArgumentException("미승인 기부 요청이 없습니다."));
+
+        return convertDonationListToDTO(pendingDonationList);
 
     }
 
@@ -132,14 +182,6 @@ public class DonationServiceImpl implements DonationService {
 
         Donation donation = donationRepository.findById(donationId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
-
-        // 대표 사진
-        Map<String, String> image = new HashMap<>();
-
-        Image img = imageRepository.findByDonationAndImageIsResized(donation, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-
-        image.put(img.getImageOriginFileName(), awsS3Service.getFilePath(img.getImageNewFileName()));
 
         // 예산안
         List<DonationBudget> donationBudgetList = donationBudgetRepository.findByDonation(donation)
@@ -151,6 +193,7 @@ public class DonationServiceImpl implements DonationService {
                         DonationBudgetResponseDTO.builder()
                                 .plan(donationBudget.getPlan())
                                 .amount(donationBudget.getAmount())
+                                .sequence(donationBudget.getSequence())
                                 .build()
                 )
         );
@@ -184,22 +227,24 @@ public class DonationServiceImpl implements DonationService {
                 evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
         );
 
-        // 조회수 증가
+        // 조회수 업데이트
         increaseViews(donation);
 
-        return DonationResponseDTO.builder()
+        DonationResponseDTO donationResponseDTO = DonationResponseDTO.builder()
                 .title(donation.getTitle())
                 .categoryCode(donation.getCategoryCode())
                 .views(donation.getViews())
+                .recommendations(donation.getRecommendations())
                 .description(donation.getDescription())
-                .image(image)
-                .startTime(donation.getStartTime())
-                .endTime(donation.getEndTime())
+                .image(getDonationImage(donation, false))
+                .startDate(donation.getStartDate())
+                .endDate(donation.getEndDate())
                 .targetAmount(donation.getAmount())
                 .budget(donationBudgetResponseDTOList)
                 .name(donation.getUser().getUserName())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
+                .deputy(donation.isDeputy())
                 .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
                 .approvalStatusCode(donation.getApprovalStatusCode())
                 .donors(donationHistoryResponseDTOList)
@@ -207,20 +252,23 @@ public class DonationServiceImpl implements DonationService {
                 .evidence(evidence)
                 .build();
 
+        // 대리인
+        if (donation.isDeputy()) donationResponseDTO.changeBeneficiaryName(donation.getBeneficiaryName());
+
+        return donationResponseDTO;
+
     }
 
     @Override
-    public DonationRecommendResponseDTO recommendDonation(String accessToken, String donationId) {
+    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO) {
 
         convertAccessTokenToUser(accessToken);
 
-        Donation donation = donationRepository.findById(donationId)
+        Donation donation = donationRepository.findById(donationRecommendPatchDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
-        // 추천수 업데이트
-        donation.changeRecommendations();
-
-        donationRepository.save(donation);
+        // 추천수 증가
+        increaseRecommendations(donation);
 
         return DonationRecommendResponseDTO.builder()
                 .recommendations(donation.getRecommendations())
@@ -229,57 +277,34 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO searchDonation(String type, String keyword) {
+    public DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page) {
 
         List<Donation> donationList = new ArrayList<>();
 
         switch (type) {
             // 제목 + 사연
             case "td":
-                donationList = donationRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword)
+                donationList = donationRepository.findByCategoryCodeAndTitleContainingOrDescriptionContaining(category, keyword, keyword, PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 제목
             case "t":
-                donationList = donationRepository.findByTitleContaining(keyword)
+                donationList = donationRepository.findByCategoryCodeAndTitleContaining(category, keyword, PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 사연
             case "d":
-                donationList = donationRepository.findByDescriptionContaining(keyword)
+                donationList = donationRepository.findByCategoryCodeAndDescriptionContaining(category, keyword, PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
             // 닉네임
             case "n":
-                donationList = donationRepository.findByUser(userRepository.findByUserNickname(keyword).orElse(null))
+                donationList = donationRepository.findByCategoryCodeAndUser(category, userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(page - 1, 9))
                         .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                 break;
         }
 
-        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
-
-        donationList.forEach(donation -> {
-            // 대표 사진
-            Map<String, String> image = new HashMap<>();
-            Image img = imageRepository.findByDonationAndImageIsResized(donation, true)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 대표 사진을 찾을 수 없습니다."));
-            String imgUrl = awsS3Service.getFilePath(img.getImageNewFileName());
-            image.put(img.getImageOriginFileName(), imgUrl);
-
-            donationGetListResponseDTOList.add(
-                    DonationGetListResponseDTO.builder()
-                            .donationId(donation.getId())
-                            .image(image)
-                            .title(donation.getTitle())
-                            .beneficiaryName(donation.getBeneficiaryName())
-                            .targetAmount(donation.getAmount())
-                            .build()
-            );
-        });
-
-        return DonationGetListWrapperResponseDTO.builder()
-                .donationGetListResponseDTOList(donationGetListResponseDTOList)
-                .build();
+        return convertDonationListToDTO(donationList);
 
     }
 
@@ -298,9 +323,9 @@ public class DonationServiceImpl implements DonationService {
 
         // 거절
         if (!donationApproveRequestDTO.isApproved()) {
-            if (donationApproveRequestDTO.getApprovalStatusCode() == null) throw new NullPointerException();
+            if (donationApproveRequestDTO.getRejectionCode() == null) throw new NullPointerException();
 
-            donation.changeApprovalStatusCode(donationApproveRequestDTO.getApprovalStatusCode());
+            donation.changeApprovalStatusCode(donationApproveRequestDTO.getRejectionCode());
 
             donationRepository.save(donation);
 
@@ -310,7 +335,7 @@ public class DonationServiceImpl implements DonationService {
         // 신청 승인 및 시작 시간 설정
         donation.changeIsApproved();
         donation.changeApprovalStatusCode(ApprovalStatusCode.APPROVAL);
-        donation.changeStartTime();
+        donation.changeStartDate();
 
         donationRepository.save(donation);
 
@@ -324,24 +349,22 @@ public class DonationServiceImpl implements DonationService {
         if (image != null) {
             String fileName = awsS3Service.uploadImage(image);
 
-            Image img = Image.builder()
+            imageRepository.save(Image.builder()
                     .imageOriginFileName(image.getOriginalFilename())
                     .imageNewFileName(fileName)
                     .donation(donation)
-                    .build();
-
-            imageRepository.save(img);
+                    .build());
 
             String thumbNailFileName = awsS3Service.uploadThumbnailImage(fileName, image);
 
-            Image thumbNailImg = Image.builder()
+            Image thumbNail = Image.builder()
                     .imageOriginFileName(image.getOriginalFilename())
                     .imageNewFileName(thumbNailFileName)
                     .imageIsResized(true)
                     .donation(donation)
                     .build();
 
-            imageRepository.save(thumbNailImg);
+            imageRepository.save(thumbNail);
         }
 
         evidence.forEach(file -> {
@@ -373,21 +396,62 @@ public class DonationServiceImpl implements DonationService {
 
     }
 
-    public void increaseViews(Donation donation) {
+    private DonationGetListWrapperResponseDTO convertDonationListToDTO(List<Donation> donationList) {
 
-        // 조회수 업데이트
+        List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
+
+        donationList.forEach(donation ->
+                donationGetListResponseDTOList.add(
+                        DonationGetListResponseDTO.builder()
+                                .donationId(donation.getId())
+                                .thumbnail(getDonationImage(donation, true))
+                                .title(donation.getTitle())
+                                .beneficiaryName(donation.getBeneficiaryName())
+                                .targetAmount(donation.getAmount())
+                                .build()
+                )
+        );
+
+        return DonationGetListWrapperResponseDTO.builder()
+                .donationGetListResponseDTOList(donationGetListResponseDTOList)
+                .build();
+
+    }
+
+    private String getDonationImage(Donation donation, boolean resized) {
+
+        Image image = imageRepository.findByDonationAndImageIsResized(donation, resized).orElse(null);
+
+        return image == null ? "" : "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + image.getImageNewFileName();
+
+    }
+
+    private void increaseViews(Donation donation) {
+
+        // 조회수 증가
         donation.changeViews();
 
         donationRepository.save(donation);
 
     }
 
-    public User convertAccessTokenToUser(String accessToken) {
+    private void increaseRecommendations(Donation donation) {
+
+        // 추천수 업데이트
+        donation.changeRecommendations();
+
+        donationRepository.save(donation);
+
+    }
+
+    private User convertAccessTokenToUser(String accessToken) {
 
         String token = accessToken.split(" ")[1];
+
         String userAccount = jwtAuthenticationProvider.getUserAccount(token);
 
-        return userRepository.findByUserAccount(userAccount).orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+        return userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
 
     }
 

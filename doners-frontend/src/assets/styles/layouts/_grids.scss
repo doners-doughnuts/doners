@@ -2,14 +2,9 @@
   width: 100%;
   padding: 0 $sm-margin;
   margin: 0 auto 50px;
-
   .row {
     display: flex;
     flex-wrap: wrap;
-  }
-
-  [class^='col-'] {
-    padding: 0 $gutter / 2;
   }
 
   @for $i from 1 through $sm-columns {
@@ -32,9 +27,10 @@
   @include responsive(D) {
     max-width: $lg-max-container;
     padding: 0;
-
     @for $i from 1 through $lg-columns {
       .col-lg-#{$i} {
+        // width: percentage($i / $lg-columns);
+        padding: $gutter / 2;
         width: ($lg-unit + $gutter) * $i;
       }
     }

@@ -2,6 +2,7 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
@@ -17,16 +18,18 @@ public interface DonationService {
     Boolean createDonation(String accessToken, DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence);
 
     // 기부글 목록 조회
-    DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode);
+    DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view);
+
+    DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken);
 
     // 기부글 상세 조회
     DonationResponseDTO getDonation(String donationId);
 
     // 기부글 추천
-    DonationRecommendResponseDTO recommendDonation(String accessToken, String donationId);
+    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO);
 
     // 기부글 검색
-    DonationGetListWrapperResponseDTO searchDonation(String type, String keyword);
+    DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page);
 
     // 기부글 승인
     Integer approveDonation(String accessToken, DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException;
