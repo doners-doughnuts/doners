@@ -2,11 +2,15 @@ import H3 from 'assets/theme/Typography/H3/H3';
 import H4 from 'assets/theme/Typography/H4/H4';
 import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
+import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './UserInfo.module.scss';
 
 const cx = classNames.bind(styles);
 
-const UserInfo = () => {
+type UserInfoProps = {
+  data: DonationDetailType;
+};
+const UserInfo = ({ data }: UserInfoProps) => {
   return (
     <div className={cx('inner-container')}>
       <div className={cx('title')}>
@@ -20,15 +24,15 @@ const UserInfo = () => {
       <div className={cx('info')}>
         <dl>
           <dt>성명(주민등록상 이름)</dt>
-          <dd>한모금</dd>
+          <dd>{data.name}</dd>
         </dl>
         <dl>
           <dt>이메일</dt>
-          <dd>thdalstn6352@naver.com</dd>
+          <dd>{data.email}</dd>
         </dl>
         <dl>
           <dt>기존 모금 신청 여부</dt>
-          <dd>이력 존재</dd>
+          <dd>{data.exist ? '이력 존재' : '이력 미존재'}</dd>
         </dl>
       </div>
       <div className={cx('profile-btn')}>

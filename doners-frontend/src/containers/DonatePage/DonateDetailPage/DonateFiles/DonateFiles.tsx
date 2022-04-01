@@ -1,13 +1,29 @@
 import classNames from 'classnames/bind';
 import styles from './DonateFiles.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import H3 from 'assets/theme/Typography/H3/H3';
+import { DonationDetailType } from '../DontateDetail/DonateDetail';
 
 const cx = classNames.bind(styles);
 
-const DonateFiles = () => {
+type DonateFIlesProps = {
+  data: DonationDetailType;
+};
+
+const DonateFiles = ({ data }: DonateFIlesProps) => {
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+
+  const [filesName, setFilesName] = useState<string[]>([]);
+
+  useEffect(() => {
+    console.log(Object.keys(data.evidence));
+    setFilesName(Object.keys(data.evidence));
+  }, []);
+
+  useEffect(() => {
+    console.log(filesName);
+  }, [filesName]);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);

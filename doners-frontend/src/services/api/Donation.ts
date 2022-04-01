@@ -4,6 +4,7 @@ type donationType = {
   category: string;
   page: string;
   sort: string;
+  view?: boolean;
 };
 
 export const postDonation = async (formData: any) => {
@@ -23,10 +24,24 @@ export const postDonation = async (formData: any) => {
 export const getDonationList = async (
   category: string,
   sort: string,
-  page: number
+  page: number,
+  view: boolean = false
 ) => {
   const result = await instance.get(
-    `/donation?category=${category}&page=${page}&sort=${sort}`
+    `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
+  );
+  return result;
+};
+
+export const getAvailableDonationList = async (
+  category: string,
+  sort: string,
+  page: number,
+  view: boolean
+) => {
+  console.log(category, sort, page, view);
+  const result = await instance.get(
+    `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
   return result;
 };

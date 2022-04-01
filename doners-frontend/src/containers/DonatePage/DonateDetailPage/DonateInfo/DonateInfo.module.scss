@@ -49,6 +49,9 @@
     }
     .history-items {
       margin-top: 10px;
+      .history-item {
+        @include flexbox(between, center);
+      }
     }
   }
 }

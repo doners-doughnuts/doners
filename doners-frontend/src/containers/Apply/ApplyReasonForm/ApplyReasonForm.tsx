@@ -29,7 +29,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const [content, setContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
-  const [fileList, setFileList] = useState(['']);
+  const [fileList, setFileList] = useState<any[]>([]);
   const [file, setFile] = useState('');
   const handleUploadBtnClick = () => {
     inputRef.current?.click();
@@ -51,7 +51,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     setIsLoading(true);
     const file = event.target.files;
     setImgFile(URL.createObjectURL(file[0]));
-    setApply({ ...apply, image: URL.createObjectURL(file[0]) });
+    setApply({ ...apply, image: file[0] });
     console.log(imgFile);
     // const formData = new FormData();
     // formData.append('image', file[0]);
@@ -66,13 +66,17 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadFile = async (event: any) => {
     const file = event.target.files;
     console.log(file);
-    setFile(URL.createObjectURL(file[0]));
-    setFileList([URL.createObjectURL(file[0])]);
+    setFile(file[0]);
+    setFileList([...fileList, file[0]]);
 
     // const formData = new FormData();
     // formData.append('file', file[0]);
     // console.log(formData);
   };
+
+  useEffect(() => {
+    console.log(fileList);
+  }, [fileList]);
 
   const setValue = () => {
     setApply({ ...apply, evidence: fileList });
