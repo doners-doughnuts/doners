@@ -5,17 +5,17 @@ import styles from './Selectbox.module.scss';
 import Select from 'react-select';
 const cx = classNames.bind(styles);
 
-type selectBoxType = {
-  option: {
+export type selectBoxType = {
+  options: {
     value: string;
     label: string;
   }[];
 };
 
-const Selectbox = ({ option }: selectBoxType) => {
+const Selectbox = ({ options }: selectBoxType) => {
   return (
     <div className={cx('box')}>
-      <Select options={option} defaultValue={option[0]} />
+      <Select options={options} defaultValue={options[0]} />
     </div>
   );
 };

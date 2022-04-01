@@ -173,10 +173,6 @@ export const createDoughnut = async () => {
 
 /* 총 잔여 NFT 발급량 조회 */
 export const getMintedNFTCount = async () => {
-  const result = await DDHelperContract.methods
-    .getMintedTokenCount()
-    .call()
-    .then(console.log);
-
+  const result = await DDHelperContract.methods.getMintedTokenCount().call();
   return result;
 };

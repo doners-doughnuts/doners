@@ -7,7 +7,9 @@ import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
 import { checkNickname } from 'services/api/UserApi';
 import Avatar from 'assets/theme/Avatar/Avatar';
+
 const cx = classNames.bind(styles);
+
 type ProfileType = {
   focus: number;
   // user: string;

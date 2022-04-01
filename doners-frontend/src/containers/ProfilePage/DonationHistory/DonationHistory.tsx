@@ -37,10 +37,10 @@ const DonationHistory = () => {
           <div className={cx('title')}>모금 참여 이력</div>
 
           <div className={cx('selectbox')}>
-            <Selectbox option={years} />
+            <Selectbox options={years} />
           </div>
           <div className={cx('selectbox')}>
-            <Selectbox option={category} />
+            <Selectbox options={category} />
           </div>
         </div>
         <div className={cx('row')}>
