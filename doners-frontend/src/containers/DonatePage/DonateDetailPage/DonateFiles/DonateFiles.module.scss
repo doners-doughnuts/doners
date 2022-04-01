@@ -1,6 +1,16 @@
 @import 'assets/styles/main';
 
 .files-form {
-  padding: 30px;
-  border: 2px solid $black;
+  width: 100%;
+  padding: 20px;
+
+  .title {
+    margin-bottom: 30px;
+  }
+  .file-item {
+    height: 50px;
+    border: 2px solid $black;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
 }

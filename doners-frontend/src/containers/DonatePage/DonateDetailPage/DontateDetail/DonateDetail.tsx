@@ -9,10 +9,22 @@ import DonateHistory from '../DonateHistory/DonateHistory';
 import DonateFiles from '../DonateFiles/DonateFiles';
 import H1 from 'assets/theme/Typography/H1/H1';
 import Tag from 'assets/theme/Tag/Tag';
+import { useState } from 'react';
+import DonateModal from '../DonateModal/DonateModal';
 
 const cx = classNames.bind(styles);
 
 const DonateDetail = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDonateClick = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseClick = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       <section className={cx('container')}>
@@ -29,11 +41,12 @@ const DonateDetail = () => {
             <div className={cx('thumbnail')}>
               <img src={src} alt="ex" />
             </div>
-            <div className={cx('donate-btn')}>
+            <div className={cx('donate-btn')} onClick={handleDonateClick}>
               <Button color="primary" size="large" fullWidth shadow>
                 기부하기
               </Button>
             </div>
+            <DonateModal open={isOpen} onClose={handleCloseClick} />
           </div>
           <div className={cx('col-lg-6')}>
             <DonateContent />
@@ -43,12 +56,12 @@ const DonateDetail = () => {
           </div>
           <div className={cx('col-lg-6', 'user-info')}>
             <UserInfo />
+            <div className={cx('file-form')}>
+              <DonateFiles />
+            </div>
           </div>
           <div className={cx('col-lg-6')}>
             <DonateHistory />
-          </div>
-          <div className={cx('col-lg-6')}>
-            <div className={cx('file-form')}>{/* <DonateFiles /> */}</div>
           </div>
         </div>
       </section>

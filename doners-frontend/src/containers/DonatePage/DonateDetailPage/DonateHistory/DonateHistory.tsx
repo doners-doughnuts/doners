@@ -3,6 +3,7 @@ import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import styles from './DonateHistory.module.scss';
 import { ReactComponent as WaveIcon } from 'assets/images/icon/wave.svg';
+import receiptSrc from 'assets/images/reciept.png';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +30,30 @@ const DonateHistory = () => {
         </div>
       </div>
       <div className={cx('history')}>
+        <div className={cx('history-item')}>
+          <div>사용자 닉네임</div>
+          <div>0.3 SSF</div>
+        </div>
+        <div className={cx('history-item')}>
+          <div>사용자 닉네임</div>
+          <div>0.3 SSF</div>
+        </div>
+        <div className={cx('history-item')}>
+          <div>사용자 닉네임</div>
+          <div>0.3 SSF</div>
+        </div>
+        <div className={cx('history-item')}>
+          <div>사용자 닉네임</div>
+          <div>0.3 SSF</div>
+        </div>
+        <div className={cx('history-item')}>
+          <div>사용자 닉네임</div>
+          <div>0.3 SSF</div>
+        </div>
+        <div className={cx('history-item')}>
+          <div>사용자 닉네임</div>
+          <div>0.3 SSF</div>
+        </div>
         <div className={cx('history-item')}>
           <div>사용자 닉네임</div>
           <div>0.3 SSF</div>
