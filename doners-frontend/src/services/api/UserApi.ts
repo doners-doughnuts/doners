@@ -57,7 +57,7 @@ export const emailSend = async (userEmail: any) => {
 
 /* 이메일 인증 완료 여부 확인 */
 export const emailcheck = async (userEmail: any) => {
-  const response = await instance.get(`/email/check/email/${userEmail}`, {});
+  const response = await instance.get(`/email/check/${userEmail}`, {});
   console.log(response);
   return response;
 };

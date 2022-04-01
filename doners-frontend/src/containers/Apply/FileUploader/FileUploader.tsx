@@ -13,7 +13,6 @@ const cx = classNames.bind(styles);
 type historyType = {
   epilogueBudgetPlan: string;
   epilogueBudgetAmount: string;
-  // id: number;
 };
 
 const FileUploader = ({ onChange }: any) => {
