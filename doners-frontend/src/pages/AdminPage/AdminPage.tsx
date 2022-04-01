@@ -15,21 +15,13 @@ const AdminPage = () => {
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
-        <div className={cx('col-lg-12')}>
+        <div className={cx('col-lg-12', '')}>
           <H2>Dashboard</H2>
         </div>
-        <div className={cx('col-lg-12')}>
-          <div className={cx('row')}>
-            {/* <DashboardPanel /> */}
-            < div className={cx('col-lg-4')} >
-              <DashboardCard />
-            </div ><div className={cx('col-lg-4')}>
-              <DashboardCard />
-            </div><div className={cx('col-lg-4')}>
-              <DashboardCard />
-            </div>
-          </div>
-        </div>
+        {/* <div className={cx('row')}> */}
+        <DashboardPanel />
+        {/* </div> */}
+        {/* </div> */}
         <div className={cx('col-lg-6')}>
           <ApprovalList />
         </div>
