@@ -51,9 +51,9 @@ function EpilogueEditor({ modify = false }: EditType) {
   const editorRef = useRef<Editor>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
-  const { epilogue_id } = useParams<string>();
+  const { donation_id } = useParams<string>();
   const navigate = useNavigate();
-
+  console.log(donation_id);
   useEffect(() => {
     if (modify && isLoading) {
       getDetail();
@@ -61,8 +61,8 @@ function EpilogueEditor({ modify = false }: EditType) {
   }, [isLoading]);
 
   const getDetail = async () => {
-    if (typeof epilogue_id === 'string') {
-      const response = await getEpilogueDetail(epilogue_id);
+    if (typeof donation_id === 'string') {
+      const response = await getEpilogueDetail(donation_id);
       console.log(response);
       setContent(response.data.epilogueDescription);
       setTitle(response.data.epilogueTitle);
@@ -102,6 +102,7 @@ function EpilogueEditor({ modify = false }: EditType) {
             epilogueBudgetRequestDTOList: historyList,
             epilogueDescription: content,
             epilogueTitle: title,
+            donationId: donation_id,
           }),
         ],
         {
@@ -133,13 +134,13 @@ function EpilogueEditor({ modify = false }: EditType) {
   const modifyApi = async () => {
     const body = {
       epilogueDescription: content,
-      epilogueId: epilogue_id,
+      epilogueId: donation_id,
       epilogueTitle: title,
     };
 
     try {
       await modifyEpilogue(body);
-      navigate(`/community/epilogue/${epilogue_id}`);
+      navigate(`/community/epilogue/${donation_id}`);
     } catch (error) {
       console.log(error);
     }

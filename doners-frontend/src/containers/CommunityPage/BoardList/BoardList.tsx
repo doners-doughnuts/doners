@@ -47,54 +47,37 @@ const BoardList = () => {
           <LoadingSpinner />
         </div>
       )}
-      {
-        !isLoading && (
-          <div className={cx('inner-container')}>
-            <div className={cx('btn-row')}>
-              <div className={cx('btn')}>
-                <Link to="write">
-                  <Button color="secondary" size="small" fullWidth>
-                    글 작성
-                  </Button>
-                </Link>
+      {!isLoading && (
+        <div className={cx('inner-container')}>
+          <div className={cx('btn-row')}>
+            <div className={cx('btn')}>
+              <Link to="write">
+                <Button color="secondary" size="small" fullWidth>
+                  글 작성
+                </Button>
+              </Link>
+            </div>
+          </div>
+          {listItems.length === 0 ? (
+            <div className={cx('none-contents')}>
+              <div className={cx('none-text')}>
+                <H1>등록된 감사후기가 없습니다.</H1>
+              </div>
+              <div className={cx('none-img')}>
+                <img src={src} alt="no donation" />
               </div>
             </div>
-            {listItems.length === 0 ? (
-              <div className={cx('none-contents')}>
-                <div className={cx('none-text')}>
-                  <H1>등록된 감사후기가 없습니다.</H1>
-                </div>
-                <div className={cx('none-img')}>
-                  <img src={src} alt="no donation" />
-                </div>
-              </div>
-            ) : (
-              listItems.map((data) => {
-                return (
-                  <Link to={data.communityId} key={data.communityId}>
-                    <BoardListItem data={data} />
-                  </Link>
-                );
-              })
-            )}
-          </div>
-        )
-
-        // { listItems.map((data) => {
-        //     return (
-        //       <Link to={data.communityId} key={data.communityId}>
-        //         <BoardListItem data={data} />
-        //       </Link>
-        //     );})}
-        // <div className={cx('none-contents')}>
-        //   <div className={cx('none-text')}>
-        //     <H1>등록된 감사후기가 없습니다.</H1>
-        //   </div>
-        //   <div className={cx('none-img')}>
-        //     <img src={src} alt="no donation" />
-        //   </div>
-        // </div>
-      }
+          ) : (
+            listItems.map((data) => {
+              return (
+                <Link to={data.communityId} key={data.communityId}>
+                  <BoardListItem data={data} />
+                </Link>
+              );
+            })
+          )}
+        </div>
+      )}
     </>
   );
 };

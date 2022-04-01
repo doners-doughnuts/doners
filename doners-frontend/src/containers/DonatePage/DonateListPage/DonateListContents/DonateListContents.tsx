@@ -11,10 +11,18 @@ import styles from './DonateListContents.module.scss';
 import src from 'assets/images/img-covid19-category.png';
 const cx = classNames.bind(styles);
 
+export type DonateType = {
+  donationId: string;
+  thumbnail: string;
+  title: string;
+  beneficiaryName: string;
+  targetAmount: number;
+};
+
 const DonateListContents = () => {
   const [isSelect, setIsSelect] = useState(false);
   const [page, setPage] = useState(1);
-  const [donateList, setDonateList] = useState([]);
+  const [donateList, setDonateList] = useState<DonateType[]>([]);
   const [searchParams] = useSearchParams();
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('');
