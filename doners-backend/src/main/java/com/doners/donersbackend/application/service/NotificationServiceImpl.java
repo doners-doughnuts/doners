@@ -14,6 +14,7 @@ import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -43,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 종료 시간 지났으면
-        if (donation.isApproved() && donation.getEndTime() != null && LocalDateTime.now().isAfter(donation.getEndTime())) {
+        if (donation.isApproved() && donation.getEndDate() != null && LocalDate.now().isAfter(donation.getEndDate())) {
             return createNotification(donation, "종료", NotificationCode.PROGRESS);
         }
 
