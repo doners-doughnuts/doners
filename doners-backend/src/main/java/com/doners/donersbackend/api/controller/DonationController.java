@@ -35,17 +35,17 @@ public class DonationController {
     @ApiOperation(value = "기부 신청")
     @ApiResponses({
             @ApiResponse(code = 201, message = "기부글 신청에 성공했습니다."),
-            @ApiResponse(code = 404, message = "해당 신청자 정보를 찾을 수 없습니다."),
-            @ApiResponse(code = 409, message = "신청자에 대한 기부글이 이미 존재합니다."),
+            @ApiResponse(code = 404, message = "신청자 정보를 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "신청자의 기부글이 이미 존재합니다."),
             @ApiResponse(code = 409, message = "기부글 신청에 실패했습니다.")
     })
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponseDTO> register(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @ApiParam(value = "기부 신청 정보", required = true) @Valid @RequestPart DonationInfoRequestDTO donationInfoRequestDTO,
-            @ApiParam(value = "관계증명서") @Valid @RequestPart(value = "certificate", required = false) MultipartFile certificate,
-            @ApiParam(value = "대표 사진") @Valid @RequestPart(value = "image", required = false) MultipartFile image,
-            @ApiParam(value = "증빙 자료", required = true) @Valid @RequestPart(value = "evidence") List<MultipartFile> evidence
+            @ApiParam(value = "관계증명서") @RequestPart(required = false) MultipartFile certificate,
+            @ApiParam(value = "대표 사진") @RequestPart(required = false) MultipartFile image,
+            @ApiParam(value = "증빙 자료", required = true) @RequestPart List<MultipartFile> evidence
     ) {
 
         try {
@@ -179,7 +179,7 @@ public class DonationController {
             @ApiResponse(code = 409, message = "기부글 신청 승인에 실패했습니다.")
     })
     @PatchMapping("/approve")
-    public ResponseEntity<? extends BaseResponseDTO> approve(
+    public ResponseEntity<? extends BaseResponseDTO> a22pprove(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @ApiParam(value = "기부글 승인 정보", required = true) @Valid @RequestBody DonationApproveRequestDTO donationApproveRequestDTO
     ) {

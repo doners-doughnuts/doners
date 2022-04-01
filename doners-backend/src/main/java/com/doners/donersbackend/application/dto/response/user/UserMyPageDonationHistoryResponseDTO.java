@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ApiModel("UserMyPageDonationHistoryResponseDTO")
@@ -30,21 +31,21 @@ public class UserMyPageDonationHistoryResponseDTO {
     @ApiModelProperty(name = "기부 신청 카테고리 코드")
     private CategoryCode donationCategoryCode;
 
-    @ApiModelProperty(name = "기부 시작 시간")
-    private LocalDateTime donationStartTime;
+    @ApiModelProperty(name = "기부 시작일")
+    private LocalDate donationStartDate;
 
     @ApiModelProperty(name = "기부금 수령 완료 여부")
     private boolean donationIsReceived;
 
     @Builder
     public UserMyPageDonationHistoryResponseDTO(String donationId, String donationTitle, ApprovalStatusCode donationApprovalStatusCode,
-                                                boolean donationIsApproved, CategoryCode donationCategoryCode, LocalDateTime donationStartTime, boolean donationIsReceived) {
+                                                boolean donationIsApproved, CategoryCode donationCategoryCode, LocalDate donationStartDate, boolean donationIsReceived) {
         this.donationId = donationId;
         this.donationTitle = donationTitle;
         this.donationApprovalStatusCode = donationApprovalStatusCode;
         this.donationIsApproved = donationIsApproved;
         this.donationCategoryCode = donationCategoryCode;
-        this.donationStartTime = donationStartTime;
+        this.donationStartDate = donationStartDate;
         this.donationIsReceived = donationIsReceived;
     }
 }
