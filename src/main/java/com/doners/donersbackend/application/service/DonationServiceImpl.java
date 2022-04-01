@@ -64,8 +64,6 @@ public class DonationServiceImpl implements DonationService {
         Donation donation = Donation.builder()
                 .phone(donationInfoRequestDTO.getPhone())
                 .isDeputy(donationInfoRequestDTO.isDeputy())
-                .beneficiaryName(donationInfoRequestDTO.getBeneficiaryName())
-                .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
                 .title(donationInfoRequestDTO.getTitle())
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
