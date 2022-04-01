@@ -109,6 +109,10 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view) {
+        System.out.println("@@@@@@@@" + categoryCode);
+        System.out.println("@@@@@@@@" + page);
+        System.out.println("@@@@@@@@" + sort);
+        System.out.println("@@@@@@@@" + view);
 
         List<Donation> donationList = new ArrayList<>();
 
@@ -160,6 +164,7 @@ public class DonationServiceImpl implements DonationService {
             }
         }
 
+        System.out.println("donationList size : " + donationList.size());
         return convertDonationListToDTO(donationList);
 
     }
