@@ -1,6 +1,7 @@
 package com.doners.donersbackend.domain.dao.epilogue;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
+import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +33,13 @@ public class Epilogue extends BaseEntity {
     @Column(name="epilogue_is_deleted", columnDefinition="BOOLEAN DEFAULT false")
     private boolean epilogueIsDeleted;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="donation_id")
+    private Donation donation;
 
     // 닉네임 수정
     public void changeEpilogue(String epilogueTitle,String epilogueDescription) {
