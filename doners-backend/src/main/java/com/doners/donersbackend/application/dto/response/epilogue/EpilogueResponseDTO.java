@@ -38,10 +38,13 @@ public class EpilogueResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "댓글 리스트")
     private List<EpilogueBudgetResponseDTO> epilogueBudgetResponseDTOList;
 
+    @ApiModelProperty(name = "기부 ID")
+    private String donationId;
+
     @Builder
     public EpilogueResponseDTO(String epilogueTitle, long epilogueViews, String epilogueDescription,
                                LocalDateTime epilogueCreateTime, List<CommentResponseDTO> commentResponseDTOList, String epilogueWriter,
-                               String epilogueImage, List<EpilogueBudgetResponseDTO> epilogueBudgetResponseDTOList) {
+                               String epilogueImage, List<EpilogueBudgetResponseDTO> epilogueBudgetResponseDTOList, String donationId) {
         this.epilogueTitle = epilogueTitle;
         this.epilogueViews = epilogueViews;
         this.epilogueDescription = epilogueDescription;
@@ -50,6 +53,7 @@ public class EpilogueResponseDTO extends BaseResponseDTO {
         this.epilogueWriter = epilogueWriter;
         this.epilogueImage = epilogueImage;
         this.epilogueBudgetResponseDTOList = epilogueBudgetResponseDTOList;
+        this.donationId = donationId;
     }
 
     public static EpilogueResponseDTO of(String message, Integer statusCode, EpilogueResponseDTO epilogueResponseDTO) {
