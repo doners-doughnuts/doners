@@ -41,6 +41,9 @@ instance.interceptors.response.use(
       console.log(error.response);
       switch (error.response.status) {
         /* 'JWT expired' exeption */
+        case 400:
+          console.log('400 ERROR, not authorized.');
+          break;
         case 401:
           console.log('401error!');
           break;
