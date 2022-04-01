@@ -4,29 +4,54 @@ import Checkbox from 'assets/theme/Checkbox/Checkbox';
 import classNames from 'classnames/bind';
 import Input from 'assets/theme/Input/Input';
 import styles from './UserInfoForm.module.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-interface InfoProps {
-  setApplyStep: (applyStep: number) => void;
-  setPhone: (phone: string) => void;
-  setIsdeputy: (isdeputy: boolean) => void;
-  setName: (name: string) => void;
-  setEmail: (email: string) => void;
-  setRelationshipFile: (relationshipFile: string) => void;
-}
 const cx = classNames.bind(styles);
-const UserInfoForm = ({
-  setApplyStep,
-  setPhone,
-  setIsdeputy,
-  setName,
-  setEmail,
-  setRelationshipFile,
-}: InfoProps) => {
+const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
   const [isSelect, setIsSelect] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userPhone, setUserPhone] = useState('');
+  const [deputyName, setDeputyName] = useState('');
+  const [deputyPhone, setDeputyPhone] = useState('');
+  const [file, setFile] = useState('');
+  const [deputyDoc, setDeputyDoc] = useState('');
+
   const handleCheckbox = () => {
     setIsSelect((prev) => !prev);
   };
+
+  const setValue = () => {
+    if (isSelect) {
+      //대리인일때
+      setApply({
+        ...apply,
+        beneficiaryName: deputyName,
+        beneficiaryPhone: deputyPhone,
+        deputy: isSelect,
+        phone: userPhone,
+        certificate: file,
+      });
+    } else {
+      //대리인 아닐때
+      setApply({
+        ...apply,
+        phone: userPhone,
+        deputy: isSelect,
+      });
+    }
+    setApplyStep(1);
+  };
+
+  const handleUploadFile = async (event: any) => {
+    const file = event.target.files;
+    setDeputyDoc(file);
+    console.log(file);
+    setFile(URL.createObjectURL(file[0]));
+    // const formData = new FormData();
+    // formData.append('file', file[0]);
+    // console.log(formData);
+  };
+
   return (
     <div className={cx('containor')}>
       <section className={cx('section1')}>
@@ -41,11 +66,18 @@ const UserInfoForm = ({
         </div>
         <div className={cx('input-data')}>
           <div className={cx('input-title')}> 성명</div>
-          <Input />
+          <Input
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
         <div className={cx('input-data')}>
           <div className={cx('input-title')}>전화번호</div>
-          <Input placeholder="전화번호" disabled={isSelect} />
+          <Input
+            value={userPhone}
+            onChange={(e) => setUserPhone(e.target.value)}
+            placeholder="전화번호"
+          />
         </div>
         <Checkbox selected={isSelect} onChange={handleCheckbox}>
           모금 대상자의 대리인 입니다.
@@ -60,24 +92,45 @@ const UserInfoForm = ({
         </div>
         <div className={cx('input-data')}>
           <div className={cx('input-title')}>성명</div>
-          <Input placeholder="수혜자의 성명" disabled={!isSelect} />
+          <Input
+            value={deputyName}
+            onChange={(e) => setDeputyName(e.target.value)}
+            placeholder="수혜자의 성명"
+            disabled={!isSelect}
+          />
         </div>
         <div className={cx('input-data')}>
           <div className={cx('input-title')}>전화번호</div>
-          <Input placeholder="수혜자의 전화번호" disabled={!isSelect} />{' '}
+          <Input
+            value={deputyPhone}
+            onChange={(e) => setDeputyPhone(e.target.value)}
+            placeholder="수혜자의 전화번호"
+            disabled={!isSelect}
+          />
         </div>
         <div className={cx('input-data')}>
           <div className={cx('input-title')}>관계증명서 첨부</div>
           <Input
+            onChange={handleUploadFile}
+            value={''}
             placeholder="file"
             type="file"
             disabled={!isSelect}
-            size="large"
           />
         </div>
       </section>
       <div className={cx('nextbtn')}>
-        <Button color={'alternate'}>다음단계</Button>
+        {(!isSelect && userName !== '' && userPhone !== '') ||
+        (isSelect &&
+          deputyPhone !== '' &&
+          deputyName !== '' &&
+          deputyDoc !== '') ? (
+          <Button onClick={setValue} color={'alternate'}>
+            다음 단계
+          </Button>
+        ) : (
+          <Button color={'alternate'}>폼을 작성해주세요</Button>
+        )}
       </div>
     </div>
   );
