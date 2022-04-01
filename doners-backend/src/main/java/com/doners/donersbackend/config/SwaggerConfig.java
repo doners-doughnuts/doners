@@ -45,7 +45,7 @@ public class SwaggerConfig {
                 .build();
     }
 
-    public static final String SECURITY_SCHEMA_NAME = "JWT";
+    public static final String SECURITY_SCHEMA_NAME = "Authorization";
     public static final String AUTHORIZATION_SCOPE_GLOBAL = "global";
     public static final String AUTHORIZATION_SCOPE_GLOBAL_DESC = "accessEverything";
 

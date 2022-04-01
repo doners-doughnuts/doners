@@ -26,8 +26,8 @@ instance.interceptors.request.use(
     return config;
   },
   (err) => {
-    // return Promise.reject(err);
-    return false;
+    return Promise.reject(err);
+    // return false;
   }
 );
 
@@ -58,9 +58,18 @@ instance.interceptors.response.use(
     } else {
       // ex. 서버 키지 않은 경우
     }
-    //return Promise.reject(error);
-    return false;
+    return Promise.reject(error);
+    // return false;
   }
 );
+
+export const multipartInstance = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  // TODO timeout 설정
+  timeout: 30000,
+  headers: {
+    'Content-Type': `multipart/form-data`,
+  },
+});
 
 export default instance;

@@ -107,7 +107,7 @@ const ApplyReasonForm = ({
           </div>
           <div className={cx('select-data')}>
             <div className={cx('select')}>
-              <Selectbox option={category} />
+              <Selectbox options={category} />
             </div>
             <div className={cx('date')}>
               <Input placeholder="모금 마감일자" type="date" />

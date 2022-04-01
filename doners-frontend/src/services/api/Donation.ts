@@ -22,3 +22,9 @@ export const getDonationDetail = async (donation_id: string) => {
   const result = await instance.get(`/donation/${donation_id}`);
   return result;
 };
+
+export const approveApplication = async (
+  donationId: string,
+  approved: boolean,
+  rejectionCode: string
+) => {};
