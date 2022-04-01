@@ -4,7 +4,7 @@ import DonateListHeader from 'containers/DonatePage/DonateListPage/DonateListHea
 const DonateListPage = () => {
   return (
     <div>
-      <DonateListHeader />
+      {/* <DonateListHeader /> */}
       <DonateListContents />
     </div>
   );

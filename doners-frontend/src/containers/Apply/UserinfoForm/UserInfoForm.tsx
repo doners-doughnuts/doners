@@ -68,7 +68,12 @@ const UserInfoForm = ({
         </div>
         <div className={cx('input-data')}>
           <div className={cx('input-title')}>관계증명서 첨부</div>
-          <Input placeholder="file" type="file" disabled={!isSelect} />
+          <Input
+            placeholder="file"
+            type="file"
+            disabled={!isSelect}
+            size="large"
+          />
         </div>
       </section>
       <div className={cx('nextbtn')}>

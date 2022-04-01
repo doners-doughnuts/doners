@@ -11,6 +11,7 @@ import P from 'assets/theme/Typography/P/P';
 import Avatar from 'assets/theme/Avatar/Avatar';
 import Span from 'assets/theme/Typography/Span/Span';
 import { ReactComponent as ClipIcon } from 'assets/images/icon/clip.svg';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 type headerType = {
@@ -29,6 +30,25 @@ const EpilogueDetailHeader = ({
   onDelete,
   onModify,
 }: headerType) => {
+  const [isOwn, setIsOwn] = useState(false);
+
+  const checkUser = () => {
+    const item = localStorage.getItem('user');
+    if (typeof item === 'string') {
+      const Juser = JSON.parse(item);
+      console.log(writer);
+      console.log(Juser.userNickname);
+      if (writer === Juser.userNickname) {
+        setIsOwn(true);
+      }
+      // console.log(Juser.userNickname);
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, [writer]);
+
   return (
     <div className={cx('header')}>
       <div className={cx('thumbnail')}>
@@ -41,25 +61,27 @@ const EpilogueDetailHeader = ({
         <div className={cx('top')}>
           <Tag color="black">Category</Tag>
           <div className={cx('button-wrap')}>
-            <div className={cx('buttons')}>
-              <CustomButton
-                src={editIcon}
-                color="yellow"
-                shadow
-                size="small"
-                onClick={onModify}
-              >
-                수정
-              </CustomButton>
-              <CustomButton
-                src={deleteIcon}
-                shadow
-                size="small"
-                onClick={onDelete}
-              >
-                삭제
-              </CustomButton>
-            </div>
+            {isOwn ? (
+              <div className={cx('buttons')}>
+                <CustomButton
+                  src={editIcon}
+                  color="yellow"
+                  shadow
+                  size="small"
+                  onClick={onModify}
+                >
+                  수정
+                </CustomButton>
+                <CustomButton
+                  src={deleteIcon}
+                  shadow
+                  size="small"
+                  onClick={onDelete}
+                >
+                  삭제
+                </CustomButton>
+              </div>
+            ) : null}
           </div>
         </div>
         <div>

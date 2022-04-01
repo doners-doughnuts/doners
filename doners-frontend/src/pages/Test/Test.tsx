@@ -7,6 +7,7 @@ import Input from 'assets/theme/Input/Input';
 import RoundedButton from 'assets/theme/Button/RoundedButton/RoundedButton';
 import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import editIcon from 'assets/images/icon/edit.svg';
+import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
 
 const Test = () => {
   return (
@@ -66,6 +67,8 @@ const Test = () => {
 
       <Input />
       <Input error />
+
+      <LoadingSpinner />
     </div>
   );
 };

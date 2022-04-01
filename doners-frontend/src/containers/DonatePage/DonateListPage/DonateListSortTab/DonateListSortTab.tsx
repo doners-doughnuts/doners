@@ -21,6 +21,7 @@ const DonateListSortTab = ({ sort, onClick }: sortType) => {
           >
             <H4>최신순</H4>
           </li>
+
           <li
             className={cx('lnb-item', { 'is-active': sort === '2' })}
             onClick={() => {

@@ -15,13 +15,17 @@ import { Link, useSearchParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-const DonateListHeader = () => {
+type headerType = {
+  category: string;
+  onClick: any;
+};
+const DonateListHeader = ({ category, onClick }: headerType) => {
   const [title, setTitle] = useState('');
   const [searchParams] = useSearchParams();
   const category_id = searchParams.get('category');
 
   useEffect(() => {
-    switch (searchParams.get('category')) {
+    switch (category) {
       case '1':
         setTitle('코로나19 모금');
         break;
@@ -35,7 +39,7 @@ const DonateListHeader = () => {
         setTitle('미혼모/부 모금');
         break;
     }
-  }, [searchParams]);
+  }, [category]);
 
   return (
     <section className={cx('container')}>
@@ -43,34 +47,38 @@ const DonateListHeader = () => {
         <div className={cx('col-lg-12')}>
           <div className={cx('btn-wrap')}>
             <div className={cx('btn-row')}>
-              <Link to="/fundraisings/list?category=1&sort=1">
-                <RoundedButton
-                  src={covid19}
-                  shadow
-                  active={category_id === '1'}
-                />
-              </Link>
-              <Link to="/fundraisings/list?category=2&sort=1">
-                <RoundedButton
-                  src={disease}
-                  shadow
-                  active={category_id === '2'}
-                />
-              </Link>
-              <Link to="/fundraisings/list?category=3&sort=1">
-                <RoundedButton
-                  src={soldier}
-                  shadow
-                  active={category_id === '3'}
-                />
-              </Link>
-              <Link to="/fundraisings/list?category=4&sort=1">
-                <RoundedButton
-                  src={singlemom}
-                  shadow
-                  active={category_id === '4'}
-                />
-              </Link>
+              <RoundedButton
+                src={covid19}
+                shadow
+                active={category_id === '1'}
+                onClick={() => {
+                  onClick('1');
+                }}
+              />
+              <RoundedButton
+                src={disease}
+                shadow
+                active={category_id === '2'}
+                onClick={() => {
+                  onClick('2');
+                }}
+              />
+              <RoundedButton
+                src={soldier}
+                shadow
+                active={category_id === '3'}
+                onClick={() => {
+                  onClick('3');
+                }}
+              />
+              <RoundedButton
+                src={singlemom}
+                shadow
+                active={category_id === '4'}
+                onClick={() => {
+                  onClick('4');
+                }}
+              />
             </div>
           </div>
           <div className={cx('title')}>
