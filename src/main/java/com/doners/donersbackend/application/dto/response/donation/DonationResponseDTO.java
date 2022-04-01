@@ -44,7 +44,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private LocalDate endDate;
 
     @ApiModelProperty(name = "목표 모금액")
-    private long targetAmount;
+    private double targetAmount;
 
     @ApiModelProperty(name = "모금액 활용 계획")
     private List<DonationBudgetResponseDTO> budget;
@@ -80,7 +80,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private Map<String, String> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;

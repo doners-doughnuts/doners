@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class DonationHistory extends BaseEntity {
 
     @Column(name = "donation_history_amount")
-    private long amount;
+    private double amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

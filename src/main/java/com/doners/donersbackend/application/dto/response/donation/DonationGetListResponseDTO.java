@@ -26,10 +26,10 @@ public class DonationGetListResponseDTO {
     private String beneficiaryName;
 
     @ApiModelProperty(name = "목표 모금액")
-    private long targetAmount;
+    private double targetAmount;
 
     @Builder
-    public DonationGetListResponseDTO(String donationId, String thumbnail, String title, String beneficiaryName, long targetAmount) {
+    public DonationGetListResponseDTO(String donationId, String thumbnail, String title, String beneficiaryName, double targetAmount) {
         this.donationId = donationId;
         this.thumbnail = thumbnail;
         this.title = title;
