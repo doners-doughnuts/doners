@@ -1,0 +1,40 @@
+@import 'assets/styles/main';
+
+.inner-container {
+  padding: 30px;
+  border: 2px solid $black;
+  background-color: $white;
+  height: fit-content;
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .content {
+    min-height: 350px;
+  }
+
+  .info {
+    margin-top: 30px;
+    dl {
+      @include flexbox(start, center);
+      @include text-style(18);
+      margin-bottom: 10px;
+      dt {
+        margin-right: 20px;
+        color: $gray-4;
+      }
+    }
+  }
+
+  .profile-btn {
+    border-bottom: 2px solid $gray-3;
+    width: fit-content;
+    margin-left: auto;
+    color: $gray-3;
+    margin-top: 20px;
+
+    button {
+      color: $gray-3;
+    }
+  }
+}

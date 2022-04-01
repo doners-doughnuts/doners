@@ -21,5 +21,10 @@
 }
 .text-gray {
   @extend %font-base;
-  color: $gray-4;
+  color: $gray-3;
+}
+
+.text-green {
+  @extend %font-base;
+  color: $green;
 }

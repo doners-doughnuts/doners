@@ -1,7 +1,9 @@
-import { BackdropProps } from '@mui/material';
 import classNames from 'classnames/bind';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styles from './Input.module.scss';
 const cx = classNames.bind(styles);
+
+type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 
 type InputType = {
   error?: boolean;
@@ -11,7 +13,10 @@ type InputType = {
   name?: string;
   value?: string;
   disabled?: boolean;
-  onChange?: (...args: any[]) => void;
+  id?: string;
+  multiple?: boolean;
+  size?: string;
+  onChange?: (ev: InputChangeEvent) => void;
 };
 
 const Input = ({
@@ -23,16 +28,39 @@ const Input = ({
   name,
   value,
   disabled,
+  id,
+  multiple,
+  size,
 }: InputType) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState(value);
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  // const handleInputChange = () => {
+  //   if (inputRef.current) {
+  //     onChange(inputRef.current.value);
+  //   }
+  // };
+
+  const changeHandler = (ev: InputChangeEvent) => {
+    setInputValue(ev.target.value);
+    onChange && onChange(ev); // optional로 인한 코드
+  };
+
   return (
     <input
-      className={cx('input-form', { error, success })}
+      className={cx('input-form', { error, success, large: size === 'large' })}
+      id={id}
       placeholder={placeholder}
-      onChange={onChange}
+      onChange={changeHandler}
       type={type}
       name={name}
-      value={value}
+      value={inputValue}
       disabled={disabled}
+      ref={inputRef}
+      multiple={multiple}
     />
   );
 };

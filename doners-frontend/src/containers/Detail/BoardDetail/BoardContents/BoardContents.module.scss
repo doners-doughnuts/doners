@@ -1,12 +1,10 @@
 @import 'assets/styles/main';
 
-.container {
-  margin-top: 100px;
-}
 .inner-container {
   border: 2px solid $black;
   box-shadow: $btn-shadow;
   padding: 50px;
+  margin-bottom: 100px;
   .article-header {
     margin-bottom: 50px;
   }
@@ -23,7 +21,7 @@
     @include flexbox(between, center);
 
     .sub-info {
-      @include flexbox;
+      @include flexbox(start, center);
 
       .views,
       .comment {

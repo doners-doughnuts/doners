@@ -11,19 +11,19 @@ const getRarity = () => {
 
 function processRarity(nfts) {
   const rarity = {}
-  
+
   // loop through all nfts
-  for(const nft of nfts) {
+  for (const nft of nfts) {
     // check if attributes exist
-    if(nft?.attributes?.length > 0) {
+    if (nft?.attributes?.length > 0) {
       // loop through all attributes
-      for(attribute of nft.attributes) {
+      for (attribute of nft.attributes) {
         // add trait type to rarity object if it doesn't exist
-        if(!rarity[attribute.trait_type]) {
+        if (!rarity[attribute.trait_type]) {
           rarity[attribute.trait_type] = {}
         }
         // add attribute value to rarity object if it doesn't exist and set count to 0
-        if(!rarity[attribute.trait_type][attribute.value]) {
+        if (!rarity[attribute.trait_type][attribute.value]) {
           rarity[attribute.trait_type][attribute.value] = {
             count: 0
           }
@@ -38,9 +38,9 @@ function processRarity(nfts) {
 
   // create a total rarity score for each nft by adding up all the rarity scores for each trait type
   nfts.map(nft => {
-    if(nft?.attributes?.length > 0) {
+    if (nft?.attributes?.length > 0) {
       let totalScore = 0;
-      for(attribute of nft.attributes) {
+      for (attribute of nft.attributes) {
         attribute.rarity_score = rarity[attribute.trait_type][attribute.value].rarityScore
         totalScore += parseFloat(attribute.rarity_score)
       }
@@ -50,14 +50,14 @@ function processRarity(nfts) {
 
   // sort nfts by total rarity score
   nfts.sort((a, b) => b.total_rarity_score - a.total_rarity_score)
-  
+
   // add rank to nfts
   nfts.map((nft, index) => {
     nft.rank = index + 1
   })
 
-  // sort nfts by edition again
-  nfts.sort((a, b) => a.custom_fields.edition - b.custom_fields.edition)
+  // sort nfts by tokenId again
+  nfts.sort((a, b) => a.custom_fields.tokenId - b.custom_fields.tokenId)
 
   fs.writeFileSync(`${basePath}/build/json/_metadata_with_rarity.json`, JSON.stringify(nfts, null, 2));
 }

@@ -31,4 +31,8 @@ public class Notification extends BaseEntity {
     @JoinColumn(name = "donation_id")
     private Donation donation;
 
+    public void changeIsRead() {
+        this.isRead = true;
+    }
+
 }

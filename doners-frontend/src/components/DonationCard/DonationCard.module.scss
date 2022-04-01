@@ -1,0 +1,52 @@
+@import 'assets/styles/main';
+
+.card {
+  box-shadow: $btn-shadow;
+  border: 2px solid $black;
+  border-radius: 8px;
+  background-color: $white;
+  padding: 20px;
+  height: 450px;
+  margin: 20px 10px;
+
+  .card-header {
+    @include flexbox(between, center);
+    margin-bottom: 20px;
+  }
+  .user-info {
+    @include flexbox(start, center);
+    .name {
+      margin-left: 10px;
+    }
+  }
+
+  .tag {
+    @include column-flexbox;
+  }
+
+  .title {
+    margin-bottom: 20px;
+  }
+
+  .img-wrap {
+    width: 100%;
+    height: 230px;
+    background-color: gray;
+    // background-image: url('../../assets/images/character.png');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    .thumbnail {
+      width: 100%;
+    }
+  }
+
+  .progress-bar {
+    margin-top: 20px;
+  }
+
+  .progress-rate {
+    @include flexbox(end);
+  }
+}

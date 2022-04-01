@@ -16,8 +16,8 @@ public class DonationGetListResponseDTO {
     @ApiModelProperty(name = "기부글 ID")
     private String donationId;
 
-    @ApiModelProperty(name = "대표 사진")
-    private Map<String, String> image;
+    @ApiModelProperty(name = "썸네일 주소")
+    private String thumbnail;
 
     @ApiModelProperty(name = "제목")
     private String title;
@@ -29,9 +29,9 @@ public class DonationGetListResponseDTO {
     private long targetAmount;
 
     @Builder
-    public DonationGetListResponseDTO(String donationId, Map<String, String> image, String title, String beneficiaryName, long targetAmount) {
+    public DonationGetListResponseDTO(String donationId, String thumbnail, String title, String beneficiaryName, long targetAmount) {
         this.donationId = donationId;
-        this.image = image;
+        this.thumbnail = thumbnail;
         this.title = title;
         this.beneficiaryName = beneficiaryName;
         this.targetAmount = targetAmount;

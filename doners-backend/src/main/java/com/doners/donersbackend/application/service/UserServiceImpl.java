@@ -3,18 +3,23 @@ package com.doners.donersbackend.application.service;
 import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
 import com.doners.donersbackend.application.dto.response.user.*;
 import com.doners.donersbackend.domain.dao.community.Community;
+import com.doners.donersbackend.domain.dao.donation.Donation;
+import com.doners.donersbackend.domain.dao.email.EmailConfirmation;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.repository.CommunityRepository;
-import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
+import com.doners.donersbackend.domain.repository.EmailConfirmationRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
+import com.doners.donersbackend.domain.repository.donation.DonationRepository;
+import com.doners.donersbackend.domain.repository.epilogue.EpilogueRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +30,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final ImageRepository imageRepository;
+
+    private final EmailConfirmationRepository emailConfirmationRepository;
+
+    private final DonationRepository donationRepository;
 
     private final CommunityRepository communityRepository;
 
@@ -103,12 +112,13 @@ public class UserServiceImpl implements UserService {
     // 닉네임 중복 체크
     @Override
     public Integer checkNickname(String userNickname) {
-        if(userRepository.findByUserNickname(userNickname).isPresent())
+        if(userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false).isPresent())
             return 409;
 
         return 200;
     }
 
+    @Transactional
     @Override
     public void deleteUser(String accessToken) {
         String userAccount = getUserAccountFromAccessToken(accessToken);
@@ -118,6 +128,16 @@ public class UserServiceImpl implements UserService {
 
         user.deleteUser();
         userRepository.save(user);
+
+        EmailConfirmation emailConfirmation = emailConfirmationRepository.findByEmailAddress(user.getUserEmail())
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일 인증 정보를 찾을 수 없습니다."));
+
+        try {
+            emailConfirmationRepository.delete(emailConfirmation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -158,6 +178,21 @@ public class UserServiceImpl implements UserService {
 
         imageRepository.save(thumbnailImage);
 
+    }
+
+    @Override
+    public String getProfileImage(String accessToken, String userNickname) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+
+        User requestUser = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("요청을 보낸 유저 정보가 존재하지 않습니다."));
+
+        User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 닉네임을 가진 유저 정보가 존재하지 않습니다."));
+
+        Image profileImage = imageRepository.findByUserAndImageIsResized(user, false).orElse(null);
+
+        return profileImage == null ? "" : "https://donersa404.s3.ap-northeast-2.amazonaws.com/" + profileImage.getImageNewFileName();
     }
 
     @Override
@@ -216,6 +251,39 @@ public class UserServiceImpl implements UserService {
 
         return UserMyPageEpilogueHistoryWrapperResponseDTO.builder()
                 .userMyPageEpilogueHistoryResponseDTOList(list).build();
+    }
+
+    @Override
+    public UserMyPageDonationHistoryWrapperResponseDTO getDonationHistoryList(String accessToken) {
+        String userAccount = getUserAccountFromAccessToken(accessToken);
+        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
+                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+
+        List<Donation> donationList = donationRepository
+                .findByUserAndIsDeletedOrderByStartDateDesc(user, false)
+                .orElseThrow(() -> new IllegalArgumentException("기부 신청 내역이 존재하지 않습니다."));
+
+        List<UserMyPageDonationHistoryResponseDTO> list = new ArrayList<>();
+
+        try {
+            donationList.forEach(donation -> {
+                list.add(
+                        UserMyPageDonationHistoryResponseDTO.builder()
+                                .donationId(donation.getId())
+                                .donationCategoryCode(donation.getCategoryCode())
+                                .donationIsApproved(donation.isApproved())
+                                .donationApprovalStatusCode(donation.getApprovalStatusCode())
+                                .donationTitle(donation.getTitle())
+                                .donationIsReceived(donation.isReceived())
+                                .donationStartDate(donation.getStartDate()).build()
+                );
+            });
+        } catch (Exception e) {
+            return null;
+        }
+
+        return UserMyPageDonationHistoryWrapperResponseDTO.builder()
+                .userMyPageDonationHistoryResponseDTOList(list).build();
     }
 
     @Override
