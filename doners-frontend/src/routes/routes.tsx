@@ -40,7 +40,7 @@ export default function Router() {
         // { path: 'list', element: <DonateListPage /> },
         { path: 'list', element: <DonateListPage /> },
         { path: 'apply', element: <DonateRegistPage /> },
-        { path: ':donate_seq', element: <DonateDetailPage /> },
+        { path: ':donation_id', element: <DonateDetailPage /> },
       ],
     },
     {

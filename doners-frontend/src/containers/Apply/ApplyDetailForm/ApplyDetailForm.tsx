@@ -31,9 +31,14 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     console.log(apply);
     const formData = new FormData();
     formData.append('certificate', apply.certificate);
-    formData.append('muitipart', apply.image);
-    formData.append('evidence', apply.evidence);
+    formData.append('image', apply.image);
 
+    for (let i = 0; i < apply.evidence.length; i++) {
+      formData.append('evidence', apply.evidence[i]);
+      console.log(apply.evidence[i]);
+    }
+    // formData.append('evidence', apply.evidence);
+    console.log(apply.evidence);
     let result = historyList
       .map(({ epilogueBudgetPlan: plan, epilogueBudgetAmount: amount }) => ({
         plan,
@@ -49,11 +54,11 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
           JSON.stringify({
             beneficiaryName: apply.beneficiaryName,
             beneficiaryPhone: apply.beneficiaryPhoney,
+            budget: result,
             categoryCode: apply.categoryCode,
             deputy: apply.deputy,
             description: apply.description,
             endTime: apply.endTime,
-            budget: result,
             targetAmount: total,
             title: apply.title,
             phone: apply.phone,
@@ -64,10 +69,9 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
         }
       )
     );
-    console.log(formData);
     const response = await postDonation(formData);
-    console.log(response);
   };
+
   useEffect(() => {
     const ssftrans = total / 4000000;
     const temp1 = ssftrans * 10000;

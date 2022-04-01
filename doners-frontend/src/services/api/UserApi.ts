@@ -33,7 +33,7 @@ export const login = async (userAccount: any) => {
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: any) => {
   try {
-    const response = await instance.get(`/user/check/${userNickname}`, {});
+    const response = await instance.get(`/user/check/${userNickname}`);
     console.log(response);
     return response;
   } catch (error) {
@@ -57,7 +57,7 @@ export const emailSend = async (userEmail: any) => {
 
 /* 이메일 인증 완료 여부 확인 */
 export const emailcheck = async (userEmail: any) => {
-  const response = await instance.get(`/email/check/${userEmail}`, {});
+  const response = await instance.get(`/email/check/${userEmail}`);
   console.log(response);
   return response;
 };

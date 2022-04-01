@@ -7,11 +7,16 @@ import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
 import { useState } from 'react';
+import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
 
 const cx = classNames.bind(styles);
 
-const DonateInfo = () => {
+type DonateInfoProps = {
+  data: DonationDetailType;
+};
+
+const DonateInfo = ({ data }: DonateInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [target, setTarget] = useState(3.89);
   const [current, setCurrent] = useState(1.0);
@@ -21,6 +26,29 @@ const DonateInfo = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const remainDate = () => {
+    if (data.startDate && data.endDate) {
+      const startDateArr = data.startDate.split('-');
+      const endDateArr = data.endDate.split('-');
+
+      const stDate = new Date(
+        Number(startDateArr[0]),
+        Number(startDateArr[1]),
+        Number(startDateArr[2])
+      );
+      const endDate = new Date(
+        Number(endDateArr[0]),
+        Number(endDateArr[1]),
+        Number(endDateArr[2])
+      );
+
+      const diff = stDate.getTime() - endDate.getTime();
+      const diffDate = diff / (1000 * 60 * 60 * 24);
+
+      return diffDate;
+    }
+    return '0';
+  };
   return (
     <div className={cx('info-form')}>
       <div className={cx('title')}>
@@ -31,14 +59,16 @@ const DonateInfo = () => {
           <div className={cx('date-title')}>
             <H4>신청일: </H4>
           </div>
-          <H4>2022.03.22</H4>
+          <H4>{data.startDate}</H4>
+          {/* <H4>2022.03.22</H4> */}
         </div>
         <div className={cx('date-row')}>
           <div className={cx('date-title')}>
             <H4>마감일: </H4>
           </div>
-          <H4>2022.04.08</H4>
-          <H4 color="red">(D-23)</H4>
+          <H4>{data.endDate}</H4>
+          {/* <H4>2022.04.08</H4> */}
+          <H4 color="red">{`(D-${remainDate()})`}</H4>
         </div>
         <div className={cx('value-row')}>
           <div className={cx('value-title')}>
@@ -68,8 +98,16 @@ const DonateInfo = () => {
           </div>
           {isOpen ? (
             <div className={cx('history-items')}>
-              hello
-              {/* <HistoryItem /> */}
+              {data.budget.map((value) => {
+                return (
+                  <div className={cx('history-item')}>
+                    <P>{value.plan}</P>
+                    <div className={cx('value')}>
+                      <P>{`${value.amount.toLocaleString()}KRW`}</P>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : null}
         </div>
