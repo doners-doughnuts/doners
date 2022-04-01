@@ -46,7 +46,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
     const file = event.target.files;
     setDeputyDoc(file);
     console.log(file);
-    setFile(URL.createObjectURL(file[0]));
+    setFile(file[0]);
     // const formData = new FormData();
     // formData.append('file', file[0]);
     // console.log(formData);

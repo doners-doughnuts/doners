@@ -59,8 +59,8 @@ instance.interceptors.response.use(
     } else {
       // ex. 서버 키지 않은 경우
     }
-    //return Promise.reject(error);
-    return false;
+    return Promise.reject(error);
+    //return false;
   }
 );
 

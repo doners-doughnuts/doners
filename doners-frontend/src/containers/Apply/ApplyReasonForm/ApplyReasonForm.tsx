@@ -24,12 +24,13 @@ import FileUploader from '../FileUploader/FileUploader';
 const cx = classNames.bind(styles);
 
 const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
+  const fileList: File[] = [];
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
   const [content, setContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
-  const [fileList, setFileList] = useState(['']);
+  // const [fileList, setFileList] = useState(['']);
   const [file, setFile] = useState('');
   const handleUploadBtnClick = () => {
     inputRef.current?.click();
@@ -50,29 +51,17 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadImage = async (event: any) => {
     setIsLoading(true);
     const file = event.target.files;
-    setImgFile(URL.createObjectURL(file[0]));
-    setApply({ ...apply, image: URL.createObjectURL(file[0]) });
+    setImgFile(file[0]);
+    setApply({ ...apply, image: file[0] });
     console.log(imgFile);
-    // const formData = new FormData();
-    // formData.append('image', file[0]);
-    // console.log(formData);
   };
 
-  // const handleUploadFile = (data: any) => {
-  //   setFileList((prev) => [...prev, data]);
-  //   console.log(fileList);
+  // const handleUploadFile = async (event: any) => {
+  //   const file = event.target.files;
+  //   console.log(file);
+  //   setFile(file[0]);
+  //   setFileList(file[0]);
   // };
-
-  const handleUploadFile = async (event: any) => {
-    const file = event.target.files;
-    console.log(file);
-    setFile(URL.createObjectURL(file[0]));
-    setFileList([URL.createObjectURL(file[0])]);
-
-    // const formData = new FormData();
-    // formData.append('file', file[0]);
-    // console.log(formData);
-  };
 
   const setValue = () => {
     setApply({ ...apply, evidence: fileList });
@@ -80,18 +69,38 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     setApplyStep(2);
   };
 
+  const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files: FileList | null = e.target.files;
+    const fileArray = Array.prototype.slice.call(files);
+
+    fileArray.forEach((file) => {
+      fileList.push(file);
+    });
+  };
+
+  // const onFileUpload = async () => {
+
+  //   const Food = {
+  //     name: '피자',
+  //     price: 13500,
+  //   };
+
+  //   formData.append('stringFood', JSON.stringify(Food));
+  // };
+
   const setTime = (event: any) => {
     let date = event.target.value;
     let now = new Date();
-    const todaysDate = new Date(
-      now.getTime() - now.getTimezoneOffset() * 60000
-    ).toISOString();
-    console.log(todaysDate);
-    const datafm: string = date + todaysDate.substring(10, todaysDate.length);
-    console.log(datafm);
+    // const todaysDate = new Date(
+    //   now.getTime() - now.getTimezoneOffset() * 60000
+    // ).toISOString();
+    // console.log(todaysDate);
+    // const datafm: string = date + todaysDate.substring(10, todaysDate.length);
+    // console.log(datafm);
+    console.log(date);
     setApply({
       ...apply,
-      endTime: datafm,
+      endDate: date,
     });
   };
   //2022-03-31T13:58:28.915Z
@@ -198,10 +207,11 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
         <div className={cx('file')}>
           {/* <FileUploader onChange={handleUploadFile} list={fileList} /> */}
           <Input
-            onChange={handleUploadFile}
+            onChange={onSaveFiles}
             placeholder="file"
             type="file"
             value={''}
+            multiple
           />
         </div>
       </div>
