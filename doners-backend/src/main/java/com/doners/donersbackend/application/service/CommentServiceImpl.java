@@ -36,10 +36,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void registerComment(String accessToken, CommentRegisterPostDTO commentRegisterPostDTO) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Comment parentComment = null;
         if(commentRepository.findByIdAndCommentIsDeleted(commentRegisterPostDTO.getCommentId(), false).isPresent()){
@@ -62,10 +59,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Integer changeComment(String accessToken, CommentChangePatchDTO commentChangePatchDTO) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Comment comment = commentRepository.findByIdAndCommentIsDeleted(commentChangePatchDTO.getCommentId(), false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
@@ -86,10 +80,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Integer deleteComment(String accessToken, String commentId) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
@@ -110,10 +101,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentGetListWrapperResponseDTO getEpilogueCommentList(String accessToken, String id) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<CommentResponseDTO> list = new ArrayList<>();
 
@@ -128,10 +116,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentGetListWrapperResponseDTO getCommunityCommentList(String accessToken, String id) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<CommentResponseDTO> list = new ArrayList<>();
 
@@ -146,10 +131,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentGetListWrapperResponseDTO getSubCommentList(String accessToken, String parentId) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<CommentResponseDTO> list = new ArrayList<>();
 
@@ -161,9 +143,11 @@ public class CommentServiceImpl implements CommentService{
         return new CommentGetListWrapperResponseDTO(list);
     }
 
-    @Override
-    public String getUserAccountFromAccessToken(String accessToken) {
+    public User getUserFromAccessToken(String accessToken) {
         String token = accessToken.split(" ")[1];
-        return jwtAuthenticationProvider.getUserAccount(token);
+        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+
+        return userRepository.findByUserAccount(userAccount)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
     }
 }
