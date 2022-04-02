@@ -83,10 +83,10 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private double achievementRate;
 
     @ApiModelProperty(name = "증빙 자료")
-    private Map<String, String> evidence;
+    private List<FileResponseDTO> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, List<FileResponseDTO> evidence) {
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
