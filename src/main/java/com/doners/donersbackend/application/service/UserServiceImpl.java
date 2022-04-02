@@ -93,10 +93,7 @@ public class UserServiceImpl implements UserService {
     // 닉네임 변경
     @Override
     public Integer changeUserNickname(String accessToken, String userNickname) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(userAccount)
-                .orElseThrow(() -> new IllegalArgumentException("권한이 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         try {
             user.changeNickname(userNickname);
@@ -121,10 +118,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(String accessToken) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         user.deleteUser();
         userRepository.save(user);
@@ -142,10 +136,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void uploadProfileImage(String accessToken, MultipartFile multipartFile) {
-
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(userAccount).orElseThrow(() -> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         String fileName = awsS3Service.uploadImage(multipartFile);
 
@@ -182,10 +173,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getProfileImage(String accessToken, String userNickname) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-
-        User requestUser = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("요청을 보낸 유저 정보가 존재하지 않습니다."));
+        User reqeustUser = getUserFromAccessToken(accessToken);
 
         User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 닉네임을 가진 유저 정보가 존재하지 않습니다."));
@@ -197,9 +185,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserMyPageCommunityHistoryWrapperResponseDTO getCommunityHistoryList(String accessToken) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<Community> communityList = communityRepository
                 .findByUserAndCommunityIsDeletedOrderByCommunityCreateTimeDesc(user, false)
@@ -226,9 +212,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserMyPageEpilogueHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<Epilogue> epilogueList = epilogueRepository
                 .findByUserAndEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(user, false)
@@ -255,9 +239,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserMyPageDonationHistoryWrapperResponseDTO getDonationHistoryList(String accessToken) {
-        String userAccount = getUserAccountFromAccessToken(accessToken);
-        User user = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<Donation> donationList = donationRepository
                 .findByUserAndIsDeletedOrderByStartDateDesc(user, false)
@@ -286,9 +268,11 @@ public class UserServiceImpl implements UserService {
                 .userMyPageDonationHistoryResponseDTOList(list).build();
     }
 
-    @Override
-    public String getUserAccountFromAccessToken(String accessToken) {
+    public User getUserFromAccessToken(String accessToken) {
         String token = accessToken.split(" ")[1];
-        return jwtAuthenticationProvider.getUserAccount(token);
+        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+
+        return userRepository.findByUserAccount(userAccount)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
     }
 }
