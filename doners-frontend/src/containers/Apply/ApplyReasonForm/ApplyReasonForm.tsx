@@ -19,12 +19,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import P from 'assets/theme/Typography/P/P';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
+import { fDateDash } from 'utils/formatTime';
 import FileUploader from '../FileUploader/FileUploader';
+import { cs } from 'date-fns/locale';
 
 const cx = classNames.bind(styles);
 
 const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const fileList: File[] = [];
+  const date: string = new Date().toString();
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
   const [content, setContent] = useState<string>('');
@@ -63,6 +66,8 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   //   setFileList(file[0]);
   // };
 
+  const addFile = () => {};
+
   const setValue = () => {
     setApply({ ...apply, evidence: fileList });
     console.log(apply);
@@ -90,7 +95,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
 
   const setTime = (event: any) => {
     let date = event.target.value;
-    let now = new Date();
+    // let now = new Date();
     // const todaysDate = new Date(
     //   now.getTime() - now.getTimezoneOffset() * 60000
     // ).toISOString();
@@ -177,6 +182,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
                 type="date"
                 value={''}
                 onChange={setTime}
+                min={fDateDash(date)}
               />
             </div>
           </div>
@@ -205,7 +211,6 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
           </div>
         </div>
         <div className={cx('file')}>
-          {/* <FileUploader onChange={handleUploadFile} list={fileList} /> */}
           <Input
             onChange={onSaveFiles}
             placeholder="file"
@@ -213,6 +218,8 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
             value={''}
             multiple
           />
+          <Input type="file" onChange={addFile} multiple />
+          <div className={cx('file-list')}></div>
         </div>
       </div>
 
