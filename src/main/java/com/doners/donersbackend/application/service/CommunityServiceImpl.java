@@ -146,14 +146,11 @@ public class CommunityServiceImpl implements CommunityService{
         communityRepository.save(community);
     }
 
-    @Override
     public User getUserFromAccessToken(String accessToken) {
         String token = accessToken.split(" ")[1];
         String userAccount = jwtAuthenticationProvider.getUserAccount(token);
 
-        User user = userRepository.findByUserAccount(userAccount)
+        return userRepository.findByUserAccount(userAccount)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
-
-        return user;
     }
 }
