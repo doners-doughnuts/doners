@@ -254,12 +254,17 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
       </div>
 
       <div className={cx('nextbtn')}>
-        {apply.title !== '' ? (
+        {apply.title !== '' &&
+        files.length !== 0 &&
+        apply.categoryCode !== '' &&
+        apply.image !== '' &&
+        apply.endDate !== '' &&
+        apply.description !== '' ? (
           <Button onClick={setValue} color={'alternate'}>
             다음 단계
           </Button>
         ) : (
-          <Button color={'alternate'}>폼을 작성해주세요</Button>
+          <Button color={'alternate'}>폼을 완성해주세요</Button>
         )}
       </div>
     </div>
