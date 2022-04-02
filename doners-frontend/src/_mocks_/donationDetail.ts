@@ -11,7 +11,7 @@ const _donationDetail: DontationDetailType = {
   startDate: '2021/09/22',
   endDate: '2022/07/04',
   account: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367',
-  targetAmount: 2348.239487,
+  targetAmount: 2348,
   budget: { plan: '하나', amount: 234.238, sequence: 1 },
   name: '송민수',
   nickname: 'songeebeosut',
