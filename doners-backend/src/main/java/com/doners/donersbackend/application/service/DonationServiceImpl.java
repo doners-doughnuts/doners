@@ -28,9 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +65,7 @@ public class DonationServiceImpl implements DonationService {
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
-                .account(donationInfoRequestDTO.getAccount())
+                .account(user.getUserAccount())
                 .amount(donationInfoRequestDTO.getTargetAmount())
                 .endDate(donationInfoRequestDTO.getEndDate())
                 .user(user)
@@ -168,9 +166,12 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken) {
-
+    public DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken) throws Exception {
         User user = convertAccessTokenToUser(accessToken);
+
+        if(!user.getUserCode().equals(UserCode.ADMIN)) {
+            throw new Exception("관리자가 아닙니다.");
+        }
 
         List<Donation> pendingDonationList = donationRepository.findByIsApproved(false)
                 .orElseThrow(() -> new IllegalArgumentException("미승인 기부 요청이 없습니다."));
@@ -224,10 +225,14 @@ public class DonationServiceImpl implements DonationService {
         List<File> fileList = fileRepository.findByDonation(donation)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 증빙 자료를 찾을 수 없습니다."));
 
-        Map<String, String> evidence = new HashMap<>();
+        List<FileResponseDTO> evidence = new ArrayList<>();
 
         fileList.forEach(file ->
-                evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
+                evidence.add(FileResponseDTO.builder()
+                        .name(file.getOriginalFileName())
+                        .url(awsS3Service.getFilePath(file.getSavedFileName()))
+                        .build()
+                )
         );
 
         // 조회수 업데이트
@@ -346,6 +351,18 @@ public class DonationServiceImpl implements DonationService {
 
         return 3;
 
+    }
+
+    @Override
+    public DonationCheckResponseDTO checkDonation(String accessToken) {
+
+        User user = convertAccessTokenToUser(accessToken);
+
+        boolean apply = donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null;
+
+        return DonationCheckResponseDTO.builder()
+                .apply(apply)
+                .build();
     }
 
     @Override
