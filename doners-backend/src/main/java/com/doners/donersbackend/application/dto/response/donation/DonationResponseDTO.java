@@ -52,6 +52,9 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "신청자 이름")
     private String name;
 
+    @ApiModelProperty(name = "신청자 닉네임")
+    private String nickname;
+
     @ApiModelProperty(name = "신청자 이메일")
     private String email;
 
@@ -80,7 +83,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private Map<String, String> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
@@ -92,6 +95,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
         this.targetAmount = targetAmount;
         this.budget = budget;
         this.name = name;
+        this.nickname = nickname;
         this.email = email;
         this.phone = phone;
         this.deputy = deputy;
