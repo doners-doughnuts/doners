@@ -3,6 +3,7 @@ package com.doners.donersbackend.application.service;
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationResponseDTO;
@@ -33,6 +34,9 @@ public interface DonationService {
 
     // 기부글 승인
     Integer approveDonation(String accessToken, DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException;
+
+    // 기부글 신청 여부
+    DonationCheckResponseDTO checkDonation(String accessToken);
 
     // 대표 사진 및 증빙 자료 업로드
     void uploadDonationFile(Donation donation, MultipartFile image, List<MultipartFile> evidence);
