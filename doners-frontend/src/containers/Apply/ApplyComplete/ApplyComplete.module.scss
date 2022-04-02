@@ -1,0 +1,26 @@
+@import 'assets/styles/main';
+.container {
+  text-align: center;
+  margin: 90px 0 0 0;
+  .title {
+    @include text-style-24;
+    margin: 0 0 30px 0;
+  }
+  .contents {
+    text-align: left;
+    border: 2px solid black;
+    padding: 60px;
+    margin: 0 200px 50px 200px;
+
+    li {
+      margin: 10px 0 0 0;
+    }
+  }
+  .footer-btn {
+    padding: 15px 0 0 0;
+    Button {
+      margin: 0 10px;
+      width: 200px;
+    }
+  }
+}

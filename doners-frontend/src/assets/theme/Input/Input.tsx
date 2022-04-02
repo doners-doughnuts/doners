@@ -16,6 +16,8 @@ type InputType = {
   id?: string;
   multiple?: boolean;
   size?: string;
+  max?: string;
+  min?: string;
   onChange?: (ev: InputChangeEvent) => void;
 };
 
@@ -31,6 +33,8 @@ const Input = ({
   id,
   multiple,
   size,
+  max,
+  min,
 }: InputType) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState(value);
@@ -61,6 +65,8 @@ const Input = ({
       disabled={disabled}
       ref={inputRef}
       multiple={multiple}
+      max={max}
+      min={min}
     />
   );
 };

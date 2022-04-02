@@ -60,7 +60,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
             description: apply.description,
             endDate: apply.endDate,
             budget: result,
-            targetAmount: ssf,
+            targetAmount: apply.targetAmount,
             title: apply.title,
             phone: apply.phone,
           }),
@@ -72,6 +72,9 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     );
     const response = await postDonation(formData);
     console.log(response);
+    if (response) {
+      setApplyStep(3);
+    }
   };
   useEffect(() => {
     const ssftrans = total / 4000000;
