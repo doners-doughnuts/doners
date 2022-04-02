@@ -8,7 +8,6 @@ const cx = classNames.bind(styles);
 const HistoryItem = ({ value, onDelete }: any) => {
   const money = Number(value.epilogueBudgetAmount);
   const cmoney = money.toLocaleString();
-  console.log(cmoney);
   return (
     <div className={cx('history-item')}>
       <P>{value.epilogueBudgetPlan}</P>

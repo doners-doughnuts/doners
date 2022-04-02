@@ -20,7 +20,7 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     Optional<List<Donation>> findByIsApproved(boolean isApproved);
 
-    Optional<List<Donation>> findByUserAndIsDeletedOrderByStartTimeDesc(User user, boolean isDeleted);
+    Optional<List<Donation>> findByUserAndIsDeletedOrderByStartDateDesc(User user, boolean isDeleted);
 
     @Query("SELECT d FROM Donation d WHERE d.categoryCode = :categoryCode AND (d.title LIKE %:title% OR d.description LIKE %:description%)")
     Optional<List<Donation>> findByCategoryCodeAndTitleContainingOrDescriptionContaining(CategoryCode categoryCode, String title, String description, Pageable pageable);

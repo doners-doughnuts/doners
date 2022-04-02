@@ -7,12 +7,9 @@ import { ReactComponent as RemoveIcon } from 'assets/images/icon/remove.svg';
 const cx = classNames.bind(styles);
 
 const UploadItem = ({ value }: any) => {
-  const money = Number(value.epilogueBudgetAmount);
-  const cmoney = money.toLocaleString();
-  console.log(cmoney);
   return (
     <div className={cx('history-item')}>
-      FILE <P>{value.epilogueBudgetPlan}</P>
+      FILE <P>{value}</P>
       <div className={cx('value')}>
         <div className={cx('icon')}>
           <RemoveIcon />
