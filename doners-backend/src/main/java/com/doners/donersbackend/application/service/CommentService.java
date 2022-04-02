@@ -16,6 +16,4 @@ public interface CommentService {
     CommentGetListWrapperResponseDTO getCommunityCommentList(String accessToken, String id);
     // 감사글 대 댓글 목록
     CommentGetListWrapperResponseDTO getSubCommentList(String accessToken, String parentId);
-
-    String getUserAccountFromAccessToken(String accessToken);
 }
