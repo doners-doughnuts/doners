@@ -65,7 +65,7 @@ public class DonationServiceImpl implements DonationService {
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
-                .account(donationInfoRequestDTO.getAccount())
+                .account(user.getUserAccount())
                 .amount(donationInfoRequestDTO.getTargetAmount())
                 .endDate(donationInfoRequestDTO.getEndDate())
                 .user(user)
@@ -351,6 +351,18 @@ public class DonationServiceImpl implements DonationService {
 
         return 3;
 
+    }
+
+    @Override
+    public DonationCheckResponseDTO checkDonation(String accessToken) {
+
+        User user = convertAccessTokenToUser(accessToken);
+
+        boolean apply = donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null;
+
+        return DonationCheckResponseDTO.builder()
+                .apply(apply)
+                .build();
     }
 
     @Override
