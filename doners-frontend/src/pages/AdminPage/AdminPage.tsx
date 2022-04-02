@@ -12,7 +12,6 @@ import {
 import ApplicationList from 'containers/Admin/ApplicationList/ApplicationList';
 import { cursorTo } from 'readline';
 import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
-import Selectbox, { selectBoxType } from 'assets/theme/Selectbox/Selectbox';
 
 const cx = classNames.bind(styles);
 

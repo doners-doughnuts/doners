@@ -8,20 +8,22 @@ const cx = classNames.bind(styles);
 
 type ApplicationListType = {
   applicationList: ApplicationListItemType[];
-}
+};
 
 const ApplicationList = ({ applicationList }: ApplicationListType) => {
   // console.log(_applicationList)
   return (
-    <section className={cx('container')} >
+    <section className={cx('container')}>
       <div className={cx('header')}>
         <H3>기부 신청 관리</H3>
       </div>
       <div className={cx('inner-container')}>
-        {_applicationList.map(item => <ApplicationListItem item={item} />)}
+        {applicationList.map((item: ApplicationListItemType, idx) => (
+          <ApplicationListItem key={idx} item={item} />
+        ))}
       </div>
-    </section >
-  )
-}
+    </section>
+  );
+};
 
 export default ApplicationList;
