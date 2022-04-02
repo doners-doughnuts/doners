@@ -44,9 +44,6 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const [content, setContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
-  const [fileList, setFileList] = useState<File[]>([]);
-
-  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [files, setFiles] = useState<IFileTypes[]>([]);
 
   const dragRef = useRef<HTMLLabelElement | null>(null);
@@ -75,12 +72,13 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const setValue = () => {
     setApply({ ...apply, evidence: files.map((data) => data.object) });
     console.log(files);
+    console.log(files.map((data) => data.object));
     console.log(apply);
+    setApplyStep(2);
   };
 
   const setTime = (event: any) => {
     let date = event.target.value;
-    console.log(date);
     setApply({
       ...apply,
       endDate: date,
@@ -91,13 +89,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     (e: ChangeEvent<HTMLInputElement> | any): void => {
       let selectFiles: File[] = [];
       let tempFiles: IFileTypes[] = files;
-
-      if (e.type === 'drop') {
-        selectFiles = e.dataTransfer.files;
-      } else {
-        selectFiles = e.target.files;
-      }
-
+      selectFiles = e.target.files;
       for (const file of selectFiles) {
         tempFiles = [
           ...tempFiles,
@@ -167,6 +159,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
         </div>
         <div className={cx('detail-data')}>
           <div className={cx('title')}>
+            제목
             <Input
               placeholder="모금 제목(최대 30자)"
               value={apply.title}
@@ -180,6 +173,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
           </div>
           <div className={cx('select-data')}>
             <div className={cx('select')}>
+              카테고리
               <Selectbox
                 onChange={(e) =>
                   setApply({
@@ -191,6 +185,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
               />
             </div>
             <div className={cx('date')}>
+              모금 마감일자
               <Input
                 placeholder="모금 마감일자"
                 type="date"
