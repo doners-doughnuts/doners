@@ -27,11 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -64,12 +61,11 @@ public class DonationServiceImpl implements DonationService {
         Donation donation = Donation.builder()
                 .phone(donationInfoRequestDTO.getPhone())
                 .isDeputy(donationInfoRequestDTO.isDeputy())
-//                .beneficiaryName(donationInfoRequestDTO.getBeneficiaryName())
-//                .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
                 .title(donationInfoRequestDTO.getTitle())
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
+                .account(donationInfoRequestDTO.getAccount())
                 .amount(donationInfoRequestDTO.getTargetAmount())
                 .endDate(donationInfoRequestDTO.getEndDate())
                 .user(user)
@@ -109,6 +105,10 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view) {
+        System.out.println("@@@@@@@@" + categoryCode);
+        System.out.println("@@@@@@@@" + page);
+        System.out.println("@@@@@@@@" + sort);
+        System.out.println("@@@@@@@@" + view);
 
         List<Donation> donationList = new ArrayList<>();
 
@@ -160,6 +160,7 @@ public class DonationServiceImpl implements DonationService {
             }
         }
 
+        System.out.println("donationList size : " + donationList.size());
         return convertDonationListToDTO(donationList);
 
     }
@@ -221,10 +222,14 @@ public class DonationServiceImpl implements DonationService {
         List<File> fileList = fileRepository.findByDonation(donation)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 증빙 자료를 찾을 수 없습니다."));
 
-        Map<String, String> evidence = new HashMap<>();
+        List<FileResponseDTO> evidence = new ArrayList<>();
 
         fileList.forEach(file ->
-                evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
+                evidence.add(FileResponseDTO.builder()
+                        .name(file.getOriginalFileName())
+                        .url(awsS3Service.getFilePath(file.getSavedFileName()))
+                        .build()
+                )
         );
 
         // 조회수 업데이트
@@ -239,9 +244,11 @@ public class DonationServiceImpl implements DonationService {
                 .image(getDonationImage(donation, false))
                 .startDate(donation.getStartDate())
                 .endDate(donation.getEndDate())
+                .account(donation.getAccount())
                 .targetAmount(donation.getAmount())
                 .budget(donationBudgetResponseDTOList)
                 .name(donation.getUser().getUserName())
+                .nickname(donation.getUser().getUserNickname())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
                 .deputy(donation.isDeputy())

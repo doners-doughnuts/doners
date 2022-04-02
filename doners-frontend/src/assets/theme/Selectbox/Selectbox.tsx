@@ -6,10 +6,8 @@ import Select from 'react-select';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 const cx = classNames.bind(styles);
 
-type InputChangeEvent = ChangeEvent<HTMLInputElement>;
-
-type selectBoxType = {
-  option: {
+export type selectBoxType = {
+  options: {
     value: string;
     label: string;
   }[];
@@ -17,10 +15,10 @@ type selectBoxType = {
   value?: string;
 };
 
-const Selectbox = ({ option, onChange, value }: selectBoxType) => {
+const Selectbox = ({ options }: selectBoxType) => {
   return (
     <div className={cx('box')}>
-      <Select options={option} defaultValue={option[0]} onChange={onChange} />
+      <Select options={options} defaultValue={options[0]} />
     </div>
   );
 };

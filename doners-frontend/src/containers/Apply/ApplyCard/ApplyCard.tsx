@@ -25,11 +25,11 @@ const ApplyCard = () => {
     deputy: false,
     title: '',
     categoryCode: '',
-    endTime: '',
+    endDate: '',
     description: '',
     image: '',
     phone: '',
-    evidence: [],
+    evidence: '',
     targetAmount: 0,
     budget: [{ amount: '', plan: '', sequence: '' }],
   });
