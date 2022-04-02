@@ -1,8 +1,13 @@
-import Selectbox, { selectBoxType } from 'assets/theme/Selectbox/Selectbox';
+import Button from 'assets/theme/Button/Button';
+import Selectbox from 'assets/theme/Selectbox/Selectbox';
 import classNames from 'classnames/bind';
 import { env } from 'process';
 import { useEffect, useState } from 'react';
-import { approveApplication, getDonationDetail } from 'services/api/Donation';
+import {
+  getDonationDetail,
+  approveApplication,
+  declineApplication,
+} from 'services/api/Donation';
 import { createFundraiser } from 'services/blockchain/SsfApi';
 import { DonationListType, DontationDetailType } from 'types/DonationTypes';
 import { getWalletAccount } from 'utils/walletAddress';
@@ -30,15 +35,15 @@ export enum RejectionCode {
 
 /* 관리자 기부신청 처리 관련 반려 사유 */
 const options = [
-  { value: '0', label: RejectionCode.BEFORE_CONFIRMATION },
-  { value: '1', label: RejectionCode.APPROVAL },
-  { value: '2', label: RejectionCode.WRONG_CONTACT_NUM },
-  { value: '3', label: RejectionCode.UNQUALIFIED_DEPUTY },
-  { value: '4', label: RejectionCode.DUPLICATION },
-  { value: '5', label: RejectionCode.INADEQUATE_PLANNING },
-  { value: '6', label: RejectionCode.INSUFFICIENT_REASON },
-  { value: '7', label: RejectionCode.LACK_OF_EVIDENCE },
-  { value: '8', label: RejectionCode.ETC },
+  { value: 'BEFORE_CONFIRMATION', label: RejectionCode.BEFORE_CONFIRMATION },
+  { value: 'APPROVAL', label: RejectionCode.APPROVAL },
+  { value: 'WRONG_CONTACT_NUM', label: RejectionCode.WRONG_CONTACT_NUM },
+  { value: 'UNQUALIFIED_DEPUTY', label: RejectionCode.UNQUALIFIED_DEPUTY },
+  { value: 'DUPLICATION', label: RejectionCode.DUPLICATION },
+  { value: 'INADEQUATE_PLANNING', label: RejectionCode.INADEQUATE_PLANNING },
+  { value: 'INSUFFICIENT_REASON', label: RejectionCode.INSUFFICIENT_REASON },
+  { value: 'LACK_OF_EVIDENCE', label: RejectionCode.LACK_OF_EVIDENCE },
+  { value: 'ETC', label: RejectionCode.ETC },
 ];
 
 type ApprovalModalType = {
@@ -50,7 +55,7 @@ type ApprovalModalType = {
 
 const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
   const [approvalStatus, setApprovalStatus] = useState('');
-
+  // console.log(approvalStatus);
   useEffect(() => {
     // TODO
   }, []);
@@ -61,7 +66,9 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
       donation.donationId
     );
 
-    const response = await createFundraiser(
+    // contract address가 반환된다
+    // ex. 0xc86F168f8D5b22C677c0184C2865C11Dc5921951
+    const fundContractAddress: string = await createFundraiser(
       process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!,
       await getWalletAccount(),
       donationDetail.title,
@@ -73,14 +80,20 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
       donationDetail.account
     );
 
-    console.log(response);
+    console.log(fundContractAddress);
 
-    // if (response) {
-    //   const res = await approveApplication(
-    //     contents.donationId,
-    //     approvalStatusCode === ''
-    //   );
-    // }
+    if (fundContractAddress.includes('0x')) {
+      const response = await approveApplication(donation.donationId);
+      console.log(response);
+    }
+  };
+
+  const handleDecline = async () => {
+    const response = await declineApplication(
+      donation.donationId,
+      approvalStatus
+    );
+    console.log(response);
   };
 
   return (
@@ -93,10 +106,17 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
         <section className={cx('inner-container')}>
           <div className={cx('p')}>
             모달
-            <Selectbox options={options} />
+            <Selectbox
+              onChange={(e) => setApprovalStatus(e.value)}
+              options={options}
+            />
           </div>
-          <button onClick={handleApprove}>승인</button>
-          <button>거절</button>
+          <Button color="secondary" fullWidth onClick={handleApprove}>
+            승인
+          </Button>
+          <Button color="alternate" fullWidth onClick={handleDecline}>
+            거절
+          </Button>
         </section>
       ) : null}
     </div>
