@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @ToString
 public class EpilogueGetListWrapperResponseDTO extends BaseResponseDTO {
-    @ApiModelProperty(name = "감사 글 목록")
+    @ApiModelProperty(name = "에필로그 목록")
     private List<EpilogueGetListResponseDTO> epilogueGetListResponseDTOList;
 
     @Builder

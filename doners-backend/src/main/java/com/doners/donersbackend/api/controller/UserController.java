@@ -277,7 +277,7 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code=200, message="미승인 기부 요청 목록을 정상적으로 불러왔습니다."),
             @ApiResponse(code=404, message="미승인 기부 요청 목록이 없습니다."),
-            @ApiResponse(code=409, message="미승인 기부 요청 목록을 불러오지 못했습니다.")
+            @ApiResponse(code=409, message="관리자가 아니어서 미승인 기부 요청 목록을 불러오지 못했습니다.")
     })
     public ResponseEntity<? extends BaseResponseDTO> getPendingDonationList(
             @ApiIgnore @RequestHeader("Authorization") String accessToken) {
@@ -288,7 +288,7 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("미승인 기부 요청 목록이 없습니다.", 404));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("미승인 기부 요청 목록을 불러오지 못했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("관리자가 아니어서 미승인 기부 요청 목록을 불러오지 못했습니다.", 409));
         }
 
         return ResponseEntity.ok(DonationGetListWrapperResponseDTO.of("미승인 기부 요청 목록을 정상적으로 불러왔습니다.", 200, donationGetListWrapperResponseDTO));

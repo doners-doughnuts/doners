@@ -17,6 +17,4 @@ public interface CommunityService {
     CommunityGetListWrapperResponseDTO getCommunityList(String accessToken, int sequence);
 
     CommunityResponseDTO getCommunity(String accessToken, String communityId);
-
-    User getUserFromAccessToken(String accessToken);
 }

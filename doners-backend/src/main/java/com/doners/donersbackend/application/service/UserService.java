@@ -32,6 +32,4 @@ public interface UserService {
     UserMyPageEpilogueHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken);
 
     UserMyPageDonationHistoryWrapperResponseDTO getDonationHistoryList(String accessToken);
-
-    String getUserAccountFromAccessToken(String accessToken);
 }

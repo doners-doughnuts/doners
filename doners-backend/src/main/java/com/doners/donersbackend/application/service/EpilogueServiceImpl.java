@@ -51,10 +51,7 @@ public class EpilogueServiceImpl implements EpilogueService {
     @Transactional
     @Override
     public void registerEpilogue(String accessToken, EpilogueRegisterPostDTO epilogueRegisterPostDTO, MultipartFile image) {
-        String token = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(token)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Donation donation = donationRepository.findById(epilogueRegisterPostDTO.getDonationId()).orElse(null);
 
@@ -67,16 +64,7 @@ public class EpilogueServiceImpl implements EpilogueService {
                 .epilogueCreateTime(LocalDateTime.now())
                 .donation(donation).build();
 
-        epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
-                epilogueBudgetRepository.save(
-                        EpilogueBudget.builder()
-                                .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
-                                .epilogueBudgetAmount(epilogueBudgetRequestDTO.getEpilogueBudgetAmount())
-                                .epilogueBudgetSequence(epilogueBudgetRequestDTO.getEpilogueBudgetSequence())
-                                .epilogue(epilogue)
-                                .build()
-                )
-        );
+        registerEpilogueBudgets(epilogue, epilogueRegisterPostDTO);
 
         epilogueRepository.save(epilogue);
         // 썸네일 이미지 업로드
@@ -85,10 +73,7 @@ public class EpilogueServiceImpl implements EpilogueService {
 
     @Override
     public Integer changeEpilogue(String accessToken, EpilogueChangePatchDTO epilogueChangePatchDTO) {
-        String token = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(token)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Epilogue epilogue = epilogueRepository.findById(epilogueChangePatchDTO.getEpilogueId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 에필로그를 찾을 수 없습니다."));
@@ -109,10 +94,7 @@ public class EpilogueServiceImpl implements EpilogueService {
 
     @Override
     public Integer deleteEpilogue(String accessToken, String epilogueId) {
-        String token = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(token)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Epilogue epilogue = epilogueRepository.findByIdAndEpilogueIsDeleted(epilogueId, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 글을 찾을 수 없습니다."));
@@ -133,32 +115,14 @@ public class EpilogueServiceImpl implements EpilogueService {
 
     @Override
     public EpilogueGetListWrapperResponseDTO getEpilogueList(String accessToken, int sequence) {
-        String token = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(token)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         List<Epilogue> epilogueList = epilogueRepository.findByEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(false, PageRequest.of(sequence-1, 9, Sort.Direction.DESC, "epilogueCreateTime"))
                 .orElseThrow(() -> new IllegalArgumentException("에필로그가 없습니다."));
 
         List<EpilogueGetListResponseDTO> epilogueGetListResponseDTOList = new ArrayList<>();
 
-        epilogueList.forEach(epilogue -> {
-            Image epilogueThumbnailImage = imageRepository.findByEpilogueAndImageIsResized(epilogue, true)
-                            .orElseThrow(() -> new IllegalArgumentException("에필로그 썸네일 이미지가 없습니다."));
-
-            epilogueGetListResponseDTOList.add(
-                    EpilogueGetListResponseDTO.builder()
-                            .epilogueId(epilogue.getId())
-                            .epilogueTitle(epilogue.getEpilogueTitle())
-                            .epilogueDescription(epilogue.getEpilogueDescription())
-                            .epilogueCreateTime(epilogue.getEpilogueCreateTime())
-                            .epilogueViews(epilogue.getEpilogueViews())
-                            .epilogueWriter(epilogue.getUser().getUserNickname())
-                            .epilogueThumbnailImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueThumbnailImage.getImageNewFileName())
-                            .build()
-            );
-        });
+        epilogueGetListResponseDTOList = createEpilogueGetListReponseDTOList(epilogueList, epilogueGetListResponseDTOList);
 
         return EpilogueGetListWrapperResponseDTO.builder()
                 .epilogueGetListResponseDTOList(epilogueGetListResponseDTOList)
@@ -167,10 +131,7 @@ public class EpilogueServiceImpl implements EpilogueService {
 
     @Override
     public EpilogueResponseDTO getEpilogue(String accessToken, String epilogueId) {
-        String token = getUserAccountFromAccessToken(accessToken);
-
-        User user = userRepository.findByUserAccount(token)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+        User user = getUserFromAccessToken(accessToken);
 
         Epilogue epilogue = epilogueRepository.findByIdAndEpilogueIsDeleted(epilogueId, false)
                 .orElseThrow(() -> new IllegalArgumentException("해당 에필로그를 찾을 수 없습니다."));
@@ -193,16 +154,9 @@ public class EpilogueServiceImpl implements EpilogueService {
         );
 
         increaseViews(epilogue);
-        return EpilogueResponseDTO.builder()
-                .epilogueTitle(epilogue.getEpilogueTitle())
-                .epilogueDescription(epilogue.getEpilogueDescription())
-                .epilogueCreateTime(epilogue.getEpilogueCreateTime())
-                .epilogueViews(epilogue.getEpilogueViews())
-                .epilogueWriter(epilogue.getUser().getUserNickname())
-                .epilogueImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueImage.getImageNewFileName())
-                .donationId(epilogue.getDonation().getId())
-                .epilogueBudgetResponseDTOList(epilogueBudgetResponseDTOList)
-                .build();
+
+
+        return createEpilogueResponseDTO(epilogue, epilogueImage, epilogueBudgetResponseDTOList);
     }
 
     @Override
@@ -237,9 +191,58 @@ public class EpilogueServiceImpl implements EpilogueService {
         epilogueRepository.save(epilogue);
     }
 
-    @Override
-    public String getUserAccountFromAccessToken(String accessToken) {
+    public void registerEpilogueBudgets(Epilogue epilogue, EpilogueRegisterPostDTO epilogueRegisterPostDTO) {
+        epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
+                epilogueBudgetRepository.save(
+                        EpilogueBudget.builder()
+                                .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
+                                .epilogueBudgetAmount(epilogueBudgetRequestDTO.getEpilogueBudgetAmount())
+                                .epilogueBudgetSequence(epilogueBudgetRequestDTO.getEpilogueBudgetSequence())
+                                .epilogue(epilogue)
+                                .build()
+                )
+        );
+    }
+
+    public List<EpilogueGetListResponseDTO> createEpilogueGetListReponseDTOList(List<Epilogue> epilogueList, List<EpilogueGetListResponseDTO> epilogueGetListResponseDTOList) {
+        epilogueList.forEach(epilogue -> {
+            Image epilogueThumbnailImage = imageRepository.findByEpilogueAndImageIsResized(epilogue, true)
+                    .orElseThrow(() -> new IllegalArgumentException("에필로그 썸네일 이미지가 없습니다."));
+
+            epilogueGetListResponseDTOList.add(
+                    EpilogueGetListResponseDTO.builder()
+                            .epilogueId(epilogue.getId())
+                            .epilogueTitle(epilogue.getEpilogueTitle())
+                            .epilogueDescription(epilogue.getEpilogueDescription())
+                            .epilogueCreateTime(epilogue.getEpilogueCreateTime())
+                            .epilogueViews(epilogue.getEpilogueViews())
+                            .epilogueWriter(epilogue.getUser().getUserNickname())
+                            .epilogueThumbnailImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueThumbnailImage.getImageNewFileName())
+                            .build()
+            );
+        });
+
+        return epilogueGetListResponseDTOList;
+    }
+
+    public EpilogueResponseDTO createEpilogueResponseDTO(Epilogue epilogue, Image epilogueImage, List<EpilogueBudgetResponseDTO> epilogueBudgetResponseDTOList) {
+        return EpilogueResponseDTO.builder()
+                .epilogueTitle(epilogue.getEpilogueTitle())
+                .epilogueDescription(epilogue.getEpilogueDescription())
+                .epilogueCreateTime(epilogue.getEpilogueCreateTime())
+                .epilogueViews(epilogue.getEpilogueViews())
+                .epilogueWriter(epilogue.getUser().getUserNickname())
+                .epilogueImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + epilogueImage.getImageNewFileName())
+                .donationId(epilogue.getDonation().getId())
+                .epilogueBudgetResponseDTOList(epilogueBudgetResponseDTOList)
+                .build();
+    }
+
+    public User getUserFromAccessToken(String accessToken) {
         String token = accessToken.split(" ")[1];
-        return jwtAuthenticationProvider.getUserAccount(token);
+        String userAccount = jwtAuthenticationProvider.getUserAccount(token);
+
+        return userRepository.findByUserAccount(userAccount)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
     }
 }
