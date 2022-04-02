@@ -7,9 +7,8 @@ import com.doners.donersbackend.application.dto.response.community.CommunityResp
 import com.doners.donersbackend.domain.dao.user.User;
 
 public interface CommunityService {
-    // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자 , 코드
-    void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO);
-    // 글 변경
+    void registerCommunity(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO);
+
     Integer changeCommunity(String accessToken, CommunityChangePatchDTO communityChangePatchDTO);
 
     Integer deleteCommunity(String accessToken, String communityId);
