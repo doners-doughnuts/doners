@@ -11,7 +11,7 @@ import styles from './ApplicationListItem.module.scss';
 
 const cx = classNames.bind(styles);
 
-const ApplicationListItem = (item: ApplicationListItemType) => {
+const ApplicationListItem = (item: any) => {
   const [status, setStatus] = useState(true);
 
   const { donationId, thumbnail, title, beneficiaryName, targetAmount } =

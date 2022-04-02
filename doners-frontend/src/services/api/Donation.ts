@@ -50,11 +50,7 @@ export const getDonationDetail = async (donation_id: string) => {
  * @param approved
  * @param rejectionCode
  */
-export const approveApplication = async (
-  donationId: string,
-  approved: boolean,
-  rejectionCode: string
-) => {
+export const approveApplication = async (donationId: string) => {
   const response = await instance.patch(COMMON + '/approve', {
     donationId,
     approved: true,
@@ -70,7 +66,6 @@ export const approveApplication = async (
  */
 export const declineApplication = async (
   donationId: string,
-  approved: boolean,
   rejectionCode: string
 ) => {
   const response = await instance.patch(COMMON + '/approve', {
