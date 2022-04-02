@@ -2,12 +2,12 @@ package com.doners.donersbackend.domain.dao.donation;
 
 import com.doners.donersbackend.domain.dao.BaseEntity;
 import com.doners.donersbackend.domain.dao.user.User;
-import com.doners.donersbackend.domain.enums.CategoryCode;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
+import com.doners.donersbackend.domain.enums.CategoryCode;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @ToString
@@ -38,14 +38,17 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_description")
     private String description;
 
+    @Column(name = "donation_account")
+    private String account;
+
     @Column(name = "donation_amount")
-    private long amount;
+    private double amount;
 
-    @Column(name = "donation_start_time")
-    private LocalDateTime startTime;
+    @Column(name = "donation_start_date")
+    private LocalDate startDate;
 
-    @Column(name = "donation_end_time")
-    private LocalDateTime endTime;
+    @Column(name = "donation_end_date")
+    private LocalDate endDate;
 
     @Column(name = "donation_is_approved", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isApproved;
@@ -91,8 +94,8 @@ public class Donation extends BaseEntity {
     }
 
     // 시작
-    public void changeStartTime() {
-        this.startTime = LocalDateTime.now();
+    public void changeStartDate() {
+        this.startDate = LocalDate.now();
     }
 
     // 거절 사유

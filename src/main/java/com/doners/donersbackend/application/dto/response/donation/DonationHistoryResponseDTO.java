@@ -15,10 +15,10 @@ public class DonationHistoryResponseDTO {
     private String nickname;
 
     @ApiModelProperty(name = "기부 금액")
-    private long amount;
+    private double amount;
 
     @Builder
-    public DonationHistoryResponseDTO(String nickname, long amount) {
+    public DonationHistoryResponseDTO(String nickname, double amount) {
         this.nickname = nickname;
         this.amount = amount;
     }

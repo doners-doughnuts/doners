@@ -63,14 +63,13 @@ public class DonationServiceImpl implements DonationService {
         Donation donation = Donation.builder()
                 .phone(donationInfoRequestDTO.getPhone())
                 .isDeputy(donationInfoRequestDTO.isDeputy())
-                .beneficiaryName(donationInfoRequestDTO.getBeneficiaryName())
-                .beneficiaryPhone(donationInfoRequestDTO.getBeneficiaryPhone())
                 .title(donationInfoRequestDTO.getTitle())
                 .categoryCode(donationInfoRequestDTO.getCategoryCode())
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .description(donationInfoRequestDTO.getDescription())
+                .account(donationInfoRequestDTO.getAccount())
                 .amount(donationInfoRequestDTO.getTargetAmount())
-                .endTime(donationInfoRequestDTO.getEndTime())
+                .endDate(donationInfoRequestDTO.getEndDate())
                 .user(user)
                 .build();
 
@@ -108,6 +107,10 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view) {
+        System.out.println("@@@@@@@@" + categoryCode);
+        System.out.println("@@@@@@@@" + page);
+        System.out.println("@@@@@@@@" + sort);
+        System.out.println("@@@@@@@@" + view);
 
         List<Donation> donationList = new ArrayList<>();
 
@@ -117,7 +120,7 @@ public class DonationServiceImpl implements DonationService {
                 // 최신 순
                 case 1:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
                 // 참여 미달 순
@@ -130,17 +133,17 @@ public class DonationServiceImpl implements DonationService {
                 // 마감 임박 순
                 case 3:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
-        // TODO: 모금 가능한 기부만 보기
+            // TODO: 모금 가능한 기부만 보기
         } else {
             switch (sort) {
                 // 최신 순
                 case 1:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
                 // 참여 미달 순
@@ -153,12 +156,13 @@ public class DonationServiceImpl implements DonationService {
                 // 마감 임박 순
                 case 3:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endTime"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
         }
 
+        System.out.println("donationList size : " + donationList.size());
         return convertDonationListToDTO(donationList);
 
     }
@@ -229,26 +233,34 @@ public class DonationServiceImpl implements DonationService {
         // 조회수 업데이트
         increaseViews(donation);
 
-        return DonationResponseDTO.builder()
+        DonationResponseDTO donationResponseDTO = DonationResponseDTO.builder()
                 .title(donation.getTitle())
                 .categoryCode(donation.getCategoryCode())
                 .views(donation.getViews())
                 .recommendations(donation.getRecommendations())
                 .description(donation.getDescription())
                 .image(getDonationImage(donation, false))
-                .startTime(donation.getStartTime())
-                .endTime(donation.getEndTime())
+                .startDate(donation.getStartDate())
+                .endDate(donation.getEndDate())
+                .account(donation.getAccount())
                 .targetAmount(donation.getAmount())
                 .budget(donationBudgetResponseDTOList)
                 .name(donation.getUser().getUserName())
+                .nickname(donation.getUser().getUserNickname())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
+                .deputy(donation.isDeputy())
                 .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
                 .approvalStatusCode(donation.getApprovalStatusCode())
                 .donors(donationHistoryResponseDTOList)
                 .achievementRate((double) amountSum / donation.getAmount() * 100)
                 .evidence(evidence)
                 .build();
+
+        // 대리인
+        if (donation.isDeputy()) donationResponseDTO.changeBeneficiaryName(donation.getBeneficiaryName());
+
+        return donationResponseDTO;
 
     }
 
@@ -328,7 +340,7 @@ public class DonationServiceImpl implements DonationService {
         // 신청 승인 및 시작 시간 설정
         donation.changeIsApproved();
         donation.changeApprovalStatusCode(ApprovalStatusCode.APPROVAL);
-        donation.changeStartTime();
+        donation.changeStartDate();
 
         donationRepository.save(donation);
 
