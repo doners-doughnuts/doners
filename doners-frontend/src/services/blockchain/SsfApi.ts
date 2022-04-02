@@ -37,7 +37,7 @@ export const getSSFBalance = async (walletAddress: string) => {
 //   SsfContract.methods.withdraw().call().then(console.log);
 // };
 /* 기부금 만들기 */
-// fundRaisingCloses -> Date.now() + 마감기한 사용 초단위로 변환!!
+// fundRaisingCloses -> 마감일자 초단위로 변환!!
 export const createFundraiser = async (
   factoryAddress: string,
   walletAddress: string,
@@ -46,7 +46,6 @@ export const createFundraiser = async (
   imageURL: string,
   description: string,
   donationsGoal: number,
-  nowCollectMoney: number,
   fundRaisingCloses: number,
   beneficiary: string
 ) => {
@@ -57,7 +56,6 @@ export const createFundraiser = async (
       imageURL,
       description,
       donationsGoal,
-      nowCollectMoney,
       fundRaisingCloses,
       beneficiary
     )
