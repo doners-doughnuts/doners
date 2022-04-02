@@ -10,7 +10,7 @@ import H4 from 'assets/theme/Typography/H4/H4';
 import {
   checkNickname,
   emailSend,
-  signupcheck,
+  signup,
   emailcheck,
   login,
 } from 'services/api/UserApi';
@@ -188,7 +188,7 @@ const SignupFormNew = () => {
       };
       // //회원가입 api 호출
       try {
-        const response = await signupcheck(bodyparams);
+        const response = await signup(bodyparams);
         if (!response) {
           console.log(response);
           alert('회원가입 실패');

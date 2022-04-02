@@ -7,152 +7,199 @@ import styles from './SignupForm.module.scss';
 import Input from 'assets/theme/Input/Input';
 import EmailAuthValidation from './EmailAuthValidation';
 import SignUpValidation from './SignUpValidation';
-import { checkNickname, signupcheck } from 'services/api/UserApi';
+import {
+  checkNickname,
+  emailcheck,
+  emailSend,
+  login,
+  signup,
+} from 'services/api/UserApi';
+import H2 from 'assets/theme/Typography/H2/H2';
+import H3 from 'assets/theme/Typography/H3/H3';
+import P from 'assets/theme/Typography/P/P';
+import { toast } from 'react-toastify';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { signupState } from 'atoms/atoms';
-import { useRecoilValue } from 'recoil';
-import useEmailAuth from 'hooks/useEmailAuth';
-import { useSetRecoilState } from 'recoil';
 
 const cx = classNames.bind(styles);
 
 const SignupForm = () => {
+  const [nicknameCheck, setNicknameCheck] = useState(false);
+  const [isEmailSend, setIsEmailSend] = useState(false);
+  const [isRegist, setIsRegist] = useState(false);
+  const [throttle, setThrottle] = useState(false);
+  const signupAccount = useRecoilValue(signupState);
+
   const navigate = useNavigate();
-  const [emailvailerror, SetEmailvailerror] = useState();
-  const [emailvailerrormsg, SetEmailvailerrorMsg] = useState('');
-  const [emailsendmsg, Setemailsendmsg] = useState('');
-  const [authmail, sendAuthMail] = useState(false);
-  const [disabledattr, setDisabledattr] = useState(false);
   const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
     initialValues: {
       realname: '',
-      authmail: false,
       nickname: '',
       email: '',
     },
     onSubmit: async (submitValues) => {
-      console.log(submitValues);
-      alert('회원가입 시도');
-      // console.log(checkNickname(submitValues.nickname));
-      //const result = handlesignup();
-      // console.log(result);
-      console.log('회원가입 완료');
-      alert('회원가입 완료');
-      navigate(-1);
+      try {
+        await emailcheck(submitValues.email);
+        const body = {
+          userAccount: signupAccount,
+          userEmail: submitValues.email,
+          userName: submitValues.realname,
+          userNickname: submitValues.nickname,
+          userCode: 'USER',
+        };
+        await signup(body);
+        toast.success('회원가입이 완료되었습니다.');
+        await login(signupAccount);
+        navigate(-1);
+      } catch (error) {
+        toast.error('이메일 인증이 완료되지 않았습니다.');
+      }
     },
     validate: SignUpValidation,
   });
 
-  const signupvisible = useRecoilValue(signupState);
+  const handleNicknameCheck = () => {
+    checkNicknameApi();
+  };
 
-  // const signup = async (nickname: any) => {
-  //   try {
-  //     const result = await checkNickname(nickname);
-  //     console.log(result);
-  //     Setemailsendmsg(result.data.message);
-  //   } catch (error) {}
-  // };
-
-  // const handlesignup = () => {
-  //   try {
-  //     const result = signupcheck(
-  //       values.realname,
-  //       values.email,
-  //       signupvisible,
-  //       values.nickname
-  //     );
-  //     console.log(result);
-  //   } catch (error) {}
-  // };
-
-  const handleEmailSend = async (email: any) => {
+  const checkNicknameApi = async () => {
     try {
-      //const result = await emailConfirm(email);
-      Setemailsendmsg('전송된 메일의 링크를 눌러주세요.');
-      //    console.log(result);
+      const result = await checkNickname(values.nickname);
+      console.log(result);
+      setNicknameCheck(true);
+      toast.success('사용가능한 닉네임입니다.');
     } catch (error) {
-      Setemailsendmsg('이미 메일을 전송하였습니다. 메일을 확인해주세요');
+      toast.error('사용중인 닉네임입니다.');
     }
-  };
-  const isEmail = (email: any) => {
-    const emailRegex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    return emailRegex.test(email);
   };
 
-  const emailAuthentication = (event: React.ChangeEvent<HTMLInputElement>) => {
-    SetEmailvailerrorMsg('');
-    Setemailsendmsg('');
-    //이메일 유효성 확인..
-    if (!values.email) {
-      SetEmailvailerrorMsg('이메일을 입력해주세요.');
-    } else if (!isEmail(values.email)) {
-      SetEmailvailerrorMsg('이메일 형식으로 입력해주세요.');
-    } else if (!isEmail(values.email)) {
-      //
-      SetEmailvailerrorMsg('이미 인증이 완료된 이메일입니다.');
-    } else {
-      sendAuthMail(true);
-      handleChange(event);
-      handleEmailSend(values.email);
-      setDisabledattr(true);
+  const handleEmailSend = () => {
+    if (throttle) return;
+    if (!throttle) {
+      sendEmail();
     }
   };
+
+  const sendEmail = async () => {
+    try {
+      setIsEmailSend(true);
+      setTimeout(async () => {
+        await emailSend(values.email);
+        setThrottle(false);
+        toast.success('이메일을 발송했습니다. 이메일을 확인해주세요.');
+      }, 300);
+    } catch (error) {
+      toast.error('이미 사용중인 이메일입니다.');
+    }
+  };
+  useEffect(() => {
+    if (errors.realname) {
+      toast.error(errors.realname);
+    }
+    if (errors.nickname) {
+      toast.error(errors.nickname);
+    }
+    if (errors.email) {
+      toast.error(errors.email);
+    }
+  }, [errors]);
 
   useEffect(() => {
-    console.log('signupvisible', signupvisible);
-  }, [signupvisible]);
-
-  useEffect(() => {}, []);
-
+    if (isEmailSend && nicknameCheck) {
+      setIsRegist(true);
+    }
+  }, [isEmailSend, nicknameCheck]);
   return (
-    <div className={signupvisible ? cx('formvis') : cx('forminvis')}>
-      <div>For the New ones ...</div>
-      <div>회원정보 입력</div>
-      <div>도너스의 회원이 되신 것을 환영합니다!</div>
-      <div>서비스를 이용하기 위해서는 회원님의 정보가 필요해요.</div>
-      <form onSubmit={handleSubmit} noValidate>
-        <Input
-          value={values.nickname}
-          placeholder="닉네임"
-          name="nickname"
-          error={errors.nickname ? true : false}
-          onChange={handleChange}
-        />
-        <div>{errors.nickname}</div>
-        <Input
-          value={values.realname}
-          placeholder="성명(주민등록상 이름)"
-          name="realname"
-          error={errors.realname ? true : false}
-          onChange={handleChange}
-        />
-        <div>{errors.realname}</div>
-        <Input
-          placeholder="이메일"
-          value={values.email}
-          id="email"
-          type="email"
-          name="email"
-          error={errors.authmail ? true : false}
-          onChange={handleChange}
-          disabled={disabledattr}
-        />
-        <div>{errors.authmail}</div>
-        <div>{emailvailerrormsg}</div>
-        <div>{emailsendmsg}</div>
-        <Button type="button" color="alternate">
-          인증
-        </Button>
-        {/* Button 안에 onClick={emailAuthentication} 함수 있었음 */}
-        <Button
-          type="submit"
-          disabled={isLoading}
-          color="primary"
-          // onClick={emailAuthentication}
-        >
-          {isLoading ? '진행중' : '회원가입 완료'}
-        </Button>
-      </form>
+    <div className={cx('signup-container')}>
+      <H2>For the New ones ...</H2>
+      <div className={cx('signup-innerContainer')}>
+        <div className={cx('signup-info')}>
+          <div className={cx('signup-title')}>
+            <H3>회원정보 입력</H3>
+          </div>
+          <P>도너스의 회원이 되신 것을 환영합니다!</P>
+          <P>서비스를 이용하기 위해서는 회원님의 정보가 필요해요.</P>
+        </div>
+        <div className={cx('signup-form')}>
+          <form onSubmit={handleSubmit} noValidate>
+            <div className={cx('input-row', 'realname-wrapper')}>
+              <Input
+                value={values.realname}
+                placeholder="성명(주민등록상 이름)"
+                name="realname"
+                error={errors.realname ? true : false}
+                onChange={handleChange}
+                size="large"
+              />
+            </div>
+            <div className={cx('input-row', 'nickname-wrapper')}>
+              <div className={cx('input-wrap')}>
+                <div className={cx('input')}>
+                  <Input
+                    value={values.nickname}
+                    placeholder="닉네임"
+                    name="nickname"
+                    error={errors.nickname ? true : false}
+                    onChange={handleChange}
+                    size="large"
+                  />
+                </div>
+                <div className={cx('button')}>
+                  <Button
+                    type="button"
+                    color="secondary"
+                    size="large"
+                    fullWidth
+                    onClick={handleNicknameCheck}
+                    disabled={nicknameCheck}
+                  >
+                    검사
+                  </Button>
+                </div>
+              </div>
+              {/* <div>{errors.nickname}</div> */}
+            </div>
+            <div className={cx('input-row', 'nickname-wrapper')}>
+              <div className={cx('input-wrap')}>
+                <div className={cx('input')}>
+                  <Input
+                    placeholder="이메일"
+                    value={values.email}
+                    id="email"
+                    type="email"
+                    name="email"
+                    error={errors.email ? true : false}
+                    onChange={handleChange}
+                    size="large"
+                  />
+                </div>
+                <div className={cx('button')}>
+                  <Button
+                    type="button"
+                    size="large"
+                    color="secondary"
+                    fullWidth
+                    onClick={handleEmailSend}
+                    disabled={isEmailSend}
+                  >
+                    인증
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <Button
+              type="submit"
+              disabled={!isRegist}
+              color="primary"
+              fullWidth
+              size="large"
+            >
+              회원가입
+            </Button>
+            {/* Button 안에 onClick={emailAuthentication} 함수 있었음 */}
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

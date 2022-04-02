@@ -4,6 +4,7 @@ import Router from 'routes/routes';
 // import styles from './App.module.css';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Web3Test from 'services/Web3Test';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
   return (
@@ -15,6 +16,13 @@ export default function App() {
         <ScrollToTop />
         <Router />
       </RecoilRoot>
+      <ToastContainer
+        position="top-center"
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        autoClose={2000}
+      />
     </>
   );
 }
