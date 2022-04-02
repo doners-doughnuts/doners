@@ -21,12 +21,12 @@ public class EpilogueRegisterPostDTO {
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="글 제목")
+    @ApiModelProperty(name="에필로그 제목")
     private String epilogueTitle;
 
     @NotBlank
     @NotNull
-    @ApiModelProperty(name="글 내용")
+    @ApiModelProperty(name="에필로그 내용")
     private String epilogueDescription;
 
     @ApiModelProperty(name = "모금액 활용 계획")

@@ -22,6 +22,4 @@ public interface EpilogueService {
     EpilogueResponseDTO getEpilogue(String accessToken, String epilogueId);
 
     void uploadEpilogueImage(Epilogue epilogue, MultipartFile image);
-
-    String getUserAccountFromAccessToken(String accessToken);
 }

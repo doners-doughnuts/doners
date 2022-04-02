@@ -14,22 +14,22 @@ import java.util.List;
 @Getter
 @ToString
 public class EpilogueResponseDTO extends BaseResponseDTO {
-    @ApiModelProperty(name = "감사 글 제목")
+    @ApiModelProperty(name = "에필로그 제목")
     private String epilogueTitle;
 
-    @ApiModelProperty(name = "감사 글 조회수")
+    @ApiModelProperty(name = "에필로그 조회수")
     private long epilogueViews;
 
-    @ApiModelProperty(name = "감사 글 내용")
+    @ApiModelProperty(name = "에필로그 내용")
     private String epilogueDescription;
 
-    @ApiModelProperty(name = "감사 글 작성일")
+    @ApiModelProperty(name = "에필로그 작성일")
     private LocalDateTime epilogueCreateTime;
 
     @ApiModelProperty(name = "댓글 리스트")
     private List<CommentResponseDTO> commentResponseDTOList;
 
-    @ApiModelProperty(name = "감사 글 작성자 이름")
+    @ApiModelProperty(name = "에필로그 작성자")
     private String epilogueWriter;
 
     @ApiModelProperty(name = "에필로그 이미지")

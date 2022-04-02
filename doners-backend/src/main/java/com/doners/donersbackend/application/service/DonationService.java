@@ -21,7 +21,7 @@ public interface DonationService {
     // 기부글 목록 조회
     DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view);
 
-    DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken);
+    DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken) throws Exception;
 
     // 기부글 상세 조회
     DonationResponseDTO getDonation(String donationId);
