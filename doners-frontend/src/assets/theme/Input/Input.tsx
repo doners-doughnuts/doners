@@ -8,6 +8,7 @@ type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 type InputType = {
   error?: boolean;
   success?: boolean;
+  block?: boolean;
   placeholder?: string;
   type?: string;
   name?: string;
@@ -25,6 +26,7 @@ const Input = ({
   onChange,
   error,
   success,
+  block,
   placeholder,
   type,
   name,
@@ -55,7 +57,12 @@ const Input = ({
 
   return (
     <input
-      className={cx('input-form', { error, success, large: size === 'large' })}
+      className={cx('input-form', {
+        error,
+        success,
+        block,
+        large: size === 'large',
+      })}
       id={id}
       placeholder={placeholder}
       onChange={changeHandler}
