@@ -46,6 +46,7 @@ export type DonationDetailType = {
   targetAmount: number;
   title: string;
   views: number;
+  nickname: string;
 };
 
 const DonateDetail = () => {
@@ -72,6 +73,7 @@ const DonateDetail = () => {
     targetAmount: 0,
     title: '',
     views: 0,
+    nickname: '',
   });
   const { donation_id } = useParams();
 
@@ -119,7 +121,7 @@ const DonateDetail = () => {
                   <H1>{donationData.title}</H1>
                 </div>
                 <div className={cx('category')}>
-                  <Tag color="black">Category</Tag>
+                  <Tag color="black">{donationData.categoryCode}</Tag>
                 </div>
               </div>
               <div className={cx('col-lg-6')}>

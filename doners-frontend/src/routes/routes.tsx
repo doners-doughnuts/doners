@@ -47,8 +47,8 @@ export default function Router() {
       path: '/profile',
       element: <ScrollLayout />,
       children: [
-        { path: '', element: <MyPage focus={1} /> },
-        { path: 'mynft/:id', element: <MyPage focus={1} /> },
+        { path: ':id', element: <MyPage focus={1} /> },
+        // { path: 'mynft/:id', element: <MyPage focus={1} /> },
         { path: 'donationhistory/:id', element: <MyPage focus={2} /> },
         { path: 'fundhistory/:id', element: <MyPage focus={3} /> },
       ],

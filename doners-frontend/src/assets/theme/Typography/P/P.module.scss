@@ -28,3 +28,7 @@
   @extend %font-base;
   color: $green;
 }
+.text-red {
+  @extend %font-base;
+  color: $red;
+}
