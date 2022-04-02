@@ -29,5 +29,6 @@ export type DontationDetailType = {
   approvalStatusCode: string;
   doners: object;
   achievementRate: number;
-  // evidence: Map<string, string>;
+  // evidence: Record<string, string>;
+  evidence: Array<object>;
 };
