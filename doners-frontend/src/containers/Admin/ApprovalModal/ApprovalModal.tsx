@@ -83,7 +83,6 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
     // }
   };
 
-  console.log(options);
   return (
     <div
       className={
