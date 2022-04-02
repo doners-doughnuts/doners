@@ -168,7 +168,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
                     categoryCode: e.value,
                   })
                 }
-                option={category}
+                options={category}
               />
             </div>
             <div className={cx('date')}>

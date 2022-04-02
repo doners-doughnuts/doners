@@ -4,7 +4,7 @@ const SignupPage = () => {
   return (
     <div>
       <AccountCheck />
-      <SignupForm />
+      {/* <SignupForm /> */}
     </div>
   );
 };

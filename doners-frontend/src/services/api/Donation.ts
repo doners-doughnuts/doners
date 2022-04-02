@@ -1,3 +1,4 @@
+import { vi } from 'date-fns/locale';
 import instance from 'services/axios';
 
 type donationType = {
@@ -27,6 +28,7 @@ export const getDonationList = async (
   page: number,
   view: boolean = false
 ) => {
+  console.log(category, sort, page, view);
   const result = await instance.get(
     `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
