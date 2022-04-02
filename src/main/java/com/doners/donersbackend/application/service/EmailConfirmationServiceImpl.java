@@ -32,8 +32,6 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
 
     private final EmailConfirmationRepository emailConfirmationRepository;
 
-    private static final long EMAIL_TOKEN_EXPIRATION_TIME = 5L; // 만료 기간 5분
-
     // 이메일 인증을 위해 이메일 생성 메서드
     @Transactional
     @Override
@@ -41,18 +39,11 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
         String emailAddress = emailConfirmationCreateRequestDTO.getEmailAddress();
 
         if(userRepository.findByUserEmailAndUserIsDeleted(emailAddress, false).isPresent() ||
-        emailConfirmationRepository.findByEmailAddressAndEmailConfirmationIsConfirmed(emailAddress, false).isPresent()) {
-            throw new Exception("이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다.");
+        emailConfirmationRepository.findByEmailAddressAndEmailConfirmationIsConfirmed(emailAddress, true).isPresent()) {
+            throw new Exception("이미 해당 이메일로 가입 되어 있는 계정이 있습니다.");
         }
 
         try {
-            EmailConfirmation emailConfirmation = EmailConfirmation.builder()
-                    .emailAddress(emailAddress)
-                    .emailConfirmationCreateTime(LocalDateTime.now())
-                    .build();
-
-            emailConfirmationRepository.save(emailConfirmation);
-
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(emailAddress);
             mailMessage.setFrom("Doners");
@@ -64,6 +55,15 @@ public class EmailConfirmationServiceImpl implements EmailConfirmationService {
                             .append(emailAddress).toString());
 
             sendEmail(mailMessage);
+
+            if(!emailConfirmationRepository.findByEmailAddress(emailAddress).isPresent()) {
+                EmailConfirmation emailConfirmation = EmailConfirmation.builder()
+                        .emailAddress(emailAddress)
+                        .emailConfirmationCreateTime(LocalDateTime.now())
+                        .build();
+
+                emailConfirmationRepository.save(emailConfirmation);
+            }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "인증 메일 전송이 실패했습니다.");
         }
