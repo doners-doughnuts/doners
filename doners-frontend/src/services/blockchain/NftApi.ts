@@ -149,7 +149,7 @@ export const getUserNFTMetadataList = async (walletAddress: string) => {
 /* 총 발행된 NFT(DD) 개수 (관리자페이지용) */
 export const getTotalNFTCount = async () => {
   const result = await DDHelperContract.methods.getTotalCnt().call();
-  console.log('총 발행된 NFT 개수: ', result);
+  // console.log('총 발행된 NFT 개수: ', result);
   return result;
 };
 
