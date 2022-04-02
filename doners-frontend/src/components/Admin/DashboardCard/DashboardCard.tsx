@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 
 type DashboardCardType = {
   header: string;
-  content: number;
+  content: string;
   label: string;
 }
 
@@ -18,8 +18,7 @@ const DashboardCard = ({ header, content, label }: DashboardCardType) => {
     <div className={cx('card')}>
       <P>{header}</P>
       <span className={cx('card-content')}>
-
-        {content.toString()}
+        {content}
         {/* <H2 >{content.toString()}</H2>
         <P>{label}</P> */}
       </span>

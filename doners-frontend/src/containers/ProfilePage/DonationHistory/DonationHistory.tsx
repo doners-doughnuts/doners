@@ -22,6 +22,19 @@ const DonationHistory = () => {
     { value: '3', label: '미혼모' },
     { value: '4', label: '코로나19' },
   ];
+
+  enum RejectionCode {
+    'BEFORE_CONFIRMATION' = '확인 전',
+    'APPROVAL' = '승인',
+    'WRONG_CONTACT_NUM' = '신청자 연락처 확인 불가',
+    'UNQUALIFIED_DEPUTY' = '대리인 자격 부족',
+    'DUPLICATION' = '기존 기부 내역과 중복',
+    'INADEQUATE_PLANNING' = '모금 상세 계획 미흡',
+    'INSUFFICIENT_REASON' = '모금 사유 불충분',
+    'LACK_OF_EVIDENCE' = '증빙자료 부족',
+    'ETC' = '기타',
+  }
+
   return (
     <div>
       <section className={cx('container')}></section>
@@ -37,10 +50,10 @@ const DonationHistory = () => {
           <div className={cx('title')}>모금 참여 이력</div>
 
           <div className={cx('selectbox')}>
-            <Selectbox option={years} />
+            <Selectbox options={years} />
           </div>
           <div className={cx('selectbox')}>
-            <Selectbox option={category} />
+            <Selectbox options={category} />
           </div>
         </div>
         <div className={cx('row')}>
