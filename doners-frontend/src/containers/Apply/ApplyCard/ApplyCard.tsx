@@ -11,6 +11,7 @@ import ApplyStepper from '../ApplyStepper/ApplyStepper';
 import UserInfoForm from '../UserinfoForm/UserInfoForm';
 import ApplyDetailForm from '../ApplyDetailForm/ApplyDetailForm';
 import ApplyReasonForm from '../ApplyReasonForm/ApplyReasonForm';
+import ApplyComplete from '../ApplyComplete/ApplyComplete';
 
 const cx = classNames.bind(styles);
 const ApplyCard = () => {
@@ -34,28 +35,12 @@ const ApplyCard = () => {
     budget: [{ amount: '', plan: '', sequence: '' }],
   });
 
-  //1단계
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
-  const [relationshipFile, setRelationshipFile] = useState('');
-  const [deputy, setIsdeputy] = useState(false);
-
-  //2단계
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [endtime, setEndTime] = useState('');
-  const [description, setDescription] = useState('');
-  const [evidence, setEvidence] = useState([]);
-
-  //3단계
-  const [amount, setAmount] = useState(0);
-  const [budget, setBudget] = useState([{ amount: '', plan: '' }]);
-
   const titlelist = [
     '사용자 정보 기입',
     '기부 신청 사유',
     '세부 설정 및 검토',
     '완료',
+    '실패',
   ];
 
   return (
@@ -100,7 +85,13 @@ const ApplyCard = () => {
                       />
                     );
                   case 3:
-                    return <div>헤헤 성공!</div>;
+                    return (
+                      <ApplyComplete
+                        setApplyStep={setApplyStep}
+                        apply={apply}
+                        setApply={setApply}
+                      />
+                    );
                 }
               })()}
             </main>

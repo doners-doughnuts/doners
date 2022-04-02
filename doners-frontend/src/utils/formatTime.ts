@@ -31,6 +31,10 @@ export function fToNow(date: string) {
   });
 }
 
+export function fDateDash(date: string) {
+  return format(new Date(date), 'yyyy-MM-dd');
+}
+
 /**
  * 모금가능한 기부인지 검사하는 함수
  * @param {date} expire-date of the Donation
