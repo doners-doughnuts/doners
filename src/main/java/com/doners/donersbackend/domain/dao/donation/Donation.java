@@ -38,6 +38,9 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_description")
     private String description;
 
+    @Column(name = "donation_account")
+    private String account;
+
     @Column(name = "donation_amount")
     private double amount;
 
