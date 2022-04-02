@@ -77,6 +77,10 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       )
     );
     const response = await postDonation(formData);
+    console.log(response);
+    if (response) {
+      setApplyStep(3);
+    }
   };
 
   useEffect(() => {

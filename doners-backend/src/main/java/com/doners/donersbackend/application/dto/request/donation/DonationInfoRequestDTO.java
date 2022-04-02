@@ -50,10 +50,6 @@ public class DonationInfoRequestDTO {
     @NotBlank
     private String description;
 
-    @ApiModelProperty(name = "신청자 지갑 주소")
-    @NotBlank
-    private String account;
-
     @ApiModelProperty(name = "모금액 활용 계획")
     @NotEmpty
     private List<DonationBudgetRequestDTO> budget;

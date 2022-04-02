@@ -15,6 +15,8 @@ import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
 import EpilogueEditPage from 'pages/EditPage/Epilogue/EpilogueEditPage';
 import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
 import AdminPage from 'pages/AdminPage/AdminPage';
+import ApplyMainPage from 'pages/ApplyPage/ApplyMainPage';
+import ApplyFailPage from 'pages/ApplyPage/ApplyFailPage';
 
 export default function Router() {
   return useRoutes([
@@ -26,7 +28,11 @@ export default function Router() {
     {
       path: '/apply',
       element: <ScrollLayout />,
-      children: [{ path: '', element: <ApplyPage /> }],
+      children: [
+        { path: 'main', element: <ApplyMainPage /> },
+        { path: 'form', element: <ApplyPage /> },
+        { path: 'fail', element: <ApplyFailPage /> },
+      ],
     },
     {
       path: '/category',
