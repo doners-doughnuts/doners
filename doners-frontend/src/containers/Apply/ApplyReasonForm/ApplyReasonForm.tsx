@@ -15,29 +15,42 @@ import Input from 'assets/theme/Input/Input';
 import Selectbox from 'assets/theme/Selectbox/Selectbox';
 import classNames from 'classnames/bind';
 import styles from './ApplyReasonForm.module.scss';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 import P from 'assets/theme/Typography/P/P';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import { fDateDash } from 'utils/formatTime';
 import FileUploader from '../FileUploader/FileUploader';
+import deleteicon from 'assets/images/icon/delete.png';
 import { cs } from 'date-fns/locale';
+
+interface IFileTypes {
+  id: number;
+  object: File;
+}
 
 const cx = classNames.bind(styles);
 
 const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
-  const fileList: File[] = [];
   const date: string = new Date().toString();
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
   const [content, setContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
-  // const [fileList, setFileList] = useState(['']);
-  const [file, setFile] = useState('');
-  const handleUploadBtnClick = () => {
-    inputRef.current?.click();
-  };
+  const [fileList, setFileList] = useState<File[]>([]);
+
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [files, setFiles] = useState<IFileTypes[]>([]);
+
+  const dragRef = useRef<HTMLLabelElement | null>(null);
+  const fileId = useRef<number>(0);
 
   const category = [
     { value: 'WARRIOR', label: '참전용사' },
@@ -59,56 +72,57 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     console.log(imgFile);
   };
 
-  // const handleUploadFile = async (event: any) => {
-  //   const file = event.target.files;
-  //   console.log(file);
-  //   setFile(file[0]);
-  //   setFileList(file[0]);
-  // };
-
-  const addFile = () => {};
-
   const setValue = () => {
-    setApply({ ...apply, evidence: fileList });
+    setApply({ ...apply, evidence: files.map((data) => data.object) });
+    console.log(files);
     console.log(apply);
-    setApplyStep(2);
   };
-
-  const onSaveFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files: FileList | null = e.target.files;
-    const fileArray = Array.prototype.slice.call(files);
-
-    fileArray.forEach((file) => {
-      fileList.push(file);
-    });
-  };
-
-  // const onFileUpload = async () => {
-
-  //   const Food = {
-  //     name: '피자',
-  //     price: 13500,
-  //   };
-
-  //   formData.append('stringFood', JSON.stringify(Food));
-  // };
 
   const setTime = (event: any) => {
     let date = event.target.value;
-    // let now = new Date();
-    // const todaysDate = new Date(
-    //   now.getTime() - now.getTimezoneOffset() * 60000
-    // ).toISOString();
-    // console.log(todaysDate);
-    // const datafm: string = date + todaysDate.substring(10, todaysDate.length);
-    // console.log(datafm);
     console.log(date);
     setApply({
       ...apply,
       endDate: date,
     });
   };
-  //2022-03-31T13:58:28.915Z
+
+  const onChangeFiles = useCallback(
+    (e: ChangeEvent<HTMLInputElement> | any): void => {
+      let selectFiles: File[] = [];
+      let tempFiles: IFileTypes[] = files;
+
+      if (e.type === 'drop') {
+        selectFiles = e.dataTransfer.files;
+      } else {
+        selectFiles = e.target.files;
+      }
+
+      for (const file of selectFiles) {
+        tempFiles = [
+          ...tempFiles,
+          {
+            id: fileId.current++,
+            object: file,
+          },
+        ];
+      }
+      setFiles(tempFiles);
+    },
+    [files]
+  );
+
+  const handleFilterFile = useCallback(
+    (id: number): void => {
+      setFiles(files.filter((file: IFileTypes) => file.id !== id));
+    },
+    [files]
+  );
+
+  const handleUploadBtnClick = () => {
+    inputRef.current?.click();
+  };
+
   useEffect(() => {
     console.log({ apply });
     setApply({
@@ -180,7 +194,6 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
               <Input
                 placeholder="모금 마감일자"
                 type="date"
-                value={''}
                 onChange={setTime}
                 min={fDateDash(date)}
               />
@@ -211,15 +224,37 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
           </div>
         </div>
         <div className={cx('file')}>
-          <Input
-            onChange={onSaveFiles}
-            placeholder="file"
+          <input
             type="file"
-            value={''}
-            multiple
+            id="fileUpload"
+            style={{ display: 'none' }}
+            multiple={true}
+            onChange={onChangeFiles}
           />
-          <Input type="file" onChange={addFile} multiple />
-          <div className={cx('file-list')}></div>
+          <div className={cx('fileuploadlist')}>
+            {files.length > 0 &&
+              files.map((file: IFileTypes) => {
+                const {
+                  id,
+                  object: { name },
+                } = file;
+                return (
+                  <div className={cx('file-list-item')} key={id}>
+                    <div className={cx('itemname')}>{name}</div>
+                    <div
+                      className={cx('item-delete-icon')}
+                      onClick={() => handleFilterFile(id)}
+                    >
+                      <img src={deleteicon}></img>
+                    </div>
+                  </div>
+                );
+              })}
+            <label htmlFor="fileUpload" ref={dragRef}>
+              <div className={cx('add-file-item')}>+증빙자료 추가</div>
+            </label>
+          </div>
+          <div className={cx('file-list')}>{FileList}</div>
         </div>
       </div>
 
