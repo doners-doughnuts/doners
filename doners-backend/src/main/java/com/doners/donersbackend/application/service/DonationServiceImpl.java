@@ -244,6 +244,7 @@ public class DonationServiceImpl implements DonationService {
                 .targetAmount(donation.getAmount())
                 .budget(donationBudgetResponseDTOList)
                 .name(donation.getUser().getUserName())
+                .nickname(donation.getUser().getUserNickname())
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
                 .deputy(donation.isDeputy())
