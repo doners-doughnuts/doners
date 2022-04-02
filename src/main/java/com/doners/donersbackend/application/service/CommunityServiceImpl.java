@@ -39,22 +39,10 @@ public class CommunityServiceImpl implements CommunityService{
 
     // 글 등록 : 필수 글 정보 입력 - 제목, 내용, 작성자
     @Override
-    public void communityRegister(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO) {
+    public void registerCommunity(String accessToken, CommunityRegisterPostDTO communityRegisterPostDTO) {
         User user = getUserFromAccessToken(accessToken);
 
-        CommunityCode communityCode;
-        communityCode = user.getUserCode().getCode().equals("U01") ? NOTICE : GENERAL;
-
-        // 글작성 정보 추가할 것
-        Community community = Community.builder()
-                .communityTitle(communityRegisterPostDTO.getCommunityTitle())
-                .communityDescription(communityRegisterPostDTO.getCommunityDescription())
-                .user(user)
-                .communityViews(0L)
-                .communityCreateTime(LocalDateTime.now())
-                .communityCode(communityCode).build();
-
-        communityRepository.save(community);
+        saveCommunity(communityRegisterPostDTO, user);
     }
 
     @Override
@@ -99,6 +87,40 @@ public class CommunityServiceImpl implements CommunityService{
 
         List<CommunityGetListResponseDTO> communityGetListResponseDTOList = new ArrayList<>();
 
+        communityGetListResponseDTOList = createCommunityGetListResponseDTOList(communityList, communityGetListResponseDTOList);
+
+        return CommunityGetListWrapperResponseDTO.builder()
+                .communityGetListResponseDTOList(communityGetListResponseDTOList)
+                .build();
+    }
+
+    @Override
+    public CommunityResponseDTO getCommunity(String accessToken, String communityId) {
+        User user = getUserFromAccessToken(accessToken);
+
+        Community community = communityRepository.findByIdAndCommunityIsDeleted(communityId, false)
+                .orElseThrow(() -> new IllegalArgumentException("해당 커뮤니티 글을 찾을 수 없습니다."));
+
+        increaseViews(community);
+
+        return createCommunityResponseDTO(community);
+    }
+
+    public void saveCommunity(CommunityRegisterPostDTO communityRegisterPostDTO, User user) {
+        CommunityCode communityCode = user.getUserCode().getCode().equals("U01") ? NOTICE : GENERAL;
+
+        Community community = Community.builder()
+                .communityTitle(communityRegisterPostDTO.getCommunityTitle())
+                .communityDescription(communityRegisterPostDTO.getCommunityDescription())
+                .user(user)
+                .communityViews(0L)
+                .communityCreateTime(LocalDateTime.now())
+                .communityCode(communityCode).build();
+
+        communityRepository.save(community);
+    }
+
+    public List<CommunityGetListResponseDTO> createCommunityGetListResponseDTOList(List<Community> communityList, List<CommunityGetListResponseDTO> communityGetListResponseDTOList) {
         communityList.forEach(community -> {
             List<Comment> commentList = commentRepository.findAllByCommunityAndCommentIsDeleted(community, false).orElse(null);
             long comments = commentList == null ? 0L : commentList.size();
@@ -117,19 +139,10 @@ public class CommunityServiceImpl implements CommunityService{
             );
         });
 
-        return CommunityGetListWrapperResponseDTO.builder()
-                .communityGetListResponseDTOList(communityGetListResponseDTOList)
-                .build();
+        return communityGetListResponseDTOList;
     }
 
-    @Override
-    public CommunityResponseDTO getCommunity(String accessToken, String communityId) {
-        User user = getUserFromAccessToken(accessToken);
-
-        Community community = communityRepository.findByIdAndCommunityIsDeleted(communityId, false)
-                .orElseThrow(() -> new IllegalArgumentException("해당 커뮤니티 글을 찾을 수 없습니다."));
-
-        increaseViews(community);
+    public CommunityResponseDTO createCommunityResponseDTO(Community community) {
         return CommunityResponseDTO.builder()
                 .communityTitle(community.getCommunityTitle())
                 .communityDescription(community.getCommunityDescription())
