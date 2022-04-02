@@ -28,9 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -224,10 +222,14 @@ public class DonationServiceImpl implements DonationService {
         List<File> fileList = fileRepository.findByDonation(donation)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 증빙 자료를 찾을 수 없습니다."));
 
-        Map<String, String> evidence = new HashMap<>();
+        List<FileResponseDTO> evidence = new ArrayList<>();
 
         fileList.forEach(file ->
-                evidence.put(file.getOriginalFileName(), awsS3Service.getFilePath(file.getSavedFileName()))
+                evidence.add(FileResponseDTO.builder()
+                        .name(file.getOriginalFileName())
+                        .url(awsS3Service.getFilePath(file.getSavedFileName()))
+                        .build()
+                )
         );
 
         // 조회수 업데이트
