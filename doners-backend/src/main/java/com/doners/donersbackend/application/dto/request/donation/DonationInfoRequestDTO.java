@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DonationInfoRequestDTO {
 
-    @ApiModelProperty(name = "본인 / 대리인 전화번호")
+    @ApiModelProperty(name = "신청자(본인 / 대리인) 전화번호")
     @NotBlank
     private String phone;
 
@@ -49,6 +49,10 @@ public class DonationInfoRequestDTO {
     @ApiModelProperty(name = "사연")
     @NotBlank
     private String description;
+
+    @ApiModelProperty(name = "신청자 지갑 주소")
+    @NotBlank
+    private String account;
 
     @ApiModelProperty(name = "모금액 활용 계획")
     @NotEmpty

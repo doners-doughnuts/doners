@@ -34,7 +34,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "사연")
     private String description;
 
-    @ApiModelProperty(name = "대표 사진 주소")
+    @ApiModelProperty(name = "대표 사진 URL")
     private String image;
 
     @ApiModelProperty(name = "신청일")
@@ -42,6 +42,9 @@ public class DonationResponseDTO extends BaseResponseDTO {
 
     @ApiModelProperty(name = "마감일")
     private LocalDate endDate;
+
+    @ApiModelProperty(name = "신청자 지갑 주소")
+    private String account;
 
     @ApiModelProperty(name = "목표 모금액")
     private double targetAmount;
@@ -83,7 +86,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private Map<String, String> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
@@ -92,6 +95,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
         this.image = image;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.account = account;
         this.targetAmount = targetAmount;
         this.budget = budget;
         this.name = name;
