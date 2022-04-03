@@ -115,6 +115,13 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     inputRef.current?.click();
   };
 
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setApply({
+      ...apply,
+      title: e.target.value,
+    });
+  };
+
   useEffect(() => {
     console.log({ apply });
     setApply({
@@ -163,6 +170,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
             <Input
               placeholder="모금 제목(최대 30자)"
               value={apply.title}
+              // onChange={handleTitleChange}
               onChange={(e) =>
                 setApply({
                   ...apply,

@@ -3,14 +3,15 @@ import H4 from 'assets/theme/Typography/H4/H4';
 import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
-import { DonationDetailType } from '../DontateDetail/DonateDetail';
+// import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './UserInfo.module.scss';
 import { ReactComponent as ErrorIcon } from 'assets/images/icon/error.svg';
+import { DontationDetailType } from 'types/DonationTypes';
 
 const cx = classNames.bind(styles);
 
 type UserInfoProps = {
-  data: DonationDetailType;
+  data: DontationDetailType;
 };
 const UserInfo = ({ data }: UserInfoProps) => {
   const navigate = useNavigate();

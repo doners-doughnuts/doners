@@ -2,12 +2,13 @@ import classNames from 'classnames/bind';
 import styles from './DonateFiles.module.scss';
 import { useEffect, useState } from 'react';
 import H3 from 'assets/theme/Typography/H3/H3';
-import { DonationDetailType } from '../DontateDetail/DonateDetail';
+import { DontationDetailType } from 'types/DonationTypes';
+// import { DonationDetailType } from '../DontateDetail/DonateDetail';
 
 const cx = classNames.bind(styles);
 
 type DonateFIlesProps = {
-  data: DonationDetailType;
+  data: DontationDetailType;
 };
 
 const DonateFiles = ({ data }: DonateFIlesProps) => {

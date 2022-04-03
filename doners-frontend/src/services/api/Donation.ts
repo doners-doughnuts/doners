@@ -53,10 +53,8 @@ export const getAvailableDonationList = async (
 };
 
 export const getDonationDetail = async (donation_id: string) => {
-  // const result: DontationDetailType = await instance.get(
-  //   `/donation/${donation_id}`
-  // );
-  const result: DontationDetailType = _donationDetail;
+  const result = await instance.get(`/donation/${donation_id}`);
+  // const result: DontationDetailType = _donationDetail;
   return result;
 };
 

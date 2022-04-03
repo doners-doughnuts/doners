@@ -35,8 +35,12 @@ const ApplyMain = () => {
               <main className={cx('content')}>
                 <div>도움이 필요하신가요? 도너스에서 손을 내밀어보세요.</div>
                 <div>
-                  <img className={cx('charactor')} src={Charactor} />
-                  <img className={cx('pointer')} src={Pointer} />
+                  <img
+                    className={cx('charactor')}
+                    src={Charactor}
+                    alt="character"
+                  />
+                  <img className={cx('pointer')} src={Pointer} alt="pointer" />
                 </div>
               </main>
               <footer className={cx('footer')}>

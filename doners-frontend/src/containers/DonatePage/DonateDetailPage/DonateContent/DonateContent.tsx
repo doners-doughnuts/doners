@@ -2,14 +2,15 @@ import H3 from 'assets/theme/Typography/H3/H3';
 import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { DontationDetailType } from 'types/DonationTypes';
 import DonateContentModal from '../DonateContentModal/DonateContentModal';
-import { DonationDetailType } from '../DontateDetail/DonateDetail';
+// import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateContent.module.scss';
 
 const cx = classNames.bind(styles);
 
 type DonateContentProps = {
-  data: DonationDetailType;
+  data: DontationDetailType;
 };
 const DonateContent = ({ data }: DonateContentProps) => {
   const [openContentModal, setOpenContentModal] = useState(false);
