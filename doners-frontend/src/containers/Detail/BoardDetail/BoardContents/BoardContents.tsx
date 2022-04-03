@@ -37,7 +37,7 @@ const BoardContents = () => {
   }, [writer]);
 
   const checkUser = () => {
-    const item = localStorage.getItem('user');
+    const item = sessionStorage.getItem('accessToken');
     if (typeof item === 'string') {
       const Juser = JSON.parse(item);
       console.log(writer);
