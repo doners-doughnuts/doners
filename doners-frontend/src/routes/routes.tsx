@@ -7,7 +7,7 @@ import DonateListPage from 'pages/Donate/DonateListPage';
 import DonateRegistPage from 'pages/Donate/DonateRegistPage';
 import SignupPage from 'pages/SignupPage/SignupPage';
 import HomePage from 'pages/HomePage/HomePage';
-import MyPage from 'pages/MyPage/MyPage';
+import ProfilePage from 'pages/ProfilePage/ProfilePage';
 import Test from 'pages/Test/Test';
 import ApplyPage from 'pages/ApplyPage/ApplyPage';
 import { Navigate, useRoutes } from 'react-router';
@@ -53,10 +53,10 @@ export default function Router() {
       path: '/profile',
       element: <ScrollLayout />,
       children: [
-        { path: ':id', element: <MyPage focus={1} /> },
+        { path: ':id', element: <ProfilePage focus={1} /> },
         // { path: 'mynft/:id', element: <MyPage focus={1} /> },
-        { path: 'donationhistory/:id', element: <MyPage focus={2} /> },
-        { path: 'fundhistory/:id', element: <MyPage focus={3} /> },
+        { path: 'donationhistory/:id', element: <ProfilePage focus={2} /> },
+        { path: 'fundhistory/:id', element: <ProfilePage focus={3} /> },
       ],
     },
     {

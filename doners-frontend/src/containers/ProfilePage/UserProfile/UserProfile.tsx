@@ -10,6 +10,7 @@ const cx = classNames.bind(styles);
 
 const UserProfile = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [profileImg, setProfileImg] = useState('');
   const [walletAddress, setWalletAddress] = useState<string>('');
 
   const openModal = () => {
@@ -20,8 +21,11 @@ const UserProfile = () => {
   };
 
   const getAccountInfo = async () => {
+    // TODO 프로필 사용자의 지갑주소로 대체
     const address = await getWalletAccount();
     setWalletAddress(address);
+    // TODO 사용자 프로필 사진
+    setProfileImg('');
   };
 
   const { id } = useParams();
@@ -29,14 +33,14 @@ const UserProfile = () => {
   useEffect(() => {
     getAccountInfo();
   }, []);
+
   return (
     <div className={cx('container')}>
       <div className={cx('profileimage')}>
-        <Avatar size="large" onClick={openModal} />
+        <Avatar size="large" src={profileImg} onClick={openModal} />
       </div>
       <div className={cx('myaccount')}>
-        <image />
-        {walletAddress}
+        TODO: 프로필 사용자의 지갑주소{walletAddress}
       </div>
       <ProfileModal open={modalOpen} close={closeModal} />
     </div>
