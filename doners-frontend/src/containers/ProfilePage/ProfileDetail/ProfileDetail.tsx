@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import MyNFT from '../MyNFT/MyNFT';
 import FundHistory from '../FundHistory/FundHistory';
 import DonationHistory from '../DonationHistory/DonationHistory';
-import ProfileTab from 'containers/ProfilePage/Tab/ProfileTab';
+import ProfileTab from 'containers/ProfilePage/ProfileTab/ProfileTab';
 
 const cx = classNames.bind(styles);
 type ProfileType = {

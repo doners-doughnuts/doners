@@ -4,10 +4,12 @@ import ProfileDetail from 'containers/ProfilePage/ProfileDetail/ProfileDetail';
 import PopularMembership from 'containers/CommunityPage/Membership/PopularMembership/PopularMembership';
 import CommunityTab from 'containers/CommunityPage/Tab/CommunityTab';
 import Avatar from 'assets/theme/Avatar/Avatar';
+
 interface ProfilePageProps {
   focus: number;
 }
-const Mypage = ({ focus }: ProfilePageProps) => {
+
+const ProfilePage = ({ focus }: ProfilePageProps) => {
   return (
     <div>
       <UserProfile />
@@ -24,4 +26,4 @@ const Mypage = ({ focus }: ProfilePageProps) => {
   );
 };
 
-export default Mypage;
+export default ProfilePage;

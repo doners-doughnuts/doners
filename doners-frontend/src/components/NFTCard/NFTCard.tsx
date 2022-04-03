@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { getMetadataFromUri } from 'services/blockchain/NftApi';
 import { NftMetadataType } from 'types/NftTypes';
 import { fDate } from 'utils/formatTime';
+import NFTDetail from 'containers/ProfilePage/NFTDetail/NFTDetail';
 
 const cx = classNames.bind(styles);
 
@@ -23,8 +24,13 @@ const NFTCard = ({ metadataUri }: any) => {
   const [metadata, setMetadata] = useState<NftMetadataType>();
   const [edition, setEdition] = useState('');
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const handleOpenModal = () => {
-    console.log('TODO');
+    setModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   const getMetadata = async () => {
@@ -43,28 +49,37 @@ const NFTCard = ({ metadataUri }: any) => {
   }, []);
 
   return (
-    <div className={cx('container')} onClick={handleOpenModal}>
-      {metadata ? (
-        <>
-          <div className={cx('card')}>
-            <div className={cx('tag')}>
-              <Tag color="black">{edition}</Tag>
+    <>
+      <div className={cx('container')} onClick={handleOpenModal}>
+        {metadata ? (
+          <>
+            <div className={cx('card')}>
+              <div className={cx('tag')}>
+                <Tag color="black">{edition}</Tag>
+              </div>
+              <div className={cx('img-wrap')}>
+                <img src={metadata.image} alt="" />
+              </div>
             </div>
-            <div className={cx('img-wrap')}>
-              <img src={metadata.image} alt="" />
+            <div className={cx('detail')}>
+              <div
+                className={cx('nfttitle')}
+              >{`${metadata.edition}#${metadata.tokenId}`}</div>
+              <div className={cx('nftdate')}>
+                {fDate(new Date(metadata.date).toLocaleDateString())}
+              </div>
             </div>
-          </div>
-          <div className={cx('detail')}>
-            <div
-              className={cx('nfttitle')}
-            >{`${metadata.edition}#${metadata.tokenId}`}</div>
-            <div className={cx('nftdate')}>
-              {fDate(new Date(metadata.date).toLocaleDateString())}
-            </div>
-          </div>{' '}
-        </>
+          </>
+        ) : null}
+      </div>
+      {modalOpen ? (
+        <NFTDetail
+          open={modalOpen}
+          close={handleCloseModal}
+          metadata={metadata}
+        ></NFTDetail>
       ) : null}
-    </div>
+    </>
   );
 };
 
