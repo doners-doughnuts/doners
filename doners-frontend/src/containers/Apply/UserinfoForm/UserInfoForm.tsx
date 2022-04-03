@@ -47,9 +47,6 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
     setDeputyDoc(file);
     console.log(file);
     setFile(file[0]);
-    // const formData = new FormData();
-    // formData.append('file', file[0]);
-    // console.log(formData);
   };
 
   return (
@@ -96,6 +93,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             value={deputyName}
             onChange={(e) => setDeputyName(e.target.value)}
             placeholder="수혜자의 성명"
+            block={!isSelect}
             disabled={!isSelect}
           />
         </div>
@@ -105,6 +103,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             value={deputyPhone}
             onChange={(e) => setDeputyPhone(e.target.value)}
             placeholder="수혜자의 전화번호"
+            block={!isSelect}
             disabled={!isSelect}
           />
         </div>
@@ -115,6 +114,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             value={''}
             placeholder="file"
             type="file"
+            block={!isSelect}
             disabled={!isSelect}
           />
         </div>
@@ -129,7 +129,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             다음 단계
           </Button>
         ) : (
-          <Button color={'alternate'}>폼을 작성해주세요</Button>
+          <Button color={'alternate'}>폼을 완성해주세요</Button>
         )}
       </div>
     </div>
