@@ -30,6 +30,7 @@ const AccountCheck = () => {
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts',
         });
+        console.log(accounts);
         setAccount(accounts[0]);
       } else {
         toast.info('Metamask를 설치해주세요!');
