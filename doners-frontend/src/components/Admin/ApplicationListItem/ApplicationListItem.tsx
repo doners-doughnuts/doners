@@ -43,6 +43,7 @@ const ApplicationListItem = (item: any) => {
       <ApprovalModal
         open={openModal}
         onClose={handleOnClose}
+        setStatus={setStatus}
         donation={item.item}
       />
     </>

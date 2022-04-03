@@ -74,6 +74,7 @@ export const approveApplication = async (donationId: string) => {
     approved: true,
   });
   console.log(response);
+  return response;
 };
 
 /**
@@ -91,4 +92,5 @@ export const declineApplication = async (
     approved: false,
   });
   console.log(response);
+  return response;
 };

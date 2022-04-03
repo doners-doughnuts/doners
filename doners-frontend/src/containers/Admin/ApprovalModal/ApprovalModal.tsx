@@ -15,6 +15,7 @@ import { ReactComponent as CloseIcon } from 'assets/images/icon/close.svg';
 
 import styles from './ApprovalModal.module.scss';
 import H4 from 'assets/theme/Typography/H4/H4';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -52,11 +53,17 @@ const options = [
 type ApprovalModalType = {
   open: boolean;
   onClose: any;
+  setStatus: any;
   donation: DonationListType;
   // contents: any;
 };
 
-const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
+const ApprovalModal = ({
+  open,
+  onClose,
+  setStatus,
+  donation,
+}: ApprovalModalType) => {
   const [approvalStatus, setApprovalStatus] = useState('');
   // console.log(approvalStatus);
   useEffect(() => {
@@ -93,6 +100,14 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
     if (fundContractAddress.includes('0x')) {
       const response = await approveApplication(donation.donationId);
       console.log(response);
+      if (response.status === 200) {
+        toast.success('기부 신청이 승인처리 되었습니다.');
+        setStatus(true);
+      } else {
+        // TODO 승인 실패 처리
+        toast.error('승인 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+        setStatus(false);
+      }
     }
   };
 
@@ -101,7 +116,17 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
       donation.donationId,
       approvalStatus
     );
-    console.log(response);
+    // console.log(response);
+    if (response.status === 200) {
+      toast.success('기부 신청이 거절처리 되었습니다.');
+      setStatus(false);
+    } else {
+      // TODO 승인거절 실패 처리
+      toast.error(
+        '신청 거부 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.'
+      );
+      setStatus(false);
+    }
   };
 
   return (
