@@ -13,50 +13,61 @@
     cursor: pointer;
     border: 0;
   }
-  .container {
-    @include flexbox(start);
-    margin: 100px 20px;
-    .explanation {
-      margin: 0 50px 0 100px;
-      .col {
-        @include flexbox(start);
-        .row-title {
-          @include text-style(16);
-          font-weight: 800;
-        }
-        .row-content {
-          @include text-style(16);
-          color: $gray-3;
-        }
-      }
-    }
+  // .container {
+  //   @include flexbox(start);
+  //   margin: 100px 20px;
+  //   .explanation {
+  //     margin: 0 50px 0 100px;
+  //     .col {
+  //       @include flexbox(start);
+  //       .row-title {
+  //         @include text-style(16);
+  //         font-weight: 800;
+  //       }
+  //       .row-content {
+  //         @include text-style(16);
+  //         color: $gray-3;
+  //       }
+  //     }
+  //   }
+  // }
+
+  .inner-container {
+    display: flex;
+    flex-direction: column;
   }
 
-  .img {
-    .img-wrap {
-      border: 2px solid $black;
-      box-shadow: $btn-shadow;
+  .detail-header {
+    margin-top: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    line-height: 1.5em;
+    padding-left: 10px;
+  }
+
+  .detail-content {
+    margin-top: 10px;
+    color: $gray-3;
+    display: flex;
+    align-items: center;
+    line-height: 1.5em;
+  }
+
+  // div[class^="detail-"] {
+    // color: aqua ;
+  //   margin-top: 10px;
+  // }
+
+
+  .img-wrap {
+
+    img {
+      // object-fit: contain;
+      width: 100%;
       border-radius: 8px;
-      position: relative;
-      background-color: $red;
-      height: 200px;
-      width: 200px;
-      color: $white;
-      text-align: center;
-      line-height: 200px;
-      text-align: center;
+      border: 2px solid $black;
 
-      //   img {
-      //     // object-fit: contain;
-      //     width: 100%;
-      //     border-radius: 8px;
-      //     border: 2px solid $black;
-
-      //     &:hover {
-      //       opacity: 0.7;
-      //       z-index: inherit;
-      //     }
-      //   }
     }
   }
 }

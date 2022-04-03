@@ -7,16 +7,25 @@ import Span from 'assets/theme/Typography/Span/Span';
 import H4 from 'assets/theme/Typography/H4/H4';
 import H3 from 'assets/theme/Typography/H3/H3';
 import tempimg from 'assets/images/character-coin-red.png';
+import { NftMetadataType } from 'types/NftTypes';
+
 const cx = classNames.bind(styles);
+
 type ProfileType = {
   focus: number;
   // user: string;
 };
-const NFTDetail = (props: { open?: any; close?: any }) => {
+
+const NFTDetail = (props: {
+  open?: any;
+  close?: any;
+  metadata?: NftMetadataType;
+}) => {
   const { open, close } = props;
-  const [target, setTarget] = useState(3.89);
-  const [totalpeople, setTotalpeople] = useState(234);
-  const [current, setCurrent] = useState(1.0);
+
+  const [metadata, setMetadata] = useState(props.metadata);
+
+  console.log(metadata);
 
   return (
     <div
@@ -34,45 +43,38 @@ const NFTDetail = (props: { open?: any; close?: any }) => {
           </header>
           <main>
             <div className={cx('container')}>
-              <div className={cx('NFTImg')}>
-                <div className={cx('img')}>
+              <div className={cx('row')}>
+                <div className={cx('col-lg-3', 'col-md-4', 'col-sm-4')}>
                   <div className={cx('img-wrap')}>
-                    {/* <img src={metadata.image} alt="" /> */}
+                    <img src={metadata?.image} alt="Your Doughnut!" />
                   </div>
                 </div>
-              </div>
-              <div className={cx('explanation')}>
-                <div className={cx('col')}>
-                  <div className={cx('row-title')}>Contract address</div>
+                {/* <div className={cx('col-lg-1.5', 'col-md-2', 'col-sm-1')}> */}
+                <div className={cx('detail-header')}>
+                  <div className={cx('col-lg-1', 'col-md-2', 'col-sm-2')}>
+                    <div className={cx('row-title')}>이름</div>
+                    <div className={cx('row-title')}>ID</div>
+                    <div className={cx('row-title')}>설명</div>
+                    <div className={cx('row-title')}>카테고리</div>
+                    <div className={cx('row-title')}>발급일자</div>
+                    <div className={cx('row-title')}>속성</div>
+                    {/* </div> */}
+                  </div>
                 </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-title')}>Token ID</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-title')}>Token Standards</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-title')}>Blockchain</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-title')}>Metadata</div>
-                </div>
-              </div>
-              <div className={cx('explanation')}>
-                <div className={cx('col')}>
-                  <div className={cx('row-content')}>asdfasdfsadfsad</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-content')}>asdfasdfsadfsad</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-content')}>asdfasdfsadfsad</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-content')}>asdfasdfsadfsad</div>
-                </div>
-                <div className={cx('col')}>
-                  <div className={cx('row-content')}>NN</div>
+                <div className={cx('detail-content')}>
+                  <div className={cx('col-lg-3', 'col-md-1', 'col-sm-2')}>
+                    <div className={cx('row-content')}>{metadata?.name}</div>
+                    <div className={cx('row-content')}>{metadata?.tokenId}</div>
+                    <div className={cx('row-content')}>
+                      {metadata?.description}
+                    </div>
+                    <div className={cx('row-content')}>{metadata?.edition}</div>
+                    <div className={cx('row-content')}>{metadata?.date}</div>
+                    <div className={cx('row-content')}>
+                      희귀도:(비공개)
+                      {/* {metadata?.attributes.toString()} */}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
