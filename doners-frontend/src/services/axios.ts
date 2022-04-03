@@ -16,12 +16,12 @@ const instance = axios.create({
 // HTTP request interceptor
 instance.interceptors.request.use(
   (config) => {
-    const item = localStorage.getItem('user');
-    if (typeof item === 'string') {
-      const user = JSON.parse(item);
-      if (user.accessToken) {
+    const data = sessionStorage.getItem('accessToken');
+    if (typeof data === 'string') {
+      const accesstoken = JSON.parse(data);
+      if (accesstoken) {
         // For Spring Boot back-end
-        config.headers!.Authorization = 'Bearer ' + user.accessToken;
+        config.headers!.Authorization = 'Bearer ' + accesstoken;
         // for Node.js Express back-end
         //// return { 'x-access-token': user.accessToken };
       }
@@ -58,7 +58,7 @@ instance.interceptors.response.use(
           window.location.reload();
           toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
           //  2. Reset authentication from localstorage/sessionstorage
-          localStorage.removeItem('user');
+          sessionStorage.removeItem('accessToken');
           // logout();
           break;
         case 404:

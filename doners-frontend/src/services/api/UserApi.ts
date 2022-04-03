@@ -13,13 +13,13 @@ type SignUpValidationProps = {
 export const login = async (userAccount: string) => {
   const response = await instance.get(`/user/${userAccount}`);
   // 아직 JWT TOKEN없어서
-  // if (response.data.statusCode === 200) {
-  // localStorage.setItem('user', response.data.accessToken);
-  // }
 
   // if (response.data.accessToken) {
   //   // save JWT token
-  localStorage.setItem('user', JSON.stringify(response.data));
+  sessionStorage.setItem(
+    'accessToken',
+    JSON.stringify(response.data.accessToken)
+  );
   // }
   // return response.data;
 };

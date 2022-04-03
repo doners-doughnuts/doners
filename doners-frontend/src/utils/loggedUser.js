@@ -1,7 +1,7 @@
-//* Get Logged User info from localStorage
+//* Get Logged User info from sessionStorage
 
 export function getLoggedUserId() {
-  const user = localStorage.getItem('user');
+  const user = sessionStorage.getItem('accessToken');
   if (user) {
     return user;
   } else {
@@ -15,6 +15,6 @@ export function checkUserLogged() {
 }
 
 export function getLoggedUserInfo() {
-  const user = localStorage.getItem('user');
+  const user = sessionStorage.getItem('accessToken');
   return user;
 }
