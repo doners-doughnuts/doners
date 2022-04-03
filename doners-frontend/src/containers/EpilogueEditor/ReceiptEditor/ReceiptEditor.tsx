@@ -12,19 +12,16 @@ const cx = classNames.bind(styles);
 type historyType = {
   epilogueBudgetPlan: string;
   epilogueBudgetAmount: string;
-  id: number;
 };
 
 const ReceiptEditor = ({ onChange, list }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [history, setHistory] = useState('');
   const [money, setMoney] = useState('');
-  const [id, setId] = useState(0);
 
   const handleOnclick = () => {
     if (history && money) {
       const data = {
-        id: historyList.length,
         epilogueBudgetPlan: history,
         epilogueBudgetAmount: money,
       };
@@ -38,9 +35,9 @@ const ReceiptEditor = ({ onChange, list }: any) => {
     }
   };
 
-  const handleHistoryDelete = (id: number) => {
-    setHistoryList(historyList.filter((history) => history.id !== id));
-  };
+  // const handleHistoryDelete = (id: number) => {
+  //   setHistoryList(historyList.filter((history) => history.id !== id));
+  // };
 
   useEffect(() => {
     for (let id in list) {
@@ -96,7 +93,7 @@ const ReceiptEditor = ({ onChange, list }: any) => {
             <HistoryItem
               value={data}
               key={idx}
-              onDelete={handleHistoryDelete}
+              // onDelete={handleHistoryDelete}
             />
           );
         })}
