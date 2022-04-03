@@ -37,7 +37,11 @@ const ApplicationListItem = (item: any) => {
           <b>{title}</b>
         </span>
         <span className={cx('status')}>
-          <Tag color="green">{status ? '승인 대기중' : '처리 완료'}</Tag>
+          {status ? (
+            <Tag color="green">승인 대기중</Tag>
+          ) : (
+            <Tag color="black">처리 완료</Tag>
+          )}
         </span>
       </div>
       <ApprovalModal

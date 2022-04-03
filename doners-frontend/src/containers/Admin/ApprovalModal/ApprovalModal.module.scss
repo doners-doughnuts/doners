@@ -12,7 +12,7 @@
 
   .inner-container {
     // display: flex;
-    width: 80%;
+    width: 50%;
     height: fit-content;
     padding: 30px;
     border: 2px solid $black;
@@ -54,4 +54,9 @@
   to {
     opacity: 1;
   }
+}
+
+embed {
+  width: 50%;
+  height: fit-content;
 }

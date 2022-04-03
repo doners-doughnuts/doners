@@ -30,7 +30,7 @@ import FileUploader from '../FileUploader/FileUploader';
 import deleteicon from 'assets/images/icon/delete.png';
 import { cs } from 'date-fns/locale';
 
-interface IFileTypes {
+export interface IFileTypes {
   id: number;
   object: File;
 }

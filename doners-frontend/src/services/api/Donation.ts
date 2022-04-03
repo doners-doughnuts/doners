@@ -90,6 +90,7 @@ export const declineApplication = async (
   const response = await instance.patch(COMMON + '/approve', {
     donationId,
     approved: false,
+    rejectionCode,
   });
   console.log(response);
   return response;
