@@ -18,7 +18,7 @@ export type DontationDetailType = {
   endDate: string;
   account: string;
   targetAmount: number;
-  budget: object;
+  budget: Array<{ plan: string; amount: number; sequence: number }>;
   name: string;
   nickname: string;
   email: string;
@@ -27,7 +27,7 @@ export type DontationDetailType = {
   beneficiaryName: string;
   exist: boolean;
   approvalStatusCode: string;
-  doners: object;
+  donors: object;
   achievementRate: number;
-  // evidence: Map<string, string>;
+  evidence: object;
 };

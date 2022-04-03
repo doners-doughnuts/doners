@@ -41,7 +41,6 @@ instance.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
-      const navigate = useNavigate();
       console.log(error.response);
       switch (error.response.status) {
         /* 'JWT expired' exeption */
@@ -50,7 +49,7 @@ instance.interceptors.response.use(
           break;
         case 401:
           localStorage.removeItem('user');
-          navigate('signup');
+          // navigate('signup');
           toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
           console.log('401error!');
           break;

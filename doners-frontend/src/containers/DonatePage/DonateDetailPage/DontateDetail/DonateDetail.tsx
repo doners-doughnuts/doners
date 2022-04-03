@@ -25,35 +25,36 @@ type budgetType = {
 };
 
 type donorsType = {};
-export type DonationDetailType = {
-  achievementRate: number;
-  approvalStatusCode: string;
-  beneficiaryName: string;
-  budget: Array<{ plan: string; amount: number; sequence: number }>;
-  categoryCode: string;
-  deputy: boolean;
-  description: string;
-  donors?: donorsType;
-  email: string;
-  endDate: string;
-  evidence: object;
-  exist: boolean;
-  image: string;
-  name: string;
-  phone: string;
-  recommendations: number;
-  startDate: string;
-  targetAmount: number;
-  title: string;
-  views: number;
-  nickname: string;
-};
+// export type DonationDetailType = {
+//   achievementRate: number;
+//   approvalStatusCode: string;
+//   beneficiaryName: string;
+//   budget: Array<{ plan: string; amount: number; sequence: number }>;
+//   categoryCode: string;
+//   deputy: boolean;
+//   description: string;
+//   donors?: donorsType;
+//   email: string;
+//   endDate: string;
+//   evidence: object;
+//   exist: boolean;
+//   image: string;
+//   name: string;
+//   phone: string;
+//   recommendations: number;
+//   startDate: string;
+//   targetAmount: number;
+//   title: string;
+//   views: number;
+//   nickname: string;
+// };
 
 const DonateDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [donationData, setDonationData] = useState({
     achievementRate: 0,
+    account: '',
     approvalStatusCode: '',
     beneficiaryName: '',
     budget: [],

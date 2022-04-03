@@ -62,9 +62,12 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
 
   const handleApprove = async () => {
     // 스마트 컨트랙트에 올릴 기부 상세 정보 받아오기
-    const donationDetail: DontationDetailType = await getDonationDetail(
-      donation.donationId
-    );
+
+    //** 송민수 수정 : await getDonationDetail을 하면 바로 data를 가져오는게 아니라 response.data에 값이 들어가 있음.
+    //               따라서 const donationDetail에서 바로 요소 추출 불가능  */
+    // const donationDetail: DontationDetailType = await getDonationDetail(
+    const response = await getDonationDetail(donation.donationId);
+    const donationDetail = response.data;
 
     // contract address가 반환된다
     // ex. 0xc86F168f8D5b22C677c0184C2865C11Dc5921951

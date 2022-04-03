@@ -7,13 +7,14 @@ import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
 import { useState } from 'react';
-import { DonationDetailType } from '../DontateDetail/DonateDetail';
+import { DontationDetailType } from 'types/DonationTypes';
+// import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
 
 const cx = classNames.bind(styles);
 
 type DonateInfoProps = {
-  data: DonationDetailType;
+  data: DontationDetailType;
 };
 
 const DonateInfo = ({ data }: DonateInfoProps) => {
@@ -100,7 +101,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
             <div className={cx('history-items')}>
               {data.budget.map((value) => {
                 return (
-                  <div className={cx('history-item')}>
+                  <div className={cx('history-item')} key={value.sequence}>
                     <P>{value.plan}</P>
                     <div className={cx('value')}>
                       <P>{`${value.amount.toLocaleString()}KRW`}</P>

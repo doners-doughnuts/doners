@@ -12,7 +12,7 @@ const _donationDetail: DontationDetailType = {
   endDate: '2022/07/04',
   account: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367',
   targetAmount: 2348,
-  budget: { plan: '하나', amount: 234.238, sequence: 1 },
+  budget: [{ plan: '하나', amount: 234.238, sequence: 1 }],
   name: '송민수',
   nickname: 'songeebeosut',
   email: 'dondon@gmail.com',
@@ -21,9 +21,9 @@ const _donationDetail: DontationDetailType = {
   beneficiaryName: '',
   exist: false,
   approvalStatusCode: 'APPROVAL',
-  doners: {},
+  donors: {},
   achievementRate: 89,
-  // evidence: { '234': '234' },
+  evidence: { '234': '234' },
 };
 
 export default _donationDetail;
