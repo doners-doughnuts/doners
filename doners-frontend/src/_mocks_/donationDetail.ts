@@ -23,7 +23,12 @@ const _donationDetail: DontationDetailType = {
   approvalStatusCode: 'APPROVAL',
   donors: {},
   achievementRate: 89,
-  evidence: { '234': '234' },
+  evidence: [
+    {
+      name: '샘플파일.jjppgg',
+      url: 'https://donersa404.s3.ap-northeast-2.amazonaws.com/5f24942c-265c-4096-bbb6-5ce4b553abc1.PNG',
+    },
+  ],
 };
 
 export default _donationDetail;

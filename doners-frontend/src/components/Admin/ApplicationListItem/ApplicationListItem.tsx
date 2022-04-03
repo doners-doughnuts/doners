@@ -13,11 +13,10 @@ const cx = classNames.bind(styles);
 
 const ApplicationListItem = (item: any) => {
   const [status, setStatus] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   const { donationId, thumbnail, title, beneficiaryName, targetAmount } =
     item.item;
-
-  const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -28,34 +27,30 @@ const ApplicationListItem = (item: any) => {
   };
 
   return (
-    <div className={cx('item')} onClick={handleOpenModal}>
-      {/* <section className={cx('inner-container')}>
-        <div className={cx('row')}>
-          <div className={cx('col-lg-1',)} */}
-      {/* <P>{`No.${donationId}`}</P> */}
-      <span className={cx('item-avatar')}>
-        {/* <img src={thumbnail}></img> */}
-        <Avatar src={thumbnail} />
-        {/* <H2 >{content.toString()}</H2>
-        <P>{label}</P> */}
-      </span>
-      <span className={cx('item-content')}>
-        <div>{`신청자: ${beneficiaryName}`}</div>
-        <div>{title}</div>
-      </span>
-      {/* <div></div>
-      <div className={cx('card-content-label')}>{title}</div> */}
-      <span className={cx('status')}>
-        <Tag color="green">{status ? '승인 대기중' : '처리 완료'}</Tag>
-      </span>
+    <>
+      <div className={cx('item')} onClick={handleOpenModal}>
+        <span className={cx('item-avatar')}>
+          <Avatar src={thumbnail} />
+        </span>
+        <span className={cx('item-content')}>
+          <div>{`신청자: ${beneficiaryName}`}</div>
+          <b>{title}</b>
+        </span>
+        <span className={cx('status')}>
+          {status ? (
+            <Tag color="green">승인 대기중</Tag>
+          ) : (
+            <Tag color="black">처리 완료</Tag>
+          )}
+        </span>
+      </div>
       <ApprovalModal
         open={openModal}
         onClose={handleOnClose}
+        setStatus={setStatus}
         donation={item.item}
       />
-      {/* </div>
-      </section> */}
-    </div>
+    </>
   );
 };
 

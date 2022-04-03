@@ -29,5 +29,10 @@ export type DontationDetailType = {
   approvalStatusCode: string;
   donors: object;
   achievementRate: number;
-  evidence: object;
+  evidence: Array<EvidenceType>;
+};
+
+export type EvidenceType = {
+  name: string;
+  url: string;
 };
