@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
+import { createBrowserHistory } from 'history';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -41,6 +41,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
+      const history = createBrowserHistory();
       console.log(error.response);
       switch (error.response.status) {
         /* 'JWT expired' exeption */
@@ -48,10 +49,17 @@ instance.interceptors.response.use(
           console.log('400 ERROR, not authorized.');
           break;
         case 401:
-          localStorage.removeItem('user');
           // navigate('signup');
           toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
-          console.log('401error!');
+          history.push('/users/login');
+          // console.log('401error!');
+          //! history.push() 만 했을 때, url만 변경이 되고, 페이지가 reload되지 않는 문제
+          // (https://stackoverflow.com/questions/42941708/react-history-push-is-updating-url-but-not-navigating-to-it-in-browser)
+          // 강제로 새로고침 (임시)
+          window.location.reload();
+          //  2. Reset authentication from localstorage/sessionstorage
+          localStorage.removeItem('user');
+          // logout();
           break;
         case 404:
           console.log('404error!');
