@@ -1,10 +1,39 @@
 @import 'assets/styles/main';
 
-.formvis {
-}
+.signup-container {
+  width: 100%;
 
-.forminvis {
-  display: none;
+  .signup-innerContainer {
+    border: 2px solid $black;
+    box-shadow: $btn-shadow;
+    border-radius: 8px;
+    padding: 50px;
+    margin-bottom: 150px;
+    @include flexbox(between, start);
+    .signup-title {
+      margin-bottom: 30px;
+    }
+
+    .signup-form {
+      width: 40%;
+      .input-row {
+        margin-bottom: 10px;
+        .input-wrap {
+          @include flexbox(between);
+          .input {
+            width: 78%;
+          }
+
+          .button {
+            width: 20%;
+            height: 100%;
+          }
+        }
+      }
+      .nickname-wrapper {
+      }
+    }
+  }
 }
 
 .inputWithBtn {

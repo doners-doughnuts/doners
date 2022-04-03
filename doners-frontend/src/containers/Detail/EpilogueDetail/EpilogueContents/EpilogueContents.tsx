@@ -17,8 +17,6 @@ const EpilogueContents = () => {
   const [thumbnail, setThumbnail] = useState('');
   const [historyList, setHistoryList] = useState([]);
 
-  const [views, setViews] = useState(0);
-
   const { epilogue_id } = useParams<string>();
 
   const navigate = useNavigate();
@@ -59,6 +57,7 @@ const EpilogueContents = () => {
       }
     }
   };
+  // console.log(test.title);
   return (
     <div className={cx('inner-container')}>
       <EpilogueDetailHeader

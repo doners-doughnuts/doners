@@ -37,9 +37,7 @@ const DonateModal = ({ open, onClose }: modalType) => {
       {open ? (
         <section className={cx('modalForm')}>
           <div className={cx('header')}>
-            <div className={cx('title')}>
-              <H2>기부하기</H2>
-            </div>
+            <H2>기부하기</H2>
             <div className={cx('close-btn')} onClick={() => onClose()}>
               <CloseIcon />
             </div>
@@ -53,7 +51,9 @@ const DonateModal = ({ open, onClose }: modalType) => {
                 <Input value="feasefaerfa" size="large" disabled />
               </div>
               <div className={cx('money')}>
-                <DollarIcon />
+                <div className={cx('icon')}>
+                  <DollarIcon />
+                </div>
                 <H3>23.338 </H3>
                 <H4>SSF</H4>
               </div>

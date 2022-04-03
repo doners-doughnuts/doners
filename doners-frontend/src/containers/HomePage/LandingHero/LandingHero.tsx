@@ -3,6 +3,7 @@ import styles from './LandingHero.module.scss';
 import Button from 'assets/theme/Button/Button';
 import character from 'assets/images/character.png';
 import { useNavigate } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 const LandingHero = () => {
@@ -40,6 +41,12 @@ const LandingHero = () => {
                 // className={styles.character}
               />
             </div>
+            <ToastContainer
+              position="top-center"
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </div>
         </div>
       </div>

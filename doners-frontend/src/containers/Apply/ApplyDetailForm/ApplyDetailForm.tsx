@@ -43,6 +43,12 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       formData.append('evidence', file);
     });
 
+    for (let i = 0; i < apply.evidence.length; i++) {
+      formData.append('evidence', apply.evidence[i]);
+      console.log(apply.evidence[i]);
+    }
+    // formData.append('evidence', apply.evidence);
+    console.log(apply.evidence);
     let result = historyList
       .map(({ epilogueBudgetPlan: plan, epilogueBudgetAmount: amount }) => ({
         plan,
@@ -80,12 +86,13 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       navigate('/apply/fail');
     }
   };
+
   useEffect(() => {
     const ssftrans = total / 4000000;
     const temp1 = ssftrans * 10000;
     const temp2 = Math.ceil(temp1);
     const ssfBalance = Number(temp2 / 10000);
-
+    console.log(ssfBalance);
     setSSF(ssfBalance);
     setApply({ ...apply, targetAmount: ssfBalance, budget: historyList });
     console.log(total);

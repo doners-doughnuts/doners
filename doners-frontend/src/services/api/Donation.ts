@@ -1,3 +1,4 @@
+import { vi } from 'date-fns/locale';
 import instance from 'services/axios';
 import { DontationDetailType } from 'types/DonationTypes';
 import _donationDetail from '_mocks_/donationDetail';
@@ -6,6 +7,7 @@ type donationType = {
   category: string;
   page: string;
   sort: string;
+  view?: boolean;
 };
 
 const COMMON = '/donation';
@@ -31,20 +33,32 @@ export const checkUserFundState = async () => {
 export const getDonationList = async (
   category: string,
   sort: string,
-  page: number
+  page: number,
+  view: boolean = false
 ) => {
+  console.log(category, sort, page, view);
   const result = await instance.get(
-    `/donation?category=${category}&page=${page}&sort=${sort}`
-    // `/donation?category=COVID19&page=1&sort=recent`
+    `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
+  );
+  return result;
+};
+
+export const getAvailableDonationList = async (
+  category: string,
+  sort: string,
+  page: number,
+  view: boolean
+) => {
+  console.log(category, sort, page, view);
+  const result = await instance.get(
+    `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
   return result;
 };
 
 export const getDonationDetail = async (donation_id: string) => {
-  // const result: DontationDetailType = await instance.get(
-  //   `/donation/${donation_id}`
-  // );
-  const result: DontationDetailType = _donationDetail;
+  const result = await instance.get(`/donation/${donation_id}`);
+  // const result: DontationDetailType = _donationDetail;
   return result;
 };
 
