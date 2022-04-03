@@ -18,9 +18,13 @@ const ApplicationList = ({ applicationList }: ApplicationListType) => {
         <H3>기부 신청 관리</H3>
       </div>
       <div className={cx('inner-container')}>
-        {applicationList.map((item: ApplicationListItemType, idx) => (
-          <ApplicationListItem key={idx} item={item} />
-        ))}
+        {applicationList.length > 0 ? (
+          applicationList.map((item: ApplicationListItemType, idx) => (
+            <ApplicationListItem key={idx} item={item} />
+          ))
+        ) : (
+          <div className={cx('content')}>신규 기부신청 건이 없습니다.</div>
+        )}
       </div>
     </section>
   );
