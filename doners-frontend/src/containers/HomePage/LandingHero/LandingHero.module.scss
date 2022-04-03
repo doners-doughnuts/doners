@@ -31,9 +31,23 @@
 
 .character {
   width: 300px;
-  height: 300px;
+  height: 200px;
   position: absolute;
   top: 0;
-  right: -100px;
-  transform: rotate(30deg);
+  right: 0px;
+  transform: rotate(15deg);
+  .character-main {
+    width: 500px;
+    filter: drop-shadow(5px 5px 5px rgb(145, 145, 145));
+    animation: ani 1s infinite alternate;
+
+    @keyframes ani {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(0, 5px);
+      }
+    }
+  }
 }

@@ -64,7 +64,7 @@ const DonateDetail = () => {
     donors: [],
     email: '',
     endDate: '',
-    evidence: {},
+    evidence: [],
     exist: false,
     image: '',
     name: '',

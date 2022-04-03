@@ -5,28 +5,37 @@ import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import styles from './ReceiptEditor.module.scss';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 type historyType = {
+  epilogueBudgetSequence: number;
   epilogueBudgetPlan: string;
   epilogueBudgetAmount: string;
 };
 
-const ReceiptEditor = ({ onChange, list }: any) => {
+const ReceiptEditor = ({ onDelete, onChange, list }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [history, setHistory] = useState('');
   const [money, setMoney] = useState('');
-
+  const Id = useRef<number>(0);
   const handleOnclick = () => {
     if (history && money) {
       const data = {
         epilogueBudgetPlan: history,
         epilogueBudgetAmount: money,
       };
-      setHistoryList((prev) => [...prev, data]);
+      setHistoryList((prev) => [
+        ...prev,
+        {
+          epilogueBudgetSequence: Id.current,
+          epilogueBudgetPlan: history,
+          epilogueBudgetAmount: money,
+        },
+      ]);
       onChange({
+        epilogueBudgetSequence: Id.current++,
         epilogueBudgetPlan: history,
         epilogueBudgetAmount: money,
       });
@@ -35,23 +44,29 @@ const ReceiptEditor = ({ onChange, list }: any) => {
     }
   };
 
-  // const handleHistoryDelete = (id: number) => {
-  //   setHistoryList(historyList.filter((history) => history.id !== id));
-  // };
+  const handleHistoryDelete = (epilogueBudgetSequence: number): void => {
+    console.log(epilogueBudgetSequence);
+    setHistoryList(
+      historyList.filter(
+        (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
+      )
+    );
+    onDelete(epilogueBudgetSequence);
+  };
 
   useEffect(() => {
+    console.log('여긴가???');
     for (let id in list) {
       console.log(id);
       console.log(list[id]);
-      setHistoryList((prev) => [
-        ...prev,
-        {
-          id,
-          ...list[id],
-        },
-      ]);
+      // setHistoryList((prev) => [
+      //   ...prev,
+      //   {
+      //     id,
+      //     ...list[id],
+      //   },
+      // ]);
     }
-
     // setHistoryList(list);
   }, [list]);
 
@@ -93,7 +108,7 @@ const ReceiptEditor = ({ onChange, list }: any) => {
             <HistoryItem
               value={data}
               key={idx}
-              // onDelete={handleHistoryDelete}
+              onDelete={handleHistoryDelete}
             />
           );
         })}

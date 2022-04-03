@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import Button from 'assets/theme/Button/Button';
 import styles from './AccountCheck.module.scss';
-import character from 'assets/images/charactor-fox.png';
+import character from 'assets/images/character-fox.png';
 import { ReactComponent as FoxIcon } from 'assets/images/icon/fox.svg';
 import { login } from 'services/api/UserApi';
 import { isLoggedState, signupState, nicknameState } from 'atoms/atoms';

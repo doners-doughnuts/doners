@@ -1,14 +1,18 @@
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styles from './MyNFT.module.scss';
 import NFTCard from 'components/NFTCard/NFTCard';
 import EpilogueCard from 'components/EpilogueCard/EpilogueCard';
 import { getUserNFTMetadataList, mint } from 'services/blockchain/NftApi';
 import { getWalletAccount } from 'utils/walletAddress';
+import NFTDetail from '../NFTDetail/NFTDetail';
 
 const cx = classNames.bind(styles);
+
 const MyNFT = () => {
+  const navigate = useNavigate();
   const [nftList, setNftList] = useState([]);
 
   const getNftList = async () => {
@@ -20,6 +24,10 @@ const MyNFT = () => {
     setNftList(response);
   };
 
+  const handlePageMove = () => {
+    navigate('/category');
+  };
+
   useEffect(() => {
     getNftList();
   }, []);
@@ -29,40 +37,28 @@ const MyNFT = () => {
       <section className={cx('container')}>
         {/* <div className={cx('col-lg-12')}> */}
         <div className={cx('row')}>
-          {nftList.length > 0
-            ? nftList.map((item: string, idx) => (
-                <div
-                  key={idx}
-                  className={cx('col-lg-3', 'col-md-3', 'col-sm-2')}
-                >
-                  <NFTCard metadataUri={item} />
+          {nftList.length > 0 ? (
+            nftList.map((item: string, idx) => (
+              <div
+                key={idx}
+                className={cx('col-lg-2.5', 'col-md-3', 'col-sm-2')}
+                // onClick={() => openModal()}
+              >
+                <NFTCard metadataUri={item} />
+              </div>
+            ))
+          ) : (
+            <div>
+              <div className={cx('col-lg-3', 'col-md-3', 'col-sm-2')}>
+                <div className={cx('empty')} onClick={handlePageMove}>
+                  <div className={cx('card')}>기부하러 가기</div>
                 </div>
-              ))
-            : null}
-          {/* </div> */}
-          {/* <div className={cx('row')}>
-          <div className={cx('col-lg-3')}>
-            <NFTCard />
-          </div>
-          <div className={cx('col-lg-3')}>
-            <NFTCard />
-          </div>
-          <div className={cx('col-lg-3')}>
-            <NFTCard />
-          </div>
-          <div className={cx('col-lg-3')}>
-            <NFTCard />
-          </div>
-          <div className={cx('col-lg-3')}>
-            <NFTCard />
-          </div>
-          <div className={cx('col-lg-3')}>
-            <NFTCard />
-          </div> */}
-          {/* </div> */}
+              </div>
+            </div>
+          )}
         </div>
+        {/* <button onClick={openModal}>상세보기 테스트용</button> */}
       </section>
-      {/* <NFTCard /> */}
     </div>
   );
 };

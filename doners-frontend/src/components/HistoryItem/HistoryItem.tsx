@@ -13,7 +13,10 @@ const HistoryItem = ({ value, onDelete }: any) => {
       <P>{value.epilogueBudgetPlan}</P>
       <div className={cx('value')}>
         <P>{`${cmoney}KRW`}</P>
-        <div className={cx('icon')} onClick={() => onDelete(value.id)}>
+        <div
+          className={cx('icon')}
+          onClick={() => onDelete(value.epilogueBudgetSequence)}
+        >
           <RemoveIcon />
         </div>
       </div>
