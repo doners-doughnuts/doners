@@ -14,14 +14,6 @@ const cx = classNames.bind(styles);
 const MyNFT = () => {
   const navigate = useNavigate();
   const [nftList, setNftList] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
   const getNftList = async () => {
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
@@ -47,7 +39,11 @@ const MyNFT = () => {
         <div className={cx('row')}>
           {nftList.length > 0 ? (
             nftList.map((item: string, idx) => (
-              <div key={idx} className={cx('col-lg-3', 'col-md-3', 'col-sm-2')}>
+              <div
+                key={idx}
+                className={cx('col-lg-3', 'col-md-3', 'col-sm-2')}
+                // onClick={() => openModal()}
+              >
                 <NFTCard metadataUri={item} />
               </div>
             ))
@@ -60,9 +56,8 @@ const MyNFT = () => {
               </div>
             </div>
           )}
-        </div>{' '}
-        <button onClick={openModal}>상세보기 테스트용</button>
-        <NFTDetail open={modalOpen} close={closeModal}></NFTDetail>
+        </div>
+        {/* <button onClick={openModal}>상세보기 테스트용</button> */}
       </section>
     </div>
   );
