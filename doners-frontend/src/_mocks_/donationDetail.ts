@@ -23,6 +23,7 @@ const _donationDetail: DontationDetailType = {
   approvalStatusCode: 'APPROVAL',
   doners: {},
   achievementRate: 89,
+  evidence: [],
   // evidence: { '234': '234' },
 };
 

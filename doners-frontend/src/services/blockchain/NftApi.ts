@@ -83,7 +83,7 @@ export const mint = async (edition: string, walletAddress: string) => {
 
 /* Metadata 가져오기 */
 // 그냥 uri 반환받아와서  web3에서 직접 호출. 컨트랙트에서 가져와주지 않음 (비용이 비싸질수도 있기 때문에)
-export const getMetadata = async (tokenId: number) => {
+export const getMetadataFromTokenId = async (tokenId: number) => {
   // 위와 동일
   var metadataURI = await DDHelperContract.methods
     .getMetadataUri(tokenId)
@@ -142,8 +142,17 @@ export const getUserNFTMetadataList = async (walletAddress: string) => {
     uri.replace('ipfs://', 'https://ipfs.io/ipfs/')
   );
 
-  console.log('보유 NFT의 Metadata 목록: ', result);
+  // console.log('보유 NFT의 Metadata 목록: ', result);
   return result;
+};
+
+export const getMetadataFromUri = async (metadataURI: string) => {
+  // 위의 url에서 JSON가져오기
+  // (https://stackoverflow.com/a/55784549)
+  var metadata: any = await (await fetch(metadataURI)).json();
+  // console.log(metadata);
+
+  return metadata;
 };
 
 /* 총 발행된 NFT(DD) 개수 (관리자페이지용) */
