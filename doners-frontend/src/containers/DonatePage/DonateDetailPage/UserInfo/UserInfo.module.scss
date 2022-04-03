@@ -8,7 +8,14 @@
   .title {
     margin-bottom: 20px;
   }
+  .alert-message {
+    @include flexbox(start, center);
 
+    .icon {
+      margin-right: 10px;
+      height: 24px;
+    }
+  }
   .content {
     min-height: 350px;
   }

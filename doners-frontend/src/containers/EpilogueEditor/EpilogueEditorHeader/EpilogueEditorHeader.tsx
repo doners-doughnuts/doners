@@ -36,9 +36,9 @@ const EpilogueEditorHeader = ({ onChange, src }: any) => {
     setImgFile(src);
   }, [src]);
 
-  useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
+  // useEffect(() => {
+  //   console.log(imgFile);
+  // }, [imgFile]);
 
   return (
     <div className={cx('header')}>

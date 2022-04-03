@@ -3,15 +3,12 @@ import styles from './BoardListItem.module.scss';
 import { ReactComponent as FlagIcon } from 'assets/images/icon/flag.svg';
 import { ReactComponent as ViewsIcon } from 'assets/images/icon/views.svg';
 import { ReactComponent as CommentIcon } from 'assets/images/icon/comment.svg';
+import { fToNow } from 'utils/formatTime';
 // import ListItemType from 'containers/CommunityPage/BoardList/BoardList';
 
 const cx = classNames.bind(styles);
 
 const BoardListItem = ({ data }: any) => {
-  function formatDate(value: string) {
-    const date = new Date(value);
-    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
-  }
   return (
     <div className={cx('article-row')}>
       {data.communityCode === 'NOTICE' ? (
@@ -25,7 +22,7 @@ const BoardListItem = ({ data }: any) => {
           <div className={cx('sub-left')}>
             <span className={cx('sub-text')}>{data.communityWriter}</span>
             <span className={cx('sub-text', 'date')}>
-              {formatDate(data.communityCreateTime)}
+              {fToNow(data.communityCreateTime)}
             </span>
           </div>
           <div className={cx('sub-right')}>

@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -46,6 +48,9 @@ instance.interceptors.response.use(
           console.log('400 ERROR, not authorized.');
           break;
         case 401:
+          localStorage.removeItem('user');
+          // navigate('signup');
+          toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
           console.log('401error!');
           break;
         case 404:

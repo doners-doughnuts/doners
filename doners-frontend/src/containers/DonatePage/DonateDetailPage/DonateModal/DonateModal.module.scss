@@ -41,6 +41,10 @@
       }
       .money {
         @include flexbox(start, end);
+        .icon {
+          margin-right: 10px;
+          height: 33px;
+        }
       }
     }
     .donate-form {

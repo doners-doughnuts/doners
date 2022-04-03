@@ -46,15 +46,15 @@ export default function Router() {
         // { path: 'list', element: <DonateListPage /> },
         { path: 'list', element: <DonateListPage /> },
         { path: 'apply', element: <DonateRegistPage /> },
-        { path: ':donate_seq', element: <DonateDetailPage /> },
+        { path: ':donation_id', element: <DonateDetailPage /> },
       ],
     },
     {
       path: '/profile',
       element: <ScrollLayout />,
       children: [
-        { path: '', element: <MyPage focus={1} /> },
-        { path: 'mynft/:id', element: <MyPage focus={1} /> },
+        { path: ':id', element: <MyPage focus={1} /> },
+        // { path: 'mynft/:id', element: <MyPage focus={1} /> },
         { path: 'donationhistory/:id', element: <MyPage focus={2} /> },
         { path: 'fundhistory/:id', element: <MyPage focus={3} /> },
       ],
@@ -68,7 +68,7 @@ export default function Router() {
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'epilogue/:epilogue_id', element: <EpilogueDetail /> },
-        { path: 'epilogue/write/:epilogue_id', element: <EpilogueEditPage /> },
+        { path: 'epilogue/write/:donation_id', element: <EpilogueEditPage /> },
         {
           path: 'epilogue/modify/:epilogue_id',
           element: <EpilogueEditPage modify />,

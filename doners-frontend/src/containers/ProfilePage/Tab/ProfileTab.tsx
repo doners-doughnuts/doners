@@ -24,7 +24,7 @@ const ProfileTab = ({ focus }: TabType) => {
             <div className={cx('col-lg-8')}>
               <ul className={cx('lnb-list')}>
                 <li className={cx('lnb-item', { 'is-active': focus === 1 })}>
-                  <Link to={`/profile/mynft/${id}`}>보유 NFT</Link>
+                  <Link to={`/profile/${id}`}>보유 NFT</Link>
                 </li>
                 <li className={cx('lnb-item', { 'is-active': focus === 2 })}>
                   <Link to={`/profile/donationhistory/${id}`}>기부한 내역</Link>

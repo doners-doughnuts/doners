@@ -3,17 +3,23 @@ import classNames from 'classnames/bind';
 import Button from 'assets/theme/Button/Button';
 import styles from './AccountCheck.module.scss';
 import character from 'assets/images/charactor-fox.png';
+import { ReactComponent as FoxIcon } from 'assets/images/icon/fox.svg';
 import { login } from 'services/api/UserApi';
 import { isLoggedState, signupState, nicknameState } from 'atoms/atoms';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SignupForm from '../SignupForm/SignupForm';
+import H4 from 'assets/theme/Typography/H4/H4';
 
 const cx = classNames.bind(styles);
 
 const AccountCheck = () => {
   const navigate = useNavigate();
   const setNicknameState = useSetRecoilState(nicknameState);
-  const setSignupState = useSetRecoilState(signupState);
+  // const setSignupState = useSetRecoilState(signupState);
+  const [signupAccount, setSignupAccount] = useRecoilState(signupState);
   const setIsLoggedState = useSetRecoilState(isLoggedState);
 
   const [account, setAccount] = useState<string>('');
@@ -26,7 +32,7 @@ const AccountCheck = () => {
         });
         setAccount(accounts[0]);
       } else {
-        alert('Metamask를 설치해주세요!');
+        toast.info('Metamask를 설치해주세요!');
         // eslint-disable-next-line no-restricted-globals
         location.href = 'https://metamask.io/download/';
       }
@@ -36,46 +42,28 @@ const AccountCheck = () => {
   };
 
   useEffect(() => {
-    setSignupState('');
+    // setSignupAccount('');
     setIsLoggedState(false);
   }, []);
 
   useEffect(() => {
     if (account) {
-      console.log('metamask지갑주소');
-      console.log(account);
-      console.log('api호출위치');
-
       handleLogin(account);
-      // let result2 = login(account);
-      //console.log(result2);
     }
   }, [account]);
 
-  const handleLogin = async (account: any) => {
+  const handleLogin = async (account: string) => {
     try {
       const result = await login(account);
-      console.log('Login 성공');
-      console.log(result.statusCode);
-
-      if (result.statusCode === 200) {
-        // // 로그인 성공한 userId와, response로 온 userNickname을 atom에 저장
-        // setLoggedUserState({
-        //   userId: loginInfo.userId,
-        //   userNickname: result.userNickname,
-        // });setIsLoggedState
-        setIsLoggedState(true);
-        console.log(result.userNickname);
-        setNicknameState(result.userNickname);
-        // 이전으로 돌아갈 수 있어야 하므로 history 유지
-        alert('로그인 성공! ');
-        navigate(-1);
-
-        // navigate('/', { replace: true });
-      }
+      console.log(result);
+      // // 로그인 성공한 userId와, response로 온 userNickname을 atom에 저장
+      toast.success('로그인 성공');
+      setIsLoggedState(true);
+      // setNicknameState(result.userNickname);
+      navigate('/');
     } catch (error) {
-      console.log(error);
-      if (!localStorage.getItem('user')) setSignupState(account);
+      toast.info('등록된 회원정보가 없습니다.');
+      setSignupAccount(account);
     }
   };
 
@@ -87,29 +75,35 @@ const AccountCheck = () => {
             <div className={cx('inner-container')}>
               <div className={cx('text-wrapper')}>
                 <h1 className={cx('slogan')}>
-                  Connect to <span>MetaMask</span>{' '}
-                </h1>{' '}
-                <img className={cx('character')} src={character} />
+                  Connect to <span>MetaMask</span>
+                </h1>
+                <img
+                  className={cx('character')}
+                  src={character}
+                  alt="character"
+                />
                 <div className={cx('comment-form')}>
                   <div className={cx('description')}>
-                    <span>
-                      {account !== ''
-                        ? localStorage.getItem('user')
-                          ? '이미 로그인 된 상태입니다.'
-                          : '존재하지 않는 회원입니다.'
-                        : '연결하기 버튼을 눌러 연결해주세요.'}
-                      <br />
-                      <span>{account}</span>
-                    </span>
+                    {account ? (
+                      <div className={cx('user-account')}>
+                        <FoxIcon />
+                        <H4>{account}</H4>
+                      </div>
+                    ) : (
+                      <H4>연결하기 버튼을 눌러 지갑을 연동해주세요.</H4>
+                    )}
                   </div>
-                </div>{' '}
-                <a>지갑 사용방법이 궁금하다면?</a>
+                </div>
               </div>
-              <div className={cx('buttonRow')}>
-                <Button color="primary" onClick={getAccount} fullWidth>
-                  연결하기
-                </Button>
-              </div>
+              {signupAccount ? (
+                <SignupForm />
+              ) : (
+                <div className={cx('buttonRow')}>
+                  <Button color="primary" onClick={getAccount} fullWidth>
+                    연결하기
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
