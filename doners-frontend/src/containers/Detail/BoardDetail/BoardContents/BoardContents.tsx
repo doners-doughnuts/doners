@@ -37,15 +37,14 @@ const BoardContents = () => {
   }, [writer]);
 
   const checkUser = () => {
-    const item = sessionStorage.getItem('accessToken');
-    if (typeof item === 'string') {
-      const Juser = JSON.parse(item);
+    const user = sessionStorage.getItem('user');
+    if (typeof user === 'string') {
+      const Juser = JSON.parse(user);
       console.log(writer);
-      console.log(Juser.userNickname);
-      if (writer === Juser.userNickname) {
+      console.log(Juser.nickName);
+      if (writer === Juser.nickName) {
         setIsOwn(true);
       }
-      // console.log(Juser.userNickname);
     }
   };
   const getBoard = async () => {

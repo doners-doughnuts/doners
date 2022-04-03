@@ -12,16 +12,12 @@ type SignUpValidationProps = {
 
 export const login = async (userAccount: string) => {
   const response = await instance.get(`/user/${userAccount}`);
-  // 아직 JWT TOKEN없어서
-
-  // if (response.data.accessToken) {
-  //   // save JWT token
-  sessionStorage.setItem(
-    'accessToken',
-    JSON.stringify(response.data.accessToken)
-  );
-  // }
-  // return response.data;
+  console.log(response);
+  const user = {
+    accessToken: response.data.accessToken,
+    nickName: response.data.userNickname,
+  };
+  sessionStorage.setItem('user', JSON.stringify(user));
 };
 
 /* 닉네임 중복검사 */

@@ -9,7 +9,6 @@ import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import { deleteComments, modifyComment } from 'services/api/Comment';
 import { useEffect, useRef, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
-import Textarea from 'assets/theme/Textarea/Textarea';
 
 const cx = classNames.bind(styles);
 const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
@@ -31,10 +30,10 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
   };
 
   const checkUser = () => {
-    const item = sessionStorage.getItem('accessToken');
-    if (typeof item === 'string') {
-      const Juser = JSON.parse(item);
-      if (nickname === Juser.userNickname) {
+    const user = sessionStorage.getItem('user');
+    if (typeof user === 'string') {
+      const Juser = JSON.parse(user);
+      if (nickname === Juser.nickName) {
         setIsOwn(true);
       }
     }
