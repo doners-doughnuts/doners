@@ -205,14 +205,11 @@ public class DonationController {
 
     }
 
-    @ApiOperation(value = "기부글 신청 승인")
+    @ApiOperation(value = "기부글 신청 기록 확인")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "기부글 신청이 승인되었습니다."),
-            @ApiResponse(code = 200, message = "기부글 신청이 거절되었습니다."),
-            @ApiResponse(code = 401, message = "기부글 승인 권한이 없습니다."),
-            @ApiResponse(code = 404, message = "기부글을 찾을 수 없습니다."),
-            @ApiResponse(code = 409, message = "이미 승인된 기부글 입니다."),
-            @ApiResponse(code = 409, message = "기부글 신청 승인에 실패했습니다.")
+            @ApiResponse(code = 200, message = "기부글 신청 기록이 이미 존재합니다."),
+            @ApiResponse(code = 200, message = "기부글 신청 기록이 존재하지 않습니다."),
+            @ApiResponse(code = 409, message = "기부글 신청 기록 확인에 실패했습니다.")
     })
     @GetMapping("/check")
     public ResponseEntity<? extends BaseResponseDTO> check(
@@ -222,7 +219,11 @@ public class DonationController {
         try {
             DonationCheckResponseDTO donationCheckResponseDTO = donationService.checkDonation(accessToken);
 
-            return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록 확인에 성공했했습니다.", 200,donationCheckResponseDTO));
+            if (donationCheckResponseDTO.isApply()) {
+                return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 이미 존재합니다.", 200, donationCheckResponseDTO));
+            }
+
+            return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 존재하지 않습니다.", 200, donationCheckResponseDTO));
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 기록 확인에 실패했습니다.", 409));
         }
