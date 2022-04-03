@@ -69,6 +69,8 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
     const response = await getDonationDetail(donation.donationId);
     const donationDetail = response.data;
 
+    console.log(donationDetail);
+
     // contract address가 반환된다
     // ex. 0xc86F168f8D5b22C677c0184C2865C11Dc5921951
     const fundContractAddress: string = await createFundraiser(
