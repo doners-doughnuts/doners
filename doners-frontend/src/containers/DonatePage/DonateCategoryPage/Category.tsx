@@ -17,25 +17,25 @@ const Category = () => {
       <Link to="/fundraisings/list?category=1&sort=1">
         <div className={cx('category-item', 'item-1')}>
           <img src={covid19} alt="covid19 category" />
-          <div className={cx('category-desc')}>코로나 19 모금으로 바로가기</div>
+          <div className={cx('category-desc')}>코로나 19 모금</div>
         </div>
       </Link>
       <Link to="/fundraisings/list?category=2&sort=1">
         <div className={cx('category-item', 'item-2')}>
           <img src={rare_diseases} alt="rare_diseases category" />
-          <div className={cx('category-desc')}>희귀질환 모금으로 바로가기</div>
+          <div className={cx('category-desc')}>희귀질환 모금</div>
         </div>
       </Link>
       <Link to="/fundraisings/list?category=3&sort=1">
         <div className={cx('category-item', 'item-3')}>
           <img src={veteran} alt="veteran category" />
-          <div className={cx('category-desc')}>참전용사 모금으로 바로가기</div>
+          <div className={cx('category-desc')}>참전용사 모금</div>
         </div>
       </Link>
       <Link to="/fundraisings/list?category=4&sort=1">
         <div className={cx('category-item', 'item-4')}>
           <img src={single_mom} alt="single_mom category" />
-          <div className={cx('category-desc')}>미혼모/부 모금으로 바로가기</div>
+          <div className={cx('category-desc')}>미혼모/부 모금</div>
         </div>
       </Link>
       <div className={cx('background')}></div>
