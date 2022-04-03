@@ -43,15 +43,18 @@
     display: flex;
     align-items: center;
     line-height: 1.5em;
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    white-space: nowrap;
   }
 
   .detail-content {
-    margin-top: 10px;
+    margin-top: 20px;
     color: $gray-3;
     display: flex;
     align-items: center;
     line-height: 1.5em;
+    white-space: nowrap;
   }
 
   // div[class^="detail-"] {
