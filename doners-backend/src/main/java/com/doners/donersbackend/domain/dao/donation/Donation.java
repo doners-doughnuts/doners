@@ -17,6 +17,9 @@ import java.time.LocalDate;
 @Entity
 public class Donation extends BaseEntity {
 
+    @Column(name = "donation_contract_address")
+    private String contractAddress;
+
     @Column(name = "donation_phone")
     private String phone;
 
@@ -96,6 +99,11 @@ public class Donation extends BaseEntity {
     // 시작
     public void changeStartDate() {
         this.startDate = LocalDate.now();
+    }
+
+    // 컨트랙트 주소
+    public void changeContractAddress(String contractAddress) {
+        this.contractAddress = contractAddress;
     }
 
     // 거절 사유

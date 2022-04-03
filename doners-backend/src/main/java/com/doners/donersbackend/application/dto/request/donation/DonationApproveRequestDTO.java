@@ -24,6 +24,9 @@ public class DonationApproveRequestDTO {
     @ApiModelProperty(name = "승인 여부")
     private boolean approved;
 
+    @ApiModelProperty(name = "컨트랙트 주소")
+    private String contractAddress;
+
     @ApiModelProperty(name = "거절 사유 코드")
     private ApprovalStatusCode rejectionCode;
 
