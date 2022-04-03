@@ -2,6 +2,7 @@ package com.doners.donersbackend.domain.repository.donation;
 
 import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
+import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,7 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
-    Optional<List<Donation>> findByIsApproved(boolean isApproved);
+    Optional<List<Donation>> findByIsApprovedAndApprovalStatusCode(boolean isApproved, ApprovalStatusCode approvalStatusCode);
 
     Optional<List<Donation>> findByUserAndIsDeletedOrderByStartDateDesc(User user, boolean isDeleted);
 
