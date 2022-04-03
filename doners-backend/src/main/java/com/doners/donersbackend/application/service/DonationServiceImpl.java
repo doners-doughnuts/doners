@@ -167,13 +167,12 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationGetListWrapperResponseDTO getPendingDonationList(String accessToken) throws Exception {
+
         User user = convertAccessTokenToUser(accessToken);
 
-        if (!user.getUserCode().equals(UserCode.ADMIN)) {
-            throw new Exception("관리자가 아닙니다.");
-        }
+        if (!user.getUserCode().equals(UserCode.ADMIN)) throw new Exception("관리자가 아닙니다.");
 
-        List<Donation> pendingDonationList = donationRepository.findByIsApproved(false)
+        List<Donation> pendingDonationList = donationRepository.findByIsApprovedAndApprovalStatusCode(false, ApprovalStatusCode.BEFORE_CONFIRMATION)
                 .orElseThrow(() -> new IllegalArgumentException("미승인 기부 요청이 없습니다."));
 
         return convertDonationListToDTO(pendingDonationList);
