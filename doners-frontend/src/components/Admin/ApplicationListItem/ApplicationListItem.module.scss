@@ -5,18 +5,43 @@ div {
   font-family: 'Noto Sans';
 }
 .item {
-  padding: 10px 50px;
+  display: flex;
+  // padding: 10px 50px;
   border-top: 2px solid $black;
+  border-bottom: 2px solid $black;
+  font-size: small;
+
+  .item-avatar {
+    justify-content: flex-start;
+  }
+
+  .item-content {
+    width: 100%;
+    font-size: small;
+    justify-content: center;
+    text-align: center;
+  }
+  
+
+
+  .status {
+    justify-content: flex-end;
+    // position: absolute;
+    // right: 0;
+    // font-size: 18px;
+  font-size: small;
+    font-family: 'Noto Sans';
+    width: fit-content;
+
+    Tag {
+      font-size: small;
+    font-family: 'Noto Sans';
+    width: fit-content;
+    }
+  }
 
   &:hover {
     background-color: $background-shadow;
-  }
-
-  .status {
-    position: absolute;
-    right: 0;
-    // font-size: 18px;
-    font-family: 'Noto Sans';
   }
 }
 
