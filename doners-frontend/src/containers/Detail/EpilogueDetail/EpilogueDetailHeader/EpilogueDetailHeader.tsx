@@ -33,15 +33,12 @@ const EpilogueDetailHeader = ({
   const [isOwn, setIsOwn] = useState(false);
 
   const checkUser = () => {
-    const item = sessionStorage.getItem('accessToken');
-    if (typeof item === 'string') {
-      const Juser = JSON.parse(item);
-      console.log(writer);
-      console.log(Juser.userNickname);
-      if (writer === Juser.userNickname) {
+    const user = sessionStorage.getItem('user');
+    if (typeof user === 'string') {
+      const Juser = JSON.parse(user);
+      if (writer === Juser.nickName) {
         setIsOwn(true);
       }
-      // console.log(Juser.userNickname);
     }
   };
 

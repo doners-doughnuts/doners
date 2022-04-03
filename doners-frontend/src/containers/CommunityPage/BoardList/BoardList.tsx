@@ -21,17 +21,30 @@ export type ListItemType = {
   comments: number;
 };
 const BoardList = () => {
-  const [sequence, setSequence] = useState(1);
+  const [page, setPage] = useState(1);
   const [listItems, setListItems] = useState<ListItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [throttle, setThrottle] = useState(false);
+
+  // const handleScroll = () => {
+  //   if (throttle) return;
+  //   if (!throttle) {
+  //     setThrottle(true);
+  //     setTimeout(async () => {
+  //       setPage((page) => page + 1);
+  //       setThrottle(false);
+  //     }, 300);
+  //   }
+  // };
 
   useEffect(() => {
+    console.log(page);
     setIsLoading(true);
     getList();
-  }, []);
+  }, [page]);
 
   const getList = async () => {
-    const response = await getBoardList(sequence);
+    const response = await getBoardList(page);
     console.log(response.data);
     const data = response.data.communityGetListResponseDTOList;
     setListItems((prev) => [...prev, ...data]);
@@ -48,7 +61,10 @@ const BoardList = () => {
         </div>
       )}
       {!isLoading && (
-        <div className={cx('inner-container')}>
+        <div
+          className={cx('inner-container')}
+          // onScroll={handleScroll}
+        >
           <div className={cx('btn-row')}>
             <div className={cx('btn')}>
               <Link to="write">

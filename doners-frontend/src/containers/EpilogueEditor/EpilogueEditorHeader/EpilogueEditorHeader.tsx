@@ -24,21 +24,21 @@ const EpilogueEditorHeader = ({ onChange, src }: any) => {
     setIsLoading(true);
     const file = event.target.files;
     onChange(file);
-    console.log(file);
+    console.log(URL.createObjectURL(file[0]));
     setImgFile(URL.createObjectURL(file[0]));
     const formData = new FormData();
     formData.append('file', file[0]);
     console.log(formData);
   };
 
-  useEffect(() => {
-    console.log(src);
-    setImgFile(src);
-  }, [src]);
-
   // useEffect(() => {
-  //   console.log(imgFile);
-  // }, [imgFile]);
+  //   console.log(src);
+  //   setImgFile(src);
+  // }, [src]);
+
+  useEffect(() => {
+    console.log(imgFile);
+  }, [imgFile]);
 
   return (
     <div className={cx('header')}>
@@ -83,7 +83,7 @@ const EpilogueEditorHeader = ({ onChange, src }: any) => {
             <div className={cx('upload')}>
               <ImageIcon width={42} height={42} />
               <H4 color="blue">이미지를 업로드하세요.</H4>
-              <P color="gray">여기를 클릭하거나 파일을 마우스로 끌어보세요.</P>
+              <P color="gray">여기를 클릭하여 파일을 선택해주세요.</P>
             </div>
           )}
         </div>
