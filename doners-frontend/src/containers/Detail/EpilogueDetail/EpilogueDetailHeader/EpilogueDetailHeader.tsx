@@ -33,7 +33,7 @@ const EpilogueDetailHeader = ({
   const [isOwn, setIsOwn] = useState(false);
 
   const checkUser = () => {
-    const item = localStorage.getItem('user');
+    const item = sessionStorage.getItem('accessToken');
     if (typeof item === 'string') {
       const Juser = JSON.parse(item);
       console.log(writer);
