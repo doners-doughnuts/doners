@@ -37,9 +37,9 @@ const Header = () => {
   // });
 
   useEffect(() => {
-    const localStorageUserInfo = getLoggedUserInfo();
-    console.log(localStorageUserInfo);
-    if (localStorageUserInfo) {
+    const sessionStorageUserInfo = getLoggedUserInfo();
+    console.log(sessionStorageUserInfo);
+    if (sessionStorageUserInfo) {
       setLoggedUserInfo(true);
       // console.log(mynickname);
     }
