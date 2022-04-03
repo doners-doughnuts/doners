@@ -3,11 +3,13 @@
 %tag-base {
   @include inline-flexbox;
   @include text-style(12);
-  height: 32px;
-  padding: 0 16px;
+  // height: 32px;
+  padding: 4px 16px;
   font-weight: 400;
   border: 2px solid $black;
   border-radius: 200px;
+  font-family: 'Noto Sans';
+ white-space: nowrap
 }
 
 .tag-red {

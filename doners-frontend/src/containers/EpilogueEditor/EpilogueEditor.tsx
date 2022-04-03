@@ -36,9 +36,9 @@ type EditType = {
 };
 
 type historyType = {
+  epilogueBudgetSequence: number;
   epilogueBudgetPlan: string;
   epilogueBudgetAmount: string;
-  // id: number;
 };
 
 function EpilogueEditor({ modify = false }: EditType) {
@@ -156,7 +156,13 @@ function EpilogueEditor({ modify = false }: EditType) {
     setHistoryList((prev) => [...prev, data]);
   };
 
-  // const handleDeletePlan = (id) => {};
+  const handleDeletePlan = (epilogueBudgetSequence: number) => {
+    setHistoryList(
+      historyList.filter(
+        (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
+      )
+    );
+  };
 
   useEffect(() => {
     console.log(historyList);
@@ -207,7 +213,11 @@ function EpilogueEditor({ modify = false }: EditType) {
             <TotalDonate />
           </div>
           <div className={cx('receipt-editor')}>
-            <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
+            <ReceiptEditor
+              onDelete={handleDeletePlan}
+              onChange={handleUploadPlan}
+              list={historyList}
+            />
           </div>
         </div>
         <div className={cx('btn-row')}>

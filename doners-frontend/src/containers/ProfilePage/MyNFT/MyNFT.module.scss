@@ -1,4 +1,22 @@
 @import 'assets/styles/main';
+
 .row {
-  // @include flexbox(between);
+  @include flexbox(between);
+
+  .empty {
+    .card {
+      // left: 50%;
+      // transform: translateX(-50%);
+      box-shadow: $btn-shadow-white;
+      border-radius: 8px;
+      position: relative;
+      background-color: $black;
+      height: 200px;
+      width: 200px;
+      color: $white;
+      text-align: center;
+      line-height: 200px;
+      text-align: center;
+    }
+  }
 }

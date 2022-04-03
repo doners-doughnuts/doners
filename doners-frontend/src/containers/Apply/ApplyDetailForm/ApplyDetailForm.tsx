@@ -11,7 +11,7 @@ import { postDonation } from 'services/api/Donation';
 type historyType = {
   epilogueBudgetAmount: string;
   epilogueBudgetPlan: string;
-  sequence: number;
+  epilogueBudgetSequence: number;
 };
 
 const cx = classNames.bind(styles);
@@ -27,6 +27,14 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadPlan = (data: any) => {
     setHistoryList((prev) => [...prev, data]);
     console.log(historyList);
+  };
+
+  const handleDeletePlan = (epilogueBudgetSequence: number) => {
+    setHistoryList(
+      historyList.filter(
+        (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
+      )
+    );
   };
 
   const setValue = async () => {
@@ -112,7 +120,11 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       <div className={cx('maintitle')}>희망 기부 금액 설정</div>
       <div className={cx('title')}>모금액 활용계획</div>
       <div className={cx('editor')}>
-        <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
+        <ReceiptEditor
+          onDelete={handleDeletePlan}
+          onChange={handleUploadPlan}
+          list={historyList}
+        />
       </div>
 
       <div className={cx('title')}>목표 모금액</div>

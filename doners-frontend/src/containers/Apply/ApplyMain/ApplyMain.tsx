@@ -5,7 +5,7 @@ import styles from './ApplyMain.module.scss';
 import H3 from 'assets/theme/Typography/H3/H3';
 import { Link, useNavigate } from 'react-router-dom';
 import Pointer from 'assets/images/apply-main-pointer.png';
-import Charactor from 'assets/images/charactor-coin-yellow.png';
+import Charactor from 'assets/images/character-coin-yellow.png';
 import { checkUserFundState } from 'services/api/Donation';
 const cx = classNames.bind(styles);
 const ApplyMain = () => {
