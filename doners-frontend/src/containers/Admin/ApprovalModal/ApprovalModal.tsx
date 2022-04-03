@@ -11,7 +11,10 @@ import {
 import { createFundraiser } from 'services/blockchain/SsfApi';
 import { DonationListType, DontationDetailType } from 'types/DonationTypes';
 import { getWalletAccount } from 'utils/walletAddress';
+import { ReactComponent as CloseIcon } from 'assets/images/icon/close.svg';
+
 import styles from './ApprovalModal.module.scss';
+import H4 from 'assets/theme/Typography/H4/H4';
 
 const cx = classNames.bind(styles);
 
@@ -102,26 +105,37 @@ const ApprovalModal = ({ open, onClose, donation }: ApprovalModalType) => {
   };
 
   return (
-    <div
-      className={
-        open ? [styles.openModal, styles.modal].join(' ') : styles['modal']
-      }
-    >
+    <div className={cx('modal', { openModal: open === true })}>
       {open ? (
         <section className={cx('inner-container')}>
-          <div className={cx('p')}>
-            모달
-            <Selectbox
-              onChange={(e) => setApprovalStatus(e.value)}
-              options={options}
-            />
+          <div className={cx('close-btn')} onClick={() => onClose()}>
+            <CloseIcon />
           </div>
-          <Button color="secondary" fullWidth onClick={handleApprove}>
-            승인
-          </Button>
-          <Button color="alternate" fullWidth onClick={handleDecline}>
-            거절
-          </Button>
+          <div className={cx('col-lg-12')}>
+            <div className={cx('row')}>
+              <div className={cx('col-lg-6')}>
+                <H4>기부신청 내역 처리</H4>
+                <div className={cx('content')}>
+                  <div>{donation.donationId}</div>
+                  <div>{donation.beneficiaryName}</div>
+                  <div>{donation.targetAmount}</div>
+                  <img src={donation.thumbnail} alt="" />
+                  <div>{donation.title}</div>
+                </div>
+                <Button color="secondary" fullWidth onClick={handleApprove}>
+                  승인
+                </Button>
+                <Selectbox
+                  onChange={(e) => setApprovalStatus(e.value)}
+                  options={options}
+                />
+                <Button color="alternate" fullWidth onClick={handleDecline}>
+                  거절
+                </Button>
+              </div>
+              <div className={cx('col-lg-6')}></div>
+            </div>
+          </div>
         </section>
       ) : null}
     </div>
