@@ -4,7 +4,7 @@
   border-radius: 8px;
   border: 2px solid $black;
   width: 100%;
-  padding: 13px;
+  padding: 5px;
   height: 40px;
 
   &:focus {
@@ -13,6 +13,10 @@
 
   &.error {
     background-color: $red-light;
+  }
+
+  &.block {
+    background-color: $gray-3;
   }
 }
 .large {

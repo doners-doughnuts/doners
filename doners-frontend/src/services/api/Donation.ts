@@ -12,17 +12,21 @@ type donationType = {
 
 const COMMON = '/donation';
 
+/**
+ * 유저 기부 신청
+ * @param formData
+ */
 export const postDonation = async (formData: any) => {
-  console.log(formData);
-
-  for (let key of formData.keys()) {
-    console.log(key);
-  }
-  for (let value of formData.values()) {
-    console.log(value);
-  }
-
   const result = await instance.post(`/donation`, formData);
+  return result;
+};
+
+/**
+ * 유저 기부 신청 가능 여부 확인
+ */
+export const checkUserFundState = async () => {
+  const result = await instance.get(COMMON + `/check`);
+  console.log(result);
   return result;
 };
 

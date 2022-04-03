@@ -6,15 +6,17 @@ import H3 from 'assets/theme/Typography/H3/H3';
 import { Link, useNavigate } from 'react-router-dom';
 import Pointer from 'assets/images/apply-main-pointer.png';
 import Charactor from 'assets/images/charactor-coin-yellow.png';
+import { checkUserFundState } from 'services/api/Donation';
 const cx = classNames.bind(styles);
 const ApplyMain = () => {
   const navigate = useNavigate();
-  const applyPageMove = () => {
+  const applyPageMove = async () => {
     //api 판단해서
+    const result = await checkUserFundState();
     //임시로 true로 활성화
     const flag = true;
     //true면 신청페이지
-    if (flag) {
+    if (result) {
       navigate('/apply/form');
     }
     //false면 신청불가 페이지
