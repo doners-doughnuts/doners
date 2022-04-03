@@ -12,16 +12,15 @@ const ApplyMain = () => {
   const navigate = useNavigate();
   const applyPageMove = async () => {
     //api 판단해서
-    const result = await checkUserFundState();
-    //임시로 true로 활성화
-    const flag = true;
-    //true면 신청페이지
-    if (result) {
-      navigate('/apply/form');
-    }
-    //false면 신청불가 페이지
-    else {
-      navigate('/apply/fail');
+    try {
+      const result = await checkUserFundState();
+      if (result.data.apply) {
+        navigate('/apply/fail');
+      } else {
+        navigate('/apply/form');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
