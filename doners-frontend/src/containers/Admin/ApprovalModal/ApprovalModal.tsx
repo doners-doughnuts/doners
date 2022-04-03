@@ -24,6 +24,7 @@ import { IFileTypes } from 'containers/Apply/ApplyReasonForm/ApplyReasonForm';
 import { useCallback } from 'react';
 import { ChangeEvent } from 'react';
 import { useRef } from 'react';
+import FileButton from 'assets/theme/Button/FileButton/FileButton';
 
 const cx = classNames.bind(styles);
 
@@ -47,8 +48,8 @@ export enum RejectionCode {
 
 /* 관리자 기부신청 처리 관련 반려 사유 */
 const options = [
-  { value: 'BEFORE_CONFIRMATION', label: RejectionCode.BEFORE_CONFIRMATION },
-  { value: 'APPROVAL', label: RejectionCode.APPROVAL },
+  // { value: 'BEFORE_CONFIRMATION', label: RejectionCode.BEFORE_CONFIRMATION },
+  // { value: 'APPROVAL', label: RejectionCode.APPROVAL },
   { value: 'WRONG_CONTACT_NUM', label: RejectionCode.WRONG_CONTACT_NUM },
   { value: 'UNQUALIFIED_DEPUTY', label: RejectionCode.UNQUALIFIED_DEPUTY },
   { value: 'DUPLICATION', label: RejectionCode.DUPLICATION },
@@ -72,40 +73,9 @@ const ApprovalModal = ({
   setStatus,
   donation,
 }: ApprovalModalType) => {
-  //! TEMP
-  const [files, setFiles] = useState<EvidenceType[]>([]);
-  const [testtest, setTest] = useState(false);
-  const fileId = useRef<number>(0);
-  // const onChangeFiles = useCallback(
-  //   (e: ChangeEvent<HTMLInputElement> | any): void => {
-  //     let selectFiles: File[] = [];
-  //     let tempFiles: EvidenceType[] = files;
-  //     selectFiles = e.target.files;
-  //     for (const file of selectFiles) {
-  //       tempFiles = [
-  //         ...tempFiles,
-  //         {
-  //           id: fileId.current++,
-  //           object: file,
-  //         },
-  //       ];
-  //     }
-  //     setFiles(tempFiles);
-  //   },
-  //   [files]
-  // );
-
-  // const handleFilterFile = useCallback(
-  //   (id: number): void => {
-  //     setFiles(files.filter((file: IFileTypes) => file.id !== id));
-  //   },
-  //   [files]
-  // );
-
-  //!!!!!!!!!
-
   const [approvalStatus, setApprovalStatus] = useState('');
   const [donationDetail, setDonationDetail] = useState<DontationDetailType>();
+  const [files, setFiles] = useState<EvidenceType[]>([]);
 
   const getDonationDetailInfo = async () => {
     const response = await getDonationDetail(donation.donationId);
@@ -120,9 +90,6 @@ const ApprovalModal = ({
     if (open) getDonationDetailInfo();
   }, [open]);
 
-  const TEST = () => {
-    setTest(true);
-  };
   const handleApprove = async () => {
     // 스마트 컨트랙트에 올릴 기부 상세 정보 받아오기
 
@@ -157,7 +124,9 @@ const ApprovalModal = ({
           setStatus(true);
           onClose();
           // TODO 승인 실패 처리
-          toast.error('승인 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.');
+          toast.error(
+            '신청 승인 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.'
+          );
           setStatus(false);
         }
       }
@@ -186,88 +155,69 @@ const ApprovalModal = ({
   return (
     <div className={cx('modal', { openModal: open === true })}>
       {open ? (
-        <section className={cx('inner-container')}>
-          <div className={cx('close-btn')} onClick={() => onClose()}>
-            <CloseIcon />
-          </div>
-          <div className={cx('col-lg-12')}>
-            <div className={cx('row')}>
-              <div className={cx('col-lg-6')}>
-                <H4>기부신청 내역 처리</H4>
-
-                {donationDetail && donation ? (
-                  <div className={cx('content')}>
-                    <div>{donation.donationId}</div>
-                    <div>{donation.beneficiaryName}</div>
-                    <div>{donation.targetAmount}</div>
-                    <img src={donation.thumbnail} alt="" />
-                    <div>{donation.title}</div>
-                    <div>{donationDetail?.account}</div>
-                    <div>{donationDetail.email}</div>
-                    <div>{donationDetail.endDate}</div>
-                    {/* {window.open(donationDetail.evidence[0].url)} */}
-                    {/* <div>{donationDetail.evidence}</div> */}
-                    <div>{donationDetail.title}</div>
-                    <div>{donationDetail.title}</div>
-                    <div>{donationDetail.title}</div>
-                    <div>{donationDetail.title}</div>
-                  </div>
-                ) : null}
+        <section className={cx('container')}>
+          <div className={cx('row')}>
+            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
+              {/* <div className={cx('row')}> */}
+              <H4>기부신청 내역 처리</H4>
+            </div>
+            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
+              <div className={cx('close-btn')} onClick={() => onClose()}>
+                <CloseIcon />
               </div>
-              <embed
-                src="https://jeffe.cs.illinois.edu/teaching/algorithms/book/Algorithms-JeffE.pdf"
-                width="800px"
-                height="2100px"
-              />
+            </div>
+          </div>
+          <div className={cx('row')}>
+            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
+              {donationDetail && donation ? (
+                <div className={cx('content')}>
+                  <div>{donation.donationId}</div>
+                  <div>{donation.beneficiaryName}</div>
+                  <div>{donation.targetAmount}</div>
+                  <img src={donation.thumbnail} alt="" />
+                  <div>{donation.title}</div>
+                  <div>{donationDetail?.account}</div>
+                  <div>{donationDetail.email}</div>
+                  <div>{donationDetail.endDate}</div>
+                  {/* {window.open(donationDetail.evidence[0].url)} */}
+                  {/* <div>{donationDetail.evidence}</div> */}
+                  <div>{donationDetail.title}</div>
+                  <div>{donationDetail.title}</div>
+                  <div>{donationDetail.title}</div>
+                  <div>{donationDetail.title}</div>
+                </div>
+              ) : null}
+            </div>
+
+            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
               <div className={cx('file')}>
-                <input
-                  type="file"
-                  id="fileUpload"
-                  style={{ display: 'none' }}
-                  multiple={true}
-                  // onChange={onChangeFiles}
-                />
+                <b>증빙자료</b>
                 <div className={cx('fileuploadlist')}>
                   {files.length > 0 &&
-                    files.map((file: EvidenceType) => {
-                      const { name, url } = file;
-                      return (
-                        <div
-                          className={cx('file-list-item')}
-                          key={url}
-                          // onClick={() => window.open(url)}
-                          onClick={() => TEST()}
-                        >
-                          {testtest
-                            ? null
-                            : // <embed
-                              //   src="https://jeffe.cs.illinois.edu/teaching/algorithms/book/Algorithms-JeffE.pdf"
-                              //   width="800px"
-                              //   height="2100px"
-                              // />
-                              null}
-                          <div className={cx('itemname')}>{name}</div>
-                          <div className={cx('item-delete-icon')}>
-                            {/* <img src={deleteicon}></img> */}
-                          </div>
-                        </div>
-                      );
-                    })}
+                    files.map((file: EvidenceType) => (
+                      <FileButton
+                        key={file.url}
+                        name={file.name}
+                        url={file.url}
+                      />
+                    ))}
+                  {/*  onClick={() => window.open(url)} */}
                 </div>
-                <div className={cx('file-list')}>{FileList}</div>
+                <b>기부 신청 반려사유 선택</b>
+                <Selectbox
+                  onChange={(e) => setApprovalStatus(e.value)}
+                  options={options}
+                />
+                <div className={cx('button-group')}>
+                  <Button color="secondary" fullWidth onClick={handleApprove}>
+                    승인
+                  </Button>
+                  <Button color="alternate" fullWidth onClick={handleDecline}>
+                    거절
+                  </Button>
+                </div>
               </div>
-              <Button color="secondary" fullWidth onClick={handleApprove}>
-                승인
-              </Button>
-              <Selectbox
-                onChange={(e) => setApprovalStatus(e.value)}
-                options={options}
-              />
-              <Button color="alternate" fullWidth onClick={handleDecline}>
-                거절
-              </Button>
             </div>
-            <div className={cx('col-lg-6')}></div>
           </div>
         </section>
       ) : null}
