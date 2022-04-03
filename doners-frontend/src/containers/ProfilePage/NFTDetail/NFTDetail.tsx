@@ -44,14 +44,14 @@ const NFTDetail = (props: {
           <main>
             <div className={cx('container')}>
               <div className={cx('row')}>
-                <div className={cx('col-lg-3', 'col-md-4', 'col-sm-4')}>
+                <div className={cx('col-lg-3', 'col-md-3', 'col-sm-4')}>
                   <div className={cx('img-wrap')}>
                     <img src={metadata?.image} alt="Your Doughnut!" />
                   </div>
                 </div>
                 {/* <div className={cx('col-lg-1.5', 'col-md-2', 'col-sm-1')}> */}
                 <div className={cx('detail-header')}>
-                  <div className={cx('col-lg-1', 'col-md-2', 'col-sm-2')}>
+                  <div className={cx('col-lg-2', 'col-md-2', 'col-sm-2')}>
                     <div className={cx('row-title')}>이름</div>
                     <div className={cx('row-title')}>ID</div>
                     <div className={cx('row-title')}>설명</div>
@@ -62,7 +62,7 @@ const NFTDetail = (props: {
                   </div>
                 </div>
                 <div className={cx('detail-content')}>
-                  <div className={cx('col-lg-3', 'col-md-1', 'col-sm-2')}>
+                  <div className={cx('col-lg-3', 'col-md-3', 'col-sm-2')}>
                     <div className={cx('row-content')}>{metadata?.name}</div>
                     <div className={cx('row-content')}>{metadata?.tokenId}</div>
                     <div className={cx('row-content')}>
