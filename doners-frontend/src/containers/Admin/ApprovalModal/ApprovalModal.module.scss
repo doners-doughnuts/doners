@@ -8,29 +8,36 @@
   bottom: 0;
   left: 0;
   z-index: 99;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 
-  .modalForm {
-    width: 1000px;
+  .inner-container {
+    // display: flex;
+    width: 80%;
     height: fit-content;
     padding: 30px;
     border: 2px solid $black;
     background-color: $white;
-    .header {
-      @include flexbox;
-      position: relative;
-      .title {
-        @include flexbox;
-      }
+    // .header {
+    //   @include flexbox;
+    //   position: relative;
+    //   .title {
+    //     @include flexbox;
+    //   }
       .close-btn {
-        cursor: pointer;
-        position: absolute;
-        right: 0;
-      }
+        // cursor: pointer;
+        // position: absolute;
+        justify-content: flex-end;
+        // right: 0;
+      // }
     }
 
     .content {
-      min-height: 500px;
+      min-height: fit-content;
+      border: 2px solid $black;
+
+      img {
+        width: 100px
+      }
     }
   }
 }

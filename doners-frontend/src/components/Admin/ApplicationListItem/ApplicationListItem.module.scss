@@ -10,16 +10,26 @@ div {
   border-top: 2px solid $black;
   border-bottom: 2px solid $black;
   font-size: small;
+  justify-content: space-between;
+  align-items: center;
 
   .item-avatar {
     justify-content: flex-start;
+  
   }
 
   .item-content {
     width: 100%;
     font-size: small;
     justify-content: center;
-    text-align: center;
+    padding-left: 10px;
+    text-align: start;
+    line-height: 1.5;
+
+    b {
+      
+      font-family: 'Noto Sans';
+    }
   }
   
 
@@ -31,12 +41,13 @@ div {
     // font-size: 18px;
   font-size: small;
     font-family: 'Noto Sans';
-    width: fit-content;
+    // width: auto;
 
     Tag {
+      align-items: center;
       font-size: small;
-    font-family: 'Noto Sans';
-    width: fit-content;
+      // width: 100%;
+      // word-wrap: inherit;
     }
   }
 
