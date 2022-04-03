@@ -16,12 +16,12 @@ const instance = axios.create({
 // HTTP request interceptor
 instance.interceptors.request.use(
   (config) => {
-    const item = sessionStorage.getItem('accessToken');
-    if (typeof item === 'string') {
-      const user = JSON.parse(item);
-      if (user.accessToken) {
+    const data = sessionStorage.getItem('accessToken');
+    if (typeof data === 'string') {
+      const accesstoken = JSON.parse(data);
+      if (accesstoken) {
         // For Spring Boot back-end
-        config.headers!.Authorization = 'Bearer ' + user.accessToken;
+        config.headers!.Authorization = 'Bearer ' + accesstoken;
         // for Node.js Express back-end
         //// return { 'x-access-token': user.accessToken };
       }
@@ -50,13 +50,13 @@ instance.interceptors.response.use(
           break;
         case 401:
           // navigate('signup');
-          toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
           history.push('/signup');
           // console.log('401error!');
           //! history.push() 만 했을 때, url만 변경이 되고, 페이지가 reload되지 않는 문제
           // (https://stackoverflow.com/questions/42941708/react-history-push-is-updating-url-but-not-navigating-to-it-in-browser)
           // 강제로 새로고침 (임시)
           window.location.reload();
+          toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
           //  2. Reset authentication from localstorage/sessionstorage
           sessionStorage.removeItem('accessToken');
           // logout();
