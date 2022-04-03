@@ -12,6 +12,7 @@ import {
 import ApplicationList from 'containers/Admin/ApplicationList/ApplicationList';
 import { cursorTo } from 'readline';
 import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
+import { TransactionListItemType } from 'types/TransactionTypes';
 
 const cx = classNames.bind(styles);
 
@@ -24,10 +25,6 @@ export type ApplicationListItemType = {
     beneficiaryName: string;
     targetAmount: number;
   };
-};
-
-export type TransactionListItemType = {
-  amount: number;
 };
 
 const AdminPage = () => {
@@ -76,7 +73,7 @@ const AdminPage = () => {
     setTransactionList([]);
 
     let totalBalance = 0;
-    response.forEach((e) => (totalBalance += e.amount));
+    response.forEach((e) => (totalBalance += e.balance));
     setTransactionBalance(totalBalance.toString());
   };
 
@@ -95,7 +92,7 @@ const AdminPage = () => {
           <ApplicationList applicationList={applicationList} />
         </div>
         <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-          <TransactionList TransactionList={transactionList} />
+          <TransactionList transactionList={transactionList} />
         </div>
       </div>
     </section>
