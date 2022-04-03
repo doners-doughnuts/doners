@@ -1,0 +1,145 @@
+@import 'assets/styles/main';
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  button {
+    outline: none;
+    cursor: pointer;
+    border: 0;
+  }
+  .container {
+    @include flexbox(start);
+    margin: 100px 20px;
+    .explanation {
+      margin: 0 50px 0 100px;
+      .col {
+        @include flexbox(start);
+        .row-title {
+          @include text-style(16);
+          font-weight: 800;
+        }
+        .row-content {
+          @include text-style(16);
+          color: $gray-3;
+        }
+      }
+    }
+  }
+
+  .img {
+    .img-wrap {
+      border: 2px solid $black;
+      box-shadow: $btn-shadow;
+      border-radius: 8px;
+      position: relative;
+      background-color: $red;
+      height: 200px;
+      width: 200px;
+      color: $white;
+      text-align: center;
+      line-height: 200px;
+      text-align: center;
+
+      //   img {
+      //     // object-fit: contain;
+      //     width: 100%;
+      //     border-radius: 8px;
+      //     border: 2px solid $black;
+
+      //     &:hover {
+      //       opacity: 0.7;
+      //       z-index: inherit;
+      //     }
+      //   }
+    }
+  }
+}
+
+.modal > section {
+  border: 2px solid $black;
+  box-shadow: $btn-shadow;
+  width: 90%;
+  max-width: 850px;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+  background-color: #fff;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-show 0.3s;
+  overflow: hidden;
+}
+.modal > section > header {
+  position: relative;
+  @include text-style(21);
+  font-weight: 600;
+  padding: 16px 64px 16px 16px;
+}
+.modal > section > header button {
+  position: absolute;
+  border-radius: 100%;
+  top: 15px;
+  right: 15px;
+  height: 25px;
+  width: 25px;
+  font-size: 21px;
+  font-weight: 700;
+  border: 2px solid $black;
+  text-align: center;
+  color: $black;
+  background-color: $red;
+}
+
+.modal > section > main {
+  padding: 16px;
+  .nickname {
+    display: flex;
+  }
+  Input {
+    margin: 0 20px 0 0;
+  }
+}
+
+.openModal {
+  display: flex;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  align-items: center;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+
+.inputWithBtn {
+  padding: 10px;
+  display: flex;
+}
+.invalidMsg {
+  color: $red;
+}
+@keyframes modal-show {
+  from {
+    opacity: 0;
+    margin-top: -50px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

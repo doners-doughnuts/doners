@@ -22,42 +22,7 @@ const FundModal = (props: { open?: any; close?: any }) => {
   const [target, setTarget] = useState(3.89);
   const [totalpeople, setTotalpeople] = useState(234);
   const [current, setCurrent] = useState(1.0);
-  const [nickname, setNickname] = useState('');
-  const [nicknameMsg, setNicknameMsg] = useState('');
-  const [nicknameConfirm, setNicknameConfirm] = useState(false);
-  const [nicknameCheck, setNicknameCheck] = useState(false);
   let rate = Math.floor((current / target) * 100);
-  const handleNicknameCheck = async () => {
-    // 닉네임 중복 검사 api 호출
-    try {
-      const data = await checkNickname(nickname);
-      console.log('data', data);
-      if (!data) {
-        setNicknameMsg('중복된 닉네임 입니다.');
-      } else {
-        setNicknameConfirm(true);
-        setNicknameMsg('사용가능합니다.');
-      }
-    } catch ({ response }) {
-      setNicknameMsg('중복된 닉네임 입니다.');
-    }
-  };
-
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    if (!nicknameConfirm) {
-      setNicknameMsg('닉네임을 확인해주세요.');
-    } else {
-      const bodyparams = {
-        userNickname: nickname,
-      };
-      // //회원가입 api 호출
-      try {
-      } catch (error) {
-        alert('회원가입에 실패했습니다. 새로고침 후 다시 시도해주세요');
-      }
-    }
-  };
 
   return (
     <div
@@ -106,7 +71,7 @@ const FundModal = (props: { open?: any; close?: any }) => {
               <div className={cx('inputWithBtn')}>
                 <Input
                   id="nickname"
-                  value={nickname}
+                  value="account"
                   type="text"
                   disabled={true}
                 />
