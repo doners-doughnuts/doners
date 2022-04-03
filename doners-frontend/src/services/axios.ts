@@ -51,7 +51,7 @@ instance.interceptors.response.use(
         case 401:
           // navigate('signup');
           toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
-          history.push('/users/login');
+          history.push('/signup');
           // console.log('401error!');
           //! history.push() 만 했을 때, url만 변경이 되고, 페이지가 reload되지 않는 문제
           // (https://stackoverflow.com/questions/42941708/react-history-push-is-updating-url-but-not-navigating-to-it-in-browser)
