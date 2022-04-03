@@ -10,14 +10,15 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @ApiModel("DonationResponseDTO")
 @Getter
 @ToString
 public class DonationResponseDTO extends BaseResponseDTO {
+
+    @ApiModelProperty(name = "컨트랙트 주소")
+    private String contractAddress;
 
     @ApiModelProperty(name = "제목")
     private String title;
@@ -86,7 +87,8 @@ public class DonationResponseDTO extends BaseResponseDTO {
     private List<FileResponseDTO> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, List<FileResponseDTO> evidence) {
+    public DonationResponseDTO(String contractAddress, String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, List<FileResponseDTO> evidence) {
+        this.contractAddress = contractAddress;
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
