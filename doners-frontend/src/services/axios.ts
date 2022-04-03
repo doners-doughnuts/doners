@@ -16,7 +16,7 @@ const instance = axios.create({
 // HTTP request interceptor
 instance.interceptors.request.use(
   (config) => {
-    const item = localStorage.getItem('user');
+    const item = sessionStorage.getItem('accessToken');
     if (typeof item === 'string') {
       const user = JSON.parse(item);
       if (user.accessToken) {
@@ -58,7 +58,7 @@ instance.interceptors.response.use(
           // 강제로 새로고침 (임시)
           window.location.reload();
           //  2. Reset authentication from localstorage/sessionstorage
-          localStorage.removeItem('user');
+          sessionStorage.removeItem('accessToken');
           // logout();
           break;
         case 404:
