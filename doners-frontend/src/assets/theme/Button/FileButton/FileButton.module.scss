@@ -10,4 +10,10 @@
   width: 100%;
   background-color: $background-shadow;
   color: $gray-4;
+
+  .clip-icon {
+    position: absolute;
+    top: -50px;
+    left: 50px;
+  }
 }
