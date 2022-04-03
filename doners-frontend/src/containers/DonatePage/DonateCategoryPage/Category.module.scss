@@ -31,8 +31,18 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   img {
+    filter: drop-shadow(2px 2px 2px rgb(121, 121, 121));
     width: 100%;
     height: 100%;
+    animation: ani 1s infinite alternate;
+    @keyframes ani {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(0, 3px);
+      }
+    }
   }
   &:hover {
     transform: scale(1.1);
@@ -45,12 +55,16 @@
   }
   .category-desc {
     @include text-style(24);
-    border: 2px solid $blue;
+
+    box-shadow: $btn-shadow;
+    font-weight: 800;
+    background-color: $yellow;
+    border: 2px solid $black;
     border-radius: 8px;
     padding: 10px;
     position: absolute;
-    top: 75%;
-    left: 25%;
+    top: 70%;
+    left: 35%;
     opacity: 0;
   }
 }
