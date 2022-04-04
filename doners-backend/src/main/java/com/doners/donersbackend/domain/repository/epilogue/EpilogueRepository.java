@@ -1,5 +1,6 @@
 package com.doners.donersbackend.domain.repository.epilogue;
 
+import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
 import com.doners.donersbackend.domain.dao.user.User;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 public interface EpilogueRepository extends JpaRepository<Epilogue,String> {
     Optional<Epilogue> findByIdAndEpilogueIsDeleted(String epilogueId, boolean isDeleted);
+    Optional<Epilogue> findByDonationAndEpilogueIsDeleted(Donation donation, boolean isDeleted);
     Optional<List<Epilogue>> findByEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(boolean isDeleted, Pageable pageable);
     Optional<List<Epilogue>> findByEpilogueIsDeleted(boolean isDeleted);
     Optional<List<Epilogue>> findByUserAndEpilogueIsDeletedOrderByEpilogueCreateTimeDesc(User user, boolean isDeleted);
