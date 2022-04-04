@@ -21,6 +21,7 @@ export type DonateType = {
   beneficiaryName: string;
   targetAmount: number;
   endDate: string;
+  contractAddress: string;
 };
 
 const DonateListContents = () => {
