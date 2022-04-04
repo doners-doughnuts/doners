@@ -5,8 +5,13 @@ import Router from 'routes/routes';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Web3Test from 'services/Web3Test';
 import { ToastContainer } from 'react-toastify';
+import { getSSFBalance } from 'services/blockchain/SsfApi';
+import { useEffect } from 'react';
 
 export default function App() {
+  useEffect(() => {
+    getSSFBalance('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+  }, []);
   return (
     <>
       {/* <ScrollToTop />
