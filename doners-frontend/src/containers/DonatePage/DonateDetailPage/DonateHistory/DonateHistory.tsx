@@ -3,11 +3,29 @@ import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import styles from './DonateHistory.module.scss';
 import { ReactComponent as WaveIcon } from 'assets/images/icon/wave.svg';
-import receiptSrc from 'assets/images/reciept.png';
+import { DontationDetailType } from 'types/DonationTypes';
+import { nowFundraiserData } from 'services/blockchain/SsfApi';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
+type DonateHistoryProps = {
+  data: DontationDetailType;
+};
+const DonateHistory = ({ data }: DonateHistoryProps) => {
+  const [history, setHistory] = useState([]);
 
-const DonateHistory = () => {
+  const getDonateHistory = async () => {
+    if (data.contractAddress) {
+      const result = await nowFundraiserData(data.contractAddress);
+      setHistory(result);
+    }
+  };
+
+  useEffect(() => {
+    getDonateHistory();
+    console.log(data);
+  }, [data]);
+
   return (
     <div className={cx('inner-container')}>
       <div className={cx('background')}>
@@ -30,54 +48,19 @@ const DonateHistory = () => {
         </div>
       </div>
       <div className={cx('history')}>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
-        <div className={cx('history-item')}>
-          <div>사용자 닉네임</div>
-          <div>0.3 SSF</div>
-        </div>
+        {data &&
+          history.map((data: any, idx) => {
+            console.log(data.account);
+            return (
+              <div className={cx('history-item')} key={idx}>
+                <P>{data.account}</P>
+                <div className={cx('money')}>
+                  <P>{data.value}</P>
+                  <P>SSF</P>
+                </div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

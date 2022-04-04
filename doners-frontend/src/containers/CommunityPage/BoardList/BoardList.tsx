@@ -55,12 +55,11 @@ const BoardList = () => {
 
   return (
     <>
-      {isLoading && (
+      {isLoading ? (
         <div className={cx('col-lg-12')}>
           <LoadingSpinner />
         </div>
-      )}
-      {!isLoading && (
+      ) : (
         <div
           className={cx('inner-container')}
           // onScroll={handleScroll}
