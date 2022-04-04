@@ -15,7 +15,6 @@ const FileButton = ({ name, url }: EvidenceType) => {
   };
 
   const handleOnClose = () => {
-    console.log('sdlkfj');
     setOpenModal(false);
   };
 
@@ -23,7 +22,6 @@ const FileButton = ({ name, url }: EvidenceType) => {
     <>
       <button className={cx('file-button')} onClick={handleOnOpen}>
         <FileIcon />
-        {/* <p>{name}</p> */}
         {name}
       </button>
       <Modal open={openModal} onClose={handleOnClose} contents={url} />

@@ -15,12 +15,12 @@ export function fDate(date: string) {
 }
 
 export function fDateTime(date: string) {
-  return format(new Date(date), 'dd MMM yyyy HH:mm');
+  return format(new Date(date), 'yyyy MM dd HH:mm');
 }
 
 export function fDateTimeSuffix(date: string) {
   //// return format(new Date(date), 'dd/MM/yyyy hh:mm p');
-  return format(new Date(date), 'yyyy/MM/dd p');
+  return format(new Date(date), 'yyyy/MMM/dd p');
 }
 
 export function fToNow(date: string) {
