@@ -51,7 +51,7 @@ const DonationHistory = () => {
   // TODO DELETE AFTER TEST (응답 포맷 확인용)
   const testDonate = async () => {
     const response = await donate(
-      '0xf7590513d0Bc52D8326da355b9677c2F724477D3',
+      '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA',
       await getWalletAccount(),
       1
     );
@@ -62,20 +62,21 @@ const DonationHistory = () => {
     const response = await allFundraiserMyDonationData(
       await getWalletAccount()
     );
-    // console.log(response);
+    console.log(response);
     const list: Array<DonationTransactionDetailType> = [];
     response.forEach((e) => {
       // TODO API 응답 수정된 것에 따라서 수정
       list.push({
-        account: e[2],
+        account: e[0],
         date: e[1],
-        value: e[0],
-        title: e[4],
-        url: e[3],
+        value: e[2],
+        donationTitle: e[3],
+        donationUrl: e[4],
       });
     });
     console.log(list);
     setHistoryList(list);
+    calcTotalDonationAmount();
   };
 
   /* 사용자의 총 누적 기부금액 계산 */
@@ -84,7 +85,7 @@ const DonationHistory = () => {
       let total = historyList
         .map((item) => Number(item.value))
         .reduce((acc, curr) => acc + curr);
-      // console.log(total);
+      console.log(total);
       setTotalDontaionAmount(total);
     }
   };
@@ -92,7 +93,7 @@ const DonationHistory = () => {
   useEffect(() => {
     // testDonate();
     getUserDonationHistory();
-    calcTotalDonationAmount();
+    // calcTotalDonationAmount();
   }, []);
 
   return (
@@ -100,14 +101,12 @@ const DonationHistory = () => {
       {/* <section className={cx('container')}></section> */}
       <div className={cx('total_donation')}>
         <H3>총 기부액: </H3>
-        <div className={cx('money')}>
-          <div className={cx('icon')}>
-            <DollarIcon />
-          </div>
+        {/* <div className={cx('money')}> */}
+        <div className={cx('icon')}>
+          <DollarIcon />
         </div>
-        {/* {totalDonationAmount} */}
         <H4>{`${totalDonationAmount}  SSF`}</H4>
-        {/* <H4>(약 500,000원)</H4> */}
+        {/* <H4>{`${totalDonationAmount}  SSF`}</H4> */}
       </div>
       <hr />
       <div className={cx('donation_list')}>
@@ -130,8 +129,8 @@ const DonationHistory = () => {
                       account={item.account}
                       date={item.date}
                       value={item.value}
-                      title={item.title}
-                      url={item.url}
+                      donationTitle={item.donationTitle}
+                      donationUrl={item.donationUrl}
                     />
                   </div>
                 ))

@@ -39,7 +39,7 @@ const NFTCard = ({ metadataUri }: any) => {
 
     // @ts-ignore
     // response.edition = NftEdition[response.edition];
-    console.log(response);
+    // console.log(response);
     setMetadata(response);
   };
 

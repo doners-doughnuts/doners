@@ -106,7 +106,7 @@ const ApprovalModal = ({
         process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!,
         await getWalletAccount(),
         donationDetail.title,
-        process.env.REACT_APP_BASE_URL + '/fundraiser/' + donation.donationId,
+        process.env.REACT_APP_BASE_URL + '/fundraisers/' + donation.donationId,
         donationDetail.image,
         donationDetail.description,
         donationDetail.targetAmount,
@@ -127,6 +127,7 @@ const ApprovalModal = ({
           setStatus(true);
           onClose();
           // TODO 승인 실패 처리
+        } else {
           toast.error(
             '신청 승인 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.'
           );
@@ -212,10 +213,23 @@ const ApprovalModal = ({
                   options={options}
                 />
                 <div className={cx('button-group')}>
-                  <Button color="secondary" fullWidth onClick={handleApprove}>
+                  <Button
+                    color="secondary"
+                    fullWidth
+                    onClick={handleApprove}
+                    disabled={donationDetail?.approvalStatusCode === 'APPROVAL'}
+                  >
                     승인
                   </Button>
-                  <Button color="alternate" fullWidth onClick={handleDecline}>
+                  <Button
+                    color="alternate"
+                    fullWidth
+                    onClick={handleDecline}
+                    disabled={
+                      donationDetail?.approvalStatusCode !==
+                      'BEFORE_CONFIRMATION'
+                    }
+                  >
                     거절
                   </Button>
                 </div>
