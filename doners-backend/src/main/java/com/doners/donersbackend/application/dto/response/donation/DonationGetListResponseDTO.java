@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @ApiModel("DonationGetListResponseDTO")
 @Getter
@@ -29,7 +28,7 @@ public class DonationGetListResponseDTO {
     @ApiModelProperty(name = "목표 모금액")
     private double targetAmount;
 
-    @ApiModelProperty(name = "기부 종료일")
+    @ApiModelProperty(name = "마감일")
     private LocalDate endDate;
 
     @Builder
