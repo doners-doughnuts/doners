@@ -110,9 +110,9 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     name: '_donations',
     outputs: [
       {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -120,9 +120,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         type: 'uint256',
       },
       {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'donationTitle',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'donationUrl',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -144,9 +154,9 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     name: '_myDonations',
     outputs: [
       {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -154,9 +164,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         type: 'uint256',
       },
       {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'donationTitle',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'donationUrl',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -330,9 +350,9 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     name: 'withdrawData',
     outputs: [
       {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -340,9 +360,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         type: 'uint256',
       },
       {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'donationTitle',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'donationUrl',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -419,9 +449,9 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       {
         components: [
           {
-            internalType: 'uint256',
-            name: 'value',
-            type: 'uint256',
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
           },
           {
             internalType: 'uint256',
@@ -429,9 +459,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
             type: 'uint256',
           },
           {
-            internalType: 'address',
-            name: 'account',
-            type: 'address',
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'donationTitle',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'donationUrl',
+            type: 'string',
           },
         ],
         internalType: 'struct Fundraiser.Donation[]',
@@ -449,9 +489,9 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       {
         components: [
           {
-            internalType: 'uint256',
-            name: 'value',
-            type: 'uint256',
+            internalType: 'address',
+            name: 'account',
+            type: 'address',
           },
           {
             internalType: 'uint256',
@@ -459,9 +499,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
             type: 'uint256',
           },
           {
-            internalType: 'address',
-            name: 'account',
-            type: 'address',
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'donationTitle',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'donationUrl',
+            type: 'string',
           },
         ],
         internalType: 'struct Fundraiser.Donation[]',

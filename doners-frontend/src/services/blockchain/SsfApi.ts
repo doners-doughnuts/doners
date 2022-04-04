@@ -202,6 +202,7 @@ export const allFundraiserMyDonationData = async (
       allFundData.push(FundraiserData[j]);
     }
   }
+  console.log(allFundData);
   return allFundData;
 };
 
