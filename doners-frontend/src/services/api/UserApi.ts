@@ -1,6 +1,6 @@
 import instance from 'services/axios';
 
-//const COMMON = '/user';
+const COMMON = '/user';
 
 type SignUpValidationProps = {
   userAccount?: string;
@@ -58,6 +58,13 @@ export const emailcheck = async (userEmail: string) => {
 /* 유저 프로필 */
 export const getUserProfile = async (nickname: string) => {
   const response = await instance.get(`/user/image/${nickname}`);
-  console.log(response);
+  // console.log(response);
+  return response;
+};
+
+/* 사용자 지갑 주소 */
+export const getUserAddress = async (nickname: string) => {
+  const response = await instance.get(COMMON + `/account/${nickname}`);
+  // console.log(response);
   return response;
 };

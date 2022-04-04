@@ -53,10 +53,17 @@ export default function Router() {
       path: '/profile',
       element: <ScrollLayout />,
       children: [
-        { path: ':id', element: <ProfilePage focus={1} /> },
-        // { path: 'mynft/:id', element: <MyPage focus={1} /> },
-        { path: 'donationhistory/:id', element: <ProfilePage focus={2} /> },
-        { path: 'fundhistory/:id', element: <ProfilePage focus={3} /> },
+        { path: ':nickname', element: <ProfilePage focus={1} /> },
+        { path: 'mynft/:nickname', element: <ProfilePage focus={1} /> },
+        {
+          path: 'donationhistory/:nickname',
+          element: <ProfilePage focus={2} />,
+        },
+        { path: 'fundhistory/:nickname', element: <ProfilePage focus={3} /> },
+        // {
+        //   path: ':nickname',
+        //   element: <Navigate to="mynft/:nickname" replace />,
+        // },
       ],
     },
     {
