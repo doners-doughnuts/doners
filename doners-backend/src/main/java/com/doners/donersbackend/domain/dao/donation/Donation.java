@@ -39,6 +39,7 @@ public class Donation extends BaseEntity {
     private CategoryCode categoryCode;
 
     @Column(name = "donation_description")
+    @Lob
     private String description;
 
     @Column(name = "donation_account")
