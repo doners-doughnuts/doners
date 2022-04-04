@@ -29,6 +29,7 @@ const _donationDetail: DontationDetailType = {
       url: 'https://donersa404.s3.ap-northeast-2.amazonaws.com/5f24942c-265c-4096-bbb6-5ce4b553abc1.PNG',
     },
   ],
+  contractAddress: '',
 };
 
 export default _donationDetail;

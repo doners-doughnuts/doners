@@ -12,7 +12,7 @@ const BoardEditPage = ({ modify }: EditType) => {
     <section className={cx('container')}>
       <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
-          <BoardEditor modify={modify} />;
+          <BoardEditor modify={modify} />
         </div>
       </div>
     </section>

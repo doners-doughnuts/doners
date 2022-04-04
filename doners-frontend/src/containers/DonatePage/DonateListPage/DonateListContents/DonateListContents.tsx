@@ -20,6 +20,7 @@ export type DonateType = {
   title: string;
   beneficiaryName: string;
   targetAmount: number;
+  endDate: string;
 };
 
 const DonateListContents = () => {
@@ -67,10 +68,10 @@ const DonateListContents = () => {
         category_id = 'PATIENT';
         break;
       case '3':
-        category_id = 'SINGLE';
+        category_id = 'WARRIOR';
         break;
       case '4':
-        category_id = 'WARRIOR';
+        category_id = 'SINGLE';
         break;
     }
     return category_id;

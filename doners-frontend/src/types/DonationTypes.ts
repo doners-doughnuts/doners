@@ -30,6 +30,7 @@ export type DontationDetailType = {
   donors: object;
   achievementRate: number;
   evidence: Array<EvidenceType>;
+  contractAddress: string;
 };
 
 export type EvidenceType = {
