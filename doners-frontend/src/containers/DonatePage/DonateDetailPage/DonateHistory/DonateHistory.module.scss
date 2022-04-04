@@ -41,5 +41,9 @@
   .history-item {
     @include flexbox(between, center);
     padding: 10px 20px;
+
+    .money {
+      @include flexbox;
+    }
   }
 }

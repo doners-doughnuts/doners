@@ -165,7 +165,7 @@ const DonateDetail = () => {
                 </div>
               </div>
               <div className={cx('col-lg-6')}>
-                <DonateHistory />
+                <DonateHistory data={donationData} />
               </div>
             </>
           )}
