@@ -11,53 +11,53 @@ import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
-	@Autowired
-	User user;
+    @Autowired
+    User user;
 
-	List<GrantedAuthority> roles = new ArrayList<>();
+    List<GrantedAuthority> roles = new ArrayList<>();
 
-	public UserDetailsImpl(User user) {
-		super();
-		this.user = user;
-	}
+    public UserDetailsImpl(User user) {
+        super();
+        this.user = user;
+    }
 
-	public User getUser() {
-		return this.user;
-	}
+    public User getUser() {
+        return this.user;
+    }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles;
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
+    }
 
-	@Override
-	public String getPassword() {
-		return this.user.getPassword();
-	}
+    @Override
+    public String getPassword() {
+        return this.user.getPassword();
+    }
 
-	@Override
-	public String getUsername() {
-		return this.user.getUserAccount();
-	}
+    @Override
+    public String getUsername() {
+        return this.user.getUserAccount();
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return !this.user.isUserIsDeleted();
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return !this.user.isUserIsDeleted();
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return !this.user.isUserIsDeleted();
-	}
+    @Override
+    public boolean isEnabled() {
+        return !this.user.isUserIsDeleted();
+    }
 
 }
