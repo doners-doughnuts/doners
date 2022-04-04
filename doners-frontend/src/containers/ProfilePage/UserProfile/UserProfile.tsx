@@ -39,10 +39,12 @@ const UserProfile = () => {
       <div className={cx('profileimage')}>
         <Avatar size="large" src={profileImg} onClick={openModal} />
       </div>
+      ㅇ{' '}
       <div className={cx('myaccount')}>
-        TODO: 프로필 사용자의 지갑주소{walletAddress}
+        TODO: 프로필 사용자의 지갑주소{walletAddress} 닉네임 총n번의기부
       </div>
       <ProfileModal open={modalOpen} close={closeModal} />
+      닉네임
     </div>
   );
 };
