@@ -55,7 +55,7 @@ const ReceiptEditor = ({ onDelete, onChange, list }: any) => {
   };
 
   useEffect(() => {
-    console.log('여긴가???');
+    // console.log('여긴가???');
     for (let id in list) {
       console.log(id);
       console.log(list[id]);
