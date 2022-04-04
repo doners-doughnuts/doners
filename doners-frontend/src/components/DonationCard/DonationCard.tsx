@@ -6,6 +6,7 @@ import H5 from 'assets/theme/Typography/H5/H5';
 import Tag from 'assets/theme/Tag/Tag';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import { DonateType } from 'containers/DonatePage/DonateListPage/DonateListContents/DonateListContents';
+import { checkClosedDonation } from 'utils/formatTime';
 const cx = classNames.bind(styles);
 
 type DonateProps = {
@@ -13,6 +14,12 @@ type DonateProps = {
 };
 
 const DonationCard = ({ data }: DonateProps) => {
+  console.log(data);
+  console.log(checkClosedDonation(data.endDate));
+
+  const getCurrentBalance = async () => {
+    // const result = await nowBalance()
+  };
   return (
     <div className={cx('card')}>
       <div className={cx('card-header')}>
@@ -24,7 +31,11 @@ const DonationCard = ({ data }: DonateProps) => {
           </div>
         </div>
         <div className={cx('tag')}>
-          <Tag color="orange">모금 진행중</Tag>
+          {checkClosedDonation(data.endDate) ? (
+            <Tag color="black">모금 종료</Tag>
+          ) : (
+            <Tag color="orange">모금 진행중</Tag>
+          )}
         </div>
       </div>
       <div className={cx('title')}>

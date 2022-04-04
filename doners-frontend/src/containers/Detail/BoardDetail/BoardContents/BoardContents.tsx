@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { deleteBoard, getBoardDetail } from 'services/api/Board';
 import { getUserProfile } from 'services/api/UserApi';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const BoardContents = () => {
@@ -123,7 +124,9 @@ const BoardContents = () => {
             </div>
           </div>
           <div className={cx('author')}>
-            <Avatar src={imgSrc} />
+            <Link to={`/profile/${writer}`}>
+              <Avatar src={imgSrc} />
+            </Link>
             <div className={cx('name')}>
               <P>{`${writer}`}</P>
             </div>

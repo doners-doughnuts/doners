@@ -28,8 +28,10 @@ export const getETHBalance = async (walletAddress: string) => {
 
 /* Wallet SSF(token) balance 조회 */
 export const getSSFBalance = async (walletAddress: string) => {
+  console.log(walletAddress);
   const balance = await SSFContract.methods.balanceOf(walletAddress).call();
   console.log(balance, 'SSF');
+  return balance;
 };
 
 /* 기부금 만들기 */
@@ -78,20 +80,46 @@ export const getFundraiserFactoryArray = async (factoryAddress: string) => {
 };
 
 // /* 기부 모금하기 */
+// export const donate = async (
+//   fundraiserAddress: string,
+//   walletAddress: string,
+//   donateAmount: number
+// ) => {
+//   //  contract에 송금 및 인출 가능하게 ssafycontract를 approve하는코드
+//   const result = await SSFContract.methods
+//     .approve(fundraiserAddress, donateAmount)
+//     .send({ from: walletAddress });
+
+//   console.log(result);
+
+//   // 기부하는 코드
+//   await FundraiserContract(fundraiserAddress)
+//     .methods.donate(donateAmount)
+//     .send({ from: walletAddress });
+// };
+
+export const approveTransaction = async (
+  fundraiserAddress: string,
+  walletAddress: string,
+  donateAmount: number
+) => {
+  const result = await SSFContract.methods
+    .approve(fundraiserAddress, donateAmount)
+    .send({ from: walletAddress });
+
+  return result;
+};
+
 export const donate = async (
   fundraiserAddress: string,
   walletAddress: string,
   donateAmount: number
 ) => {
-  //  contract에 송금 및 인출 가능하게 ssafycontract를 approve하는코드
-  await SSFContract.methods
-    .approve(fundraiserAddress, donateAmount)
-    .send({ from: walletAddress });
-
-  // 기부하는 코드
-  await FundraiserContract(fundraiserAddress)
+  const result = await FundraiserContract(fundraiserAddress)
     .methods.donate(donateAmount)
     .send({ from: walletAddress });
+
+  return result;
 };
 
 // /* 기부 수령하기 */

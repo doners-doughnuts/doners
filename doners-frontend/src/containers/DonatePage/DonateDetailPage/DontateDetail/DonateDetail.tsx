@@ -12,46 +12,29 @@ import Tag from 'assets/theme/Tag/Tag';
 import { useEffect, useState } from 'react';
 import DonateModal from '../DonateModal/DonateModal';
 import { getDonationDetail } from 'services/api/Donation';
+import { getEpilogueExist } from 'services/api/Epilogue';
 import { useParams } from 'react-router';
 import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
+import { checkClosedDonation } from 'utils/formatTime';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 type budgetType = {
-  // plan: string;
-  // amount: number;
-  // sequence: number;
   budget: Array<{ plan: string; amount: number; sequence: number }>;
 };
 
-type donorsType = {};
-// export type DonationDetailType = {
-//   achievementRate: number;
-//   approvalStatusCode: string;
-//   beneficiaryName: string;
-//   budget: Array<{ plan: string; amount: number; sequence: number }>;
-//   categoryCode: string;
-//   deputy: boolean;
-//   description: string;
-//   donors?: donorsType;
-//   email: string;
-//   endDate: string;
-//   evidence: object;
-//   exist: boolean;
-//   image: string;
-//   name: string;
-//   phone: string;
-//   recommendations: number;
-//   startDate: string;
-//   targetAmount: number;
-//   title: string;
-//   views: number;
-//   nickname: string;
-// };
+const CategoryCode: Record<string, string> = {
+  COVID19: '코로나19',
+  WARRIOR: '참전용사',
+  PATIENT: '희귀질환',
+  SINGLE: '미혼모/부',
+};
 
 const DonateDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isExist, setIsExist] = useState(false);
   const [donationData, setDonationData] = useState({
     achievementRate: 0,
     account: '',
@@ -75,7 +58,9 @@ const DonateDetail = () => {
     title: '',
     views: 0,
     nickname: '',
+    contractAddress: '',
   });
+
   const { donation_id } = useParams();
 
   const handleDonateClick = () => {
@@ -91,15 +76,20 @@ const DonateDetail = () => {
     getDetail();
   }, []);
 
+  useEffect(() => {
+    console.log(donationData);
+  }, [donationData]);
+
   const getDetail = async () => {
     if (typeof donation_id === 'string') {
       try {
-        const response = await getDonationDetail(donation_id);
-        const data = response.data;
-        console.log(data);
-        // setTitle(data.title);
+        const detailResponse = await getDonationDetail(donation_id);
+        const data = detailResponse.data;
+        const epilogueResponse = await getEpilogueExist(donation_id);
+        const epilData = epilogueResponse.data;
         setIsLoading(false);
         setDonationData(data);
+        setIsExist(epilData.exists);
       } catch (error) {
         console.log(error);
       }
@@ -122,19 +112,45 @@ const DonateDetail = () => {
                   <H1>{donationData.title}</H1>
                 </div>
                 <div className={cx('category')}>
-                  <Tag color="black">{donationData.categoryCode}</Tag>
+                  <Tag color="black">
+                    {CategoryCode[donationData.categoryCode]}
+                  </Tag>
                 </div>
               </div>
               <div className={cx('col-lg-6')}>
                 <div className={cx('thumbnail')}>
                   <img src={donationData.image} alt="ex" />
                 </div>
-                <div className={cx('donate-btn')} onClick={handleDonateClick}>
-                  <Button color="primary" size="large" fullWidth shadow>
-                    기부하기
-                  </Button>
+                <div className={cx('donate-btn')}>
+                  {checkClosedDonation(donationData.endDate) ? (
+                    isExist ? (
+                      <Link to={`epilogue/${donation_id}`}>
+                        <Button color="secondary" size="large" fullWidth>
+                          감사후기 보러가기
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Button color="secondary" size="large" fullWidth disabled>
+                        모금 종료
+                      </Button>
+                    )
+                  ) : (
+                    <Button
+                      color="secondary"
+                      size="large"
+                      fullWidth
+                      shadow
+                      onClick={handleDonateClick}
+                    >
+                      기부하기
+                    </Button>
+                  )}
                 </div>
-                <DonateModal open={isOpen} onClose={handleCloseClick} />
+                <DonateModal
+                  data={donationData}
+                  open={isOpen}
+                  onClose={handleCloseClick}
+                />
               </div>
               <div className={cx('col-lg-6')}>
                 <DonateContent data={donationData} />
