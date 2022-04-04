@@ -2,7 +2,6 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueChangePatchDTO;
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueRegisterPostDTO;
-import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 
 @RestController
 @CrossOrigin("*")
