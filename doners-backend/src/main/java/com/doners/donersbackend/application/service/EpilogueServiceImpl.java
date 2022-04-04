@@ -2,10 +2,7 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueChangePatchDTO;
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueRegisterPostDTO;
-import com.doners.donersbackend.application.dto.response.epilogue.EpilogueBudgetResponseDTO;
-import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListResponseDTO;
-import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.*;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
@@ -157,6 +154,20 @@ public class EpilogueServiceImpl implements EpilogueService {
 
 
         return createEpilogueResponseDTO(epilogue, epilogueImage, epilogueBudgetResponseDTOList);
+    }
+
+    @Override
+    public boolean checkIfEpilogueExists(String accessToken, String donationId) {
+        User user = getUserFromAccessToken(accessToken);
+
+        Donation donation = donationRepository.findById(donationId).orElse(null);
+        Epilogue epilogue = null;
+
+        if(donation != null) {
+            epilogue = epilogueRepository.findByDonationAndEpilogueIsDeleted(donation, false).orElse(null);
+        }
+
+        return epilogue != null;
     }
 
     @Override
