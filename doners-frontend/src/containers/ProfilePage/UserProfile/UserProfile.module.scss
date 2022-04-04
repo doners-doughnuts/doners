@@ -3,6 +3,17 @@
 
 .container {
   margin: 0 auto;
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    
+    b {
+      font-size: 24px;
+    }
+  }
+  
   .profileimage {
     @include flexbox;
     justify-content: center;

@@ -11,7 +11,6 @@ type ModalType = {
 };
 
 const Modal = ({ open, onClose, contents }: ModalType) => {
-  console.log(open);
   return (
     <div className={cx('modal', { openModal: open === true })}>
       {open ? (
