@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './LandingHero.module.scss';
 import Button from 'assets/theme/Button/Button';
-import character from 'assets/images/character.png';
+import character from 'assets/images/character-angel.png';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -38,7 +38,7 @@ const LandingHero = () => {
               <img
                 src={character}
                 alt="character"
-                // className={styles.character}
+                className={cx('character-main')}
               />
             </div>
             <ToastContainer

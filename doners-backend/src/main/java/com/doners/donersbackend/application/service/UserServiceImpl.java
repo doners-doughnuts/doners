@@ -90,6 +90,28 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserAccountResponseDTO getUserAccountResponseDTO(String accessToken, String userNickname) {
+        User requestUser = getUserFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
+                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+
+        return UserAccountResponseDTO.builder()
+                .userAccount(user.getUserAccount()).build();
+    }
+
+    @Override
+    public UserNameResponseDTO getUserNameResponseDTO(String accessToken, String userNickname) {
+        User requestUser = getUserFromAccessToken(accessToken);
+
+        User user = userRepository.findByUserNicknameAndUserIsDeleted(userNickname, false)
+                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
+
+        return UserNameResponseDTO.builder()
+                .userName(user.getUserName()).build();
+    }
+
     // 닉네임 변경
     @Override
     public Integer changeUserNickname(String accessToken, String userNickname) {

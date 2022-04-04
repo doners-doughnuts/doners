@@ -64,10 +64,12 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadImage = async (event: any) => {
     setIsLoading(true);
     const file = event.target.files;
-    setImgFile(file[0]);
+    setImgFile(URL.createObjectURL(file[0]));
     setApply({ ...apply, image: file[0] });
-    console.log(imgFile);
   };
+  useEffect(() => {
+    console.log(imgFile);
+  }, [imgFile]);
 
   const setValue = () => {
     setApply({ ...apply, evidence: files.map((data) => data.object) });

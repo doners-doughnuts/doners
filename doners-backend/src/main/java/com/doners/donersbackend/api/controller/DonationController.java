@@ -227,7 +227,5 @@ public class DonationController {
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 기록 확인에 실패했습니다.", 409));
         }
-
     }
-
 }
