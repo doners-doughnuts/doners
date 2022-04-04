@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './DonateHistory.module.scss';
 import { ReactComponent as WaveIcon } from 'assets/images/icon/wave.svg';
 import { DontationDetailType } from 'types/DonationTypes';
-import { nowFundraiserData } from 'services/blockchain/SsfApi';
+import { nowBalance, nowFundraiserData } from 'services/blockchain/SsfApi';
 import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
@@ -13,6 +13,7 @@ type DonateHistoryProps = {
 };
 const DonateHistory = ({ data }: DonateHistoryProps) => {
   const [history, setHistory] = useState([]);
+  const [current, setCurrent] = useState(0);
 
   const getDonateHistory = async () => {
     if (data.contractAddress) {
@@ -21,8 +22,16 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
     }
   };
 
+  const getCurrentBalance = async () => {
+    if (data.contractAddress) {
+      const result = await nowBalance(data.contractAddress);
+      setCurrent(result);
+    }
+  };
+
   useEffect(() => {
     getDonateHistory();
+    getCurrentBalance();
     console.log(data);
   }, [data]);
 
@@ -37,12 +46,12 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
         </div>
         <div className={cx('donate-info')}>
           <div className={cx('participant')}>
-            <P color="orange">462</P>
-            <P>명의 기부자</P>
+            <P color="orange">{String(history.length)}</P>
+            <P>개의 기부내역</P>
           </div>
           <div className={cx('money')}>
             <P>총 모금액</P>
-            <H3>100,000</H3>
+            <H3>{String(current)}</H3>
             <P>SSF</P>
           </div>
         </div>

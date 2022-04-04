@@ -35,6 +35,8 @@ const DonateDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isExist, setIsExist] = useState(false);
+  const [isOwn, setIsOwn] = useState(false);
+
   const [donationData, setDonationData] = useState({
     achievementRate: 0,
     account: '',
@@ -77,7 +79,13 @@ const DonateDetail = () => {
   }, []);
 
   useEffect(() => {
-    console.log(donationData);
+    const user = sessionStorage.getItem('user');
+    if (typeof user === 'string') {
+      const Juser = JSON.parse(user);
+      if (donationData.nickname === Juser.nickName) {
+        setIsOwn(true);
+      }
+    }
   }, [donationData]);
 
   const getDetail = async () => {
@@ -127,6 +135,12 @@ const DonateDetail = () => {
                       <Link to={`epilogue/${donation_id}`}>
                         <Button color="secondary" size="large" fullWidth>
                           감사후기 보러가기
+                        </Button>
+                      </Link>
+                    ) : isOwn ? (
+                      <Link to={`epilogue/write/${donation_id}`}>
+                        <Button color="secondary" size="large" fullWidth>
+                          감사후기 작성하기
                         </Button>
                       </Link>
                     ) : (
