@@ -64,3 +64,9 @@ export const getUserAddress = async (nickname: string) => {
   // console.log(response);
   return response;
 };
+
+/* 사용자 기부 신청 목록 조회 */
+export const getUserApplicationList = async () => {
+  const response = await instance.get(COMMON + '/mypage/donation');
+  return response;
+};

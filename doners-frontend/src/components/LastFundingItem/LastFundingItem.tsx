@@ -6,20 +6,30 @@ import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import {
+  ApplicationProfileListType,
+  CategoryCode,
+} from 'types/ApplicationTypes';
 import styles from './LastFundingItem.module.scss';
 const cx = classNames.bind(styles);
 
-const LastFundingItem = () => {
+type LastFundingItemProps = {
+  item: ApplicationProfileListType;
+};
+
+const LastFundingItem = ({ item }: LastFundingItemProps) => {
   const [target, setTarget] = useState(3.89);
   const [current, setCurrent] = useState(1.0);
   let rate = Math.floor((current / target) * 100);
+
+  console.log(item);
   return (
     <div>
       <div className={cx('history-item')}>
         <div className={cx('image')}>
           <div className={cx('card')}>
             <div className={cx('tag')}>
-              <Tag color="black">코로나19</Tag>
+              <Tag color="black">{CategoryCode[item.donationCategoryCode]}</Tag>
             </div>
             <div className={cx('img-wrap')}></div>
           </div>

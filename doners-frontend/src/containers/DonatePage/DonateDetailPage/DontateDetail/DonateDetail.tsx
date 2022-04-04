@@ -24,7 +24,8 @@ type budgetType = {
   budget: Array<{ plan: string; amount: number; sequence: number }>;
 };
 
-const CategoryCode: Record<string, string> = {
+// TODO export (리팩토링 시 따로 뺴기)
+export const CategoryCode: Record<string, string> = {
   COVID19: '코로나19',
   WARRIOR: '참전용사',
   PATIENT: '희귀질환',
