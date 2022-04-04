@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,10 +107,6 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view) {
-        System.out.println("@@@@@@@@" + categoryCode);
-        System.out.println("@@@@@@@@" + page);
-        System.out.println("@@@@@@@@" + sort);
-        System.out.println("@@@@@@@@" + view);
 
         List<Donation> donationList = new ArrayList<>();
 
@@ -121,46 +119,32 @@ public class DonationServiceImpl implements DonationService {
                             .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
-                // 참여 미달 순
-                // TODO: 보류 (달성률을 어떻게 할 것인지)
-                case 2:
-                    donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
-                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                    break;
                 // 마감 임박 순
-                case 3:
+                case 2:
                     donationList = donationRepository
                             .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
-            // TODO: 모금 가능한 기부만 보기
         } else {
+            LocalDate now = LocalDate.now();
+
             switch (sort) {
                 // 최신 순
                 case 1:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
-                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                    break;
-                // 참여 미달 순
-                // TODO: 보류 (달성률을 어떻게 할 것인지)
-                case 2:
-                    donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9))
+                            .findByCategoryCodeAndIsApprovedAndIsDeletedAndEndDateGreaterThanEqual(categoryCode, true, false, now, PageRequest.of(page - 1, 9, Sort.Direction.DESC, "startDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
                 // 마감 임박 순
-                case 3:
+                case 2:
                     donationList = donationRepository
-                            .findByCategoryCodeAndIsApprovedAndIsDeleted(categoryCode, true, false, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
+                            .findByCategoryCodeAndIsApprovedAndIsDeletedAndEndDateGreaterThanEqual(categoryCode, true, false, now, PageRequest.of(page - 1, 9, Sort.Direction.ASC, "endDate"))
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
         }
 
-        System.out.println("donationList size : " + donationList.size());
         return convertDonationListToDTO(donationList);
 
     }
