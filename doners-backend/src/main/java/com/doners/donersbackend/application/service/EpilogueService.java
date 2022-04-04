@@ -21,5 +21,7 @@ public interface EpilogueService {
 
     EpilogueResponseDTO getEpilogue(String accessToken, String epilogueId);
 
+    boolean checkIfEpilogueExists(String accessToken, String donationId);
+
     void uploadEpilogueImage(Epilogue epilogue, MultipartFile image);
 }
