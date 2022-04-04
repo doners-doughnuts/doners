@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.repository.donation;
 
-import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import org.springframework.data.domain.Pageable;

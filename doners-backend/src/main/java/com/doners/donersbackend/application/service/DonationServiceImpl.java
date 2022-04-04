@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,7 +217,7 @@ public class DonationServiceImpl implements DonationService {
                 )
         );
 
-        // 조회수 업데이트
+        // 조회수 증가
         increaseViews(donation);
 
         DonationResponseDTO donationResponseDTO = DonationResponseDTO.builder()
@@ -326,7 +325,7 @@ public class DonationServiceImpl implements DonationService {
             return 2;
         }
 
-        // 신청 승인 및 시작 시간 설정
+        // 승인 처리
         donation.changeIsApproved();
         donation.changeApprovalStatusCode(ApprovalStatusCode.APPROVAL);
         donation.changeContractAddress(donationApproveRequestDTO.getContractAddress());
@@ -348,6 +347,7 @@ public class DonationServiceImpl implements DonationService {
         return DonationCheckResponseDTO.builder()
                 .apply(apply)
                 .build();
+
     }
 
     @Override
@@ -436,7 +436,6 @@ public class DonationServiceImpl implements DonationService {
 
     private void increaseViews(Donation donation) {
 
-        // 조회수 증가
         donation.changeViews();
 
         donationRepository.save(donation);
@@ -445,7 +444,6 @@ public class DonationServiceImpl implements DonationService {
 
     private void increaseRecommendations(Donation donation) {
 
-        // 추천수 업데이트
         donation.changeRecommendations();
 
         donationRepository.save(donation);
