@@ -10,6 +10,16 @@
   z-index: 99;
   background-color: rgba(255, 255, 255, 0.5);
 
+  .loading-spinner {
+    // background-color: ;
+    width: 40vw;
+    height: 70vh;
+    @include column-flexbox(start);
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  }
   .modalForm {
     width: 1000px;
     height: 700px;
@@ -35,10 +45,26 @@
     .wallet-row {
       @include flexbox(start);
       margin-bottom: 50px;
-      .wallet-account {
-        width: 80%;
+
+      .wallet-form {
+        border: 2px solid $black;
+        border-radius: 8px;
+        padding: 10px;
         margin-right: 20px;
+        width: 70%;
+
+        .description {
+          .wallet-account {
+            @include flexbox(start, center);
+          }
+        }
       }
+
+      // .wallet-account {
+      //   width: 80%;
+      //   margin-right: 20px;
+      // }
+
       .money {
         @include flexbox(start, end);
         .icon {
@@ -60,6 +86,10 @@
             @include column-flexbox;
             .donate-money {
               @include flexbox(center, end);
+
+              .money {
+                margin-right: 10px;
+              }
             }
           }
         }

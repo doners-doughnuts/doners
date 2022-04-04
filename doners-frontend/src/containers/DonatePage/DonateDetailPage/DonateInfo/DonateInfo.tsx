@@ -6,7 +6,8 @@ import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
 // import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
@@ -19,9 +20,29 @@ type DonateInfoProps = {
 
 const DonateInfo = ({ data }: DonateInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [target, setTarget] = useState(3.89);
+  // const [target, setTarget] = useState(3.89);
   const [current, setCurrent] = useState(1.0);
-  let rate = Math.floor((current / target) * 100);
+  const [rate, setRate] = useState(0);
+
+  useEffect(() => {
+    console.log(data);
+    getCurrentBalance();
+  }, [data]);
+
+  const getCurrentBalance = async () => {
+    if (data.contractAddress) {
+      const result = await nowBalance(data.contractAddress);
+      setCurrent(result);
+    }
+  };
+
+  useEffect(() => {
+    console.log(current);
+    console.log(data.targetAmount);
+    const result = Math.floor((current / data.targetAmount) * 100);
+    console.log(result);
+    setRate(result);
+  }, [current]);
 
   const handleHistoryListClick = () => {
     setIsOpen((prev) => !prev);
@@ -50,6 +71,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
     }
     return '0';
   };
+
   return (
     <div className={cx('info-form')}>
       <div className={cx('title')}>
@@ -69,13 +91,13 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
           </div>
           <H4>{data.endDate}</H4>
           {/* <H4>2022.04.08</H4> */}
-          <H4 color="red">{`(D-${remainDate()})`}</H4>
+          <H4 color="red">{`(D${remainDate()})`}</H4>
         </div>
         <div className={cx('value-row')}>
           <div className={cx('value-title')}>
             <H4>목표금액: </H4>
           </div>
-          <H2>{String(target)}</H2>
+          <H2>{String(data.targetAmount)}</H2>
           <H4>SSF</H4>
         </div>
       </div>

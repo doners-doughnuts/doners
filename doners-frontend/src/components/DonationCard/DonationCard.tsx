@@ -6,6 +6,10 @@ import H5 from 'assets/theme/Typography/H5/H5';
 import Tag from 'assets/theme/Tag/Tag';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import { DonateType } from 'containers/DonatePage/DonateListPage/DonateListContents/DonateListContents';
+import { checkClosedDonation } from 'utils/formatTime';
+import { nowBalance } from 'services/blockchain/SsfApi';
+import { useEffect, useState } from 'react';
+import H4 from 'assets/theme/Typography/H4/H4';
 const cx = classNames.bind(styles);
 
 type DonateProps = {
@@ -13,6 +17,27 @@ type DonateProps = {
 };
 
 const DonationCard = ({ data }: DonateProps) => {
+  const [current, setCurrent] = useState(1.0);
+  const [rate, setRate] = useState(0);
+
+  const getCurrentBalance = async () => {
+    if (data.contractAddress) {
+      const result = await nowBalance(data.contractAddress);
+      setCurrent(result);
+    }
+  };
+  useEffect(() => {
+    getCurrentBalance();
+  }, []);
+
+  useEffect(() => {
+    console.log(current);
+    console.log(data.targetAmount);
+    const result = Math.floor((current / data.targetAmount) * 100);
+    console.log(result);
+    setRate(result);
+  }, [current]);
+
   return (
     <div className={cx('card')}>
       <div className={cx('card-header')}>
@@ -24,7 +49,11 @@ const DonationCard = ({ data }: DonateProps) => {
           </div>
         </div>
         <div className={cx('tag')}>
-          <Tag color="orange">모금 진행중</Tag>
+          {checkClosedDonation(data.endDate) ? (
+            <Tag color="black">모금 종료</Tag>
+          ) : (
+            <Tag color="orange">모금 진행중</Tag>
+          )}
         </div>
       </div>
       <div className={cx('title')}>
@@ -34,10 +63,12 @@ const DonationCard = ({ data }: DonateProps) => {
         <img src={data.thumbnail} alt="thumbnail" />
       </div>
       <div className={cx('progress-bar')}>
-        <Progressbar value={80} />
+        <Progressbar value={rate} />
       </div>
       <div className={cx('progress-rate')}>
-        <Span color="gray">기부금 달성률 : 87%</Span>
+        <Span>기부금 달성률 : </Span>
+        <H4>{String(rate)}</H4>
+        <Span>%</Span>
       </div>
     </div>
   );

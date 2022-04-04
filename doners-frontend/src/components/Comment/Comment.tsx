@@ -9,6 +9,8 @@ import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import { deleteComments, modifyComment } from 'services/api/Comment';
 import { useEffect, useRef, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
+import { Link } from 'react-router-dom';
+import { fToNow } from 'utils/formatTime';
 
 const cx = classNames.bind(styles);
 const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
@@ -89,9 +91,12 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
     <div className={cx('inner-container')}>
       <div className={cx('comment-header')}>
         <div className={cx('comment-info')}>
-          <Avatar src={imgSrc} />
+          <Link to={`/profile/${nickname}`}>
+            <Avatar src={imgSrc} />
+          </Link>
           <div className={cx('sub-info')}>
             <H4>{nickname}</H4>
+            {/* <Span>{fToNow(date)}</Span> */}
             <Span>{date}</Span>
           </div>
         </div>
