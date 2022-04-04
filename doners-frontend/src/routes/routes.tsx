@@ -87,7 +87,7 @@ export default function Router() {
           path: 'board/modify/:community_id',
           element: <BoardEditPage modify />,
         },
-        { path: 'about', element: <CommunityPage focus={4} /> },
+        { path: 'discord', element: <CommunityPage focus={4} /> },
       ],
     },
     // {
