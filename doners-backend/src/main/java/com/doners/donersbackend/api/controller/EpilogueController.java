@@ -2,6 +2,8 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueChangePatchDTO;
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
 import com.doners.donersbackend.application.service.EpilogueService;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 @RestController
 @CrossOrigin("*")
@@ -115,5 +118,31 @@ public class EpilogueController {
             @PathVariable("epilogueId") @ApiParam(value="에필로그 ID", required=true) String epilogueId) {
 
         return ResponseEntity.ok(EpilogueResponseDTO.of("에필로그 상세내용을 불러왔습니다.", 200, epilogueService.getEpilogue(accessToken, epilogueId)));
+    }
+
+    @ApiOperation(value = "에필로그 존재 여부 확인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "해당 기부에 대한 에필로그 존재 여부를 불러왔습니다."),
+            @ApiResponse(code = 409, message = "해당 기부에 대한 에필로그 존재 여부를 불러오지 못했습니다.")
+    })
+    @GetMapping("/check/{donationId}")
+    public ResponseEntity<? extends BaseResponseDTO> checkIfEpilogueExists(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @PathVariable("donationId") @ApiParam(value="기부 ID", required=true) String donationId) {
+        EpilogueCheckResponseDTO epilogueCheckResponseDTO = null;
+
+        try {
+            boolean exists = epilogueService.checkIfEpilogueExists(accessToken, donationId);
+
+            if (exists) {
+                epilogueCheckResponseDTO = EpilogueCheckResponseDTO.builder().exists(true).build();
+            } else {
+                epilogueCheckResponseDTO = EpilogueCheckResponseDTO.builder().exists(false).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("해당 기부에 대한 에필로그 존재 여부를 불러오지 못했습니다.", 409));
+        }
+
+        return ResponseEntity.status(200).body(EpilogueCheckResponseDTO.of("해당 기부에 대한 에필로그 존재 여부를 불러왔습니다.", 200, epilogueCheckResponseDTO));
     }
 }
