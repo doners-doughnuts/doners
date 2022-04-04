@@ -5,6 +5,7 @@ import PopularMembership from 'containers/CommunityPage/Membership/PopularMember
 import CommunityTab from 'containers/CommunityPage/Tab/CommunityTab';
 import styles from '../page.module.scss';
 import classNames from 'classnames/bind';
+import Discord from 'containers/CommunityPage/Discord/Discord';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +30,8 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
         <Epilogue />
       ) : focus === 3 ? (
         <BoardList />
+      ) : focus == 4 ? (
+        <Discord />
       ) : null}
     </section>
   );

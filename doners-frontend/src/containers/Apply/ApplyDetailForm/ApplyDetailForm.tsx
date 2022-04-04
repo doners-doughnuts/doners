@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import allow from 'assets/images/exchangearrow.png';
 import Button from 'assets/theme/Button/Button';
 import { postDonation } from 'services/api/Donation';
+import { getWalletAccount } from 'utils/walletAddress';
 
 type historyType = {
   epilogueBudgetAmount: string;
@@ -17,8 +18,13 @@ type historyType = {
 const cx = classNames.bind(styles);
 const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
+  const [walletAddress, setWalletAddress] = useState<string>('');
   const [ssf, setSSF] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getAccountInfo();
+  }, []);
 
   let total = historyList
     .map((item) => Number(item.epilogueBudgetAmount))
@@ -27,6 +33,12 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadPlan = (data: any) => {
     setHistoryList((prev) => [...prev, data]);
     console.log(historyList);
+  };
+
+  const getAccountInfo = async () => {
+    // TODO 프로필 사용자의 지갑주소로 대체
+    const address = await getWalletAccount();
+    setWalletAddress(address);
   };
 
   const handleDeletePlan = (epilogueBudgetSequence: number) => {
@@ -116,7 +128,10 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       <div className={cx('subtitle')}>
         모금액을 수령하실 지갑의 Account 주소입니다.
       </div>
-      <Input placeholder="모금 신청자 계정 지갑 주소(자동입력)" />
+      <Input
+        value={walletAddress}
+        placeholder="모금 신청자 계정 지갑 주소(자동입력)"
+      />
       <div className={cx('maintitle')}>희망 기부 금액 설정</div>
       <div className={cx('title')}>모금액 활용계획</div>
       <div className={cx('editor')}>
