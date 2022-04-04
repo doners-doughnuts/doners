@@ -65,13 +65,16 @@ export const getDonationDetail = async (donation_id: string) => {
 /**
  * 기부 신청 승인
  * @param donationId
- * @param approved
- * @param rejectionCode
+ * @param contractAddress
  */
-export const approveApplication = async (donationId: string) => {
+export const approveApplication = async (
+  donationId: string,
+  contractAddress: string
+) => {
   const response = await instance.patch(COMMON + '/approve', {
     donationId,
     approved: true,
+    contractAddress,
   });
   console.log(response);
   return response;
