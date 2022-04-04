@@ -111,7 +111,7 @@ public class UserController {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("해당 회원의 메타마스크 지갑 주소를 불러오지 못했습니다.", 409));
         }
 
-        return ResponseEntity.status(200).body(UserAccountResponseDTO.of("로그인에 성공했습니다.", 200, userAccountResponseDTO));
+        return ResponseEntity.status(200).body(UserAccountResponseDTO.of("해당 회원의 메타마스크 지갑 주소를 불러왔습니다.", 200, userAccountResponseDTO));
     }
 
     @GetMapping("/name/{userNickname}")
@@ -124,17 +124,17 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseDTO> getName(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @PathVariable("userNickname") @ApiParam(value="닉네임", required=true) String userNickname) {
-        UserAccountResponseDTO userAccountResponseDTO = null;
+        UserNameResponseDTO userNameResponseDTO = null;
 
         try {
-            userAccountResponseDTO = userService.getUserAccountResponseDTO(accessToken, userNickname);
+            userNameResponseDTO = userService.getUserNameResponseDTO(accessToken, userNickname);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 회원이 존재하지 않습니다.", 404));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("해당 회원의 메타마스크 지갑 주소를 불러오지 못했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("해당 회원의 이름을 불러오지 못했습니다.", 409));
         }
 
-        return ResponseEntity.status(200).body(UserAccountResponseDTO.of("로그인에 성공했습니다.", 200, userAccountResponseDTO));
+        return ResponseEntity.status(200).body(UserNameResponseDTO.of("해당 회원의 이름을 불러왔습니다.", 200, userNameResponseDTO));
     }
 
     @PatchMapping("/nickname")

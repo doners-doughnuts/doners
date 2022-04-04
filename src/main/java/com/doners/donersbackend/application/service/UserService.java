@@ -13,6 +13,8 @@ public interface UserService {
 
     UserAccountResponseDTO getUserAccountResponseDTO(String accessToken, String userNickname);
 
+    UserNameResponseDTO getUserNameResponseDTO(String accessToken, String userNickname);
+
     // 닉네임 변경
     Integer changeUserNickname(String accessToken, String userNickname);
 
