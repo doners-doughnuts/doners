@@ -27,7 +27,7 @@
     position: relative;
     background-color: $white;
     .date {
-      @include text-style(16);
+      @include text-style(12);
       font-family: $font-sub;
       font-weight: 100;
       color: $gray-3;
@@ -35,7 +35,7 @@
     }
   
     .title {
-      @include text-style(24);
+      @include text-style(18);
       font-family: $font-sub;
       font-weight: 600;
       color: $black;
@@ -45,13 +45,13 @@
     .ls {
       @include flexbox(start);
       .money {
-        @include text-style(18);
+        @include text-style(16);
         color: $gray-4;
        white-space: nowrap;
       }
       .parti {
         padding: 0 0 0 10px;
-        @include text-style(15);
+        @include text-style(12);
         color: $red;
         white-space: nowrap;
       }
@@ -63,6 +63,7 @@
       text-decoration: underline;
       color: $green;
       text-align: end;
+      font-size: small;
       padding-bottom: 8px;
       font-family: 'Noto Sans';
     }
