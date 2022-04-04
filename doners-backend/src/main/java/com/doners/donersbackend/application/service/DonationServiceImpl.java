@@ -431,6 +431,7 @@ public class DonationServiceImpl implements DonationService {
                                 .title(donation.getTitle())
                                 .beneficiaryName(donation.getBeneficiaryName())
                                 .targetAmount(donation.getAmount())
+                                .endDate(donation.getEndDate())
                                 .build()
                 )
         );
