@@ -13,7 +13,7 @@ import lombok.ToString;
 @Builder
 public class UserAccountResponseDTO extends BaseResponseDTO {
 
-    @ApiModelProperty(name="userAccount")
+    @ApiModelProperty(name="메타마스크 지갑 주소")
     private String userAccount;
 
     public static UserAccountResponseDTO of(String message, Integer statusCode, UserAccountResponseDTO userAccountResponseDTO) {
