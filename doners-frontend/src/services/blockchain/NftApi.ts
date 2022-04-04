@@ -118,14 +118,15 @@ export const getUserNFTIdList = async (walletAddress: string) => {
     .call();
 
   //! (실패, 위에 성공)
-  // const result = await DDHelperContract.methods
-  //   .userOwnedTokens()
-  //   .call(walletAddress, { from: walletAddress })
-  //   .then((balance: any) => {
-  //     console.log(balance.toNumber());
-  //   })
-  //   .catch(console.log);
-  console.log('보유 NFT 목록: ', result);
+  //// const result = await DDHelperContract.methods
+  ////   .userOwnedTokens()
+  ////   .call(walletAddress, { from: walletAddress })
+  ////   .then((balance: any) => {
+  ////     console.log(balance.toNumber());
+  ////   })
+  ////   .catch(console.log);
+
+  // console.log('보유 NFT 목록: ', result);
   return result;
 };
 

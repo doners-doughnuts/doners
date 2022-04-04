@@ -5,12 +5,13 @@
   border: 2px solid $black;
   box-shadow: $btn-shadow;
   background-color: $white;
-
+  
   .title {
     margin-bottom: 20px;
   }
-
+  
   .content {
+    width: 100%;
     min-height: 350px;
   }
 

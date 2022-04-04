@@ -13,7 +13,7 @@ const ProfileTab = ({ focus }: TabType) => {
   const { nickname } = useParams();
 
   useEffect(() => {
-    console.log(nickname);
+    // console.log(nickname);
   }, []);
 
   return (
