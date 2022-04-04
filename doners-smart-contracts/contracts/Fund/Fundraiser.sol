@@ -18,9 +18,11 @@ contract Fundraiser is Ownable {
     IERC20 public erc20Contract; // ssafyContract를 가져오기위한 토큰 컨트랙트 인터페이스
 
     struct Donation {
-        uint256 value;
-        uint256 date;
         address account;
+        uint256 date;
+        uint256 value;
+        string donationTitle;
+        string donationUrl;
     }
     Donation[] public _donations;
     Donation public withdrawData; // 수령 data
@@ -68,12 +70,14 @@ contract Fundraiser is Ownable {
 
         // 기부한 금액과 시간과 사람
         Donation memory donation = Donation({
-            value: _amount,
+            account: sender,
             date: block.timestamp,
-            account: sender
+            value: _amount,
+            donationTitle: title,
+            donationUrl: url
         });
         _donations.push(donation);
-        _myDonations[sender].push(Donation(_amount,block.timestamp,sender));
+        _myDonations[sender].push(Donation(sender,block.timestamp,_amount,title,url));
 
         donationsCount++;
         require (erc20Contract.approve(address(this),_amount),"address fail");

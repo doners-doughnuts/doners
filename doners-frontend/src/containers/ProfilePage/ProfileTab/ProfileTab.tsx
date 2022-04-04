@@ -10,11 +10,12 @@ type TabType = {
 };
 
 const ProfileTab = ({ focus }: TabType) => {
-  const { id } = useParams();
+  const { nickname } = useParams();
+
   useEffect(() => {
-    console.log('dd');
-    console.log(id);
+    // console.log(nickname);
   }, []);
+
   return (
     <div>
       <nav className={cx('lnb')}>
@@ -23,13 +24,17 @@ const ProfileTab = ({ focus }: TabType) => {
             <div className={cx('col-lg-8')}>
               <ul className={cx('lnb-list')}>
                 <li className={cx('lnb-item', { 'is-active': focus === 1 })}>
-                  <Link to={`/profile/${id}`}>보유 NFT</Link>
+                  <Link to={`/profile/mynft/${nickname}`}>보유 NFT</Link>
                 </li>
                 <li className={cx('lnb-item', { 'is-active': focus === 2 })}>
-                  <Link to={`/profile/donationhistory/${id}`}>기부한 내역</Link>
+                  <Link to={`/profile/donationhistory/${nickname}`}>
+                    기부한 내역
+                  </Link>
                 </li>
                 <li className={cx('lnb-item', { 'is-active': focus === 3 })}>
-                  <Link to={`/profile/fundhistory/${id}`}>모금신청 관리</Link>
+                  <Link to={`/profile/fundhistory/${nickname}`}>
+                    모금신청 관리
+                  </Link>
                 </li>
               </ul>
             </div>

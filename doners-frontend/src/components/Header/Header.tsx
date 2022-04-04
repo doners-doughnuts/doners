@@ -6,15 +6,16 @@ import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import Button from 'assets/theme/Button/Button';
 import Logo from 'assets/images/header-logo.svg';
-import { getLoggedUserInfo } from 'utils/loggedUser';
+import { getLoggedUserInfo, getLoggedUserNickname } from 'utils/loggedUser';
 import { useRecoilValue } from 'recoil';
 import { isLoggedState, nicknameState } from '../../atoms/atoms';
 
 const cx = classNames.bind(styles);
 const Header = () => {
-  const [loggedUserInfo, setLoggedUserInfo] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   // const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
   const [ScrollActive, setScrollActive] = useState(false);
+  const [loggedUserNickname, setLoggedUserNickname] = useState('');
   // }
   // function handleScroll() {
   //   }
@@ -37,11 +38,13 @@ const Header = () => {
   // });
 
   useEffect(() => {
-    const sessionStorageUserInfo = getLoggedUserInfo();
-    console.log(sessionStorageUserInfo);
-    if (sessionStorageUserInfo) {
-      setLoggedUserInfo(true);
-      // console.log(mynickname);
+    // TODO 정리: 닉네임만 남기고 정리.
+    // const sessionStorageUserInfo = getLoggedUserInfo();
+    const sessionStorageUserNickname = getLoggedUserNickname();
+    // console.log(sessionStorageUserNickname);
+    if (sessionStorageUserNickname) {
+      setIsLogged(true);
+      setLoggedUserNickname(sessionStorageUserNickname);
     }
   }, [getLoggedUserInfo()]);
 
@@ -99,8 +102,8 @@ const Header = () => {
                   <H5>프로필</H5>
                 </li>
                 <div className="btn">
-                  {loggedUserInfo ? (
-                    <Link to={`/profile/mynft/${mynickname}`}>
+                  {isLogged ? (
+                    <Link to={`/profile/${loggedUserNickname}`}>
                       <Button size="small" fullWidth color={'alternate'}>
                         Profile
                       </Button>

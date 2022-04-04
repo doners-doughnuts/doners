@@ -185,10 +185,12 @@ export const allFundraiserData = async (fundraiserFactoryAddress: string) => {
 
 // /* 모든 컨트랙트 내가 참여한 기부한 내역 */
 export const allFundraiserMyDonationData = async (
-  fundraiserFactoryAddress: string,
+  // fundraiserFactoryAddress: string,
   walletAddress: string
 ) => {
-  const fundraisers = await FundraiserFactoryContract(fundraiserFactoryAddress)
+  const fundraisers = await FundraiserFactoryContract(
+    process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!
+  )
     .methods.getFundraisers()
     .call();
   const allFundData = []; // 각 컨트랙트별 모든 나의 기부내역

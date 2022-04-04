@@ -1,6 +1,5 @@
 package com.doners.donersbackend.application.dto.response.donation;
 
-import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

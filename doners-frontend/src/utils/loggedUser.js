@@ -18,3 +18,12 @@ export function getLoggedUserInfo() {
   const user = sessionStorage.getItem('user');
   return user;
 }
+
+/* sessionStorage에서 로그인된 nickname 가져오기 */
+export function getLoggedUserNickname() {
+  const user = sessionStorage.getItem('user');
+  if (user) {
+    // console.log(JSON.parse(user).nickName);
+    return JSON.parse(user).nickName;
+  }
+}

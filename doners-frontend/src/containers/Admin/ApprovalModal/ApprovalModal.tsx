@@ -117,7 +117,10 @@ const ApprovalModal = ({
       console.log(fundContractAddress);
 
       if (fundContractAddress.includes('0x')) {
-        const response = await approveApplication(donation.donationId);
+        const response = await approveApplication(
+          donation.donationId,
+          fundContractAddress
+        );
         console.log(response);
         if (response.status === 200) {
           toast.success('기부 신청이 승인처리 되었습니다.');
