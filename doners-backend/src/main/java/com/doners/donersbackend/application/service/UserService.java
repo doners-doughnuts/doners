@@ -1,10 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
-import com.doners.donersbackend.application.dto.response.user.UserLoginResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageCommunityHistoryWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageDonationHistoryWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageEpilogueHistoryWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.response.user.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
@@ -13,6 +10,8 @@ public interface UserService {
     Integer setUserInfo(UserInfoSetRequestDTO userInfoSetRequestDto);
 
     UserLoginResponseDTO getUserLoginResponseDTO(String userAccount);
+
+    UserAccountResponseDTO getUserAccountResponseDTO(String accessToken, String userNickname);
 
     // 닉네임 변경
     Integer changeUserNickname(String accessToken, String userNickname);
