@@ -1,7 +1,7 @@
 package com.doners.donersbackend.domain.repository.donation;
 
-import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.dao.donation.Donation;
+import com.doners.donersbackend.domain.dao.user.User;
 import com.doners.donersbackend.domain.enums.ApprovalStatusCode;
 import com.doners.donersbackend.domain.enums.CategoryCode;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,8 @@ import java.util.Optional;
 public interface DonationRepository extends JpaRepository<Donation, String> {
 
     Optional<List<Donation>> findByCategoryCodeAndIsApprovedAndIsDeleted(CategoryCode categoryCode, boolean approve, boolean delete, Pageable pageable);
+
+    Optional<List<Donation>> findByCategoryCodeAndIsApprovedAndIsDeletedAndEndDateGreaterThanEqual(CategoryCode categoryCode, boolean approve, boolean delete, LocalDate endDate, Pageable pageable);
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
