@@ -1,8 +1,59 @@
 @import 'assets/styles/main';
 
 .container {
-  height: 5000px;
-  .col1 {
-    height: 1000px;
+  .header {
+    text-align: center;
+    padding: 50px 0 100px 0;
+  }
+  .section1 {
+    @include flexbox;
+    .img {
+      margin: 0 200px 100px 0;
+    }
+    .contents {
+      H3 {
+        margin: 0 0 20px 0;
+      }
+    }
+    margin: 0 0 100px 0;
+  }
+
+  .section2 {
+    @include flexbox;
+    .img {
+      margin: 0 0 100px 200px;
+    }
+    .contents {
+      H3 {
+        margin: 0 0 20px 0;
+      }
+    }
+    margin: 0 0 100px 0;
+  }
+
+  .section3 {
+    height: 700px;
+    text-align: center;
+    .logo {
+      img {
+        width: 200px;
+        filter: drop-shadow(2px 2px 2px rgb(121, 121, 121));
+        animation: ani 1s infinite alternate;
+        @keyframes ani {
+          0% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(0, 3px);
+          }
+        }
+      }
+    }
+
+    Button {
+      margin: 50px 0 50px 0;
+      width: 200px;
+      box-shadow: $btn-shadow;
+    }
   }
 }
