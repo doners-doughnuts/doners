@@ -29,17 +29,16 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
-    // const currentBalance = await nowBalance(item.contractAddress);
+    const currentBalance = await nowBalance(item.contractAddress);
     // console.log(currentBalance);
-    const currentBalance = await nowBalance(
-      '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA'
-    );
     setCurrent(currentBalance);
   };
 
   useEffect(() => {
     //// getApplicationDetail();
-    calcAchievementRate();
+    if (item.donationIsApproved) {
+      calcAchievementRate();
+    }
     // calcDday();
   }, []);
 
@@ -59,19 +58,16 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
         <div className={cx('img-wrap')}></div>
         <div className={cx('item-info-wrap')}>
           {item.donationIsApproved ? (
-            // checkClosedDonation(item.endDate) ? (
-            // TODO 대체
             // item.donationIsReceived ? (
-            true ? (
-              <Tag color="black">기부금 수령 완료</Tag>
-            ) : (
-              <Tag color="black">모금 완료</Tag>
-            )
+            <Tag color="black">기부금 수령 완료</Tag>
           ) : (
+            // ) : (
+            //   <Tag color="black">모금 완료</Tag>
+            // )
             // ) : (
             //   <Tag color="green">모금 진행중</Tag>
             // )
-            // item.donationApprovalStatusCode !== 'BEFORE_CONFIRMATION' ? (
+            // item.donationApprovalStatusCode === 'BEFORE_CONFIRMATION' ? (
             //   <Tag color="yellow">관리자 승인대기</Tag>
             // ) :
             <Tag color="orange">
