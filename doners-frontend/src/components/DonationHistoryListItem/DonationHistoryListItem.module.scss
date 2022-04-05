@@ -37,7 +37,7 @@
   
     .title {
       @include text-style(18);
-      font-family: $font-header;
+      font-family: $font-main;
       font-weight: 600;
       color: $black;
       // white-space: nowrap;
