@@ -106,7 +106,9 @@ const ApprovalModal = ({
         process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!,
         await getWalletAccount(),
         donationDetail.title,
-        process.env.REACT_APP_BASE_URL + '/fundraisers/' + donation.donationId,
+        //// process.env.REACT_APP_BASE_URL + '/fundraisers/' + donation.donationId,
+        //* url 대신 donationId로 변경
+        donation.donationId,
         donationDetail.image,
         donationDetail.description,
         donationDetail.targetAmount,

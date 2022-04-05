@@ -130,7 +130,7 @@ export const withdraw = async (
     .methods.withdraw()
     .send({ from: walletAddress });
 
-  console.log(response);
+  // console.log(response);
   return response;
 };
 // /* 현재 기부금 */

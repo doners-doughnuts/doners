@@ -35,17 +35,23 @@ const FundHistory = () => {
           <FundingItem item={applicationList[0]} />
         </div>
       ) : (
-        <div>'진행 중인 기부가 없습니다.'</div>
+        <div>진행 중인 기부가 없습니다</div>
       )}
       {applicationList?.length > 0 ? (
         <>
           <hr />
           <H3>이전 모금 내역</H3>
-          {applicationList?.map((item, idx) => (
-            <div key={idx}>
-              <LastFundingItem item={applicationList[idx]} />
-            </div>
-          ))}
+          {applicationList.length > 1
+            ? applicationList?.map((item, idx) => {
+                if (idx !== 0) {
+                  return (
+                    <div key={idx}>
+                      <LastFundingItem item={applicationList[idx]} />
+                    </div>
+                  );
+                }
+              })
+            : null}
         </>
       ) : null}
     </div>
