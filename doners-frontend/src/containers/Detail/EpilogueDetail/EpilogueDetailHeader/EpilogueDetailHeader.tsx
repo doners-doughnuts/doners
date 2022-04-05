@@ -12,6 +12,7 @@ import Avatar from 'assets/theme/Avatar/Avatar';
 import Span from 'assets/theme/Typography/Span/Span';
 import { ReactComponent as ClipIcon } from 'assets/images/icon/clip.svg';
 import { useEffect, useState } from 'react';
+import { getUserProfile } from 'services/api/UserApi';
 
 const cx = classNames.bind(styles);
 type headerType = {
@@ -31,6 +32,7 @@ const EpilogueDetailHeader = ({
   onModify,
 }: headerType) => {
   const [isOwn, setIsOwn] = useState(false);
+  const [profile, setProfile] = useState('');
 
   const checkUser = () => {
     const user = sessionStorage.getItem('user');
@@ -42,8 +44,18 @@ const EpilogueDetailHeader = ({
     }
   };
 
+  const getProfileImg = async () => {
+    const response = await getUserProfile(writer);
+    console.log(response);
+    if (response) {
+      // 이미지등록
+      setProfile(response.data.profileImage);
+    }
+  };
+
   useEffect(() => {
     checkUser();
+    getProfileImg();
   }, [writer]);
 
   return (
@@ -92,7 +104,7 @@ const EpilogueDetailHeader = ({
             </Link>
           </div>
           <div className={cx('user-info')}>
-            <Avatar />
+            <Avatar src={profile} />
             <div className={cx('name')}>
               <P>{writer}</P>
             </div>
