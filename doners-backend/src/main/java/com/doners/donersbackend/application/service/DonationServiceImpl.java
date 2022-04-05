@@ -2,7 +2,7 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
@@ -226,11 +226,11 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO) {
+    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationPatchDTO) {
 
         convertAccessTokenToUser(accessToken);
 
-        Donation donation = donationRepository.findById(donationRecommendPatchDTO.getDonationId())
+        Donation donation = donationRepository.findById(donationPatchDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 추천수 증가
@@ -292,6 +292,7 @@ public class DonationServiceImpl implements DonationService {
             if (donationApproveRequestDTO.getRejectionCode() == null) throw new NullPointerException();
 
             donation.changeApprovalStatusCode(donationApproveRequestDTO.getRejectionCode());
+            donation.changeIsDeleted();
 
             donationRepository.save(donation);
 
