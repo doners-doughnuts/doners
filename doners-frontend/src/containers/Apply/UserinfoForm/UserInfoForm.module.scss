@@ -10,23 +10,23 @@
     .header {
       margin: 0 0 30px 0;
       .title {
-        font-family: $font-sub;
+        font-family: $font-header;
         font-weight: 600;
         font-size: 18px;
       }
       .sub-title {
-        font-family: $font-sub;
+        font-family: $font-main;
         font-weight: 600;
         font-size: 14px;
         color: $gray-3;
       }
     }
     .input-data {
-      font-family: $font-sub;
+      font-family: $font-main;
       display: flex;
       margin: 0 0 10px 0;
       .input-title {
-        font-family: $font-sub;
+        font-family: $font-main;
         margin: 0 10px 0 0;
         width: 100px;
         top: 50%;
@@ -44,17 +44,17 @@
     .header {
       margin: 0 0 30px 0;
       .title {
-        font-family: $font-sub;
+        font-family: $font-header;
         font-weight: 600;
         font-size: 18px;
       }
     }
     .input-data {
-      font-family: $font-sub;
+      font-family: $font-main;
       display: flex;
       margin: 0 0 10px 0;
       .input-title {
-        font-family: $font-sub;
+        font-family: $font-main;
         margin: 0 10px 0 0;
         width: 100px;
         top: 50%;

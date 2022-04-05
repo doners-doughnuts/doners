@@ -21,7 +21,7 @@
 .title {
   margin: 0 50px 0 0;
   @include text-style(24);
-  font-family: $font-sub;
+  font-family: $font-main;
   font-weight: 700;
 }
 .selectboxlist {

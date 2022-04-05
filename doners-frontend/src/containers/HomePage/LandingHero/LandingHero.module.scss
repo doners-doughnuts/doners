@@ -16,6 +16,7 @@
 
   span {
     @include text-style(48, $orange);
+    font-family: $font-header;
   }
 }
 

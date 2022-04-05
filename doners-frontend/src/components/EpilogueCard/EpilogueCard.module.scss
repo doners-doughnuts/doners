@@ -34,4 +34,9 @@
       height: 100%;
     }
   }
+
+  &:hover {
+    background-color: $yellow;
+    // background-color: $background-shadow;
+  }
 }

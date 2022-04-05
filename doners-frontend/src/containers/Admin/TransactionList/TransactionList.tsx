@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 
 const TransactionList = ({ transactionList }: any) => {
   // const [transactionList, setTransactionList] = useState<TransactionType>();
+  console.log(transactionList);
 
   // useEffect(() => {
   //   console.log('TODO ');
@@ -24,11 +25,16 @@ const TransactionList = ({ transactionList }: any) => {
       </div>
       <div className={cx('inner-container')}>
         <img src={reciept} alt="background" />
-        {transactionList.length > 0
-          ? transactionList.map((e: any, idx: number) => (
-              <TransactionListItem key={idx} item={e} />
-            ))
-          : null}
+        {/* <div className={cx('vl')}></div> */}
+        <div className={cx('content')}>
+          {transactionList.length > 0
+            ? transactionList
+                .slice(0, transactionList.length - 1)
+                .map((item: any, idx: number) => (
+                  <TransactionListItem key={idx} item={item} />
+                ))
+            : null}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 @import 'assets/styles/main';
 
 .outer-container {
+  width: 100vw;
   background-color: $yellow;
   min-height: 100vh;
   .row {

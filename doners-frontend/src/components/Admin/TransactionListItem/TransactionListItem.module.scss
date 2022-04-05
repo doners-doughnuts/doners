@@ -1,1 +1,22 @@
 @import 'assets/styles/main';
+
+.item {
+// display: flex;
+  align-items: center;
+  .vl {
+    position: absolute;
+    border-left: 2px solid $black;
+    top: 0;
+    height: 100%;
+    margin-left: 2rem;
+    z-index: -1;
+  }
+  
+  .dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+  }
+}
