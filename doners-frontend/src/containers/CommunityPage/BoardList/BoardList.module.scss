@@ -1,6 +1,10 @@
 @import 'assets/styles/main';
 
 .inner-container {
+  .loading-spinner-wrapper {
+    height: 70vh;
+    @include flexbox;
+  }
   .btn-row {
     @include flexbox(end, center);
   }

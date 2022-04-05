@@ -28,9 +28,7 @@ export const getETHBalance = async (walletAddress: string) => {
 
 /* Wallet SSF(token) balance 조회 */
 export const getSSFBalance = async (walletAddress: string) => {
-  console.log(walletAddress);
   const balance = await SSFContract.methods.balanceOf(walletAddress).call();
-  console.log(balance, 'SSF');
   return balance;
 };
 
@@ -248,6 +246,13 @@ export const allWithdrawMyData = async (
 export const nowFundraiserCount = async (fundraiserAddress: string) => {
   return await FundraiserContract(fundraiserAddress)
     .methods.donationsCount()
+    .call();
+};
+
+// /* Fundraiser 수령 여부 */
+export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
+  return await FundraiserContract(fundraiserAddress)
+    .methods.isWithdraw()
     .call();
 };
 

@@ -6,9 +6,11 @@ import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
+import { differenceInDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
+import { calcDday } from 'utils/formatTime';
 // import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
 
@@ -25,7 +27,6 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
   const [rate, setRate] = useState(0);
 
   useEffect(() => {
-    console.log(data);
     getCurrentBalance();
   }, [data]);
 
@@ -37,39 +38,12 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
   };
 
   useEffect(() => {
-    console.log(current);
-    console.log(data.targetAmount);
     const result = Math.floor((current / data.targetAmount) * 100);
-    console.log(result);
     setRate(result);
   }, [current]);
 
   const handleHistoryListClick = () => {
     setIsOpen((prev) => !prev);
-  };
-
-  const remainDate = () => {
-    if (data.startDate && data.endDate) {
-      const startDateArr = data.startDate.split('-');
-      const endDateArr = data.endDate.split('-');
-
-      const stDate = new Date(
-        Number(startDateArr[0]),
-        Number(startDateArr[1]),
-        Number(startDateArr[2])
-      );
-      const endDate = new Date(
-        Number(endDateArr[0]),
-        Number(endDateArr[1]),
-        Number(endDateArr[2])
-      );
-
-      const diff = stDate.getTime() - endDate.getTime();
-      const diffDate = diff / (1000 * 60 * 60 * 24);
-
-      return diffDate;
-    }
-    return '0';
   };
 
   return (
@@ -83,15 +57,13 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
             <H4>신청일: </H4>
           </div>
           <H4>{data.startDate}</H4>
-          {/* <H4>2022.03.22</H4> */}
         </div>
         <div className={cx('date-row')}>
           <div className={cx('date-title')}>
             <H4>마감일: </H4>
           </div>
           <H4>{data.endDate}</H4>
-          {/* <H4>2022.04.08</H4> */}
-          <H4 color="red">{`(D${remainDate()})`}</H4>
+          <H4 color="red">{String(calcDday(data.endDate))}</H4>
         </div>
         <div className={cx('value-row')}>
           <div className={cx('value-title')}>
@@ -126,7 +98,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
                   <div className={cx('history-item')} key={value.sequence}>
                     <P>{value.plan}</P>
                     <div className={cx('value')}>
-                      <P>{`${value.amount.toLocaleString()}KRW`}</P>
+                      <P>{`${value.amount.toLocaleString()}SSF`}</P>
                     </div>
                   </div>
                 );
