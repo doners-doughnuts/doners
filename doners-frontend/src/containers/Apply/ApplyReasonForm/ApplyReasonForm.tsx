@@ -28,6 +28,9 @@ import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import { fDateDash } from 'utils/formatTime';
 import deleteicon from 'assets/images/icon/delete.png';
 import { cs } from 'date-fns/locale';
+import H3 from 'assets/theme/Typography/H3/H3';
+import Span from 'assets/theme/Typography/Span/Span';
+import H2 from 'assets/theme/Typography/H2/H2';
 
 export interface IFileTypes {
   id: number;
@@ -38,7 +41,7 @@ const cx = classNames.bind(styles);
 
 const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   const date = new Date();
-  date.getDate() + 1;
+  // date.getDate() + 1;
   date.setDate(date.getDate() + 1);
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
@@ -136,7 +139,9 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   return (
     <div className={cx('containor')}>
       <div className={cx('an')}>
-        <div className={cx('title')}>모금에 대한 상세 정보를 기재해주세요</div>
+        <div className={cx('title')}>
+          <H3>모금에 대한 상세 정보를 기재해주세요</H3>
+        </div>
         <div className={cx('subtitle')}>
           신청하시는 모금에 대한 상세정보를 기재해주세요.
         </div>
@@ -160,16 +165,14 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
               <div className={cx('upload')}>
                 <ImageIcon width={42} height={42} />
                 <H4 color="blue">이미지를 업로드하세요.</H4>
-                <P color="gray">
-                  여기를 클릭하거나 파일을 마우스로 끌어보세요.
-                </P>
+                <P color="gray">여기를 클릭하여 파일을 업로드해주세요.</P>
               </div>
             )}
           </div>
         </div>
         <div className={cx('detail-data')}>
           <div className={cx('title')}>
-            제목
+            <H4>제목</H4>
             <Input
               placeholder="모금 제목(최대 30자)"
               value={apply.title}
@@ -184,7 +187,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
           </div>
           <div className={cx('select-data')}>
             <div className={cx('select')}>
-              카테고리
+              <H4>카테고리</H4>
               <Selectbox
                 onChange={(e) =>
                   setApply({
@@ -196,7 +199,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
               />
             </div>
             <div className={cx('date')}>
-              모금 마감일자
+              <H4>모금 마감일자</H4>
               <Input
                 placeholder="모금 마감일자"
                 type="date"
@@ -221,13 +224,13 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
 
       <div className={cx('certificate')}>
         <div className={cx('en')}>
-          <div className={cx('title')}>증빙자료 첨부</div>
-          <div className={cx('subtitle')}>
-            모금은 증빙 서류 검토 후 승인이 됩니다.
+          <div className={cx('title')}>
+            <H4>증빙자료 첨부</H4>
           </div>
-          <div className={cx('subtitle')}>
+          <Span color="gray">모금은 증빙 서류 검토 후 승인이 됩니다.</Span>
+          <Span color="gray">
             증빙자료가 불충분할 시 기부 신청이 반려될 수 있습니다.
-          </div>
+          </Span>
         </div>
         <div className={cx('file')}>
           <input

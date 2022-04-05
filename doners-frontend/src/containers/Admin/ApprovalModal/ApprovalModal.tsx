@@ -25,6 +25,10 @@ import { useCallback } from 'react';
 import { ChangeEvent } from 'react';
 import { useRef } from 'react';
 import FileButton from 'assets/theme/Button/FileButton/FileButton';
+import UserInfo from 'containers/DonatePage/DonateDetailPage/UserInfo/UserInfo';
+import DonateContent from 'containers/DonatePage/DonateDetailPage/DonateContent/DonateContent';
+import DonateInfo from 'containers/DonatePage/DonateDetailPage/DonateInfo/DonateInfo';
+import H3 from 'assets/theme/Typography/H3/H3';
 
 const cx = classNames.bind(styles);
 
@@ -74,21 +78,47 @@ const ApprovalModal = ({
   donation,
 }: ApprovalModalType) => {
   const [approvalStatus, setApprovalStatus] = useState('');
-  const [donationDetail, setDonationDetail] = useState<DontationDetailType>();
+  const [donationDetail, setDonationDetail] = useState({
+    achievementRate: 0,
+    account: '',
+    approvalStatusCode: '',
+    beneficiaryName: '',
+    budget: [],
+    categoryCode: '',
+    deputy: false,
+    description: '',
+    donors: [],
+    email: '',
+    endDate: '',
+    evidence: [],
+    exist: false,
+    image: '',
+    name: '',
+    phone: '',
+    recommendations: 0,
+    startDate: '',
+    targetAmount: 0,
+    title: '',
+    views: 0,
+    nickname: '',
+    contractAddress: '',
+  });
   const [files, setFiles] = useState<EvidenceType[]>([]);
 
   const getDonationDetailInfo = async () => {
     const response = await getDonationDetail(donation.donationId);
-    const donationDetail: DontationDetailType = response.data;
+    // const donationDetail: DontationDetailType = response.data;
 
     console.log(donationDetail);
-    setDonationDetail(donationDetail);
-    setFiles(donationDetail.evidence);
+    setFiles(response.data.evidence);
+    setDonationDetail(response.data);
   };
 
   useEffect(() => {
     if (open) getDonationDetailInfo();
   }, [open]);
+
+  // useEffect(() => {}, [files]);
 
   const handleApprove = async () => {
     // 스마트 컨트랙트에 올릴 기부 상세 정보 받아오기
@@ -163,41 +193,34 @@ const ApprovalModal = ({
       {open ? (
         <section className={cx('container')}>
           <div className={cx('row')}>
-            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-              {/* <div className={cx('row')}> */}
-              <H4>기부신청 내역 처리</H4>
-            </div>
-            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-              <div className={cx('close-btn')} onClick={() => onClose()}>
-                <CloseIcon />
+            <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
+              <div className={cx('header')}>
+                <H3>기부신청 내역 처리</H3>
+                <div className={cx('close-btn')} onClick={() => onClose()}>
+                  <CloseIcon />
+                </div>
               </div>
             </div>
-          </div>
-          <div className={cx('row')}>
-            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-              {donationDetail && donation ? (
-                <div className={cx('content')}>
-                  <div>{donation.donationId}</div>
-                  <div>{donation.beneficiaryName}</div>
-                  <div>{donation.targetAmount}</div>
-                  <img src={donation.thumbnail} alt="" />
-                  <div>{donation.title}</div>
-                  <div>{donationDetail?.account}</div>
-                  <div>{donationDetail.email}</div>
-                  <div>{donationDetail.endDate}</div>
-                  {/* {window.open(donationDetail.evidence[0].url)} */}
-                  {/* <div>{donationDetail.evidence}</div> */}
-                  <div>{donationDetail.title}</div>
-                  <div>{donationDetail.title}</div>
-                  <div>{donationDetail.title}</div>
-                  <div>{donationDetail.title}</div>
-                </div>
-              ) : null}
+            {/* <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}></div> */}
+            <div className={cx('col-lg-5', 'col-md-6', 'col-sm-4', 'userInfo')}>
+              <UserInfo data={donationDetail} />
             </div>
-
+            <div
+              className={cx(
+                'col-lg-6',
+                'col-md-6',
+                'col-sm-4',
+                'donateContent'
+              )}
+            >
+              <DonateContent data={donationDetail} />
+            </div>
+            <div className={cx('col-lg-5', 'donationDetail')}>
+              <DonateInfo data={donationDetail} />
+            </div>
             <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
               <div className={cx('file')}>
-                <b>증빙자료</b>
+                <H3>증빙자료</H3>
                 <div className={cx('fileuploadlist')}>
                   {files.length > 0 &&
                     files.map((file: EvidenceType) => (
@@ -207,33 +230,40 @@ const ApprovalModal = ({
                         url={file.url}
                       />
                     ))}
-                  {/*  onClick={() => window.open(url)} */}
                 </div>
-                <b>기부 신청 반려사유 선택</b>
-                <Selectbox
-                  onChange={(e) => setApprovalStatus(e.value)}
-                  options={options}
-                />
+                <div className={cx('select-box')}>
+                  <b>기부 신청 반려사유 선택</b>
+                  <Selectbox
+                    onChange={(e) => setApprovalStatus(e.value)}
+                    options={options}
+                  />
+                </div>
                 <div className={cx('button-group')}>
-                  <Button
-                    color="secondary"
-                    fullWidth
-                    onClick={handleApprove}
-                    disabled={donationDetail?.approvalStatusCode === 'APPROVAL'}
-                  >
-                    승인
-                  </Button>
-                  <Button
-                    color="alternate"
-                    fullWidth
-                    onClick={handleDecline}
-                    disabled={
-                      donationDetail?.approvalStatusCode !==
-                      'BEFORE_CONFIRMATION'
-                    }
-                  >
-                    거절
-                  </Button>
+                  <div className={cx('button')}>
+                    <Button
+                      color="secondary"
+                      fullWidth
+                      onClick={handleApprove}
+                      disabled={
+                        donationDetail?.approvalStatusCode === 'APPROVAL'
+                      }
+                    >
+                      승인
+                    </Button>
+                  </div>
+                  <div className={cx('button')}>
+                    <Button
+                      color="alternate"
+                      fullWidth
+                      onClick={handleDecline}
+                      disabled={
+                        donationDetail?.approvalStatusCode !==
+                        'BEFORE_CONFIRMATION'
+                      }
+                    >
+                      거절
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

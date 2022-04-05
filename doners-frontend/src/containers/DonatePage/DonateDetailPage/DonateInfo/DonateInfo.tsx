@@ -73,13 +73,15 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
           <H4>SSF</H4>
         </div>
       </div>
-      <div className={cx('progress-info')}>
-        <Progressbar value={rate} />
-        <div className={cx('progress-rate')}>
-          <Span color="gray">모금액 달성률 : </Span>
-          <P color="green">{String(rate).concat('%')}</P>
+      {data.startDate ? (
+        <div className={cx('progress-info')}>
+          <Progressbar value={rate} />
+          <div className={cx('progress-rate')}>
+            <Span color="gray">모금액 달성률 : </Span>
+            <P color="green">{String(rate).concat('%')}</P>
+          </div>
         </div>
-      </div>
+      ) : null}
       <div>
         <div className={cx('donate-title')}>
           <H3>모금액 활용계획</H3>
