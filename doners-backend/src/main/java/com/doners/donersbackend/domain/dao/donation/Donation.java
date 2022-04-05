@@ -60,9 +60,6 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_approval_status_code")
     private ApprovalStatusCode approvalStatusCode;
 
-    @Column(name = "donation_is_received", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean isReceived;
-
     @Column(name = "donation_views")
     private long views;
 
@@ -97,7 +94,7 @@ public class Donation extends BaseEntity {
         this.isApproved = true;
     }
 
-    // 시작
+    // 시작일
     public void changeStartDate() {
         this.startDate = LocalDate.now();
     }
