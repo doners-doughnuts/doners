@@ -271,6 +271,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             donationList.forEach(donation -> {
+                Image thumbnailImage = imageRepository.findByDonationAndImageIsResized(donation, true).orElse(null);
                 list.add(
                         UserMyPageDonationHistoryResponseDTO.builder()
                                 .donationId(donation.getId())
@@ -279,7 +280,11 @@ public class UserServiceImpl implements UserService {
                                 .donationApprovalStatusCode(donation.getApprovalStatusCode())
                                 .donationTitle(donation.getTitle())
                                 .donationIsReceived(donation.isReceived())
-                                .donationStartDate(donation.getStartDate()).build()
+                                .donationStartDate(donation.getStartDate())
+                                .thumbnailImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnailImage.getImageNewFileName())
+                                .targetAmount(donation.getAmount())
+                                .endDate(donation.getEndDate())
+                                .contractAddress(donation.getContractAddress()).build()
                 );
             });
         } catch (Exception e) {
