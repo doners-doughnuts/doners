@@ -13,6 +13,7 @@
         font-family: $font-header;
         font-weight: 600;
         font-size: 18px;
+        margin-bottom: 10px;
       }
       .sub-title {
         font-family: $font-main;
@@ -22,8 +23,8 @@
       }
     }
     .input-data {
+      @include flexbox;
       font-family: $font-main;
-      display: flex;
       margin: 0 0 10px 0;
       .input-title {
         font-family: $font-main;
@@ -37,8 +38,7 @@
     }
   }
   .section2 {
-    float: right;
-    padding: 50px;
+    padding: 50px 0;
     margin: 60px 50px 50px 0;
     // justify-content: flex-start;
     .header {
@@ -52,11 +52,12 @@
     .input-data {
       font-family: $font-main;
       display: flex;
+      align-items: center;
       margin: 0 0 10px 0;
       .input-title {
         font-family: $font-main;
         margin: 0 10px 0 0;
-        width: 100px;
+        width: 150px;
         top: 50%;
         font-size: medium;
         color: $gray-3;

@@ -1,6 +1,5 @@
 @import 'assets/styles/main';
 
-
 .modal {
   display: none;
   position: fixed;
@@ -13,24 +12,40 @@
 
   .container {
     position: relative;
-    width: 80%;
-    height: fit-content;
+    height: 90vh;
     padding: 30px;
-    border: 2px solid $black;
+    border-radius: 20px;
     background-color: $white;
-    
+
     // display: flex;
     // justify-content: space-between;
 
+    .userInfo,
+    .donateContent,
+    .donationDetail {
+      height: 300px;
+    }
     .close-btn {
-      width: 100%;
+      width: fit-content;
     }
 
-    .button-group {
+    .header {
+      width: 100%;
+      @include flexbox(between);
+    }
 
+    .select-box {
+      margin-bottom: 20px;
+    }
+    .button-group {
       width: 100%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+
+      .button {
+        width: 45%;
+      }
     }
 
     .content {
@@ -38,9 +53,12 @@
       border: 2px solid $black;
 
       img {
-        width: 100px
+        width: 100px;
       }
+    }
 
+    .fileuploadlist {
+      margin-bottom: 20px;
     }
   }
 }
