@@ -27,3 +27,13 @@ export function getLoggedUserNickname() {
     return JSON.parse(user).nickName;
   }
 }
+
+/* 관리자 account 검사 */
+export function isAdmin() {
+  const isAdmin = sessionStorage.getItem('isAdmin');
+  return isAdmin !== undefined ? true : false;
+  // if (isAdmin) {
+  //   console.log('ADMIN ACCOUNT');
+  //   return true;
+  // } else 
+}

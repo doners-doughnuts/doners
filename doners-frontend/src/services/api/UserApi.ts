@@ -18,6 +18,11 @@ export const login = async (userAccount: string) => {
     nickName: response.data.userNickname,
   };
   sessionStorage.setItem('user', JSON.stringify(user));
+
+  /* 관리자 계정 검사 */
+  if (response.data.userCode === 'ADMIN')
+    sessionStorage.setItem('isAdmin', JSON.stringify(true));
+  else sessionStorage.removeItem('isAdmin');
 };
 
 /* 닉네임 중복검사 */

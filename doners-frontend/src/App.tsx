@@ -5,8 +5,19 @@ import Router from 'routes/routes';
 import ScrollToTop from 'components/ScrollToTop/ScrollToTop';
 import Web3Test from 'services/Web3Test';
 import { ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
+import { getNotificationList } from 'services/api/NotificationApi';
 
 export default function App() {
+  // const getUserNotificationList = async () => {
+  //   const response = await getNotificationList();
+
+  //   // setNotifications(response.data);
+  // };
+
+  // useEffect(() => {
+  //   getUserNotificationList();
+  // }, []);
   return (
     <>
       {/* <ScrollToTop />
