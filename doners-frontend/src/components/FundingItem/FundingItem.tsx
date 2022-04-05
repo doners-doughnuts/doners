@@ -124,6 +124,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
             open={modalOpen}
             close={closeModal}
             contractAddress={item.contractAddress}
+            targetAmount={item.targetAmount}
           />
           <div className={cx('date-row')}>
             <div

@@ -14,6 +14,7 @@ import H2 from 'assets/theme/Typography/H2/H2';
 import H3 from 'assets/theme/Typography/H3/H3';
 import { nowBalance, nowFundraiserCount } from 'services/blockchain/SsfApi';
 import { ApplicationProfileListType } from 'types/ApplicationTypes';
+import { getWalletAccount } from 'utils/walletAddress';
 const cx = classNames.bind(styles);
 type ProfileType = {
   focus: number;
@@ -23,12 +24,17 @@ const FundModal = (props: {
   open?: any;
   close?: any;
   contractAddress: string;
+  targetAmount: number;
 }) => {
-  const { open, close, contractAddress } = props;
-  const [target, setTarget] = useState(3.89);
-  const [totalpeople, setTotalpeople] = useState(234);
+  const { open, close, contractAddress, targetAmount } = props;
+
+  const [target, setTarget] = useState(targetAmount);
+  const [totalDoners, setTotalDoners] = useState(0);
+  const [walletAddress, setWalletAddress] = useState('');
   const [current, setCurrent] = useState(0);
   let rate = Math.floor((current / target) * 100);
+
+  console.log(target);
 
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
@@ -38,14 +44,16 @@ const FundModal = (props: {
     setCurrent(currentBalance);
   };
 
-  const  = async () => {
-    const doners = await nowFundraiserCount(contractAddress);
-    console.log(doners)
-  }
+  /* 사용자의 지갑주소 */
+  const getUserWalletAddress = async () => {
+    const address = await getWalletAccount();
+    setWalletAddress(address);
+  };
 
   useEffect(() => {
     //// getApplicationDetail();
     calcAchievementRate();
+    getUserWalletAddress();
   }, []);
 
   return (
@@ -61,11 +69,10 @@ const FundModal = (props: {
             <button className={cx('close')} onClick={close}>
               &times;
             </button>
-          </header>{' '}
+          </header>
           <main>
             <div className={cx('total_fund_raised')}>
               <div className={cx('data-row')}>
-                {' '}
                 <div className={cx('value-row')}>
                   <div className={cx('value-title')}>
                     <H4>총 모금액 </H4>
@@ -77,15 +84,17 @@ const FundModal = (props: {
                   <div className={cx('value-title')}>
                     <H4>총</H4>
                   </div>
-                  <H3>{String(totalpeople)}</H3>
+                  <H3>{String(totalDoners)}</H3>
                   <H4> 명의 기부자</H4>
                 </div>
                 <Progressbar value={rate} />
                 <div className={cx('')}>
                   <div className={cx('date-title')}>
-                    <Span color="gray">모금액 달성률 : </Span>{' '}
-                    <Span color="green">{String(rate).concat('%')}</Span>
-                    <Span color="gray"> (0.010212 SSF)</Span>{' '}
+                    <Span color="gray">모금액 달성률 : </Span>
+                    <Span color="green">
+                      {String(Math.floor((current / target) * 100)).concat('%')}
+                    </Span>
+                    <Span color="gray">{`(${current} SSF)`}</Span>
                   </div>
                 </div>
               </div>
@@ -95,7 +104,7 @@ const FundModal = (props: {
               <div className={cx('inputWithBtn')}>
                 <Input
                   id="nickname"
-                  value="account"
+                  value={walletAddress}
                   type="text"
                   disabled={true}
                 />
