@@ -43,7 +43,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         // 회원의 기부글 리스트 최신순
         List<Donation> donationList = donationRepository.findByUserOrderByEndDateDesc(user)
-                .orElseThrow(() -> new IllegalArgumentException("기부를 신청한 적이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
 
         List<NotificationGetListResponseDTO> notificationGetListResponseDTOList = new ArrayList<>();
 
@@ -61,6 +61,8 @@ public class NotificationServiceImpl implements NotificationService {
                 notificationGetListResponseDTOList.add(createNotification(donation, "거절", NotificationCode.APPROVAL));
             }
         });
+
+        if (notificationGetListResponseDTOList.size() == 0) return null;
 
         return NotificationGetListWrapperResponseDTO.builder()
                 .notificationGetListResponseDTOList(notificationGetListResponseDTOList)
