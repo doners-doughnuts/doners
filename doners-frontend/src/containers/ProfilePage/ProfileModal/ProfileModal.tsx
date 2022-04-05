@@ -1,12 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './ProfileModal.module.scss';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
-import { checkNickname } from 'services/api/UserApi';
+import {
+  checkNickname,
+  getUserProfile,
+  patchNickname,
+  postProfile,
+} from 'services/api/UserApi';
+import { toast } from 'react-toastify';
 import Avatar from 'assets/theme/Avatar/Avatar';
+import { getLoggedUserNickname } from 'utils/loggedUser';
 
 const cx = classNames.bind(styles);
 
@@ -15,15 +22,22 @@ type ProfileType = {
   // user: string;
 };
 const ProfileModal = (props: { open?: any; close?: any }) => {
+  const navigate = useNavigate();
+  const fileInput = useRef<HTMLInputElement>(null);
   const { open, close } = props;
   const [nickname, setNickname] = useState('');
+  const [initnickname, setInitnickname] = useState('');
   const [nicknameMsg, setNicknameMsg] = useState('');
-  const [nicknameConfirm, setNicknameConfirm] = useState(false);
+  const [nicknameConfirm, setNicknameConfirm] = useState(true);
   const [nicknameCheck, setNicknameCheck] = useState(false);
+
+  const [userProfileImg, setUserProfileImg] = useState('');
+  const [imgFile, setImgFile] = useState('');
 
   const handleInput = (event: { target: { id: any; value: any } }) => {
     const nicknamePattern = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
     const { id: target, value } = event.target;
+    setNicknameConfirm(false);
     switch (target) {
       case 'nickname':
         setNickname(value);
@@ -50,7 +64,10 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
     try {
       const data = await checkNickname(nickname);
       console.log('data', data);
-      if (!data) {
+      if (initnickname === nickname) {
+        setNicknameMsg('');
+        setNicknameConfirm(true);
+      } else if (!data) {
         setNicknameMsg('중복된 닉네임 입니다.');
       } else {
         setNicknameConfirm(true);
@@ -63,19 +80,62 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
     if (!nicknameConfirm) {
       setNicknameMsg('닉네임을 확인해주세요.');
     } else {
       const bodyparams = {
         userNickname: nickname,
       };
-      // //회원가입 api 호출
       try {
       } catch (error) {
-        alert('회원가입에 실패했습니다. 새로고침 후 다시 시도해주세요');
+        alert('프로필 수정에 실패하였습니다.');
       }
     }
   };
+
+  const getUserProfileImg = async () => {
+    const { data } = await getUserProfile(getLoggedUserNickname());
+    setUserProfileImg(data.profileImage);
+  };
+
+  const handleUploadFile = async (event: any) => {
+    const file = event.target.files;
+    setImgFile(file[0]);
+    setUserProfileImg(URL.createObjectURL(file[0]));
+  };
+
+  const updateprofile = async () => {
+    if (!nicknameConfirm) {
+      setNicknameMsg('닉네임을 확인해주세요.');
+    } else {
+      const formData = new FormData();
+      formData.append('multipartFile', imgFile);
+
+      if (imgFile !== '') {
+        const response = await postProfile(formData);
+        const response2 = await patchNickname(nickname);
+        if (response) {
+          toast.success('프로필 수정이 완료되었습니다.');
+          navigate('/');
+        }
+      } else {
+        const response2 = await patchNickname(nickname);
+        if (response2) {
+          toast.success('프로필 수정이 완료되었습니다.');
+          navigate('/');
+        }
+      }
+    }
+  };
+  const uploadImg = () => {
+    fileInput.current?.click();
+  };
+  useEffect(() => {
+    getUserProfileImg();
+    setNickname(getLoggedUserNickname());
+    setInitnickname(getLoggedUserNickname());
+  }, []);
 
   return (
     <div
@@ -99,8 +159,7 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
                   id="nickname"
                   value={nickname}
                   type="text"
-                  placeholder="닉네임"
-                  disabled={nicknameConfirm ? true : false}
+                  placeholder={getLoggedUserNickname()}
                   onChange={handleInput}
                 />
                 <div className={cx('inputBtn')}>
@@ -122,11 +181,19 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
             </div>
             <div className={cx('title')}>프로필 사진 변경</div>
             <div className={cx('avatar')}>
-              <Avatar size="large" />
+              <Avatar size="large" src={userProfileImg} onClick={uploadImg} />
+              <input
+                style={{ display: 'none' }}
+                type="file"
+                accept="image/jpg,impge/png,image/jpeg"
+                name="userProfilePhoto"
+                onChange={handleUploadFile}
+                ref={fileInput}
+              />
             </div>
           </main>
           <footer>
-            <Button color="secondary" size="small" onClick={close}>
+            <Button color="secondary" size="small" onClick={updateprofile}>
               프로필 수정하기
             </Button>
           </footer>
