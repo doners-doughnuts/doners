@@ -12,7 +12,7 @@ import {
   isAdmin,
 } from 'utils/loggedUser';
 import { useRecoilValue } from 'recoil';
-import { isLoggedState, nicknameState } from '../../atoms/atoms';
+import { isLoggedState, nicknameState } from 'atoms/atoms';
 import NotificationsPopover from 'containers/Notification/NotificationsPopover';
 
 const cx = classNames.bind(styles);

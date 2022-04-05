@@ -70,6 +70,13 @@ export const postProfile = async (formData: any) => {
   return response;
 };
 
+/* 유저 이름 불러오기 */
+export const getUserName = async (nickname: string) => {
+  const response = await instance.get(`/user/name/${nickname}`);
+  //console.log(response);
+  return response;
+};
+
 /* 유저 프로필 닉네임 수정 */
 export const patchNickname = async (nickname: string) => {
   const response = await instance.patch(`/user/nickname`, {
