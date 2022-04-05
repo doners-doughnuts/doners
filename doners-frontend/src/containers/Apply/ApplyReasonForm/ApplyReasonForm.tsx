@@ -38,7 +38,9 @@ export interface IFileTypes {
 const cx = classNames.bind(styles);
 
 const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
-  const date: string = new Date().toString();
+  const date = new Date();
+  date.getDate() + 1;
+  date.setDate(date.getDate() + 1);
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
   const [content, setContent] = useState<string>('');
@@ -68,14 +70,14 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     setApply({ ...apply, image: file[0] });
   };
   useEffect(() => {
-    console.log(imgFile);
+    //console.log(imgFile);
   }, [imgFile]);
 
   const setValue = () => {
     setApply({ ...apply, evidence: files.map((data) => data.object) });
-    console.log(files);
-    console.log(files.map((data) => data.object));
-    console.log(apply);
+    // console.log(files);
+    // console.log(files.map((data) => data.object));
+    // console.log(apply);
     setApplyStep(2);
   };
 
@@ -125,7 +127,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   };
 
   useEffect(() => {
-    console.log({ apply });
+    // console.log({ apply });
     setApply({
       ...apply,
       categoryCode: category[0].value,
@@ -195,12 +197,12 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
               />
             </div>
             <div className={cx('date')}>
-              모금 마감일자
+              모금 마감일자;
               <Input
                 placeholder="모금 마감일자"
                 type="date"
                 onChange={setTime}
-                min={fDateDash(date)}
+                min={fDateDash(date.toString())}
               />
             </div>
           </div>
