@@ -16,7 +16,7 @@ import {
 import { getDonationDetail } from 'services/api/Donation';
 import { DontationDetailType } from 'types/DonationTypes';
 import H5 from 'assets/theme/Typography/H5/H5';
-import { nowBalance } from 'services/blockchain/SsfApi';
+import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import { calcDday, checkClosedDonation } from 'utils/formatTime';
 
 const cx = classNames.bind(styles);
@@ -27,8 +27,10 @@ type FundingItemProps = {
 
 const FundingItem = ({ item }: FundingItemProps) => {
   const [target, setTarget] = useState(item.targetAmount);
-  const [current, setCurrent] = useState(99999);
+  // 관리자 승인이 된 모금이라면, 애니메이션 효과를 위해 99999로 설정
+  const [current, setCurrent] = useState(item.donationIsApproved ? 999999 : 0);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isWithdrawn, setIsWithdrawn] = useState(false);
 
   //// const [applicationDetail, setApplicationDetail] =
   ////   useState<DontationDetailType>();
@@ -37,10 +39,11 @@ const FundingItem = ({ item }: FundingItemProps) => {
     setModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = async () => {
     //TODO 모금액 수령이 완료되었는지 검사
-    // const response = await fundraiserIsWithdraw(item.contractAddress);
+    const response = await fundraiserIsWithdraw(item.contractAddress);
     // console.log(response);
+    setIsWithdrawn(response);
     setModalOpen(false);
   };
 
@@ -54,10 +57,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
-    // TODO const currentBalance = await nowBalance(item.contrazctAddress);
-    const currentBalance = await nowBalance(
-      '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA'
-    );
+    const currentBalance = await nowBalance(item.contractAddress);
     // console.log(currentBalance);
     setCurrent(currentBalance);
   };
@@ -78,7 +78,10 @@ const FundingItem = ({ item }: FundingItemProps) => {
 
   useEffect(() => {
     //// getApplicationDetail();
-    calcAchievementRate();
+    //* 관리자 승인 전이면 contractAddress가 아직 존재하지 않음
+    if (item.donationIsApproved) {
+      calcAchievementRate();
+    }
     // calcDday();
   }, []);
 
@@ -97,10 +100,8 @@ const FundingItem = ({ item }: FundingItemProps) => {
         </div>
         <div className={cx('item-info-wrap')}>
           {item.donationIsApproved ? (
-            !checkClosedDonation(item.endDate) ? (
-              // TODO 대체
-              // item.donationIsReceived ? (
-              false ? (
+            checkClosedDonation(item.endDate) ? (
+              isWithdrawn ? (
                 <Tag color="black">기부금 수령 완료</Tag>
               ) : (
                 <div
@@ -116,7 +117,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
             ) : (
               <Tag color="green">모금 진행중</Tag>
             )
-          ) : item.donationApprovalStatusCode !== 'BEFORE_CONFIRMATION' ? (
+          ) : item.donationApprovalStatusCode === 'BEFORE_CONFIRMATION' ? (
             <Tag color="yellow">관리자 승인대기</Tag>
           ) : (
             <Tag color="orange">
@@ -128,12 +129,15 @@ const FundingItem = ({ item }: FundingItemProps) => {
           {/* <Button color={'primary'} onClick={openModal}>
             수령하기
           </Button> */}
-          <FundModal
-            open={modalOpen}
-            close={closeModal}
-            contractAddress={item.contractAddress}
-            targetAmount={item.targetAmount}
-          />
+          {item.donationIsApproved ? (
+            <FundModal
+              open={modalOpen}
+              close={closeModal}
+              contractAddress={item.contractAddress}
+              targetAmount={item.targetAmount}
+            />
+          ) : null}
+
           <div className={cx('date-row')}>
             <div
               className={cx('date-title', 'date-start-title')}
