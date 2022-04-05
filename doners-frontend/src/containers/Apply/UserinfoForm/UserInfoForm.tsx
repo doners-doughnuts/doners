@@ -5,9 +5,14 @@ import classNames from 'classnames/bind';
 import Input from 'assets/theme/Input/Input';
 import styles from './UserInfoForm.module.scss';
 import React, { useEffect, useState } from 'react';
-
+import { getLoggedUserInfo, getLoggedUserNickname } from 'utils/loggedUser';
+import { useRecoilValue } from 'recoil';
+import { isLoggedState, nicknameState } from 'atoms/atoms';
+import { getUserName } from 'services/api/UserApi';
 const cx = classNames.bind(styles);
+
 const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
+  const [loggedUserNickname, setLoggedUserNickname] = useState('');
   const [isSelect, setIsSelect] = useState(false);
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
@@ -15,6 +20,17 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
   const [deputyPhone, setDeputyPhone] = useState('');
   const [file, setFile] = useState('');
   const [deputyDoc, setDeputyDoc] = useState('');
+
+  useEffect(() => {
+    const sessionStorageUserNickname = getLoggedUserNickname();
+    getName(sessionStorageUserNickname);
+  }, []);
+
+  const getName = async (nickname: string) => {
+    const response = await getUserName(nickname);
+    setUserName(response.data.userName);
+  };
+  useEffect(() => {}, [getLoggedUserInfo()]);
 
   const handleCheckbox = () => {
     setIsSelect((prev) => !prev);
@@ -65,6 +81,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
           <Input
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
+            disabled
           />
         </div>
         <div className={cx('input-data')}>
@@ -119,7 +136,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
         </div>
       </section>
       <div className={cx('nextbtn')}>
-        {(!isSelect && userName !== '' && userPhone !== '') ||
+        {(!isSelect && userPhone !== '') ||
         (isSelect &&
           deputyPhone !== '' &&
           deputyName !== '' &&
