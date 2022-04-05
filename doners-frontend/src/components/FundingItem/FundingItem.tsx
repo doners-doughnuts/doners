@@ -40,10 +40,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
   };
 
   const closeModal = async () => {
-    //TODO 모금액 수령이 완료되었는지 검사
-    const response = await fundraiserIsWithdraw(item.contractAddress);
-    // console.log(response);
-    setIsWithdrawn(response);
+    checkWithdrawState();
     setModalOpen(false);
   };
 
@@ -53,6 +50,14 @@ const FundingItem = ({ item }: FundingItemProps) => {
   //   console.log(response.data);
   //   setApplicationDetail(response.data);
   // };
+
+  /* 기부금 수령 여부 */
+  const checkWithdrawState = async () => {
+    //TODO 모금액 수령이 완료되었는지 검사
+    const response = await fundraiserIsWithdraw(item.contractAddress);
+    console.log(response);
+    setIsWithdrawn(response);
+  };
 
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
@@ -81,6 +86,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
     //* 관리자 승인 전이면 contractAddress가 아직 존재하지 않음
     if (item.donationIsApproved) {
       calcAchievementRate();
+      checkWithdrawState();
     }
     // calcDday();
   }, []);

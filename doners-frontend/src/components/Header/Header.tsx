@@ -13,6 +13,7 @@ import {
 } from 'utils/loggedUser';
 import { useRecoilValue } from 'recoil';
 import { isLoggedState, nicknameState } from '../../atoms/atoms';
+import NotificationsPopover from 'containers/Notification/NotificationsPopover';
 
 const cx = classNames.bind(styles);
 const Header = () => {
@@ -101,21 +102,25 @@ const Header = () => {
                 <li>
                   <H5>언어</H5>
                 </li> */}
-                <Link to="/admin">
-                  <li>
-                    <H5>관리자 페이지</H5>
-                  </li>
-                </Link>
-                <li>
-                  <H5>알림</H5>
-                </li>
-                <div className="btn">
+                <div className={cx('row')}>
                   {isLogged ? (
-                    <Link to={`/profile/${loggedUserNickname}`}>
-                      <Button size="small" fullWidth color={'alternate'}>
-                        Profile
-                      </Button>
-                    </Link>
+                    <>
+                      {isLoggedAdmin ? (
+                        <Link to="/admin">
+                          <li>
+                            <H5>관리자 페이지</H5>
+                          </li>
+                        </Link>
+                      ) : null}
+                      <li>
+                        <NotificationsPopover />
+                      </li>
+                      <Link to={`/profile/${loggedUserNickname}`}>
+                        <Button size="small" fullWidth color={'alternate'}>
+                          Profile
+                        </Button>
+                      </Link>
+                    </>
                   ) : (
                     <Link to="/signup">
                       <Button size="small" fullWidth color={'alternate'}>
