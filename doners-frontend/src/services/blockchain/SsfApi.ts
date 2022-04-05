@@ -38,7 +38,7 @@ export const createFundraiser = async (
   factoryAddress: string, // 팩토리 컨트랙트 주소
   walletAddress: string, // 현재 지갑주소
   title: string, // 글 제목
-  url: string, // 글 url
+  id: string, // 글 url
   imageURL: string, // 썸네일 image url
   description: string, // 글 내용
   donationsGoal: number, // 모금 목표 금액
@@ -48,7 +48,7 @@ export const createFundraiser = async (
   await FundraiserFactoryContract(factoryAddress)
     .methods.createFundraiser(
       title,
-      url,
+      id,
       imageURL,
       description,
       donationsGoal,
