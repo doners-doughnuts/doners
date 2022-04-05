@@ -2,7 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationPatchDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
@@ -125,13 +125,13 @@ public class DonationController {
     @PatchMapping("/recommend")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationRecommendPatchDTO donationRecommendPatchDTO
+            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationPatchDTO donationPatchDTO
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
         try {
-            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationRecommendPatchDTO);
+            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationPatchDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
@@ -229,29 +229,5 @@ public class DonationController {
         }
 
     }
-
-//    @ApiOperation(value = "기부금 수령")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "기부금 수령 결과를 저장했습니다."),
-//            @ApiResponse(code = 409, message = "기부글 수령 결과를 저장하지 못했습니다.")
-//    })
-//    @GetMapping("/receive")
-//    public ResponseEntity<? extends BaseResponseDTO> receive(
-//            @ApiIgnore @RequestHeader("Authorization") String accessToken
-//    ) {
-//
-//        try {
-//            DonationCheckResponseDTO donationCheckResponseDTO = donationService.checkDonation(accessToken);
-//
-//            if (donationCheckResponseDTO.isApply()) {
-//                return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 이미 존재합니다.", 200, donationCheckResponseDTO));
-//            }
-//
-//            return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 존재하지 않습니다.", 200, donationCheckResponseDTO));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 기록 확인에 실패했습니다.", 409));
-//        }
-//
-//    }
 
 }
