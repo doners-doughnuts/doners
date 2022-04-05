@@ -31,7 +31,8 @@ export function getLoggedUserNickname() {
 /* 관리자 account 검사 */
 export function isAdmin() {
   const isAdmin = sessionStorage.getItem('isAdmin');
-  return isAdmin !== undefined ? true : false;
+  // console.log(isAdmin ? true : false)
+  return isAdmin ? true : false;
   // if (isAdmin) {
   //   console.log('ADMIN ACCOUNT');
   //   return true;
