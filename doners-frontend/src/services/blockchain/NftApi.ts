@@ -53,28 +53,28 @@ export const setApprovalForAll = async (walletAddress: string) => {
 export const mint = async (edition: string, walletAddress: string) => {
   let result;
   switch (edition) {
-    case 'covid':
+    case 'COVID19':
       result = await DDHelperContract.methods
         .mintCovidToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
-    case 'single':
+    case 'SINGLE':
       result = await DDHelperContract.methods
         .mintSingleToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
-    case 'warrior':
+    case 'WARRIOR':
       result = await DDHelperContract.methods
         .mintWarriorToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
-    case 'patient':
+    case 'PATIENT':
       result = await DDHelperContract.methods
         .mintPatientToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
   }
@@ -134,6 +134,7 @@ export const getUserNFTIdList = async (walletAddress: string) => {
 // (https://ethereum.stackexchange.com/a/98495)
 export const getUserNFTMetadataList = async (walletAddress: string) => {
   //? 성공
+  console.log(walletAddress);
   let result = await DDHelperContract.methods
     .getTokenMetadatasByOwner(walletAddress)
     .call();
@@ -143,7 +144,7 @@ export const getUserNFTMetadataList = async (walletAddress: string) => {
     uri.replace('ipfs://', 'https://ipfs.io/ipfs/')
   );
 
-  // console.log('보유 NFT의 Metadata 목록: ', result);
+  console.log('보유 NFT의 Metadata 목록: ', result);
   return result;
 };
 
