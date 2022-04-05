@@ -182,7 +182,11 @@ function EpilogueEditor({ modify = false }: EditType) {
         )}
       </div>
       <div className={cx('inner-container')}>
-        <EpilogueEditorHeader onChange={handleUploadImage} src={imgFile} />
+        <EpilogueEditorHeader
+          onChange={handleUploadImage}
+          src={imgFile}
+          donation_id={donation_id}
+        />
         <div className={cx('editor')}>
           <textarea
             className={cx('title')}
@@ -210,7 +214,7 @@ function EpilogueEditor({ modify = false }: EditType) {
         {/* <EditorForm /> */}
         <div className={cx('donate-receipt')}>
           <div className={cx('total-donate')}>
-            <TotalDonate />
+            <TotalDonate donation_id={donation_id} />
           </div>
           <div className={cx('receipt-editor')}>
             <ReceiptEditor

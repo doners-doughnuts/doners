@@ -1,7 +1,6 @@
 @import 'assets/styles/main';
 
 .inner-container {
-  min-height: 70vh;
   .btn-row {
     @include flexbox(end, center);
   }

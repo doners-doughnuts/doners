@@ -2,7 +2,7 @@ import Button from 'assets/theme/Button/Button';
 import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import BoardListItem from 'components/BoardListItem/BoardListItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getBoardList } from 'services/api/Board';
 import styles from './BoardList.module.scss';
@@ -24,76 +24,111 @@ const BoardList = () => {
   const [page, setPage] = useState(1);
   const [listItems, setListItems] = useState<ListItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [throttle, setThrottle] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [endCheck, setEndCheck] = useState(false);
+  const [target, setTarget] = useState<any>(null);
 
-  // const handleScroll = () => {
-  //   if (throttle) return;
-  //   if (!throttle) {
-  //     setThrottle(true);
-  //     setTimeout(async () => {
-  //       setPage((page) => page + 1);
-  //       setThrottle(false);
-  //     }, 300);
-  //   }
-  // };
+  const pageRef = useRef(page);
+  pageRef.current = page;
+
+  const endCheckRef = useRef(endCheck);
+  endCheckRef.current = endCheck;
 
   useEffect(() => {
-    console.log(page);
     setIsLoading(true);
-    getList();
+    // getList();
   }, [page]);
 
+  useEffect(() => {
+    let observer: any;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.5,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  const onIntersect = async ([entry]: any, observer: any) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      await getList();
+      observer.observe(entry.target);
+    }
+  };
+
   const getList = async () => {
-    const response = await getBoardList(page);
-    console.log(response.data);
-    const data = response.data.communityGetListResponseDTOList;
-    setListItems((prev) => [...prev, ...data]);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    if (!endCheckRef.current) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 800);
+      setIsLoaded(true);
+      console.log(pageRef.current);
+      const response = await getBoardList(pageRef.current);
+
+      console.log(response.data);
+      const data = response.data.communityGetListResponseDTOList;
+      console.log(data);
+
+      if (data.length === 0) {
+        setEndCheck(true);
+        return;
+      }
+
+      setPage((prev) => prev + 1);
+      setListItems((prev) => [...prev, ...data]);
+      setIsLoaded(false);
+    }
   };
 
   return (
-    <>
-      {isLoading ? (
+    <div className={cx('container')}>
+      <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
-          <LoadingSpinner />
-        </div>
-      ) : (
-        <div
-          className={cx('inner-container')}
-          // onScroll={handleScroll}
-        >
-          <div className={cx('btn-row')}>
-            <div className={cx('btn')}>
-              <Link to="write">
-                <Button color="secondary" size="small" fullWidth>
-                  글 작성
-                </Button>
-              </Link>
+          <div className={cx('inner-container')}>
+            <div>
+              <div className={cx('btn-row')}>
+                <div className={cx('btn')}>
+                  <Link to="write">
+                    <Button color="secondary" size="small" fullWidth>
+                      글 작성
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              {listItems.length === 0 ? (
+                <div className={cx('none-contents')}>
+                  <div className={cx('none-text')}>
+                    <H1>등록된 감사후기가 없습니다.</H1>
+                  </div>
+                  <div className={cx('none-img')}>
+                    <img src={src} alt="no donation" />
+                  </div>
+                </div>
+              ) : (
+                listItems.map((data) => {
+                  return (
+                    <Link to={data.communityId} key={data.communityId}>
+                      <BoardListItem data={data} />
+                    </Link>
+                  );
+                })
+              )}
             </div>
+            <div
+              ref={setTarget}
+              style={{
+                width: '100vw',
+                height: '5px',
+              }}
+            ></div>
           </div>
-          {listItems.length === 0 ? (
-            <div className={cx('none-contents')}>
-              <div className={cx('none-text')}>
-                <H1>등록된 감사후기가 없습니다.</H1>
-              </div>
-              <div className={cx('none-img')}>
-                <img src={src} alt="no donation" />
-              </div>
-            </div>
-          ) : (
-            listItems.map((data) => {
-              return (
-                <Link to={data.communityId} key={data.communityId}>
-                  <BoardListItem data={data} />
-                </Link>
-              );
-            })
-          )}
+          {isLoading ? <LoadingSpinner /> : null}
         </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 

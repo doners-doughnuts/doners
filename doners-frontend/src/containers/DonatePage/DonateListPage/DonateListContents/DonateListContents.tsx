@@ -32,6 +32,8 @@ const DonateListContents = () => {
   const [category, setCategory] = useState('');
   // const [categoryId, setCategoryId] = useState('');
   const [sort, setSort] = useState('');
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const categoryParam = searchParams.get('category');
   const sortParam = searchParams.get('sort');
@@ -107,7 +109,7 @@ const DonateListContents = () => {
               </Checkbox>
             </div>
             <div className={cx('col-lg-8')}>
-              <DonateListSortTab sort={sort} onClick={handleSortClick} />
+              {/* <DonateListSortTab sort={sort} onClick={handleSortClick} /> */}
             </div>
             {donateList.length !== 0 ? (
               donateList.map((data) => {
@@ -132,6 +134,14 @@ const DonateListContents = () => {
                 </div>
               </div>
             )}
+            {/* <div
+              ref={setTarget}
+              style={{
+                width: '100vw',
+                height: '5px',
+              }}
+            >
+            </div> */}
           </div>
         </section>
       </div>
