@@ -97,8 +97,8 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
           </Link>
           <div className={cx('sub-info')}>
             <H4>{nickname}</H4>
-            {/* <Span>{fToNow(date)}</Span> */}
-            <Span>{date}</Span>
+            <Span>{fToNow(date)}</Span>
+            {/* <Span>{date}</Span> */}
           </div>
         </div>
         <div className={cx('button-wrap')}>
