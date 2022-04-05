@@ -27,7 +27,7 @@ contract Fundraiser is Ownable {
     }
     Donation[] public _donations;
     Donation public withdrawData; // 수령 data
-    mapping (address => Donation[]) public _myDonations;
+    mapping(address => Donation[]) public _myDonations;
     uint256 public donationsCount; // 현재 기부한 사람 인원
     event DonationReceived(address indexed donor, uint256 value);
     event Withdraw(uint256 amount);
@@ -50,10 +50,16 @@ contract Fundraiser is Ownable {
         fundRaisingCloses = _fundRaisingCloses;
         beneficiary = _beneficiary;
         transferOwnership(_custodian);
-        erc20Contract = IERC20(address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)); // ssafycontract 주소 주입
+        erc20Contract = IERC20(
+            address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)
+        ); // ssafycontract 주소 주입
     }
 
-    function myDonationsCount (address _sender) public payable returns (uint256) {
+    function myDonationsCount(address _sender)
+        public
+        payable
+        returns (uint256)
+    {
         return _myDonations[_sender].length;
     }
 
@@ -75,18 +81,31 @@ contract Fundraiser is Ownable {
             donationUrl: url
         });
         _donations.push(donation);
-        _myDonations[sender].push(Donation(sender,address(this),block.timestamp,_amount,title,url));
+        _myDonations[sender].push(
+            Donation(
+                sender,
+                address(this),
+                block.timestamp,
+                _amount,
+                title,
+                url
+            )
+        );
 
         donationsCount++;
-        require (erc20Contract.approve(address(this),_amount),"address fail");
-        require (erc20Contract.approve(sender,_amount),"msg.sender fail");
+        require(erc20Contract.approve(address(this), _amount), "address fail");
+        require(erc20Contract.approve(sender, _amount), "msg.sender fail");
 
         erc20Contract.transferFrom(sender, address(this), _amount); // 후견인 -> 컨트랙트로 송금
         emit DonationReceived(sender, _amount);
     }
 
     // 현재 컨트랙트에 내가 기부한 내역
-    function myDonations (address _myAccount) public payable returns (Donation[] memory donationlist) {
+    function myDonations(address _myAccount)
+        public
+        payable
+        returns (Donation[] memory donationlist)
+    {
         uint256 count = myDonationsCount(_myAccount);
         donationlist = new Donation[](count);
         for (uint256 i = 0; i < count; i++) {
@@ -115,9 +134,9 @@ contract Fundraiser is Ownable {
         uint256 balance = erc20Contract.balanceOf(address(this)); // 현재 컨트랙트의 금액
         address sender = msg.sender;
 
-        require (erc20Contract.approve(address(this),balance),"address fail");
-        require (erc20Contract.approve(sender,balance),"msg.sender fail");
-        require (balance > 0 ,"contract have no money");
+        require(erc20Contract.approve(address(this), balance), "address fail");
+        require(erc20Contract.approve(sender, balance), "msg.sender fail");
+        require(balance > 0, "contract have no money");
 
         erc20Contract.transfer(beneficiary, balance); // 현재 컨트랙트의 금액을 beneficiary에게 송금처리한다.
 
@@ -132,5 +151,4 @@ contract Fundraiser is Ownable {
 
         emit Withdraw(balance);
     }
-
 }
