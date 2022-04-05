@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @ToString
 public class UserMyPageDonationHistoryWrapperResponseDTO extends BaseResponseDTO {
-    @ApiModelProperty(name = "해당 유저가 신청한 기부 글 목록")
+    @ApiModelProperty(name = "해당 유저가 신청한 기부 목록")
     private List<UserMyPageDonationHistoryResponseDTO> userMyPageDonationHistoryResponseDTOList;
 
     @Builder
