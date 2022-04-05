@@ -6,7 +6,7 @@
   }
 
   .target-money {
-    @include flexbox(center, center);
+    @include flexbox(center, end);
     margin-bottom: 30px;
   }
 

@@ -13,11 +13,11 @@ type AvatarType = {
 
 const Avatar = ({ size = 'default', src, onClick }: AvatarType) => {
   return (
-    <div className={cx(`avatar-${size}`)}>
+    <div className={cx(`avatar-${size}`)} onClick={onClick}>
       {src ? (
-        <img src={src} alt="avatar-img" onClick={onClick} />
+        <img src={src} alt="avatar-img" />
       ) : (
-        <img src={defaultimg} onClick={onClick} />
+        <img src={defaultimg} alt="default" />
       )}
     </div>
   );

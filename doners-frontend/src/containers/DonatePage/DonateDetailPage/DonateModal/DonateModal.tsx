@@ -106,15 +106,15 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
     }
   };
 
-  const test = async () => {
-    const result = await nowBalance(
-      '0xc86F168f8D5b22C677c0184C2865C11Dc5921951'
-    );
-    console.log(result);
-  };
-  useEffect(() => {
-    test();
-  }, []);
+  // const test = async () => {
+  //   const result = await nowBalance(
+  //     '0xc86F168f8D5b22C677c0184C2865C11Dc5921951'
+  //   );
+  //   console.log(result);
+  // };
+  // useEffect(() => {
+  //   test();
+  // }, []);
 
   return (
     <div className={cx('modal', { openModal: open === true })}>
