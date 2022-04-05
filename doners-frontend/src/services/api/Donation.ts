@@ -62,6 +62,20 @@ export const getDonationDetail = async (donation_id: string) => {
   return result;
 };
 
+export const getSearchDonation = async (
+  category: string,
+  keyword: string,
+  page: number,
+  type: string = 't'
+) => {
+  console.log(keyword);
+  const result = await instance.get(
+    `/donation/search?category=${category}&page=${page}&keyword=${keyword}&type=${type}`
+  );
+  // const result: DontationDetailType = _donationDetail;
+  return result;
+};
+
 /**
  * 기부 신청 승인
  * @param donationId

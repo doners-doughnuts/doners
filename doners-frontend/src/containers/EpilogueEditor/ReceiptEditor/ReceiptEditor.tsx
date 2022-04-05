@@ -22,11 +22,13 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
   const [initlength, setLength] = useState(0);
 
   useEffect(() => {
-    list.map((data: historyType, idx: number) => {
-      data.epilogueBudgetSequence = idx;
-      return data;
-    });
-    setHistoryList(list);
+    if (!list) {
+      list.map((data: historyType, idx: number) => {
+        data.epilogueBudgetSequence = idx;
+        return data;
+      });
+      setHistoryList(list);
+    }
   }, [list]);
 
   useEffect(() => {
@@ -96,6 +98,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
       </div>
       <div className={cx('history-list')}>
         {historyList.map((data, idx) => {
+          console.log(data);
           return (
             <HistoryItem
               value={data}
@@ -106,7 +109,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
         })}
       </div>
       <div className={cx('total-use-value')}>
-        <P>{`총 사용 모금액: ${total.toLocaleString()} KRW`}</P>
+        <P>{`총 사용 모금액: ${total} KRW`}</P>
       </div>
     </div>
   );

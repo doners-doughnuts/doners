@@ -95,6 +95,7 @@ function EpilogueEditor({ modify = false }: EditType) {
 
   const registApi = async () => {
     const formData = new FormData();
+    console.log(historyList);
     formData.append('multipartFile', imgFile[0]);
     formData.append(
       'epilogueRegisterPostDTO',
@@ -153,6 +154,7 @@ function EpilogueEditor({ modify = false }: EditType) {
   };
 
   const handleUploadPlan = (data: any) => {
+    console.log(data);
     setHistoryList((prev) => [...prev, data]);
   };
 
@@ -164,10 +166,13 @@ function EpilogueEditor({ modify = false }: EditType) {
     );
   };
 
-  useEffect(() => {
-    handleUploadPlan(historyList);
-  }, []);
+  // useEffect(() => {
+  //   handleUploadPlan(historyList);
+  // }, []);
 
+  useEffect(() => {
+    console.log(historyList);
+  }, [historyList]);
   return (
     <>
       <div className={cx('header')}>
