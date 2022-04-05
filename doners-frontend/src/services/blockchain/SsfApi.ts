@@ -28,9 +28,7 @@ export const getETHBalance = async (walletAddress: string) => {
 
 /* Wallet SSF(token) balance 조회 */
 export const getSSFBalance = async (walletAddress: string) => {
-  console.log(walletAddress);
   const balance = await SSFContract.methods.balanceOf(walletAddress).call();
-  console.log(balance, 'SSF');
   return balance;
 };
 

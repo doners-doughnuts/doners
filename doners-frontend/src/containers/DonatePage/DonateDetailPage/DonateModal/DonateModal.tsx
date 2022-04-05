@@ -20,6 +20,7 @@ import {
   donate,
   getSSFBalance,
 } from 'services/blockchain/SsfApi';
+import { mint, setApprovalForAll } from 'services/blockchain/NftApi';
 
 const cx = classNames.bind(styles);
 
@@ -47,24 +48,21 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
 
   useEffect(() => {
     if (account) {
-      console.log(account);
       getBalance();
+      console.log(data.categoryCode);
+      console.log(account);
     }
   }, [account]);
 
   const getBalance = async () => {
-    console.log(account);
     const result = await getSSFBalance(account);
     setBalance(result);
   };
 
   const handleAddClick = () => {
-    console.log(money);
-
     setMoney((prev) => prev + 1);
   };
   const handleMinusClick = () => {
-    console.log(money);
     setMoney((prev) => prev - 1);
   };
 
@@ -99,6 +97,10 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
         setCompleteLoading(false);
         onClose();
       }, 3000);
+      await setApprovalForAll(account);
+
+      const mintResult = await mint(data.categoryCode, account);
+      console.log(mintResult);
     } catch (error) {
       console.log(error);
     }
