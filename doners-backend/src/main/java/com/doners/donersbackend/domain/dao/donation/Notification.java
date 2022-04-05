@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @ToString
@@ -25,11 +26,16 @@ public class Notification extends BaseEntity {
     private NotificationCode notificationCode;
 
     @Column(name = "notification_create_time")
-    private LocalDateTime createTime;
+    private String createTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donation_id")
     private Donation donation;
+
+    @PrePersist
+    private void onPrePersist() {
+        this.createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 
     public void changeIsRead() {
         this.isRead = true;
