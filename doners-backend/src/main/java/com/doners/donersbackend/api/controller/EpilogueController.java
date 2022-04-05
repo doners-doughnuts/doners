@@ -130,13 +130,7 @@ public class EpilogueController {
         EpilogueCheckResponseDTO epilogueCheckResponseDTO = null;
 
         try {
-            boolean exists = epilogueService.checkIfEpilogueExists(accessToken, donationId);
-
-            if (exists) {
-                epilogueCheckResponseDTO = EpilogueCheckResponseDTO.builder().exists(true).build();
-            } else {
-                epilogueCheckResponseDTO = EpilogueCheckResponseDTO.builder().exists(false).build();
-            }
+            epilogueCheckResponseDTO = epilogueService.checkIfEpilogueExists(accessToken, donationId);
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("해당 기부에 대한 에필로그 존재 여부를 불러오지 못했습니다.", 409));
         }
