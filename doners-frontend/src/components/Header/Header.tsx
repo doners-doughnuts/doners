@@ -8,7 +8,7 @@ import Button from 'assets/theme/Button/Button';
 import Logo from 'assets/images/header-logo.svg';
 import { getLoggedUserInfo, getLoggedUserNickname } from 'utils/loggedUser';
 import { useRecoilValue } from 'recoil';
-import { isLoggedState, nicknameState } from '../../atoms/atoms';
+import { isLoggedState, nicknameState } from 'atoms/atoms';
 
 const cx = classNames.bind(styles);
 const Header = () => {

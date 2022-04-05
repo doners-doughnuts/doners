@@ -55,17 +55,11 @@ function EpilogueEditor({ modify = false }: EditType) {
   const { id } = useParams<string>();
   const navigate = useNavigate();
 
-  console.log(id);
-
   useEffect(() => {
     if (modify && isLoading) {
       getDetail();
     }
   }, [isLoading]);
-
-  useEffect(() => {
-    console.log(initlength, '메리야 제발...');
-  }, [initlength]);
 
   const getDetail = async () => {
     if (typeof id === 'string') {
