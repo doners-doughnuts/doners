@@ -241,87 +241,14 @@ export const allWithdrawMyData = async (
   return allWithraws;
 };
 
-// TODO delete (test code)
-
-let title = '정홍진에게 기부하시오2';
-let url =
-  'https://www.fnnews.com/resource/media/image/2022/02/04/202202041545370304_l.jpg';
-let imageURL =
-  'https://www.fnnews.com/resource/media/image/2022/02/04/202202041545370304_l.jpg';
-let description = 'test description 입니다람쥐';
-let donationsGoal = '10000';
-let fundRaisingCloses = '51651651651651651651';
-let beneficiary = '0x80585b94098034488F58ede15BFa106EF229d6Ea';
+// /* Fundraiser 기부한 총원 */
+export const nowFundraiserCount = async (fundraiserAddress: string) => {
+  return await FundraiserContract(fundraiserAddress)
+    .methods.donationsCount()
+    .call();
+};
 
 // TODO delete (test code)
 export const check = async () => {
   const account = await Web3Client.eth.requestAccounts();
-
-  // console.log(
-  //   await FundraiserFactoryContract(
-  //     '0xFB85B019313AB2e8767B2331f47168b027D4fa43'
-  //   )
-  //     .methods.createFundraiser(
-  //       title,
-  //       url,
-  //       imageURL,
-  //       description,
-  //       donationsGoal,
-  //       fundRaisingCloses,
-  //       beneficiary
-  //     )
-  //     .send({ from: account[0] })
-  // );
-  // let tmp = await FundraiserFactoryContract(
-  //   '0xBb3EACd17DbAcbd0E18B9677498A13E310333786'
-  // )
-  //   .methods.fundraisersCount()
-  //   .call();
-  // console.log(
-  //   await FundraiserFactoryContract(
-  //     '0xFB85B019313AB2e8767B2331f47168b027D4fa43'
-  //   )
-  //     .methods.getFundraisers()
-  //     .call()
-  // );
-
-  // console.log(fundraisers[tmp - 1]);
-  // console.log(createFundraiser);
-  // console.log(
-  //   await FundraiserFactoryContract(
-  //     '0x6d03FDF73Cc0c6BE43ad768fd140A9cAC0DC7DC6'
-  //   )
-  //     .methods.getFundraisers()
-  //     .call()
-  // );
-  //  contract에 송금 및 인출 가능하게 ssafycontract를 approve하는코드
-  // await SSFContract.methods
-  //   .approve('0xD9F487C82F8B6d6Be51Ee6F6913d6DB4904779DD', 5)
-  //   .send({ from: account[0] });
-
-  // // 기부하는 코드
-  // await FundraiserContract('0xD9F487C82F8B6d6Be51Ee6F6913d6DB4904779DD')
-  //   .methods.donate(5)
-  //   .send({ from: account[0] });
-
-  // console.log(
-  //   await SSFContract.methods
-  //     .balanceOf('0x11DE56474D353a7705113582b35775558EcfF547')
-  //     .call()
-  // );
-
-  // console.log(
-  //   await FundraiserContract('0xD9F487C82F8B6d6Be51Ee6F6913d6DB4904779DD')
-  //     .methods.myDonations('0x079dae51ae588fbe92163f75c18f030812a4979a')
-  //     .call()
-  // );
-
-  // await FundraiserContract('0x5dAce039cD938722F6fFdf90Fb7c00Da99bc8194')
-  //   .methods.withdraw()
-  //   .send({ from: account[0] });
-
-  // const test = await SSFContract.methods.transfer(account[0], 10).send({
-  //   from: '0x0Bba35cf70aD080f8594B58006Bc18bf2c6B1DE6',
-  //   gas: 367760,
-  // });
 };
