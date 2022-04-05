@@ -76,7 +76,6 @@ const DonationHistory = () => {
     });
     console.log(list);
     setHistoryList(list);
-    calcTotalDonationAmount();
   };
 
   /* 사용자의 총 누적 기부금액 계산 */
@@ -91,10 +90,12 @@ const DonationHistory = () => {
   };
 
   useEffect(() => {
-    // testDonate();
     getUserDonationHistory();
-    // calcTotalDonationAmount();
   }, []);
+
+  useEffect(() => {
+    calcTotalDonationAmount();
+  }, [historyList]);
 
   return (
     <div>

@@ -54,7 +54,9 @@ function EpilogueEditor({ modify = false }: EditType) {
 
   const { id } = useParams<string>();
   const navigate = useNavigate();
+
   console.log(id);
+
   useEffect(() => {
     if (modify && isLoading) {
       getDetail();
