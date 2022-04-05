@@ -19,9 +19,7 @@ import {
   approveTransaction,
   donate,
   getSSFBalance,
-  nowBalance,
 } from 'services/blockchain/SsfApi';
-import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
 
 const cx = classNames.bind(styles);
 
@@ -156,11 +154,6 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
                 <H3>기부자 지갑 주소</H3>
               </div>
               <div className={cx('wallet-row')}>
-                {/* <div className={cx('wallet-account')}>
-                <FoxIcon />
-                <Input value={account} size="large" disabled />
-              </div> */}
-
                 <div className={cx('wallet-form')}>
                   <div className={cx('description')}>
                     <div className={cx('wallet-account')}>
