@@ -77,17 +77,11 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "승인 상태 코드")
     private ApprovalStatusCode approvalStatusCode;
 
-    @ApiModelProperty(name = "기부자 명단")
-    private List<DonationHistoryResponseDTO> donors;
-
-    @ApiModelProperty(name = "기부액 달성률")
-    private double achievementRate;
-
     @ApiModelProperty(name = "증빙 자료")
     private List<FileResponseDTO> evidence;
 
     @Builder
-    public DonationResponseDTO(String contractAddress, String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, List<FileResponseDTO> evidence) {
+    public DonationResponseDTO(String contractAddress, String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<FileResponseDTO> evidence) {
         this.contractAddress = contractAddress;
         this.title = title;
         this.categoryCode = categoryCode;
@@ -108,8 +102,6 @@ public class DonationResponseDTO extends BaseResponseDTO {
         this.beneficiaryName = beneficiaryName;
         this.exist = exist;
         this.approvalStatusCode = approvalStatusCode;
-        this.donors = donors;
-        this.achievementRate = achievementRate;
         this.evidence = evidence;
     }
 
