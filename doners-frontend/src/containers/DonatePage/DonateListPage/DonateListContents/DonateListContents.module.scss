@@ -10,6 +10,13 @@
       height: 70vh;
       @include flexbox;
     }
+    .header {
+      @include flexbox(between);
+
+      .search-bar {
+        width: 400px;
+      }
+    }
     .none-contents {
       @include column-flexbox;
       .none-text {

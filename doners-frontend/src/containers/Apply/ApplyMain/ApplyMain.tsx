@@ -26,35 +26,33 @@ const ApplyMain = () => {
   };
 
   return (
-    <div>
-      <section className={cx('container')}>
-        <div className={cx('row')}>
-          <div className={cx('col-lg-12')}>
-            <div className={cx('inner-container')}>
-              <header className={cx('header')}>
-                <div>모금 신청하기</div>
-              </header>
-              <main className={cx('content')}>
-                <div>도움이 필요하신가요? 도너스에서 손을 내밀어보세요.</div>
-                <div>
-                  <img
-                    className={cx('charactor')}
-                    src={Charactor}
-                    alt="character"
-                  />
-                  <img className={cx('pointer')} src={Pointer} alt="pointer" />
-                </div>
-              </main>
-              <footer className={cx('footer')}>
-                <Button color={'primary'} onClick={applyPageMove}>
-                  모금 신청하기
-                </Button>
-              </footer>
-            </div>
+    <section className={cx('container')}>
+      <div className={cx('row')}>
+        <div className={cx('col-lg-12')}>
+          <div className={cx('inner-container')}>
+            <header className={cx('header')}>
+              <div>모금 신청하기</div>
+            </header>
+            <main className={cx('content')}>
+              <div>도움이 필요하신가요? 도너스에서 손을 내밀어보세요.</div>
+              <div>
+                <img
+                  className={cx('charactor')}
+                  src={Charactor}
+                  alt="character"
+                />
+                <img className={cx('pointer')} src={Pointer} alt="pointer" />
+              </div>
+            </main>
+            <footer className={cx('footer')}>
+              <Button color={'primary'} onClick={applyPageMove}>
+                모금 신청하기
+              </Button>
+            </footer>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 

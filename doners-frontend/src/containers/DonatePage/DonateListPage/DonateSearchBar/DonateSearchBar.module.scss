@@ -2,10 +2,13 @@
 
 .search-bar {
   @include flexbox(start);
-  width: 60%;
   border: 2px solid $black;
   border-radius: 8px;
   padding: 10px;
   margin-left: auto;
   background-color: $white;
+
+  input {
+    width: 100%;
+  }
 }
