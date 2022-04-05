@@ -18,7 +18,8 @@ contract Fundraiser is Ownable {
     IERC20 public erc20Contract; // ssafyContract를 가져오기위한 토큰 컨트랙트 인터페이스
 
     struct Donation {
-        address account;
+        address fromAccount;
+        address toAccount;
         uint256 date;
         uint256 value;
         string donationTitle;
@@ -66,18 +67,14 @@ contract Fundraiser is Ownable {
         beneficiary = _beneficiary;
     }
 
-    function nowAddress() public payable returns (address) {
-        // 현재 컨트랙트 주소
-        return msg.sender;
-    }
-
     function donate(uint256 _amount) public payable {
         // require(block.timestamp < fundRaisingCloses, "FUND RAISING CLOSED");
         address sender = msg.sender;
 
         // 기부한 금액과 시간과 사람
         Donation memory donation = Donation({
-            account: sender,
+            fromAccount: sender,
+            toAccount: address(this),
             date: block.timestamp,
             value: _amount,
             donationTitle: title,
@@ -85,15 +82,22 @@ contract Fundraiser is Ownable {
         });
         _donations.push(donation);
         _myDonations[sender].push(
-            Donation(sender, block.timestamp, _amount, title, url)
+            Donation(
+                sender,
+                address(this),
+                block.timestamp,
+                _amount,
+                title,
+                url
+            )
         );
 
         donationsCount++;
         require(erc20Contract.approve(address(this), _amount), "address fail");
-        require(erc20Contract.approve(msg.sender, _amount), "msg.sender fail");
+        require(erc20Contract.approve(sender, _amount), "msg.sender fail");
 
-        erc20Contract.transferFrom(msg.sender, address(this), _amount); // 후견인 -> 컨트랙트로 송금
-        emit DonationReceived(msg.sender, _amount);
+        erc20Contract.transferFrom(sender, address(this), _amount); // 후견인 -> 컨트랙트로 송금
+        emit DonationReceived(sender, _amount);
     }
 
     // 현재 컨트랙트에 내가 기부한 내역
@@ -128,15 +132,17 @@ contract Fundraiser is Ownable {
 
     function withdraw() public payable onlyOwner {
         uint256 balance = erc20Contract.balanceOf(address(this)); // 현재 컨트랙트의 금액
+        address sender = msg.sender;
 
         require(erc20Contract.approve(address(this), balance), "address fail");
-        require(erc20Contract.approve(msg.sender, balance), "msg.sender fail");
+        require(erc20Contract.approve(sender, balance), "msg.sender fail");
         require(balance > 0, "contract have no money");
 
         erc20Contract.transfer(beneficiary, balance); // 현재 컨트랙트의 금액을 beneficiary에게 송금처리한다.
 
         withdrawData = Donation({
-            account: msg.sender,
+            fromAccount: sender,
+            toAccount: address(this),
             date: block.timestamp,
             value: balance,
             donationTitle: title,

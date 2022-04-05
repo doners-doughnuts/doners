@@ -45,7 +45,6 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadFile = async (event: any) => {
     const file = event.target.files;
     setDeputyDoc(file);
-    console.log(file);
     setFile(file[0]);
   };
 

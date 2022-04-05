@@ -7,12 +7,28 @@ import { Link } from 'react-router-dom';
 import styles from './EpilogueEditorHeader.module.scss';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import { useEffect, useRef, useState } from 'react';
+import { getDonationDetail } from 'services/api/Donation';
+import { DontationDetailType } from 'types/DonationTypes';
+import { getUserProfile } from 'services/api/UserApi';
 
 const cx = classNames.bind(styles);
 
-const EpilogueEditorHeader = ({ onChange, src }: any) => {
+const CategoryCode: Record<string, string> = {
+  COVID19: '코로나19',
+  WARRIOR: '참전용사',
+  PATIENT: '희귀질환',
+  SINGLE: '미혼모/부',
+};
+
+const EpilogueEditorHeader = ({ onChange, donation_id }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [imgFile, setImgFile] = useState('');
+  const [category, setCategory] = useState('');
+  const [title, setTitle] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [name, setName] = useState('');
+  const [profile, setProfile] = useState('');
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,33 +47,51 @@ const EpilogueEditorHeader = ({ onChange, src }: any) => {
     console.log(formData);
   };
 
-  // useEffect(() => {
-  //   console.log(src);
-  //   setImgFile(src);
-  // }, [src]);
+  const handleDonateDetail = async () => {
+    const result = await getDonationDetail(donation_id);
+    setCategory(result.data.categoryCode);
+    setTitle(result.data.title);
+    setEndDate(result.data.endDate);
+    setStartDate(result.data.startDate);
+    setName(result.data.name);
+    console.log(result);
+  };
+
+  const handleUserProfile = async () => {
+    const result = await getUserProfile(name);
+    setProfile(result.data.profileImage);
+  };
 
   useEffect(() => {
     console.log(imgFile);
   }, [imgFile]);
 
+  useEffect(() => {
+    handleUserProfile();
+  }, [name]);
+
+  useEffect(() => {
+    handleDonateDetail();
+  }, []);
+
   return (
     <div className={cx('header')}>
       <div className={cx('info')}>
         <div className={cx('user-info')}>
-          <Avatar />
+          <Avatar src={profile} />
           <div className={cx('name')}>
-            <P>이학성</P>
+            <P>{name}</P>
           </div>
         </div>
         <div className={cx('donation-info')}>
           <div className={cx('category-title')}>
             <div className={cx('category')}>
-              <Tag color="black">CATEGORY</Tag>
+              <Tag color="black">{CategoryCode[category]}</Tag>
             </div>
-            <H4>모금제목</H4>
+            <H4>{title}</H4>
           </div>
-          <H4>모금 진행 기간 : 21/12/24 ~ 22/03/01</H4>
-          <Link to="">
+          <H4>{`모금 진행 기간 : ${startDate} ~ ${endDate}`}</H4>
+          <Link to={`/fundraisings/${donation_id}`}>
             <div className={cx('detail_link')}>
               <P color="green">기부 상세 보기</P>
             </div>
