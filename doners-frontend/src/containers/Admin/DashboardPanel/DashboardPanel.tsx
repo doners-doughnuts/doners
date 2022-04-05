@@ -23,7 +23,7 @@ const DashboardPanel = ({
             <DashboardCard
               header="NFT 수량"
               content={nftCount.toString()}
-              label="NFT(DD)"
+              label="DD"
             />
           </div>
           <div className={cx('col-lg-4', 'col-md-4', 'col-sm-4')}>
@@ -35,9 +35,9 @@ const DashboardPanel = ({
           </div>
           <div className={cx('col-lg-4', 'col-md-4', 'col-sm-4')}>
             <DashboardCard
-              header="당일 거래 ETH/SSF"
+              header="누적 거래 SSF"
               content={transactionBalance.toString()}
-              label="ETH(SSF)"
+              label="SSF"
             />
           </div>
         </div>

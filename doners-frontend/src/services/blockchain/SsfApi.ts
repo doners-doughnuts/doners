@@ -168,8 +168,10 @@ export const nowFundraiserWithdraw = async (fundraiserAddress: string) => {
 };
 
 // /* 모든 컨트랙트 기부한 내역 */
-export const allFundraiserData = async (fundraiserFactoryAddress: string) => {
-  const fundraisers = await FundraiserFactoryContract(fundraiserFactoryAddress)
+export const allFundraiserData = async () => {
+  const fundraisers = await FundraiserFactoryContract(
+    process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!
+  )
     .methods.getFundraisers()
     .call();
   const allFundData = []; // 각 컨트랙트별 모든 기부내역
@@ -208,8 +210,10 @@ export const allFundraiserMyDonationData = async (
 };
 
 // /* 모든 컨트랙트 수령한 내역 */
-export const allWithdrawData = async (fundraiserFactoryAddress: string) => {
-  const fundraisers = await FundraiserFactoryContract(fundraiserFactoryAddress)
+export const allWithdrawData = async () => {
+  const fundraisers = await FundraiserFactoryContract(
+    process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!
+  )
     .methods.getFundraisers()
     .call();
   const allWithraws = []; // 각 컨트랙트별 모든 수령내역

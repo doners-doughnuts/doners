@@ -14,7 +14,7 @@ import {
 } from 'services/blockchain/SsfApi';
 import { getWalletAccount } from 'utils/walletAddress';
 import { fToNow } from 'utils/formatTime';
-import { DonationTransactionDetailType } from 'types/TransactionTypes';
+import { DonationTransactionType } from 'types/TransactionTypes';
 
 const cx = classNames.bind(styles);
 
@@ -43,9 +43,7 @@ const cx = classNames.bind(styles);
 // }
 
 const DonationHistory = () => {
-  const [historyList, setHistoryList] = useState<
-    DonationTransactionDetailType[]
-  >([]);
+  const [historyList, setHistoryList] = useState<DonationTransactionType[]>([]);
   const [totalDonationAmount, setTotalDontaionAmount] = useState(0);
 
   // TODO DELETE AFTER TEST (응답 포맷 확인용)
@@ -63,15 +61,16 @@ const DonationHistory = () => {
       await getWalletAccount()
     );
     console.log(response);
-    const list: Array<DonationTransactionDetailType> = [];
+    const list: Array<DonationTransactionType> = [];
     response.forEach((e) => {
       // TODO API 응답 수정된 것에 따라서 수정
       list.push({
-        account: e[0],
-        date: e[1],
-        value: e[2],
-        donationTitle: e[3],
-        donationId: e[4],
+        fromAccount: e[0],
+        toAccount: e[1],
+        date: e[2],
+        value: e[3],
+        donationTitle: e[4],
+        donationId: e[5],
       });
     });
     console.log(list);
@@ -127,7 +126,8 @@ const DonationHistory = () => {
               ? historyList.map((item, idx) => (
                   <div key={idx} className={cx('col-lg-12')}>
                     <DonationHistoryListItem
-                      account={item.account}
+                      toAccount={item.toAccount}
+                      fromAccount={item.fromAccount}
                       date={item.date}
                       value={item.value}
                       donationId={item.donationId}
