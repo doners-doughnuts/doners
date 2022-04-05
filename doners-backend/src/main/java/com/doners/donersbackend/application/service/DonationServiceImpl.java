@@ -6,7 +6,6 @@ import com.doners.donersbackend.application.dto.request.donation.DonationRecomme
 import com.doners.donersbackend.application.dto.response.donation.*;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
-import com.doners.donersbackend.domain.dao.donation.DonationHistory;
 import com.doners.donersbackend.domain.dao.donation.File;
 import com.doners.donersbackend.domain.dao.image.Image;
 import com.doners.donersbackend.domain.dao.user.User;
@@ -17,7 +16,6 @@ import com.doners.donersbackend.domain.repository.FileRepository;
 import com.doners.donersbackend.domain.repository.ImageRepository;
 import com.doners.donersbackend.domain.repository.UserRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationBudgetRepository;
-import com.doners.donersbackend.domain.repository.donation.DonationHistoryRepository;
 import com.doners.donersbackend.domain.repository.donation.DonationRepository;
 import com.doners.donersbackend.security.util.JwtAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +36,6 @@ public class DonationServiceImpl implements DonationService {
     private final DonationRepository donationRepository;
 
     private final DonationBudgetRepository donationBudgetRepository;
-
-    private final DonationHistoryRepository donationHistoryRepository;
 
     private final UserRepository userRepository;
 
@@ -184,25 +180,6 @@ public class DonationServiceImpl implements DonationService {
                 )
         );
 
-        // 모금 내역
-        List<DonationHistory> donationHistoryList = donationHistoryRepository.findByDonation(donation)
-                .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 모금 내역을 찾을 수 없습니다."));
-        List<DonationHistoryResponseDTO> donationHistoryResponseDTOList = new ArrayList<>();
-
-        // 현재까지의 모금액
-        long amountSum = 0;
-
-        for (DonationHistory donationHistory : donationHistoryList) {
-            amountSum += donationHistory.getAmount();
-
-            donationHistoryResponseDTOList.add(
-                    DonationHistoryResponseDTO.builder()
-                            .nickname(donationHistory.getUser().getUserNickname())
-                            .amount(donationHistory.getAmount())
-                            .build()
-            );
-        }
-
         // 증빙 자료
         List<File> fileList = fileRepository.findByDonation(donation)
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글에 대한 증빙 자료를 찾을 수 없습니다."));
@@ -240,8 +217,6 @@ public class DonationServiceImpl implements DonationService {
                 .deputy(donation.isDeputy())
                 .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
                 .approvalStatusCode(donation.getApprovalStatusCode())
-                .donors(donationHistoryResponseDTOList)
-                .achievementRate((double) amountSum / donation.getAmount() * 100)
                 .evidence(evidence)
                 .build();
 
@@ -414,9 +389,9 @@ public class DonationServiceImpl implements DonationService {
                                 .thumbnail(getDonationImage(donation, true))
                                 .title(donation.getTitle())
                                 .beneficiaryName(donation.getBeneficiaryName())
+                                .contractAddress(donation.getContractAddress())
                                 .targetAmount(donation.getAmount())
                                 .endDate(donation.getEndDate())
-                                .contractAddress(donation.getContractAddress())
                                 .build()
                 )
         );
