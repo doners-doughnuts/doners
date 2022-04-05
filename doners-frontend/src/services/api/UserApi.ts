@@ -58,6 +58,31 @@ export const getUserProfile = async (nickname: string) => {
   return response;
 };
 
+/* 유저 프로필사진 수정 */
+export const postProfile = async (formData: any) => {
+  const response = await instance.post(`/user/image`, formData);
+  // console.log(response);
+  return response;
+};
+
+/* 유저 프로필 닉네임 수정 */
+export const patchNickname = async (nickname: string) => {
+  const response = await instance.patch(`/user/nickname`, {
+    userNickname: nickname,
+  });
+  const user = sessionStorage.getItem('user');
+  if (user) {
+    const Juser = JSON.parse(user);
+    const Nuser = {
+      accessToken: Juser.accessToken,
+      nickName: nickname,
+    };
+    sessionStorage.removeItem('user');
+    sessionStorage.setItem('user', JSON.stringify(Nuser));
+  }
+  return response;
+};
+
 /* 사용자 지갑 주소 */
 export const getUserAddress = async (nickname: string) => {
   const response = await instance.get(COMMON + `/account/${nickname}`);
