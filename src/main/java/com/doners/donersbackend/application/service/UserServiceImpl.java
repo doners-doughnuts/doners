@@ -1,6 +1,6 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
+import com.doners.donersbackend.application.dto.request.user.UserRegisterRequestDTO;
 import com.doners.donersbackend.application.dto.response.user.*;
 import com.doners.donersbackend.domain.dao.community.Community;
 import com.doners.donersbackend.domain.dao.donation.Donation;
@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
     @Override
-    public Integer setUserInfo(UserInfoSetRequestDTO userInfoSetRequestDTO) {
+    public Integer registerUser(UserRegisterRequestDTO userRegisterRequestDTO) {
 
-        String userEmail = userInfoSetRequestDTO.getUserEmail();
-        String userAccount = userInfoSetRequestDTO.getUserAccount();
+        String userEmail = userRegisterRequestDTO.getUserEmail();
+        String userAccount = userRegisterRequestDTO.getUserAccount();
 
         // 이미 해당 이메일로 가입한 계정 존재하는지 확인
         if(userRepository.findByUserEmailAndUserIsDeleted(userEmail, false).isPresent()) {
@@ -62,11 +62,11 @@ public class UserServiceImpl implements UserService {
 
         // account 정보 추가할 것
         User user = User.builder()
-                .userName(userInfoSetRequestDTO.getUserName())
-                .userNickname(userInfoSetRequestDTO.getUserNickname())
+                .userName(userRegisterRequestDTO.getUserName())
+                .userNickname(userRegisterRequestDTO.getUserNickname())
                 .userEmail(userEmail)
                 .userAccount(userAccount)
-                .userCode(userInfoSetRequestDTO.getUserCode())
+                .userCode(userRegisterRequestDTO.getUserCode())
                 .password("")
                 .build();
 
