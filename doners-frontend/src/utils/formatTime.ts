@@ -41,5 +41,29 @@ export function fDateDash(date: string) {
  * @returns true: 마감된 기부 / false: 모금가능한 기부
  */
 export function checkClosedDonation(date: string) {
-  return compareAsc(new Date(date), new Date()) === -1;
+  console.log(new Date(date));
+  console.log(Date.now() + 1000 * 60 * 60 * 2);
+
+  // return (Date.now() - new Date('2022-04-05').getTime())- (1000 * 3600 * 24) -1)));
+  // Date.now() - new Date('2022-04-05').getTime()) /
+  //                 (1000 * 3600 * 24) -
+  //                 1
+  return compareAsc(new Date(date), Date.now() + 1000 * 60 * 60 * 24) === -1;
+}
+
+/**
+ * 남은 모금일자 계산 (D-day)
+ * @param {endDate} 마감일자, 'yyyy-MM-dd' 형태
+ * @returns D-day string
+ */
+export function calcDday(endDate: string) {
+  const dday = Math.ceil(
+    (Date.now() - new Date(endDate).getTime()) / (1000 * 3600 * 24) - 1
+  );
+  if (dday === 0) {
+    return '(마감일)';
+  } else {
+    const label = dday > 0 ? '+' : '';
+    return '(D' + label + dday + ')';
+  }
 }

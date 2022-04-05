@@ -116,7 +116,7 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
 
   useEffect(() => {
     getUserProfileImg();
-  });
+  }, []);
 
   return (
     <div
