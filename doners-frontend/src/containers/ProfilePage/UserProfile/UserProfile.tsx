@@ -8,6 +8,7 @@ import ProfileModal from '../ProfileModal/ProfileModal';
 import { getWalletAccount } from 'utils/walletAddress';
 import { getUserAddress, getUserProfile } from 'services/api/UserApi';
 import { getUserNFTIdList } from 'services/blockchain/NftApi';
+import { getLoggedUserNickname } from 'utils/loggedUser';
 const cx = classNames.bind(styles);
 
 const UserProfile = () => {
@@ -19,7 +20,8 @@ const UserProfile = () => {
   const { nickname } = useParams();
 
   const openModal = () => {
-    setModalOpen(true);
+    // 사용자 본인인지 검사
+    if (nickname === getLoggedUserNickname()) setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
