@@ -280,7 +280,6 @@ public class UserServiceImpl implements UserService {
                                 .donationIsApproved(donation.isApproved())
                                 .donationApprovalStatusCode(donation.getApprovalStatusCode())
                                 .donationTitle(donation.getTitle())
-                                .donationIsReceived(donation.isReceived())
                                 .donationStartDate(donation.getStartDate())
                                 .thumbnailImage("https://donersa404.s3.ap-northeast-2.amazonaws.com/" + thumbnailImage.getImageNewFileName())
                                 .targetAmount(donation.getAmount())
