@@ -150,7 +150,7 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
             <button className={cx('close')} onClick={close}>
               &times;
             </button>
-          </header>{' '}
+          </header>
           <main>
             <div className={cx('title')}>닉네임 수정</div>
             <div className={cx('input')}>
