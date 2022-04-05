@@ -8,6 +8,10 @@
     width: 100%;
     margin-left: 30px;
   }
+
+  &:hover {
+    background-color: $background-shadow;
+  }
 }
 
 .title {

@@ -2,21 +2,33 @@
 
 .container {
   position: relative;
+
+
+  .background {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    z-index: -1;
+  }
   img {
-    position: relative;
+    position: absolute;
     width: 100%;
     z-index: -1;
   }
+  
   .inner-container {
     position: relative;
     margin-bottom: 50px;
-  }
 
-  .background {
-    // width: 100%;
-    // height: fit-content;
-    z-index: -1;
+    // .vl {
+    //   position: absolute;
+    //   border-left: 2px solid $black;
+    //   height: 100%;
+    //   margin-left: 2rem;
+    //   z-index: -1;
+    // }
   }
+  
   
 
   .header {
@@ -28,5 +40,11 @@
     left: 50px;
 
     border: 2px solid $black;
+  }
+
+  .content {
+    padding-top: 60px;
+    padding-left: 20px;
+    font-size: small;
   }
 }

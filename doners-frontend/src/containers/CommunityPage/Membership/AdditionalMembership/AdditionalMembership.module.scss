@@ -15,7 +15,7 @@
   .item-list {
     li {
       @include flexbox(start, center);
-      font-family: $font-sub;
+      font-family: $font-main;
       border-top: 1px solid rgba(225, 227, 228, 0.2);
       margin-top: 20px;
       padding-top: 30px;
