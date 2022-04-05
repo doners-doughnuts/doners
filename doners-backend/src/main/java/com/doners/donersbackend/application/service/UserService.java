@@ -1,13 +1,13 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
+import com.doners.donersbackend.application.dto.request.user.UserRegisterRequestDTO;
 import com.doners.donersbackend.application.dto.response.user.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
-    Integer setUserInfo(UserInfoSetRequestDTO userInfoSetRequestDto);
+    Integer registerUser(UserRegisterRequestDTO userRegisterRequestDto);
 
     UserLoginResponseDTO getUserLoginResponseDTO(String userAccount);
 
