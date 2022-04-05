@@ -16,6 +16,7 @@ const EpilogueContents = () => {
   const [writer, setWriter] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [historyList, setHistoryList] = useState([]);
+  const [donationId, setDonationId] = useState('');
 
   const { epilogue_id } = useParams<string>();
 
@@ -35,6 +36,7 @@ const EpilogueContents = () => {
       setWriter(response.data.epilogueWriter);
       setThumbnail(response.data.epilogueImage);
       setHistoryList(response.data.epilogueBudgetResponseDTOList);
+      setDonationId(response.data.donationId);
     }
   };
 
@@ -67,6 +69,7 @@ const EpilogueContents = () => {
         src={thumbnail}
         onDelete={handleDeleteClick}
         onModify={handleModifyClick}
+        donationId={donationId}
       />
       <main className={cx('content')}>
         {contents !== '' ? <Viewer initialValue={contents} /> : null}

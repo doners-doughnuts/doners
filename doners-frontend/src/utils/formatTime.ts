@@ -50,7 +50,7 @@ export function checkClosedDonation(date: string) {
   // Date.now() - new Date('2022-04-05').getTime()) /
   //                 (1000 * 3600 * 24) -
   //                 1
-  return differenceInDays(new Date(date), new Date()) <= -1;
+  return differenceInDays(new Date(date), new Date()) <= 0;
 }
 
 /**

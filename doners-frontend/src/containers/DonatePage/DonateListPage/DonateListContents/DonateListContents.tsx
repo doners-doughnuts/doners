@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import DonationCard from 'components/DonationCard/DonationCard';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import { getDonationList } from 'services/api/Donation';
+import { getDonationList, getSearchDonation } from 'services/api/Donation';
 import DonateListHeader from '../DonateListHeader/DonateListHeader';
 import styles from './DonateListContents.module.scss';
 import src from 'assets/images/img-covid19-category.png';
@@ -128,6 +128,13 @@ const DonateListContents = () => {
     }
   };
 
+  const handleSearchClick = async (keyword: string) => {
+    const response = await getSearchDonation(categoryId, keyword, 1);
+    const data = response.data.donationGetListResponseDTOList;
+    setDonateList(data);
+    console.log(response);
+  };
+
   // const handleSortClick = (sort_id: string) => {
   //   navigate(`/fundraisings/list?category=${category}&sort=${sort_id}`);
   //   setSort(sort_id);
@@ -155,14 +162,14 @@ const DonateListContents = () => {
             ) : (
               <>
                 <>
-                  <div className={cx('col-lg-12')}>
+                  <div className={cx('col-lg-12', 'header')}>
                     <div className={cx('check-box')}>
                       <Checkbox selected={view} onChange={handleCheckbox}>
                         모금 가능한 기부만 보기
                       </Checkbox>
                     </div>
                     <div className={cx('search-bar')}>
-                      <DonateSearchBar />
+                      <DonateSearchBar onClick={handleSearchClick} />
                       {/* <DonateListSortTab sort={sort} onClick={handleSortClick} /> */}
                     </div>
                   </div>

@@ -22,8 +22,6 @@ function useForm({ initialValues, onSubmit, validate }: useFormProps) {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    console.log('handleChange');
-    console.log(name, value);
     setValues({ ...values, [name]: value });
   };
 

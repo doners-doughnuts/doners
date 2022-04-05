@@ -98,6 +98,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
       </div>
       <div className={cx('history-list')}>
         {historyList.map((data, idx) => {
+          console.log(data);
           return (
             <HistoryItem
               value={data}
