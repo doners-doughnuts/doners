@@ -35,6 +35,8 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     Optional<List<Donation>> findByCategoryCodeAndUser(CategoryCode category, User user, Pageable pageable);
 
+    Optional<List<Donation>> findByUserOrderByEndDateDesc(User user);
+
     Optional<Donation> findByUserAndIsDeleted(User user, boolean delete);
 
 }
