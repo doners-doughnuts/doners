@@ -1,4 +1,5 @@
 export type ApplicationProfileListType = {
+  contractAddress: string;
   donationApprovalStatusCode: string;
   donationCategoryCode: string;
   donationId: string;
@@ -6,6 +7,9 @@ export type ApplicationProfileListType = {
   donationIsReceived: boolean;
   donationStartDate: string;
   donationTitle: string;
+  thumbnailImage: string;
+  endDate: string;
+  targetAmount: number;
 };
 
 // TODO 아래의 const들 위치 /types 말고 다른 곳으로 이동 (리팩토링)
