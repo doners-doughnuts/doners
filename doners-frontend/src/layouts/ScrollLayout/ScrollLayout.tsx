@@ -1,7 +1,9 @@
+import classNames from 'classnames/bind';
 import { Footer, Header } from 'components';
 import { Outlet } from 'react-router';
-import classNames from 'classnames/bind';
+
 import styles from './ScrollLayout.module.scss';
+
 const cx = classNames.bind(styles);
 
 const ScrollLayout = () => {

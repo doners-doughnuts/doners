@@ -167,12 +167,14 @@ function EpilogueEditor({ modify = false }: EditType) {
   };
 
   // useEffect(() => {
+  //   console.log(historyList);
   //   handleUploadPlan(historyList);
   // }, []);
 
-  useEffect(() => {
-    console.log(historyList);
-  }, [historyList]);
+  // useEffect(() => {
+  //   console.log(imgFile);
+  // }, [imgFile]);
+
   return (
     <>
       <div className={cx('header')}>

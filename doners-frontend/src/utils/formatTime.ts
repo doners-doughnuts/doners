@@ -69,3 +69,8 @@ export function calcDday(endDate: string) {
     return '(D' + label + dday + ')';
   }
 }
+
+/* Fundraiser Contract time */
+export function fFundraiserContractTime(date: string) {
+  return fDateTime(new Date(Number(date) * 1000).toString());
+}

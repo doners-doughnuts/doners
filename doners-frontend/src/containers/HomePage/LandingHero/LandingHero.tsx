@@ -4,6 +4,7 @@ import Button from 'assets/theme/Button/Button';
 import character from 'assets/images/character-angel.png';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
+import H1 from 'assets/theme/Typography/H1/H1';
 
 const cx = classNames.bind(styles);
 const LandingHero = () => {
@@ -20,6 +21,7 @@ const LandingHero = () => {
               <h1 className={cx('slogan')}>
                 Donate & Collect <br />
                 extraordinary <br />
+                {/* // TODO 리팩토링 */}
                 <span>doughnut</span> NFTs
               </h1>
               <div className={cx('description')}>

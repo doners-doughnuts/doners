@@ -23,7 +23,7 @@ const baseUri = "ipfs://NewUriToReplace"; // This will be replaced automatically
 const layerConfigurations = [
   {
     // 생성할 이미지의 총 개수 (테스트로 20개만 우선적으로 해봄)
-    growTokenSizeTo: 20,
+    growTokenSizeTo: 100,
     // NFT 이미지의 layer. 순서에 유의: 위의 것이 가장 아래에 배치됨
     layersOrder: [
       { name: "Background" },
