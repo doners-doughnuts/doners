@@ -19,8 +19,10 @@ const MyNFT = () => {
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    // const result = await getWalletAccount();
+    // console.log(result);
     const response = await getUserNFTMetadataList(await getWalletAccount());
-    // console.log(response);
+    console.log(response);
     setNftList(response);
   };
 
@@ -31,6 +33,10 @@ const MyNFT = () => {
   useEffect(() => {
     getNftList();
   }, []);
+
+  useEffect(() => {
+    console.log(nftList);
+  }, [nftList]);
 
   return (
     <div>

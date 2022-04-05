@@ -27,7 +27,6 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
   const [rate, setRate] = useState(0);
 
   useEffect(() => {
-    console.log(data);
     getCurrentBalance();
   }, [data]);
 
@@ -39,28 +38,13 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
   };
 
   useEffect(() => {
-    console.log(current);
-    console.log(data.targetAmount);
     const result = Math.floor((current / data.targetAmount) * 100);
-    console.log(result);
     setRate(result);
   }, [current]);
 
   const handleHistoryListClick = () => {
     setIsOpen((prev) => !prev);
   };
-
-  // const calcDday = () => {
-  //   const dday = Math.ceil(
-  //     (Date.now() - new Date(data.endDate).getTime()) / (1000 * 3600 * 24) - 1
-  //   );
-  //   if (dday === 0) {
-  //     return '(마감일)';
-  //   } else {
-  //     const label = dday > 0 ? '+' : '';
-  //     return '(D' + label + dday + ')';
-  //   }
-  // };
 
   return (
     <div className={cx('info-form')}>
