@@ -371,7 +371,7 @@ const startCreating = async () => {
           // 2xxxxx: single
           // 3xxxxx: warrior
           // 4xxxxx: patient
-          const tokenId = 1000000 + abstractedIndexes[0];
+          const tokenId = 3000000 + abstractedIndexes[0];
 
           debugLogs ? console.log("Clearing canvas") : null;
           ctx.clearRect(0, 0, format.width, format.height);
