@@ -139,7 +139,7 @@ const DonateDetail = () => {
                         </Button>
                       </Link>
                     ) : isOwn ? (
-                      <Link to={`epilogue/write/${donation_id}`}>
+                      <Link to={`/community/epilogue/write/${donation_id}`}>
                         <Button color="secondary" size="large" fullWidth>
                           감사후기 작성하기
                         </Button>
