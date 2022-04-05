@@ -10,6 +10,7 @@ import { differenceInDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
+import { calcDday } from 'utils/formatTime';
 // import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
 
@@ -49,17 +50,17 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
     setIsOpen((prev) => !prev);
   };
 
-  const calcDday = () => {
-    const dday = Math.ceil(
-      (Date.now() - new Date(data.endDate).getTime()) / (1000 * 3600 * 24) - 1
-    );
-    if (dday === 0) {
-      return '(마감일)';
-    } else {
-      const label = dday > 0 ? '+' : '';
-      return '(D' + label + dday + ')';
-    }
-  };
+  // const calcDday = () => {
+  //   const dday = Math.ceil(
+  //     (Date.now() - new Date(data.endDate).getTime()) / (1000 * 3600 * 24) - 1
+  //   );
+  //   if (dday === 0) {
+  //     return '(마감일)';
+  //   } else {
+  //     const label = dday > 0 ? '+' : '';
+  //     return '(D' + label + dday + ')';
+  //   }
+  // };
 
   return (
     <div className={cx('info-form')}>
@@ -78,7 +79,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
             <H4>마감일: </H4>
           </div>
           <H4>{data.endDate}</H4>
-          <H4 color="red">{String(calcDday())}</H4>
+          <H4 color="red">{String(calcDday(data.endDate))}</H4>
         </div>
         <div className={cx('value-row')}>
           <div className={cx('value-title')}>
@@ -113,7 +114,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
                   <div className={cx('history-item')} key={value.sequence}>
                     <P>{value.plan}</P>
                     <div className={cx('value')}>
-                      <P>{`${value.amount.toLocaleString()}KRW`}</P>
+                      <P>{`${value.amount.toLocaleString()}SSF`}</P>
                     </div>
                   </div>
                 );

@@ -80,6 +80,10 @@ public class EpilogueServiceImpl implements EpilogueService {
         }
 
         try {
+            if(epilogueChangePatchDTO.getEpilogueBudgetRequestDTOList().size() > 0) {
+                changeEpilogueBudgets(epilogue, epilogueChangePatchDTO);
+            }
+
             epilogue.changeEpilogue(epilogueChangePatchDTO.getEpilogueTitle(), epilogueChangePatchDTO.getEpilogueDescription());
         } catch(Exception e) {
             return 409;
@@ -204,6 +208,25 @@ public class EpilogueServiceImpl implements EpilogueService {
 
     public void registerEpilogueBudgets(Epilogue epilogue, EpilogueRegisterPostDTO epilogueRegisterPostDTO) {
         epilogueRegisterPostDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
+                epilogueBudgetRepository.save(
+                        EpilogueBudget.builder()
+                                .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
+                                .epilogueBudgetAmount(epilogueBudgetRequestDTO.getEpilogueBudgetAmount())
+                                .epilogueBudgetSequence(epilogueBudgetRequestDTO.getEpilogueBudgetSequence())
+                                .epilogue(epilogue)
+                                .build()
+                )
+        );
+    }
+
+    @Transactional
+    public void changeEpilogueBudgets(Epilogue epilogue, EpilogueChangePatchDTO epilogueChangePatchDTO) {
+        List<EpilogueBudget> epilogueBudgetList = epilogueBudgetRepository.findAllByEpilogue(epilogue)
+                        .orElseThrow(() -> new IllegalArgumentException("EpilogueBudget이 존재하지 않습니다."));
+
+        epilogueBudgetList.forEach(epilogueBudget -> epilogueBudgetRepository.delete(epilogueBudget));
+
+        epilogueChangePatchDTO.getEpilogueBudgetRequestDTOList().forEach(epilogueBudgetRequestDTO ->
                 epilogueBudgetRepository.save(
                         EpilogueBudget.builder()
                                 .epilogueBudgetPlan(epilogueBudgetRequestDTO.getEpilogueBudgetPlan())
