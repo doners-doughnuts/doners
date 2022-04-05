@@ -7,10 +7,10 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel("DonationPatchDTO")
+@ApiModel("DonationRecommendPatchDTO")
 @Getter
 @ToString
-public class DonationPatchDTO {
+public class DonationRecommendPatchDTO {
 
     @ApiModelProperty(name = "기부 ID")
     @NotBlank
