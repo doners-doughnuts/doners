@@ -1,6 +1,7 @@
 package com.doners.donersbackend.application.dto.response.user;
 
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
+import com.doners.donersbackend.domain.enums.UserCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -18,6 +19,9 @@ public class UserLoginResponseDTO extends BaseResponseDTO {
 
     @ApiModelProperty(name="닉네임")
     private String userNickname;
+
+    @ApiModelProperty(name="회원 코드")
+    private UserCode userCode;
 
     public void changeAccessToken(String accessToken) {
         this.accessToken = accessToken;

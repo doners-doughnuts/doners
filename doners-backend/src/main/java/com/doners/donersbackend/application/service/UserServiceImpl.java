@@ -83,7 +83,8 @@ public class UserServiceImpl implements UserService {
 
         try {
             return UserLoginResponseDTO.builder()
-                    .userNickname(user.getUserNickname()).build();
+                    .userNickname(user.getUserNickname())
+                    .userCode(user.getUserCode()).build();
 
         } catch (Exception e) {
             return null;
