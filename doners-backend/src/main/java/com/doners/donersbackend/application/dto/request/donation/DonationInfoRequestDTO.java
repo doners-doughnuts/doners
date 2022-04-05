@@ -42,7 +42,7 @@ public class DonationInfoRequestDTO {
 
     @ApiModelProperty(name = "마감일")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Future
+//    @Future
     private LocalDate endDate;
 
     @ApiModelProperty(name = "사연")
