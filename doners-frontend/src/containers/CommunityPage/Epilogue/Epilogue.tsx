@@ -46,7 +46,7 @@ const Epilogue = () => {
     let observer: any;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 1,
+        threshold: 0.2,
       });
       observer.observe(target);
     }
