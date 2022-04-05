@@ -12,17 +12,36 @@ import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import H4 from 'assets/theme/Typography/H4/H4';
 import H2 from 'assets/theme/Typography/H2/H2';
 import H3 from 'assets/theme/Typography/H3/H3';
+import { nowBalance } from 'services/blockchain/SsfApi';
+import { ApplicationProfileListType } from 'types/ApplicationTypes';
 const cx = classNames.bind(styles);
 type ProfileType = {
   focus: number;
   // user: string;
 };
-const FundModal = (props: { open?: any; close?: any }) => {
-  const { open, close } = props;
+const FundModal = (props: {
+  open?: any;
+  close?: any;
+  contractAddress: string;
+}) => {
+  const { open, close, contractAddress } = props;
   const [target, setTarget] = useState(3.89);
   const [totalpeople, setTotalpeople] = useState(234);
-  const [current, setCurrent] = useState(1.0);
+  const [current, setCurrent] = useState(0);
   let rate = Math.floor((current / target) * 100);
+
+  /* 모금 달성률 */
+  const calcAchievementRate = async () => {
+    // let rate = Math.floor((current / target) * 100);
+    const currentBalance = await nowBalance(contractAddress);
+    console.log(currentBalance);
+    setCurrent(currentBalance);
+  };
+
+  useEffect(() => {
+    //// getApplicationDetail();
+    calcAchievementRate();
+  }, []);
 
   return (
     <div
@@ -46,7 +65,7 @@ const FundModal = (props: { open?: any; close?: any }) => {
                   <div className={cx('value-title')}>
                     <H4>총 모금액 </H4>
                   </div>
-                  <H2>{String(target)}</H2>
+                  <H2>{String(current)}</H2>
                   <H4>SSF</H4>
                 </div>
                 <div className={cx('people-row')}>
