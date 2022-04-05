@@ -38,7 +38,7 @@ export const createFundraiser = async (
   factoryAddress: string, // 팩토리 컨트랙트 주소
   walletAddress: string, // 현재 지갑주소
   title: string, // 글 제목
-  url: string, // 글 url
+  id: string, // 글 url
   imageURL: string, // 썸네일 image url
   description: string, // 글 내용
   donationsGoal: number, // 모금 목표 금액
@@ -48,7 +48,7 @@ export const createFundraiser = async (
   await FundraiserFactoryContract(factoryAddress)
     .methods.createFundraiser(
       title,
-      url,
+      id,
       imageURL,
       description,
       donationsGoal,
@@ -126,9 +126,12 @@ export const withdraw = async (
   walletAddress: string
 ) => {
   // 인출코드
-  await FundraiserContract(fundraiserAddress)
+  const response = await FundraiserContract(fundraiserAddress)
     .methods.withdraw()
     .send({ from: walletAddress });
+
+  console.log(response);
+  return response;
 };
 // /* 현재 기부금 */
 export const nowBalance = async (fundraiserAddress: string) => {
@@ -243,6 +246,13 @@ export const allWithdrawMyData = async (
 export const nowFundraiserCount = async (fundraiserAddress: string) => {
   return await FundraiserContract(fundraiserAddress)
     .methods.donationsCount()
+    .call();
+};
+
+// /* Fundraiser 수령 여부 */
+export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
+  return await FundraiserContract(fundraiserAddress)
+    .methods.isWithdraw()
     .call();
 };
 

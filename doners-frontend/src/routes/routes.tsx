@@ -77,9 +77,9 @@ export default function Router() {
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'epilogue/:epilogue_id', element: <EpilogueDetail /> },
-        { path: 'epilogue/write/:donation_id', element: <EpilogueEditPage /> },
+        { path: 'epilogue/write/:id', element: <EpilogueEditPage /> },
         {
-          path: 'epilogue/modify/:epilogue_id',
+          path: 'epilogue/modify/:id',
           element: <EpilogueEditPage modify />,
         },
         { path: 'board', element: <CommunityPage focus={3} /> },
