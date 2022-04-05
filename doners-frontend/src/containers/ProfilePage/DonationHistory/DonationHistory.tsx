@@ -100,7 +100,7 @@ const DonationHistory = () => {
     <div>
       {/* <section className={cx('container')}></section> */}
       <div className={cx('total_donation')}>
-        <H3>총 기부액: </H3>
+        <H4>총 기부액: </H4>
         {/* <div className={cx('money')}> */}
         <div className={cx('icon')}>
           <DollarIcon />
