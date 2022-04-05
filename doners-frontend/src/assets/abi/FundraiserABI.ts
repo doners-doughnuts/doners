@@ -11,7 +11,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'string',
-        name: '_url',
+        name: '_id',
         type: 'string',
       },
       {
@@ -111,7 +111,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     outputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: 'fromAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'toAccount',
         type: 'address',
       },
       {
@@ -131,7 +136,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'string',
-        name: 'donationUrl',
+        name: 'donationId',
         type: 'string',
       },
     ],
@@ -155,7 +160,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     outputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: 'fromAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'toAccount',
         type: 'address',
       },
       {
@@ -175,7 +185,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'string',
-        name: 'donationUrl',
+        name: 'donationId',
         type: 'string',
       },
     ],
@@ -275,12 +285,38 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
+    name: 'id',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'imageURL',
     outputs: [
       {
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'isWithdraw',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -334,24 +370,16 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'url',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'withdrawData',
     outputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: 'fromAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'toAccount',
         type: 'address',
       },
       {
@@ -371,7 +399,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'string',
-        name: 'donationUrl',
+        name: 'donationId',
         type: 'string',
       },
     ],
@@ -411,19 +439,6 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'nowAddress',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256',
@@ -450,7 +465,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         components: [
           {
             internalType: 'address',
-            name: 'account',
+            name: 'fromAccount',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'toAccount',
             type: 'address',
           },
           {
@@ -470,7 +490,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
           },
           {
             internalType: 'string',
-            name: 'donationUrl',
+            name: 'donationId',
             type: 'string',
           },
         ],
@@ -490,7 +510,12 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         components: [
           {
             internalType: 'address',
-            name: 'account',
+            name: 'fromAccount',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'toAccount',
             type: 'address',
           },
           {
@@ -510,7 +535,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
           },
           {
             internalType: 'string',
-            name: 'donationUrl',
+            name: 'donationId',
             type: 'string',
           },
         ],

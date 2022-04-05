@@ -44,7 +44,7 @@ export const FundraiserFactoryABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'string',
-        name: 'url',
+        name: 'id',
         type: 'string',
       },
       {
