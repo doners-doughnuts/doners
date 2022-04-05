@@ -17,7 +17,7 @@ type DonateProps = {
 };
 
 const DonationCard = ({ data }: DonateProps) => {
-  const [current, setCurrent] = useState(1.0);
+  const [current, setCurrent] = useState(0);
   const [rate, setRate] = useState(0);
 
   const getCurrentBalance = async () => {
