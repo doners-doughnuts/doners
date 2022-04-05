@@ -54,7 +54,6 @@ const EpilogueEditorHeader = ({ onChange, donation_id }: any) => {
     setEndDate(result.data.endDate);
     setStartDate(result.data.startDate);
     setName(result.data.name);
-    console.log(result);
   };
 
   const handleUserProfile = async () => {
@@ -63,16 +62,16 @@ const EpilogueEditorHeader = ({ onChange, donation_id }: any) => {
   };
 
   useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
-
-  useEffect(() => {
-    handleUserProfile();
+    if (name) {
+      handleUserProfile();
+    }
   }, [name]);
 
   useEffect(() => {
-    handleDonateDetail();
-  }, []);
+    if (donation_id) {
+      handleDonateDetail();
+    }
+  }, [donation_id]);
 
   return (
     <div className={cx('header')}>

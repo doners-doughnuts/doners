@@ -13,6 +13,9 @@ import Span from 'assets/theme/Typography/Span/Span';
 import { ReactComponent as ClipIcon } from 'assets/images/icon/clip.svg';
 import { useEffect, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
+import { getDonationDetail } from 'services/api/Donation';
+import H4 from 'assets/theme/Typography/H4/H4';
+import { CategoryCode } from 'types/ApplicationTypes';
 
 const cx = classNames.bind(styles);
 type headerType = {
@@ -20,6 +23,7 @@ type headerType = {
   date: string;
   writer: string;
   src: string;
+  donationId: string;
   onDelete: (...args: any[]) => void;
   onModify: (...args: any[]) => void;
 };
@@ -28,11 +32,15 @@ const EpilogueDetailHeader = ({
   date,
   writer,
   src,
+  donationId,
   onDelete,
   onModify,
 }: headerType) => {
   const [isOwn, setIsOwn] = useState(false);
   const [profile, setProfile] = useState('');
+  const [category, setCategory] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const checkUser = () => {
     const user = sessionStorage.getItem('user');
@@ -53,6 +61,18 @@ const EpilogueDetailHeader = ({
     }
   };
 
+  const getDonateDetail = async () => {
+    const response = await getDonationDetail(donationId);
+    setCategory(response.data.categoryCode);
+    setStartDate(response.data.startDate);
+    setEndDate(response.data.endDate);
+  };
+  useEffect(() => {
+    if (donationId) {
+      getDonateDetail();
+    }
+  }, [donationId]);
+
   useEffect(() => {
     checkUser();
     getProfileImg();
@@ -68,7 +88,7 @@ const EpilogueDetailHeader = ({
       </div>
       <div className={cx('epilogue-info')}>
         <div className={cx('top')}>
-          <Tag color="black">Category</Tag>
+          <Tag color="black">{CategoryCode[category]}</Tag>
           <div className={cx('button-wrap')}>
             {isOwn ? (
               <div className={cx('buttons')}>
@@ -93,15 +113,22 @@ const EpilogueDetailHeader = ({
             ) : null}
           </div>
         </div>
-        <div>
-          <H1>{title}</H1>
-          <div className={cx('donation-info')}>
-            <H5>모금 진행 기간 : 21/12/24 ~ 22/03/01</H5>
-            <Link to="">
-              <div className={cx('detail_link')}>
-                <Span color="green">기부 상세 보기</Span>
+        <div className={cx('info')}>
+          <div className={cx('left-info')}>
+            <H1>{title}</H1>
+            <div className={cx('donation-info')}>
+              <div className={cx('donation-date')}>
+                <H4>모금 진행 기간 : </H4>
+                <H4>{startDate}</H4>
+                <H4> ~ </H4>
+                <H4>{endDate}</H4>
               </div>
-            </Link>
+              <Link to="">
+                <div className={cx('detail_link')}>
+                  <P color="green">기부 상세 보기</P>
+                </div>
+              </Link>
+            </div>
           </div>
           <div className={cx('user-info')}>
             <Avatar src={profile} />
