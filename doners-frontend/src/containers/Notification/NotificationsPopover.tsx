@@ -11,25 +11,28 @@ import styles from './NotificationsPopover.module.scss';
 import Popover from 'assets/theme/Popover/Popover';
 import H4 from 'assets/theme/Typography/H4/H4';
 import NotificationItem from 'components/Notification/NotificationItem/NotificationItem';
+import _notificationList from '_mocks_/notificationData';
+import { ReactComponent as CheckAllIcon } from 'assets/images/icon/check.svg';
+
+import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
 
 const NotificationsPopover = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [notifications, setNotifications] = useState<NotificationItemType[]>(
-    []
-  );
+  const navigate = useNavigate();
+
+  const [notifications, setNotifications] =
+    useState<NotificationItemType[]>(_notificationList);
   const totalUnReadCnt = notifications.filter(
     (item) => !item.notificationIsRead
   ).length;
 
   const handleOpen = () => {
-    console.log('연다');
     setOpen(true);
   };
 
   const handleClose = () => {
-    console.log('닫닫');
     setOpen(false);
   };
 
@@ -52,18 +55,22 @@ const NotificationsPopover = () => {
     // setNotifications(data);
 
     // 전처리 후 저장) 알림 목록을 읽음 -> 안읽음 기준으로 정렬
-    // setNotifications(
-    //   data.notificationList.sort(function (
-    //     a: NotificationItemType,
-    //     b: NotificationItemType
-    //   ) {
-    //     return a.notificationIsRead - b.notificationIsRead;
-    //   })
-    // );
+    setNotifications(
+      data.notificationList.sort(function (a: any, b: any) {
+        console.log(a);
+        return a.notificationIsRead - b.notificationIsRead;
+      })
+    );
   };
 
   useEffect(() => {
-    getUserNotificationList();
+    // getUserNotificationList();
+    setNotifications(
+      _notificationList.sort(function (a: any, b: any) {
+        console.log(a);
+        return a.notificationIsRead - b.notificationIsRead;
+      })
+    );
   }, []);
 
   return (
@@ -71,20 +78,28 @@ const NotificationsPopover = () => {
       <div>
         <div onClick={handleOpen}>
           <NotificationIcon />
+          <div className={cx('badge')}>{totalUnReadCnt}</div>
         </div>
         {open ? (
           <div className={cx('popover', { open: open })}>
             <div className={cx('blocker')} onClick={handleClose}></div>
             <div className={cx('contents')}>
-              <H4>Notifications</H4>
-              <div>
-                <div>
-                  <div>총{totalUnReadCnt} 개의 새로운 알림이 있습니다</div>
-                </div>
+              <div className={cx('notification-header')}>
+                <H4>Notifications</H4>
+              </div>
 
+              <div className={cx('notification-sub-header')}>
+                총{' '}
+                <span className={cx('notification-unread-count')}>
+                  {totalUnReadCnt}
+                </span>{' '}
+                개의 새로운 알림이 있습니다
+              </div>
+              <div className={cx('notification-read-all')}>
                 {totalUnReadCnt > 0 && (
                   <div title=" 전체읽음 처리">
                     <button color="secondary" onClick={handleMarkAllAsRead}>
+                      {/* <CheckAllIcon /> */}
                       {/* <Icon icon={doneAllFill} width={20} height={20} /> */}
                     </button>
                   </div>
@@ -93,6 +108,8 @@ const NotificationsPopover = () => {
 
               <hr />
               <div>
+                <div className={cx('list-header')}>새로운 알림</div>
+                <hr />
                 {/* <Scrollbar sx={{ height: { xs: 340, sm: 'auto' } }}> */}
                 {/* <List
                   disablePadding
@@ -124,6 +141,9 @@ const NotificationsPopover = () => {
                     </ListSubheader>
                   }
                 > */}
+                <hr />
+                <div className={cx('list-header')}>읽은 알림</div>
+                <hr />
                 {notifications
                   .slice(totalUnReadCnt, notifications.length)
                   .map((notification) => (
@@ -132,12 +152,14 @@ const NotificationsPopover = () => {
                       item={notification}
                     />
                   ))}
+
                 {/* </List> */}
                 {/* </Scrollbar> */}
 
-                <hr />
+                {/* <hr /> */}
               </div>
-              <div>
+              <div className={cx('reload-button')}>
+                <hr />
                 <button onClick={getUserNotificationList}>새로고침</button>
               </div>
             </div>
