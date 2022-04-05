@@ -64,7 +64,7 @@ const BoardContents = () => {
     const response = await getUserProfile(writer);
     if (response) {
       // 이미지등록
-      // setImgSrc(defaultImg);
+      setImgSrc(response.data.profileImage);
     }
   };
 
