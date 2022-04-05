@@ -36,8 +36,10 @@ const TotalDonate = ({ donation_id }: any) => {
   };
 
   useEffect(() => {
-    handleDonateDetail();
-  }, []);
+    if (donation_id) {
+      handleDonateDetail();
+    }
+  }, [donation_id]);
 
   useEffect(() => {
     getCurrentBalance();

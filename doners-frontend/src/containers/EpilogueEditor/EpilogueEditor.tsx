@@ -48,14 +48,12 @@ function EpilogueEditor({ modify = false }: EditType) {
   const [imgFile, setImgFile] = useState('');
   const [initlength, SetInit] = useState(0);
   const [historyList, setHistoryList] = useState<historyType[]>([]);
-
+  const [donationId, setDonationId] = useState('');
   const editorRef = useRef<Editor>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   const { id } = useParams<string>();
   const navigate = useNavigate();
-
-  console.log(id);
 
   useEffect(() => {
     if (modify && isLoading) {
@@ -63,19 +61,15 @@ function EpilogueEditor({ modify = false }: EditType) {
     }
   }, [isLoading]);
 
-  useEffect(() => {
-    console.log(initlength, '메리야 제발...');
-  }, [initlength]);
-
   const getDetail = async () => {
     if (typeof id === 'string') {
       const response = await getEpilogueDetail(id);
-      console.log(response);
       setContent(response.data.epilogueDescription);
       setTitle(response.data.epilogueTitle);
       setImgFile(response.data.epilogueImage);
       setHistoryList(response.data.epilogueBudgetResponseDTOList);
       SetInit(response.data.epilogueBudgetResponseDTOList.length);
+      setDonationId(response.data.donationId);
       setIsLoading(false);
     }
   };
@@ -102,7 +96,6 @@ function EpilogueEditor({ modify = false }: EditType) {
   const registApi = async () => {
     const formData = new FormData();
     formData.append('multipartFile', imgFile[0]);
-    console.log(imgFile[0]);
     formData.append(
       'epilogueRegisterPostDTO',
       new Blob(
@@ -119,7 +112,6 @@ function EpilogueEditor({ modify = false }: EditType) {
         }
       )
     );
-    console.log(formData);
 
     try {
       if (!imgFile) {
@@ -132,7 +124,6 @@ function EpilogueEditor({ modify = false }: EditType) {
 
       if (imgFile && title && content) {
         const response = await registEpilogue(formData);
-        console.log(response);
         navigate('/community/epilogue');
       }
     } catch (error) {
@@ -174,13 +165,8 @@ function EpilogueEditor({ modify = false }: EditType) {
   };
 
   useEffect(() => {
-    console.log(historyList);
     handleUploadPlan(historyList);
   }, []);
-
-  useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
 
   return (
     <>
@@ -195,7 +181,7 @@ function EpilogueEditor({ modify = false }: EditType) {
         <EpilogueEditorHeader
           onChange={handleUploadImage}
           src={imgFile}
-          donation_id={id}
+          donation_id={donationId}
         />
         <div className={cx('editor')}>
           <textarea
@@ -224,7 +210,7 @@ function EpilogueEditor({ modify = false }: EditType) {
         {/* <EditorForm /> */}
         <div className={cx('donate-receipt')}>
           <div className={cx('total-donate')}>
-            <TotalDonate donation_id={id} />
+            <TotalDonate donation_id={donationId} />
           </div>
           <div className={cx('receipt-editor')}>
             <ReceiptEditor
