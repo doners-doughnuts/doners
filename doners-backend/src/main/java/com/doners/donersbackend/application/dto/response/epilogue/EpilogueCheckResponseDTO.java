@@ -16,6 +16,9 @@ public class EpilogueCheckResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name="에필로그 존재 유무")
     private boolean exists;
 
+    @ApiModelProperty(name="에필로그 ID")
+    private String epilogueId;
+
     public static EpilogueCheckResponseDTO of(String message, Integer statusCode, EpilogueCheckResponseDTO epilogueCheckResponseDTO) {
         epilogueCheckResponseDTO.setMessage(message);
         epilogueCheckResponseDTO.setStatusCode(statusCode);
