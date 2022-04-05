@@ -1,8 +1,8 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationRecommendResponseDTO;
@@ -16,7 +16,7 @@ import java.util.List;
 public interface DonationService {
 
     // 기부글 신청
-    Boolean createDonation(String accessToken, DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence);
+    Boolean createDonation(String accessToken, DonationRegisterPostDTO donationRegisterPostDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence);
 
     // 기부글 목록 조회
     DonationGetListWrapperResponseDTO getDonationList(CategoryCode categoryCode, int page, int sort, boolean view);
@@ -28,7 +28,7 @@ public interface DonationService {
     DonationResponseDTO getDonation(String donationId);
 
     // 기부글 추천
-    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationPatchDTO);
+    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO);
 
     // 기부글 검색
     DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page);
