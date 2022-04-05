@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract Fundraiser is Ownable {
     using SafeMath for uint256;
     string public title; // 글 제목
-    string public url; // 모금 주소
+    string public id; // 모금 donationId
     string public imageURL; // 사진 주소
     string public description; // 사연
     uint256 public donationsGoal; // 목표 금액
@@ -24,7 +24,7 @@ contract Fundraiser is Ownable {
         uint256 date;
         uint256 value;
         string donationTitle;
-        string donationUrl;
+        string donationId;
     }
     Donation[] public _donations;
     Donation public withdrawData; // 수령 data
@@ -35,7 +35,7 @@ contract Fundraiser is Ownable {
 
     constructor(
         string memory _title,
-        string memory _url,
+        string memory _id,
         string memory _imageURL,
         string memory _description,
         uint256 _donationsGoal,
@@ -44,7 +44,7 @@ contract Fundraiser is Ownable {
         address _custodian
     ) {
         title = _title;
-        url = _url;
+        id = _id;
         imageURL = _imageURL;
         description = _description;
         donationsGoal = _donationsGoal;
@@ -79,7 +79,7 @@ contract Fundraiser is Ownable {
             date: block.timestamp,
             value: _amount,
             donationTitle: title,
-            donationUrl: url
+            donationId: id
         });
         _donations.push(donation);
         _myDonations[sender].push(
@@ -89,7 +89,7 @@ contract Fundraiser is Ownable {
                 block.timestamp,
                 _amount,
                 title,
-                url
+                id
             )
         );
 
@@ -147,7 +147,7 @@ contract Fundraiser is Ownable {
             date: block.timestamp,
             value: balance,
             donationTitle: title,
-            donationUrl: url
+            donationId: id
         });
 
         emit Withdraw(balance);
