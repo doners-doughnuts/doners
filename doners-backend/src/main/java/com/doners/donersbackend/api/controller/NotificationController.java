@@ -2,7 +2,7 @@ package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.NotificationReadPatchDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
-import com.doners.donersbackend.application.dto.response.donation.NotificationResponseDTO;
+import com.doners.donersbackend.application.dto.response.donation.NotificationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.service.NotificationService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -33,21 +33,21 @@ public class NotificationController {
             @ApiIgnore @RequestHeader("Authorization") String accessToken
     ) {
 
-        NotificationResponseDTO notificationResponseDTO = null;
+        NotificationGetListWrapperResponseDTO notificationGetListWrapperResponseDTO = null;
 
         try {
-            notificationResponseDTO = notificationService.getNotification(accessToken);
+            notificationGetListWrapperResponseDTO = notificationService.getNotification(accessToken);
 
-            if (notificationResponseDTO == null) {
-                return ResponseEntity.status(200).body(NotificationResponseDTO.of("알림이 없습니다.", 200));
+            if (notificationGetListWrapperResponseDTO == null) {
+                return ResponseEntity.status(200).body(NotificationGetListWrapperResponseDTO.of("알림이 없습니다.", 200));
             }
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
+            return ResponseEntity.status(404).body(BaseResponseDTO.of(e.getMessage(), 404));
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("알림 확인에 실패했습니다.", 409));
         }
 
-        return ResponseEntity.ok(NotificationResponseDTO.of("알림이 있습니다.", 200, notificationResponseDTO));
+        return ResponseEntity.ok(NotificationGetListWrapperResponseDTO.of("알림이 있습니다.", 200, notificationGetListWrapperResponseDTO));
 
     }
 
