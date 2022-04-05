@@ -39,7 +39,7 @@ public class NotificationController {
             notificationGetListWrapperResponseDTO = notificationService.getNotification(accessToken);
 
             if (notificationGetListWrapperResponseDTO == null) {
-                return ResponseEntity.status(200).body(NotificationGetListWrapperResponseDTO.of("알림이 없습니다.", 200));
+                return ResponseEntity.status(204).body(NotificationGetListWrapperResponseDTO.of("알림이 없습니다.", 204));
             }
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
