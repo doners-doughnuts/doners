@@ -1,18 +1,15 @@
 package com.doners.donersbackend.application.dto.response.donation;
 
-import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-
-@ApiModel("NotificationResponseDTO")
+@ApiModel("NotificationGetListResponseDTO")
 @Getter
 @ToString
-public class NotificationResponseDTO extends BaseResponseDTO {
+public class NotificationGetListResponseDTO {
 
     @ApiModelProperty(name = "알림 ID")
     private String notificationId;
@@ -24,22 +21,18 @@ public class NotificationResponseDTO extends BaseResponseDTO {
     private String description;
 
     @ApiModelProperty(name = "생성 시간")
-    private LocalDateTime createTime;
+    private String createTime;
+
+    @ApiModelProperty(name = "읽음 여부")
+    private boolean read;
 
     @Builder
-    public NotificationResponseDTO(String notificationId, String donationId, String description, LocalDateTime createTime) {
+    public NotificationGetListResponseDTO(String notificationId, String donationId, String description, String createTime, boolean read) {
         this.notificationId = notificationId;
         this.donationId = donationId;
         this.description = description;
         this.createTime = createTime;
-    }
-
-    public static NotificationResponseDTO of(String message, Integer statusCode, NotificationResponseDTO donationResponseDTO) {
-        NotificationResponseDTO res = donationResponseDTO;
-        res.setMessage(message);
-        res.setStatusCode(statusCode);
-
-        return res;
+        this.read = read;
     }
 
 }

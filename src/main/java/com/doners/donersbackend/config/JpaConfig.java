@@ -22,10 +22,10 @@ import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class JpaConfig {
-    // 설정정보조회  (application.properties?-> Persistence 생성 -> JPAQueryFactory/EntityManagerFactory -> EntityManager 셍성
+
+    // 설정 정보 조회  (application.properties -> Persistence 생성 -> JPAQueryFactory/EntityManagerFactory -> EntityManager 셍성)
     @PersistenceContext
     EntityManager entityManager;
-
 
     @Bean
     @Primary
@@ -54,4 +54,5 @@ public class JpaConfig {
                 .registerModule(new ParameterNamesModule())
                 .registerModule(new Jdk8Module());
     }
+
 }
