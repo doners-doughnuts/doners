@@ -7,12 +7,11 @@ const cx = classNames.bind(styles);
 
 const HistoryItem = ({ value, onDelete }: any) => {
   const money = Number(value.epilogueBudgetAmount);
-  const cmoney = money.toLocaleString();
   return (
     <div className={cx('history-item')}>
       <P>{value.epilogueBudgetPlan}</P>
       <div className={cx('value')}>
-        <P>{`${cmoney}KRW`}</P>
+        <P>{`${money}KRW`}</P>
         <div
           className={cx('icon')}
           onClick={() => onDelete(value.epilogueBudgetSequence)}

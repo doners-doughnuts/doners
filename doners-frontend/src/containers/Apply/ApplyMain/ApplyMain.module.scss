@@ -9,6 +9,7 @@
     box-shadow: $btn-shadow;
     padding: 50px;
     margin-bottom: 150px;
+    // @include column-flexbox;
   }
 
   .content {
