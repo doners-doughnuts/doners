@@ -1,3 +1,4 @@
+import { Viewer } from '@toast-ui/react-editor';
 import H3 from 'assets/theme/Typography/H3/H3';
 import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
@@ -27,7 +28,10 @@ const DonateContent = ({ data }: DonateContentProps) => {
       <div className={cx('title')}>
         <H3>모금 신청자의 글</H3>
       </div>
-      <div className={cx('content')}>{data.description}</div>
+      <div className={cx('content')}>
+        {/* <Viewer initialValue={data.description} /> */}
+        <P>test</P>
+      </div>
       <div onClick={handleOpenModal} className={cx('open-btn')}>
         <P color="green">더보기</P>
       </div>

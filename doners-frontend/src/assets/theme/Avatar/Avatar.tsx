@@ -3,7 +3,7 @@ import styles from './Avatar.module.scss';
 import defaultimg from 'assets/images/img-defaultprofile2.png';
 const cx = classNames.bind(styles);
 
-type AvatarSize = 'default' | 'small' | 'large';
+type AvatarSize = 'default' | 'small' | 'large' | 'xlarge';
 
 type AvatarType = {
   size?: AvatarSize;

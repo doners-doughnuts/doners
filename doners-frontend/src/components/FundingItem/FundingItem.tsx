@@ -152,10 +152,6 @@ const FundingItem = ({ item }: FundingItemProps) => {
           <div className={cx('date-row')}>
             <div className={cx('date-title')}>
               {`마감일: ${item.endDate}  `}
-              {/* <span className={cx('date-dday')}>{`(D${Math.floor(
-                (Date.now() - new Date(item.endDate).getTime()) /
-                  (1000 * 3600 * 24)
-              )} )`}</span> */}
               <span className={cx('date-dday')}>{calcDday(item.endDate)}</span>
             </div>
           </div>

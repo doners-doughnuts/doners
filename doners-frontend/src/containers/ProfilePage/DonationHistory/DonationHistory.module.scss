@@ -1,20 +1,29 @@
 @import 'assets/styles/main';
 
 .total_donation {
+  @include flexbox(start, end);
   text-align: center;
-  margin: 0 0 50px 0;
+  margin-bottom: 30px;
   width: 100%;
-  display: flex;
-  // justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
   white-space: nowrap;
 
-  .icon {
-    margin-left: 20px;
-    margin-right: 20px;
+  .title {
+    margin: 0 5px;
+    width: 50px;
+    font-family: $font-main;
+    font-size: 70px;
   }
-  
+}
+.total_donation_amount {
+  @include column-flexbox(center, start);
+
+  .amount {
+    @include flexbox(start);
+    margin-top: 10px;
+    .icon {
+      margin-right: 10px;
+    }
+  }
 }
 
 .donation_list {

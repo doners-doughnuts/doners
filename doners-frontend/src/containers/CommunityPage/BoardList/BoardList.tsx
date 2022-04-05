@@ -105,7 +105,7 @@ const BoardList = () => {
                   {listItems.length === 0 ? (
                     <div className={cx('none-contents')}>
                       <div className={cx('none-text')}>
-                        <H1>등록된 감사후기가 없습니다.</H1>
+                        <H1>등록된 게시글이 없습니다.</H1>
                       </div>
                       <div className={cx('none-img')}>
                         <img src={src} alt="no donation" />

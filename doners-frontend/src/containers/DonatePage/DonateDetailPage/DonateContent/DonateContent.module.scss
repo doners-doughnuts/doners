@@ -1,18 +1,20 @@
 @import 'assets/styles/main';
 
 .inner-container {
+  height: 100%;
   padding: 30px;
   border: 2px solid $black;
   box-shadow: $btn-shadow;
   background-color: $white;
-  
+
   .title {
     margin-bottom: 20px;
   }
-  
+
   .content {
     width: 100%;
-    min-height: 350px;
+    overflow-wrap: break-word;
+    overflow: hidden;
   }
 
   .open-btn {

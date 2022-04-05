@@ -34,3 +34,9 @@
   width: 90px;
   height: 90px;
 }
+
+.avatar-xlarge {
+  @extend %avatar-base;
+  width: 180px;
+  height: 180px;
+}
