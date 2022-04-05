@@ -13,6 +13,7 @@ import ApplicationList from 'containers/Admin/ApplicationList/ApplicationList';
 import { cursorTo } from 'readline';
 import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
 import { TransactionListItemType } from 'types/TransactionTypes';
+import { allFundraiserData, allWithdrawData } from 'services/blockchain/SsfApi';
 
 const cx = classNames.bind(styles);
 
@@ -41,13 +42,6 @@ const AdminPage = () => {
     TransactionListItemType[]
   >([]);
 
-  useEffect(() => {
-    getNFTCount();
-
-    getPendingList();
-    getTransactionList();
-  }, []);
-
   const getNFTCount = async () => {
     const mintedCount = await getMintedNFTCount();
     const totalCount = await getTotalNFTCount();
@@ -66,16 +60,28 @@ const AdminPage = () => {
 
   const getTransactionList = async () => {
     // TODO
-    // const response = await
-    //(임시)
-    const response: TransactionListItemType[] = [];
-
-    setTransactionList([]);
-
+    let response = await allFundraiserData();
+    console.log('기부내역들: ', response);
     let totalBalance = 0;
     response.forEach((e) => (totalBalance += e.balance));
+
+    response.push(await allWithdrawData());
+    console.log('수령내역들: ', response);
+
+    //(임시)
+    // const response: TransactionListItemType[] = [];
+
+    setTransactionList(response);
+
     setTransactionBalance(totalBalance.toString());
   };
+
+  useEffect(() => {
+    getNFTCount();
+
+    getPendingList();
+    getTransactionList();
+  }, []);
 
   return (
     <section className={cx('container')}>

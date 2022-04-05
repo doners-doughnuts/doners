@@ -18,6 +18,11 @@ export const login = async (userAccount: string) => {
     nickName: response.data.userNickname,
   };
   sessionStorage.setItem('user', JSON.stringify(user));
+
+  /* 관리자 계정 검사 */
+  if (response.data.userCode === 'ADMIN')
+    sessionStorage.setItem('isAdmin', JSON.stringify(true));
+  else sessionStorage.removeItem('isAdmin');
 };
 
 /* 닉네임 중복검사 */
@@ -62,6 +67,13 @@ export const getUserProfile = async (nickname: string) => {
 export const postProfile = async (formData: any) => {
   const response = await instance.post(`/user/image`, formData);
   // console.log(response);
+  return response;
+};
+
+/* 유저 이름 불러오기 */
+export const getUserName = async (nickname: string) => {
+  const response = await instance.get(`/user/name/${nickname}`);
+  //console.log(response);
   return response;
 };
 

@@ -104,7 +104,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     const temp1 = ssftrans * 10000;
     const temp2 = Math.ceil(temp1);
     const ssfBalance = Number(temp2 / 10000);
-    console.log(ssfBalance);
     setSSF(ssfBalance);
     setApply({ ...apply, targetAmount: ssfBalance, budget: historyList });
     console.log(total);

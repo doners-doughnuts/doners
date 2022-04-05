@@ -1,0 +1,45 @@
+@import 'assets/styles/main';
+
+.popup { display: none; }
+.popup.open { display: block; }
+
+.blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: ' ';
+  // TODO delete
+  background: rgba(0,0,0,.5);
+  z-index: 999;
+}
+.popup .contents {
+  position: st;
+  // border: 1px solid #ccc;
+  // border-radius: 5px;
+  // width: 200px;
+  // height: 100px;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // background: #FFF;
+
+  // position: fixed;
+  // top: 50vh;
+  // left: 50vw;
+  // transform: translate(-50%, -50%);
+}
+
+.contents {
+  background-color: $yellow;
+  position: fixed;
+  // top: 100;
+  text-anchor: middle;
+  width: 400px;
+  height: 600px;
+  border: 2px solid $black;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 999;
+}
