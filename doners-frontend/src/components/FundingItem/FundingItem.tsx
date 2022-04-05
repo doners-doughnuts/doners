@@ -52,7 +52,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
   const calcAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
     const currentBalance = await nowBalance(item.contractAddress);
-    console.log(currentBalance);
+    // console.log(currentBalance);
     setCurrent(currentBalance);
   };
 
@@ -97,7 +97,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
               ) : (
                 <div
                   className={cx('withdraw-button-wrapper')}
-                  onClick={openModal}
+                  // onClick={openModal}
                 >
                   <Tag color="black">모금 완료</Tag>
                   <Button color={'secondary'} onClick={openModal}>

@@ -128,9 +128,12 @@ export const withdraw = async (
   walletAddress: string
 ) => {
   // 인출코드
-  await FundraiserContract(fundraiserAddress)
+  const response = await FundraiserContract(fundraiserAddress)
     .methods.withdraw()
     .send({ from: walletAddress });
+
+  console.log(response);
+  return response;
 };
 // /* 현재 기부금 */
 export const nowBalance = async (fundraiserAddress: string) => {

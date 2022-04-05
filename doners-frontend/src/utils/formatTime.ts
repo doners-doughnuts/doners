@@ -41,9 +41,6 @@ export function fDateDash(date: string) {
  * @returns true: 마감된 기부 / false: 모금가능한 기부
  */
 export function checkClosedDonation(date: string) {
-  console.log(new Date(date));
-  console.log(Date.now() + 1000 * 60 * 60 * 2);
-
   // return (Date.now() - new Date('2022-04-05').getTime())- (1000 * 3600 * 24) -1)));
   // Date.now() - new Date('2022-04-05').getTime()) /
   //                 (1000 * 3600 * 24) -
