@@ -99,35 +99,6 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
     setUserProfileImg(data.profileImage);
   };
 
-  // const onChange = (e) => {
-  //   if (e.target.files[0]) {
-  //     const formData = new FormData();
-  //     formData.append(
-  //       'multipartFile',
-  //       new Blob([JSON.stringify({ userId: loggedUserId })], {
-  //         type: 'application/json',
-  //       })
-  //     );
-  //     formData.append('userProfilePhoto', e.target.files[0]);
-
-  //     modifyProfilePhoto(formData);
-  //   } else {
-  //     //업로드 취소할 시
-  //     setImage(prevImage);
-  //     return;
-  //   }
-
-  //   //화면에 프로필 사진 표시
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     if (reader.readyState === 2) {
-  //       console.log(reader);
-  //       setImgFile(reader.result);
-  //     }
-  //   };
-  //   reader.readAsDataURL(e.target.files[0]);
-  // };
-
   const handleUploadFile = async (event: any) => {
     const file = event.target.files;
     setImgFile(file[0]);
