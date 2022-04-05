@@ -6,6 +6,7 @@ import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
+import { differenceInDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
@@ -48,28 +49,16 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
     setIsOpen((prev) => !prev);
   };
 
-  const remainDate = () => {
-    if (data.startDate && data.endDate) {
-      const startDateArr = data.startDate.split('-');
-      const endDateArr = data.endDate.split('-');
-
-      const stDate = new Date(
-        Number(startDateArr[0]),
-        Number(startDateArr[1]),
-        Number(startDateArr[2])
-      );
-      const endDate = new Date(
-        Number(endDateArr[0]),
-        Number(endDateArr[1]),
-        Number(endDateArr[2])
-      );
-
-      const diff = stDate.getTime() - endDate.getTime();
-      const diffDate = diff / (1000 * 60 * 60 * 24);
-
-      return diffDate;
+  const calcDday = () => {
+    const dday = Math.ceil(
+      (Date.now() - new Date(data.endDate).getTime()) / (1000 * 3600 * 24) - 1
+    );
+    if (dday === 0) {
+      return '(마감일)';
+    } else {
+      const label = dday > 0 ? '+' : '';
+      return '(D' + label + dday + ')';
     }
-    return '0';
   };
 
   return (
@@ -83,15 +72,13 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
             <H4>신청일: </H4>
           </div>
           <H4>{data.startDate}</H4>
-          {/* <H4>2022.03.22</H4> */}
         </div>
         <div className={cx('date-row')}>
           <div className={cx('date-title')}>
             <H4>마감일: </H4>
           </div>
           <H4>{data.endDate}</H4>
-          {/* <H4>2022.04.08</H4> */}
-          <H4 color="red">{`(D${remainDate()})`}</H4>
+          <H4 color="red">{String(calcDday())}</H4>
         </div>
         <div className={cx('value-row')}>
           <div className={cx('value-title')}>

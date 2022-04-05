@@ -1,4 +1,9 @@
-import { compareAsc, format, formatDistanceToNowStrict } from 'date-fns';
+import {
+  compareAsc,
+  differenceInDays,
+  format,
+  formatDistanceToNowStrict,
+} from 'date-fns';
 import local from 'date-fns/locale/ko';
 // ----------------------------------------------------------------------
 
@@ -41,5 +46,5 @@ export function fDateDash(date: string) {
  * @returns true: 마감된 기부 / false: 모금가능한 기부
  */
 export function checkClosedDonation(date: string) {
-  return compareAsc(new Date(date), new Date()) === -1;
+  return differenceInDays(new Date(date), new Date()) <= -1;
 }

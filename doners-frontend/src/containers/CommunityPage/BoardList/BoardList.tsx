@@ -8,6 +8,7 @@ import { getBoardList } from 'services/api/Board';
 import styles from './BoardList.module.scss';
 import src from 'assets/images/img-covid19-category.png';
 import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 const cx = classNames.bind(styles);
 export type ListItemType = {
@@ -36,14 +37,17 @@ const BoardList = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    // getList();
-  }, [page]);
+    getList();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+  }, []);
 
   useEffect(() => {
     let observer: any;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.5,
+        threshold: 1,
       });
       observer.observe(target);
     }
@@ -60,19 +64,13 @@ const BoardList = () => {
 
   const getList = async () => {
     if (!endCheckRef.current) {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 800);
       setIsLoaded(true);
-      console.log(pageRef.current);
       const response = await getBoardList(pageRef.current);
-
-      console.log(response.data);
+      console.log(response);
       const data = response.data.communityGetListResponseDTOList;
-      console.log(data);
 
       if (data.length === 0) {
+        setIsLoaded(false);
         setEndCheck(true);
         return;
       }
@@ -88,44 +86,56 @@ const BoardList = () => {
       <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
           <div className={cx('inner-container')}>
-            <div>
-              <div className={cx('btn-row')}>
-                <div className={cx('btn')}>
-                  <Link to="write">
-                    <Button color="secondary" size="small" fullWidth>
-                      글 작성
-                    </Button>
-                  </Link>
-                </div>
+            {isLoading ? (
+              <div className={cx('loading-spinner-wrapper')}>
+                <LoadingSpinner />
               </div>
-              {listItems.length === 0 ? (
-                <div className={cx('none-contents')}>
-                  <div className={cx('none-text')}>
-                    <H1>등록된 감사후기가 없습니다.</H1>
+            ) : (
+              <>
+                <div>
+                  <div className={cx('btn-row')}>
+                    <div className={cx('btn')}>
+                      <Link to="write">
+                        <Button color="secondary" size="small" fullWidth>
+                          글 작성
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
-                  <div className={cx('none-img')}>
-                    <img src={src} alt="no donation" />
-                  </div>
+                  {listItems.length === 0 ? (
+                    <div className={cx('none-contents')}>
+                      <div className={cx('none-text')}>
+                        <H1>등록된 감사후기가 없습니다.</H1>
+                      </div>
+                      <div className={cx('none-img')}>
+                        <img src={src} alt="no donation" />
+                      </div>
+                    </div>
+                  ) : (
+                    listItems.map((data) => {
+                      return (
+                        <Link to={data.communityId} key={data.communityId}>
+                          <BoardListItem data={data} />
+                        </Link>
+                      );
+                    })
+                  )}
                 </div>
-              ) : (
-                listItems.map((data) => {
-                  return (
-                    <Link to={data.communityId} key={data.communityId}>
-                      <BoardListItem data={data} />
-                    </Link>
-                  );
-                })
-              )}
-            </div>
-            <div
-              ref={setTarget}
-              style={{
-                width: '100vw',
-                height: '5px',
-              }}
-            ></div>
+                <div
+                  ref={setTarget}
+                  style={{
+                    width: '100vw',
+                    height: '5px',
+                  }}
+                ></div>
+                {isLoaded ? (
+                  <div className={cx('loading-spinner-wrapper')}>
+                    <SyncLoader />
+                  </div>
+                ) : null}
+              </>
+            )}
           </div>
-          {isLoading ? <LoadingSpinner /> : null}
         </div>
       </div>
     </div>
