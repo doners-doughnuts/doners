@@ -112,4 +112,9 @@ public class Donation extends BaseEntity {
         this.approvalStatusCode = approvalStatusCode;
     }
 
+    // 삭제
+    public void changeIsDeleted() {
+        this.isDeleted = true;
+    }
+
 }
