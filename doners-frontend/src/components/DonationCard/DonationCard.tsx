@@ -31,10 +31,7 @@ const DonationCard = ({ data }: DonateProps) => {
   }, []);
 
   useEffect(() => {
-    console.log(current);
-    console.log(data.targetAmount);
     const result = Math.floor((current / data.targetAmount) * 100);
-    console.log(result);
     setRate(result);
   }, [current]);
 

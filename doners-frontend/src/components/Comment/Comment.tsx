@@ -43,9 +43,10 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
 
   const getProfileImg = async () => {
     const response = await getUserProfile(nickname);
+    console.log(response);
     if (response) {
       // 이미지등록
-      // setImgSrc(defaultImg);
+      setImgSrc(response.data.profileImage);
     }
   };
 

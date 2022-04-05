@@ -2,7 +2,7 @@ import Checkbox from 'assets/theme/Checkbox/Checkbox';
 import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import DonationCard from 'components/DonationCard/DonationCard';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import {
   getAvailableDonationList,
@@ -32,8 +32,16 @@ const DonateListContents = () => {
   const [category, setCategory] = useState('');
   // const [categoryId, setCategoryId] = useState('');
   const [sort, setSort] = useState('');
-  const [target, setTarget] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [endCheck, setEndCheck] = useState(false);
+  const [target, setTarget] = useState<any>(null);
+
+  const pageRef = useRef(page);
+  pageRef.current = page;
+
+  const endCheckRef = useRef(endCheck);
+  endCheckRef.current = endCheck;
 
   const categoryParam = searchParams.get('category');
   const sortParam = searchParams.get('sort');
@@ -53,13 +61,32 @@ const DonateListContents = () => {
 
   useEffect(() => {
     if (category !== '' && sort !== '') {
+      setIsLoading(true);
       getList();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 800);
     }
   }, [category, sort, view]);
 
-  // useEffect(() => {
-  //   getAvailableList();
-  // }, [view]);
+  useEffect(() => {
+    let observer: any;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  const onIntersect = async ([entry]: any, observer: any) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      await getList();
+      observer.observe(entry.target);
+    }
+  };
 
   const checkCategory = (category: string) => {
     let category_id = '';
@@ -82,9 +109,11 @@ const DonateListContents = () => {
   const categoryId = checkCategory(category);
 
   const getList = async () => {
-    const response = await getDonationList(categoryId, sort, page, view);
-    console.log(response);
-    setDonateList(response.data.donationGetListResponseDTOList);
+    if (!endCheckRef.current) {
+      const response = await getDonationList(categoryId, sort, page, view);
+      console.log(response);
+      setDonateList(response.data.donationGetListResponseDTOList);
+    }
   };
 
   const handleSortClick = (sort_id: string) => {
@@ -134,14 +163,6 @@ const DonateListContents = () => {
                 </div>
               </div>
             )}
-            {/* <div
-              ref={setTarget}
-              style={{
-                width: '100vw',
-                height: '5px',
-              }}
-            >
-            </div> */}
           </div>
         </section>
       </div>
