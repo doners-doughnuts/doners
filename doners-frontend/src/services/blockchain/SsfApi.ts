@@ -248,6 +248,13 @@ export const nowFundraiserCount = async (fundraiserAddress: string) => {
     .call();
 };
 
+// /* Fundraiser 수령 여부 */
+export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
+  return await FundraiserContract(fundraiserAddress)
+    .methods.isWithdraw()
+    .call();
+};
+
 // TODO delete (test code)
 export const check = async () => {
   const account = await Web3Client.eth.requestAccounts();
