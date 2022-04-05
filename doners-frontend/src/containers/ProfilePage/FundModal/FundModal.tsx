@@ -12,7 +12,7 @@ import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import H4 from 'assets/theme/Typography/H4/H4';
 import H2 from 'assets/theme/Typography/H2/H2';
 import H3 from 'assets/theme/Typography/H3/H3';
-import { nowBalance } from 'services/blockchain/SsfApi';
+import { nowBalance, nowFundraiserCount } from 'services/blockchain/SsfApi';
 import { ApplicationProfileListType } from 'types/ApplicationTypes';
 const cx = classNames.bind(styles);
 type ProfileType = {
@@ -37,6 +37,11 @@ const FundModal = (props: {
     console.log(currentBalance);
     setCurrent(currentBalance);
   };
+
+  const  = async () => {
+    const doners = await nowFundraiserCount(contractAddress);
+    console.log(doners)
+  }
 
   useEffect(() => {
     //// getApplicationDetail();
