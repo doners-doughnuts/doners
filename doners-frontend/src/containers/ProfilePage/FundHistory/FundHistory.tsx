@@ -19,7 +19,7 @@ const FundHistory = () => {
   /* 기부 신청 목록 조회 */
   const getApplicationList = async () => {
     const response = await getUserApplicationList();
-    // console.log(response.data.userMyPageDonationHistoryResponseDTOList);
+    console.log(response.data.userMyPageDonationHistoryResponseDTOList);
     setApplicationList(response.data.userMyPageDonationHistoryResponseDTOList);
   };
 
