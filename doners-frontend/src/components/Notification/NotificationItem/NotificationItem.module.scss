@@ -1,0 +1,19 @@
+@import 'assets/styles/main';
+
+.item {
+  padding: 20px 30px 20px 30px;
+  position: relative;
+  // background-color: $white;
+
+  .item-label {
+    color: $red; 
+  }
+
+  .item-date {
+    color: $gray-4;
+  }
+
+  &:hover {
+    background-color: rgba(0,0,0,0.1);;
+  }
+}
