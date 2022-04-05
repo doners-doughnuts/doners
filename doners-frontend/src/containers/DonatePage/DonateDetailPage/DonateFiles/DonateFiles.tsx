@@ -13,24 +13,6 @@ type DonateFIlesProps = {
 };
 
 const DonateFiles = ({ data }: DonateFIlesProps) => {
-  // const [numPages, setNumPages] = useState(0);
-  // const [pageNumber, setPageNumber] = useState(1);
-
-  // const [files, setFiles] = useState<string[]>([]);
-
-  // useEffect(() => {
-  //   console.log(Object.keys(data.evidence));
-  //   setFilesName(Object.keys(data.evidence));
-  // }, []);
-  useEffect(() => {
-    console.log(data.evidence);
-  }, [data]);
-
-  // function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
-  //   setNumPages(numPages);
-  //   setPageNumber(1);
-  // }
-
   return (
     <div className={cx('files-form')}>
       <div className={cx('title')}>

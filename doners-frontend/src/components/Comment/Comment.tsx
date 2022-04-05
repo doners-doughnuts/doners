@@ -43,9 +43,10 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
 
   const getProfileImg = async () => {
     const response = await getUserProfile(nickname);
+    console.log(response);
     if (response) {
       // 이미지등록
-      // setImgSrc(defaultImg);
+      setImgSrc(response.data.profileImage);
     }
   };
 
@@ -96,8 +97,8 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
           </Link>
           <div className={cx('sub-info')}>
             <H4>{nickname}</H4>
-            {/* <Span>{fToNow(date)}</Span> */}
-            <Span>{date}</Span>
+            <Span>{fToNow(date)}</Span>
+            {/* <Span>{date}</Span> */}
           </div>
         </div>
         <div className={cx('button-wrap')}>

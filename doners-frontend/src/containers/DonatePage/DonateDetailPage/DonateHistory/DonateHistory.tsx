@@ -32,7 +32,6 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
   useEffect(() => {
     getDonateHistory();
     getCurrentBalance();
-    console.log(data);
   }, [data]);
 
   return (

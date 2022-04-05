@@ -19,9 +19,8 @@ import {
   approveTransaction,
   donate,
   getSSFBalance,
-  nowBalance,
 } from 'services/blockchain/SsfApi';
-import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
+import { mint, setApprovalForAll } from 'services/blockchain/NftApi';
 
 const cx = classNames.bind(styles);
 
@@ -49,24 +48,21 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
 
   useEffect(() => {
     if (account) {
-      console.log(account);
       getBalance();
+      console.log(data.categoryCode);
+      console.log(account);
     }
   }, [account]);
 
   const getBalance = async () => {
-    console.log(account);
     const result = await getSSFBalance(account);
     setBalance(result);
   };
 
   const handleAddClick = () => {
-    console.log(money);
-
     setMoney((prev) => prev + 1);
   };
   const handleMinusClick = () => {
-    console.log(money);
     setMoney((prev) => prev - 1);
   };
 
@@ -101,6 +97,10 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
         setCompleteLoading(false);
         onClose();
       }, 3000);
+      await setApprovalForAll(account);
+
+      const mintResult = await mint(data.categoryCode, account);
+      console.log(mintResult);
     } catch (error) {
       console.log(error);
     }
@@ -156,11 +156,6 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
                 <H3>기부자 지갑 주소</H3>
               </div>
               <div className={cx('wallet-row')}>
-                {/* <div className={cx('wallet-account')}>
-                <FoxIcon />
-                <Input value={account} size="large" disabled />
-              </div> */}
-
                 <div className={cx('wallet-form')}>
                   <div className={cx('description')}>
                     <div className={cx('wallet-account')}>

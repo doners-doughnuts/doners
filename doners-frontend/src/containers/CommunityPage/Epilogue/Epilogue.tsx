@@ -2,11 +2,12 @@ import EpilogueCard from 'components/EpilogueCard/EpilogueCard';
 import classNames from 'classnames/bind';
 import styles from './Epilogue.module.scss';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getEpilogueList } from 'services/api/Epilogue';
 import H1 from 'assets/theme/Typography/H1/H1';
 import src from 'assets/images/img-covid19-category.png';
 import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 const cx = classNames.bind(styles);
 
@@ -20,34 +21,71 @@ type ListItemType = {
 };
 
 const Epilogue = () => {
-  const [sequence, setSequence] = useState(1);
+  const [page, setPage] = useState(1);
   const [listItems, setListItems] = useState<ListItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [endCheck, setEndCheck] = useState(false);
+  const [target, setTarget] = useState<any>(null);
+
+  const pageRef = useRef(page);
+  pageRef.current = page;
+
+  const endCheckRef = useRef(endCheck);
+  endCheckRef.current = endCheck;
 
   useEffect(() => {
     setIsLoading(true);
     getList();
-  }, []);
-
-  const getList = async () => {
-    const response = await getEpilogueList(sequence);
-    console.log(response.data);
-    const data = response.data.epilogueGetListResponseDTOList;
-    console.log(data);
-    setListItems((prev) => [...prev, ...data]);
     setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 800);
+  }, []);
+
+  useEffect(() => {
+    let observer: any;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.2,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  const onIntersect = async ([entry]: any, observer: any) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      await getList();
+      observer.observe(entry.target);
+    }
   };
 
-  console.log(isLoading);
+  const getList = async () => {
+    if (!endCheckRef.current) {
+      setIsLoaded(true);
+      const response = await getEpilogueList(page);
+      const data = response.data.epilogueGetListResponseDTOList;
+      console.log(data);
+      if (data.length === 0) {
+        setIsLoaded(false);
+        setEndCheck(true);
+        return;
+      }
+      setPage((prev) => prev + 1);
+      setListItems((prev) => [...prev, ...data]);
+      setIsLoaded(false);
+    }
+  };
 
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
         {isLoading ? (
           <div className={cx('col-lg-12')}>
-            <LoadingSpinner />
+            <div className={cx('loading-spinner-wrapper')}>
+              <LoadingSpinner />
+            </div>
           </div>
         ) : listItems.length !== 0 ? (
           listItems.map((data) => {
@@ -71,6 +109,18 @@ const Epilogue = () => {
             </div>
           </div>
         )}
+        <div
+          ref={setTarget}
+          style={{
+            width: '100vw',
+            height: '5px',
+          }}
+        ></div>
+        {isLoaded ? (
+          <div className={cx('loading-spinner-wrapper')}>
+            <SyncLoader />
+          </div>
+        ) : null}
       </div>
     </section>
   );
