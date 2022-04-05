@@ -2,16 +2,15 @@ import Checkbox from 'assets/theme/Checkbox/Checkbox';
 import H1 from 'assets/theme/Typography/H1/H1';
 import classNames from 'classnames/bind';
 import DonationCard from 'components/DonationCard/DonationCard';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import {
-  getAvailableDonationList,
-  getDonationList,
-} from 'services/api/Donation';
+import { getDonationList } from 'services/api/Donation';
 import DonateListHeader from '../DonateListHeader/DonateListHeader';
-import DonateListSortTab from '../DonateListSortTab/DonateListSortTab';
 import styles from './DonateListContents.module.scss';
 import src from 'assets/images/img-covid19-category.png';
+import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
+import SyncLoader from 'react-spinners/SyncLoader';
+
 const cx = classNames.bind(styles);
 
 export type DonateType = {
@@ -32,8 +31,16 @@ const DonateListContents = () => {
   const [category, setCategory] = useState('');
   // const [categoryId, setCategoryId] = useState('');
   const [sort, setSort] = useState('');
-  const [target, setTarget] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [endCheck, setEndCheck] = useState(false);
+  const [target, setTarget] = useState<any>(null);
+
+  const pageRef = useRef(page);
+  pageRef.current = page;
+
+  const endCheckRef = useRef(endCheck);
+  endCheckRef.current = endCheck;
 
   const categoryParam = searchParams.get('category');
   const sortParam = searchParams.get('sort');
@@ -53,13 +60,32 @@ const DonateListContents = () => {
 
   useEffect(() => {
     if (category !== '' && sort !== '') {
+      setIsLoading(true);
       getList();
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   }, [category, sort, view]);
 
-  // useEffect(() => {
-  //   getAvailableList();
-  // }, [view]);
+  useEffect(() => {
+    let observer: any;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  const onIntersect = async ([entry]: any, observer: any) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      await getList();
+      observer.observe(entry.target);
+    }
+  };
 
   const checkCategory = (category: string) => {
     let category_id = '';
@@ -82,18 +108,33 @@ const DonateListContents = () => {
   const categoryId = checkCategory(category);
 
   const getList = async () => {
-    const response = await getDonationList(categoryId, sort, page, view);
-    console.log(response);
-    setDonateList(response.data.donationGetListResponseDTOList);
+    if (!endCheckRef.current) {
+      setIsLoaded(true);
+      const response = await getDonationList(categoryId, sort, page, view);
+      const data = response.data.donationGetListResponseDTOList;
+      console.log(response);
+      if (data.length === 0) {
+        setIsLoaded(false);
+        setEndCheck(true);
+        return;
+      }
+      setPage((prev) => prev + 1);
+      setDonateList((prev) => [...prev, ...data]);
+      setIsLoaded(false);
+    }
   };
 
-  const handleSortClick = (sort_id: string) => {
-    navigate(`/fundraisings/list?category=${category}&sort=${sort_id}`);
-    setSort(sort_id);
-  };
+  // const handleSortClick = (sort_id: string) => {
+  //   navigate(`/fundraisings/list?category=${category}&sort=${sort_id}`);
+  //   setSort(sort_id);
+  // };
 
   const handleCategoryClick = (category_id: string) => {
     navigate(`/fundraisings/list?category=${category_id}&sort=${sort}`);
+    // console.log(page);
+    setPage(1);
+    setDonateList([]);
+    setEndCheck(false);
     setCategory(category_id);
   };
 
@@ -103,45 +144,59 @@ const DonateListContents = () => {
       <div className={cx('outer-container')}>
         <section className={cx('container')}>
           <div className={cx('row')}>
-            <div className={cx('col-lg-4')}>
-              <Checkbox selected={view} onChange={handleCheckbox}>
-                모금 가능한 기부만 보기
-              </Checkbox>
-            </div>
-            <div className={cx('col-lg-8')}>
-              {/* <DonateListSortTab sort={sort} onClick={handleSortClick} /> */}
-            </div>
-            {donateList.length !== 0 ? (
-              donateList.map((data) => {
-                return (
-                  <div className={cx('col-lg-4')} key={data.donationId}>
-                    {/* donateList id 값 선언 */}
-                    <Link to={`/fundraisings/${data.donationId}`}>
-                      <DonationCard data={data} />
-                    </Link>
-                  </div>
-                );
-              })
-            ) : (
-              <div className={cx('col-lg-12')}>
-                <div className={cx('none-contents')}>
-                  <div className={cx('none-text')}>
-                    <H1>모금 정보가 없습니다.</H1>
-                  </div>
-                  <div className={cx('none-img')}>
-                    <img src={src} alt="no donation" />
-                  </div>
-                </div>
+            {isLoading ? (
+              <div className={cx('loading-spinner-wrapper')}>
+                <LoadingSpinner />
               </div>
+            ) : (
+              <>
+                <>
+                  <div className={cx('col-lg-4')}>
+                    <Checkbox selected={view} onChange={handleCheckbox}>
+                      모금 가능한 기부만 보기
+                    </Checkbox>
+                  </div>
+                  <div className={cx('col-lg-8')}>
+                    {/* <DonateListSortTab sort={sort} onClick={handleSortClick} /> */}
+                  </div>
+                  {donateList.length !== 0 ? (
+                    donateList.map((data) => {
+                      return (
+                        <div className={cx('col-lg-4')} key={data.donationId}>
+                          {/* donateList id 값 선언 */}
+                          <Link to={`/fundraisings/${data.donationId}`}>
+                            <DonationCard data={data} />
+                          </Link>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className={cx('col-lg-12')}>
+                      <div className={cx('none-contents')}>
+                        <div className={cx('none-text')}>
+                          <H1>모금 정보가 없습니다.</H1>
+                        </div>
+                        <div className={cx('none-img')}>
+                          <img src={src} alt="no donation" />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+                <div
+                  ref={setTarget}
+                  style={{
+                    width: '100vw',
+                    height: '5px',
+                  }}
+                ></div>
+                {isLoaded ? (
+                  <div className={cx('loading-spinner-wrapper')}>
+                    <SyncLoader />
+                  </div>
+                ) : null}
+              </>
             )}
-            {/* <div
-              ref={setTarget}
-              style={{
-                width: '100vw',
-                height: '5px',
-              }}
-            >
-            </div> */}
           </div>
         </section>
       </div>
