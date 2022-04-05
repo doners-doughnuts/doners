@@ -161,7 +161,7 @@ public class EpilogueServiceImpl implements EpilogueService {
     }
 
     @Override
-    public boolean checkIfEpilogueExists(String accessToken, String donationId) {
+    public EpilogueCheckResponseDTO checkIfEpilogueExists(String accessToken, String donationId) {
         User user = getUserFromAccessToken(accessToken);
 
         Donation donation = donationRepository.findById(donationId).orElse(null);
@@ -171,7 +171,11 @@ public class EpilogueServiceImpl implements EpilogueService {
             epilogue = epilogueRepository.findByDonationAndEpilogueIsDeleted(donation, false).orElse(null);
         }
 
-        return epilogue != null;
+        if(epilogue != null) {
+            return EpilogueCheckResponseDTO.builder().epilogueId(epilogue.getId()).exists(true).build();
+        }
+
+        return EpilogueCheckResponseDTO.builder().exists(false).build();
     }
 
     @Override
