@@ -1,13 +1,32 @@
 import Button from 'assets/theme/Button/Button';
 import classNames from 'classnames/bind';
 import styles from './ApplyComplete.module.scss';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getLoggedUserInfo, getLoggedUserNickname } from 'utils/loggedUser';
 import { Link } from 'react-router-dom';
 import { fDateDash } from 'utils/formatTime';
+import { useRecoilValue } from 'recoil';
 const cx = classNames.bind(styles);
 
 const ApplyComplete = ({ setApplyStep, apply, setApply }: any) => {
   const date: string = new Date().toString();
+  const [isLogged, setIsLogged] = useState(false);
+  const [loggedUserNickname, setLoggedUserNickname] = useState('');
+  useEffect(() => {
+    const sessionStorageUserNickname = getLoggedUserNickname();
+    if (sessionStorageUserNickname) {
+      setIsLogged(true);
+      setLoggedUserNickname(sessionStorageUserNickname);
+    }
+  }, [getLoggedUserInfo()]);
+
+  useEffect(() => {
+    const sessionStorageUserNickname = getLoggedUserNickname();
+    if (sessionStorageUserNickname) {
+      setIsLogged(true);
+      setLoggedUserNickname(sessionStorageUserNickname);
+    }
+  }, [getLoggedUserInfo()]);
   return (
     <div className={cx('container')}>
       <div>
@@ -37,7 +56,7 @@ const ApplyComplete = ({ setApplyStep, apply, setApply }: any) => {
         있습니다.
       </div>
       <div className={cx('footer-btn')}>
-        <Link to={''}>
+        <Link to={`/profile/${loggedUserNickname}`}>
           <Button color="secondary">마이페이지로 이동</Button>
         </Link>
         <Link to={'/'}>
