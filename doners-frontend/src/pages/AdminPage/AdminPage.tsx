@@ -14,6 +14,7 @@ import { cursorTo } from 'readline';
 import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
 import { TransactionListItemType } from 'types/TransactionTypes';
 import { allFundraiserData, allWithdrawData } from 'services/blockchain/SsfApi';
+import H1 from 'assets/theme/Typography/H1/H1';
 
 const cx = classNames.bind(styles);
 
@@ -62,8 +63,8 @@ const AdminPage = () => {
     // TODO
     let response = await allFundraiserData();
     console.log('기부내역들: ', response);
-    let totalBalance = 0;
-    response.forEach((e) => (totalBalance += e.balance));
+    let totalBalance: number = 0;
+    response.forEach((e) => (totalBalance += Number(e.value)));
 
     response.push(await allWithdrawData());
     console.log('수령내역들: ', response);
@@ -87,7 +88,7 @@ const AdminPage = () => {
     <section className={cx('container')}>
       <div className={cx('row')}>
         <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-          <H2>Dashboard</H2>
+          <H1>Dashboard</H1>
         </div>
         <DashboardPanel
           nftCount={nftCount}

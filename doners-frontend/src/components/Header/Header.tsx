@@ -97,7 +97,7 @@ const Header = () => {
               </div>
             </div>
             <div className={cx('header-rightside')}>
-              <ul className={cx('header-list')}>
+              <ul className={cx('header-list-rightside')}>
                 {/* //TODO 다크모드 OR 언어 (리팩토링)
                 <li>
                   <H5>언어</H5>

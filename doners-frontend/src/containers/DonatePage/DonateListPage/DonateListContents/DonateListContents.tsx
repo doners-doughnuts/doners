@@ -50,6 +50,9 @@ const DonateListContents = () => {
 
   const handleCheckbox = () => {
     setView((prev) => !prev);
+    setPage(1);
+    setDonateList([]);
+    setEndCheck(false);
   };
 
   useEffect(() => {

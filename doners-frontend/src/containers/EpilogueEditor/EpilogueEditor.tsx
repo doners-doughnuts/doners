@@ -167,14 +167,14 @@ function EpilogueEditor({ modify = false }: EditType) {
     );
   };
 
-  useEffect(() => {
-    console.log(historyList);
-    handleUploadPlan(historyList);
-  }, []);
+  // useEffect(() => {
+  //   console.log(historyList);
+  //   handleUploadPlan(historyList);
+  // }, []);
 
-  useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
+  // useEffect(() => {
+  //   console.log(imgFile);
+  // }, [imgFile]);
 
   return (
     <>

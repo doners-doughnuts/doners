@@ -12,14 +12,14 @@
     width: 300px;
   }
   .title {
-    font-family: $font-sub;
+    font-family: $font-header;
     font-weight: 600;
     font-size: 18px;
     padding: 5px;
     width: 700px;
   }
   .subtitle {
-    font-family: $font-sub;
+    font-family: $font-main;
     font-weight: 600;
     font-size: 14px;
     color: $gray-3;
@@ -48,14 +48,14 @@
   .certificate {
     display: flex;
     .file {
-      font-family: $font-sub;
+      font-family: $font-main;
       width: 100%;
       margin: 30px 0 0 50px;
 
       .fileuploadlist {
         .file-list-item {
           margin: 5px 0;
-          font-family: $font-sub;
+          font-family: $font-main;
           display: flex;
           border-radius: 8px;
           padding: 10px;
@@ -64,7 +64,7 @@
           color: $gray-4;
         }
         .add-file-item {
-          font-family: $font-sub;
+          font-family: $font-main;
           border-radius: 8px;
           padding: 5px;
           border: 2px solid $black;

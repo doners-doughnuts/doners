@@ -133,7 +133,8 @@ const DonateDetail = () => {
                 <div className={cx('donate-btn')}>
                   {checkClosedDonation(donationData.endDate) ? (
                     isExist ? (
-                      <Link to={`epilogue/${donation_id}`}>
+                      // TODO
+                      <Link to={`/epilogue/${donation_id}`}>
                         <Button color="secondary" size="large" fullWidth>
                           감사후기 보러가기
                         </Button>

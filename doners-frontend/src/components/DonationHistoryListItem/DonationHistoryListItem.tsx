@@ -3,7 +3,7 @@ import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import styles from './DonationHistoryListItem.module.scss';
 import { ReactComponent as RemoveIcon } from 'assets/images/icon/remove.svg';
-import { fDate, fDateTime } from 'utils/formatTime';
+import { fDate, fDateTime, fFundraiserContractTime } from 'utils/formatTime';
 import { DonationTransactionType } from 'types/TransactionTypes';
 import { ReactComponent as DollarIcon } from 'assets/images/icon/dollar.svg';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,8 @@ const DonationHistoryListItem = ({
     <div className={cx('history-item')}>
       <div className={cx('card')}>
         <div className={cx('date')}>
-          {fDateTime(new Date(Number(date) * 1000).toString())}
+          {fFundraiserContractTime(date)}
+          {/* {fDateTime(new Date(Number(date) * 1000).toString())} */}
         </div>
         <div className={cx('title')}>{donationTitle}</div>
         <div className={cx('ls')}>
