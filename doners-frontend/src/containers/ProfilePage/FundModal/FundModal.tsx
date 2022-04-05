@@ -19,6 +19,7 @@ import {
 } from 'services/blockchain/SsfApi';
 import { ApplicationProfileListType } from 'types/ApplicationTypes';
 import { getWalletAccount } from 'utils/walletAddress';
+import { toast } from 'react-toastify';
 const cx = classNames.bind(styles);
 type ProfileType = {
   focus: number;
@@ -43,8 +44,14 @@ const FundModal = (props: {
   /* 모금액 수령하기 */
   const handleWithdraw = async () => {
     if (walletAddress) {
-      const response = await withdraw(contractAddress, walletAddress);
-      console.log(response);
+      await withdraw(contractAddress, walletAddress)
+        .then(() => {
+          toast.success('성공적으로 모금수령이 되었습니다!');
+        })
+        .catch(() => {
+          toast.error('모금수령에 문제가 있었습니다. 관리자에게 문의하세요.');
+        });
+      close();
     }
   };
 
