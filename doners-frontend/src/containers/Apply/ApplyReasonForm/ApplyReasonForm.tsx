@@ -26,7 +26,6 @@ import P from 'assets/theme/Typography/P/P';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import { fDateDash } from 'utils/formatTime';
-import FileUploader from '../FileUploader/FileUploader';
 import deleteicon from 'assets/images/icon/delete.png';
 import { cs } from 'date-fns/locale';
 
@@ -197,7 +196,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
               />
             </div>
             <div className={cx('date')}>
-              모금 마감일자;
+              모금 마감일자
               <Input
                 placeholder="모금 마감일자"
                 type="date"
