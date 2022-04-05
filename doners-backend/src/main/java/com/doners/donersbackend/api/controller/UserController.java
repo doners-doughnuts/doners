@@ -1,6 +1,6 @@
 package com.doners.donersbackend.api.controller;
 
-import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
+import com.doners.donersbackend.application.dto.request.user.UserRegisterRequestDTO;
 import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.user.*;
@@ -36,25 +36,25 @@ public class UserController {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @PostMapping
-    @ApiOperation(value="필수 회원정보 입력 - 이름, 닉네임, 이메일, 메타마스크 계정 주소")
+    @ApiOperation(value="회원가입 - 이름, 닉네임, 이메일, 메타마스크 계정 주소")
     @ApiResponses({
-            @ApiResponse(code=201, message="필수 회원정보 입력에 성공했습니다."),
-            @ApiResponse(code=409, message="필수 회원정보 입력에 실패했습니다. / 이미 해당 이메일이나 메타마스크 계정 주소로 가입된 계정이 존재합니다."),
+            @ApiResponse(code=201, message="회원가입에 성공했습니다."),
+            @ApiResponse(code=409, message="회원가입에 실패했습니다. / 이미 해당 이메일이나 메타마스크 계정 주소로 가입된 계정이 존재합니다."),
     })
-    public ResponseEntity<? extends BaseResponseDTO> setUserInfo(
-            @RequestBody @Valid @ApiParam(value="필수 회원 정보", required=true) UserInfoSetRequestDTO userInfoSetRequestDTO) {
+    public ResponseEntity<? extends BaseResponseDTO> registerUser(
+            @RequestBody @Valid @ApiParam(value="필수 회원 정보", required=true) UserRegisterRequestDTO userRegisterRequestDTO) {
         try {
-            Integer statusCode = userService.setUserInfo(userInfoSetRequestDTO);
+            Integer statusCode = userService.registerUser(userRegisterRequestDTO);
 
             if(statusCode == 409) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 해당 이메일이나 메타마스크 계정 주소로 가입된 계정이 존재합니다.", 409));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("필수 회원정보 입력에 실패했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("회원가입에 실패했습니다.", 409));
         }
 
-        return ResponseEntity.status(201).body(BaseResponseDTO.of("필수 회원정보 입력에 성공했습니다.", 201));
+        return ResponseEntity.status(201).body(BaseResponseDTO.of("회원가입에 성공했습니다.", 201));
     }
 
     @GetMapping("/{userAccount}")
@@ -66,9 +66,6 @@ public class UserController {
     })
     public ResponseEntity<? extends BaseResponseDTO> login(
             @PathVariable("userAccount") @ApiParam(value="메타마스크 계정 주소", required=true) String userAccount) {
-
-        // 로그인 ID, PW 기반으로 AutenticationToken 을 생성하여 검증 (사용자 비밀번호 체크)
-        // authenticate 메소드가 실행될 때 UserDetailsServiceImpl 의 loadUserByUsername 메소드가 실행됨
         Authentication authentication = null;
 
         UserLoginResponseDTO userLoginResponseDTO = null;
@@ -81,8 +78,7 @@ public class UserController {
             if(userLoginResponseDTO == null) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("로그인에 실패했습니다.", 201));
             }
-
-            // 인증 정보를 기반으로 JWT 생성
+            
             userLoginResponseDTO.changeAccessToken(jwtAuthenticationProvider.createToken(authentication));
         } catch (Exception e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("해당 메타마스크 계정 주소로 가입된 정보가 없습니다.", 404));
