@@ -17,6 +17,8 @@ import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
 import AdminPage from 'pages/AdminPage/AdminPage';
 import ApplyMainPage from 'pages/ApplyPage/ApplyMainPage';
 import ApplyFailPage from 'pages/ApplyPage/ApplyFailPage';
+import ErrorPage from 'pages/CommonPage/ErrorPage';
+import NotFoundPage from 'pages/CommonPage/NotFoundPage';
 
 export default function Router() {
   return useRoutes([
@@ -87,7 +89,7 @@ export default function Router() {
           path: 'board/modify/:community_id',
           element: <BoardEditPage modify />,
         },
-        { path: 'about', element: <CommunityPage focus={4} /> },
+        { path: 'discord', element: <CommunityPage focus={4} /> },
       ],
     },
     // {
@@ -106,6 +108,6 @@ export default function Router() {
       children: [{ path: '/', element: <HomePage /> }],
     },
     // { path: '*', element: <Navigate to="/error" replace /> },
-    { path: '*', element: <Test /> },
+    { path: '*', element: <NotFoundPage /> },
   ]);
 }
