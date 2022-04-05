@@ -32,7 +32,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
 
   const handleUploadPlan = (data: any) => {
     setHistoryList((prev) => [...prev, data]);
-    console.log(historyList);
   };
 
   const getAccountInfo = async () => {
@@ -50,11 +49,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   };
 
   const setValue = async () => {
-    console.log('===================');
-    console.log(ssf);
-    console.log(total);
-    console.log(apply);
-
     const formData = new FormData();
     formData.append('certificate', apply.certificate);
     formData.append('image', apply.image);
@@ -65,17 +59,16 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
 
     for (let i = 0; i < apply.evidence.length; i++) {
       formData.append('evidence', apply.evidence[i]);
-      console.log(apply.evidence[i]);
+      // console.log(apply.evidence[i]);
     }
     // formData.append('evidence', apply.evidence);
-    console.log(apply.evidence);
+    //console.log(apply.evidence);
     let result = historyList
       .map(({ epilogueBudgetPlan: plan, epilogueBudgetAmount: amount }) => ({
         plan,
         amount,
       }))
       .map((data, idx) => ({ ...data, sequence: idx }));
-    console.log(result);
     formData.append(
       'donationInfoRequestDTO',
       new Blob(
@@ -99,7 +92,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       )
     );
     const response = await postDonation(formData);
-    console.log(response);
     if (response) {
       setApplyStep(3);
     } else {
@@ -117,10 +109,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     setApply({ ...apply, targetAmount: ssfBalance, budget: historyList });
     console.log(total);
   }, [total, historyList]);
-
-  console.log('------------------');
-  console.log(apply);
-  console.log('------------------');
 
   return (
     <div className={cx('containor')}>
