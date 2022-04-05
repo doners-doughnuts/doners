@@ -12,7 +12,11 @@ import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import H4 from 'assets/theme/Typography/H4/H4';
 import H2 from 'assets/theme/Typography/H2/H2';
 import H3 from 'assets/theme/Typography/H3/H3';
-import { nowBalance, nowFundraiserCount } from 'services/blockchain/SsfApi';
+import {
+  nowBalance,
+  nowFundraiserCount,
+  withdraw,
+} from 'services/blockchain/SsfApi';
 import { ApplicationProfileListType } from 'types/ApplicationTypes';
 import { getWalletAccount } from 'utils/walletAddress';
 const cx = classNames.bind(styles);
@@ -34,14 +38,29 @@ const FundModal = (props: {
   const [current, setCurrent] = useState(0);
   let rate = Math.floor((current / target) * 100);
 
-  console.log(target);
+  // console.log(target);
+
+  /* 모금액 수령하기 */
+  const handleWithdraw = async () => {
+    if (walletAddress) {
+      const response = await withdraw(contractAddress, walletAddress);
+      console.log(response);
+    }
+  };
 
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
     const currentBalance = await nowBalance(contractAddress);
-    console.log(currentBalance);
+    // console.log(currentBalance);
     setCurrent(currentBalance);
+  };
+
+  /* 총 기부자 */
+  const getTotalDoners = async () => {
+    const doners = await nowFundraiserCount(contractAddress);
+    // console.log(doners);
+    setTotalDoners(doners);
   };
 
   /* 사용자의 지갑주소 */
@@ -54,6 +73,7 @@ const FundModal = (props: {
     //// getApplicationDetail();
     calcAchievementRate();
     getUserWalletAddress();
+    getTotalDoners();
   }, []);
 
   return (
@@ -113,7 +133,7 @@ const FundModal = (props: {
             </div>
           </main>
           <footer>
-            <Button color="primary" size="large" onClick={close}>
+            <Button color="primary" size="large" onClick={handleWithdraw}>
               수령하기
             </Button>
           </footer>
