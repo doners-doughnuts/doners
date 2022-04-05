@@ -18,7 +18,7 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     Optional<List<Donation>> findByCategoryCodeAndIsApprovedAndIsDeleted(CategoryCode categoryCode, boolean approve, boolean delete, Pageable pageable);
 
-    Optional<List<Donation>> findByCategoryCodeAndIsApprovedAndIsDeletedAndEndDateGreaterThanEqual(CategoryCode categoryCode, boolean approve, boolean delete, LocalDate endDate, Pageable pageable);
+    Optional<List<Donation>> findByCategoryCodeAndIsApprovedAndIsDeletedAndEndDateGreaterThanEqual(CategoryCode categoryCode, boolean approve, boolean delete, LocalDate today, Pageable pageable);
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
@@ -38,5 +38,7 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
     Optional<List<Donation>> findByUserOrderByEndDateDesc(User user);
 
     Optional<Donation> findByUserAndIsDeleted(User user, boolean delete);
+
+    Optional<Donation> findByUserAndIsApprovedAndEndDateGreaterThanEqual(User user, boolean approve, LocalDate today);
 
 }

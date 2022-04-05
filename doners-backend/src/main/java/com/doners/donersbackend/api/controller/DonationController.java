@@ -230,4 +230,28 @@ public class DonationController {
 
     }
 
+//    @ApiOperation(value = "기부금 수령")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "기부금 수령 결과를 저장했습니다."),
+//            @ApiResponse(code = 409, message = "기부글 수령 결과를 저장하지 못했습니다.")
+//    })
+//    @GetMapping("/receive")
+//    public ResponseEntity<? extends BaseResponseDTO> receive(
+//            @ApiIgnore @RequestHeader("Authorization") String accessToken
+//    ) {
+//
+//        try {
+//            DonationCheckResponseDTO donationCheckResponseDTO = donationService.checkDonation(accessToken);
+//
+//            if (donationCheckResponseDTO.isApply()) {
+//                return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 이미 존재합니다.", 200, donationCheckResponseDTO));
+//            }
+//
+//            return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 존재하지 않습니다.", 200, donationCheckResponseDTO));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 기록 확인에 실패했습니다.", 409));
+//        }
+//
+//    }
+
 }

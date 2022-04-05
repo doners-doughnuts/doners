@@ -53,8 +53,6 @@ public class DonationServiceImpl implements DonationService {
 
         User user = convertAccessTokenToUser(accessToken);
 
-        if (donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null) return false;
-
         Donation donation = Donation.builder()
                 .phone(donationInfoRequestDTO.getPhone())
                 .isDeputy(donationInfoRequestDTO.isDeputy())
@@ -317,10 +315,8 @@ public class DonationServiceImpl implements DonationService {
 
         User user = convertAccessTokenToUser(accessToken);
 
-        boolean apply = donationRepository.findByUserAndIsDeleted(user, false).orElse(null) != null;
-
         return DonationCheckResponseDTO.builder()
-                .apply(apply)
+                .apply(donationRepository.findByUserAndIsApprovedAndEndDateGreaterThanEqual(user, true, LocalDate.now()).orElse(null) != null)
                 .build();
 
     }
