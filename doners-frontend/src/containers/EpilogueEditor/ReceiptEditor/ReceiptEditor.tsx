@@ -15,17 +15,20 @@ type historyType = {
   epilogueBudgetAmount: string;
 };
 
-const ReceiptEditor = ({ onDelete, onChange, list }: any) => {
+const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [history, setHistory] = useState('');
   const [money, setMoney] = useState('');
-  const Id = useRef<number>(0);
+  const [initlength, setLength] = useState(0);
+  let Id = useRef<number>(initlength);
+  useEffect(() => {
+    setLength(length);
+    for (let i in length) {
+      Id.current += 1;
+    }
+  }, [length]);
   const handleOnclick = () => {
     if (history && money) {
-      const data = {
-        epilogueBudgetPlan: history,
-        epilogueBudgetAmount: money,
-      };
       setHistoryList((prev) => [
         ...prev,
         {
@@ -55,19 +58,20 @@ const ReceiptEditor = ({ onDelete, onChange, list }: any) => {
   };
 
   useEffect(() => {
-    // console.log('여긴가???');
-    for (let id in list) {
-      console.log(id);
-      console.log(list[id]);
-      // setHistoryList((prev) => [
-      //   ...prev,
-      //   {
-      //     id,
-      //     ...list[id],
-      //   },
-      // ]);
-    }
-    // setHistoryList(list);
+    console.log(list, '배고프다');
+    // for (let id in list) {
+    //   console.log(id);
+    //   console.log(list[id]);
+    //   setHistoryList((prev) => [
+    //     ...prev,
+    //     {
+    //       id,
+    //       ...list[id],
+    //     },
+    //   ]);
+    // }
+
+    setHistoryList(list);
   }, [list]);
 
   useEffect(() => {
