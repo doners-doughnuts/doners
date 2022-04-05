@@ -71,7 +71,7 @@ const DonationHistory = () => {
         date: e[1],
         value: e[2],
         donationTitle: e[3],
-        donationUrl: e[4],
+        donationId: e[4],
       });
     });
     console.log(list);
@@ -130,8 +130,8 @@ const DonationHistory = () => {
                       account={item.account}
                       date={item.date}
                       value={item.value}
+                      donationId={item.donationId}
                       donationTitle={item.donationTitle}
-                      donationUrl={item.donationUrl}
                     />
                   </div>
                 ))

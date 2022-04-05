@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel("UserInfoPostDto")
 @NoArgsConstructor
 @Getter
-public class UserInfoSetRequestDTO {
+public class UserRegisterRequestDTO {
 
     @NotNull
     @NotBlank

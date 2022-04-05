@@ -71,7 +71,7 @@ const NFTDetail = (props: {
                     <div className={cx('row-content')}>{metadata?.edition}</div>
                     <div className={cx('row-content')}>{metadata?.date}</div>
                     <div className={cx('row-content')}>
-                      희귀도:(비공개)
+                      희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)희귀도:(비공개)
                       {/* {metadata?.attributes.toString()} */}
                     </div>
                   </div>

@@ -18,7 +18,6 @@ const MyNFT = () => {
   const getNftList = async () => {
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
-    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // const result = await getWalletAccount();
     // console.log(result);
     const response = await getUserNFTMetadataList(await getWalletAccount());

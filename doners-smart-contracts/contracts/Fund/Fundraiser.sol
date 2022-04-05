@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract Fundraiser is Ownable {
     using SafeMath for uint256;
     string public title; // 글 제목
-    string public url; // 모금 주소
+    string public id; // 모금 donationId
     string public imageURL; // 사진 주소
     string public description; // 사연
     uint256 public donationsGoal; // 목표 금액
@@ -16,6 +16,7 @@ contract Fundraiser is Ownable {
     address payable public beneficiary; // 수혜자 주소
     address public custodian; // 후견인 주소
     IERC20 public erc20Contract; // ssafyContract를 가져오기위한 토큰 컨트랙트 인터페이스
+    bool public isWithdraw; // 기부 수령 확인
 
     struct Donation {
         address fromAccount;
@@ -23,7 +24,7 @@ contract Fundraiser is Ownable {
         uint256 date;
         uint256 value;
         string donationTitle;
-        string donationUrl;
+        string donationId;
     }
     Donation[] public _donations;
     Donation public withdrawData; // 수령 data
@@ -34,7 +35,7 @@ contract Fundraiser is Ownable {
 
     constructor(
         string memory _title,
-        string memory _url,
+        string memory _id,
         string memory _imageURL,
         string memory _description,
         uint256 _donationsGoal,
@@ -43,7 +44,7 @@ contract Fundraiser is Ownable {
         address _custodian
     ) {
         title = _title;
-        url = _url;
+        id = _id;
         imageURL = _imageURL;
         description = _description;
         donationsGoal = _donationsGoal;
@@ -78,7 +79,7 @@ contract Fundraiser is Ownable {
             date: block.timestamp,
             value: _amount,
             donationTitle: title,
-            donationUrl: url
+            donationId: id
         });
         _donations.push(donation);
         _myDonations[sender].push(
@@ -88,7 +89,7 @@ contract Fundraiser is Ownable {
                 block.timestamp,
                 _amount,
                 title,
-                url
+                id
             )
         );
 
@@ -133,7 +134,7 @@ contract Fundraiser is Ownable {
     function withdraw() public payable onlyOwner {
         uint256 balance = erc20Contract.balanceOf(address(this)); // 현재 컨트랙트의 금액
         address sender = msg.sender;
-
+        isWithdraw = true;
         require(erc20Contract.approve(address(this), balance), "address fail");
         require(erc20Contract.approve(sender, balance), "msg.sender fail");
         require(balance > 0, "contract have no money");
@@ -146,7 +147,7 @@ contract Fundraiser is Ownable {
             date: block.timestamp,
             value: balance,
             donationTitle: title,
-            donationUrl: url
+            donationId: id
         });
 
         emit Withdraw(balance);
