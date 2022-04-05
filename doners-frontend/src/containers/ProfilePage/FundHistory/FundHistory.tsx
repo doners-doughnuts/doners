@@ -39,7 +39,9 @@ const FundHistory = () => {
       )}
       {applicationList?.length > 0 ? (
         <>
-          <hr />
+          <div className={cx('divider')}>
+            <hr />
+          </div>
           <H3>이전 모금 내역</H3>
           {applicationList.length > 1
             ? applicationList?.map((item, idx) => {
