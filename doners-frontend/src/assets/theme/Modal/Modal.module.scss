@@ -8,12 +8,13 @@
   bottom: 0;
   left: 0;
   z-index: 99;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
 
   .inner-container {
     position: relative;
-    width: 70%;
-    height: fit-content;
+    width: 60%;
+    height: 90vh;
+    // height: fit-content;
     padding: 30px;
     border: 2px solid $black;
     background-color: $white;
@@ -22,13 +23,19 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding-bottom: 10px; 
+      padding-bottom: 10px;
     }
 
     .modal-content {
-      border: 10px ;
+      height: 90%;
+      border: 10px;
       display: flex;
       justify-content: center;
+
+      embed {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }

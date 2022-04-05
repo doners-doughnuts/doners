@@ -59,7 +59,6 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
       <div className={cx('history')}>
         {data &&
           history.map((data: any, idx) => {
-            console.log(data.account);
             return (
               <div className={cx('history-item')} key={idx}>
                 <P>{data.account}</P>
