@@ -5,9 +5,6 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
-<<<<<<< HEAD
-import { checkNickname, getUserProfile } from 'services/api/UserApi';
-=======
 import {
   checkNickname,
   getUserProfile,
@@ -15,7 +12,6 @@ import {
   postProfile,
 } from 'services/api/UserApi';
 import { toast } from 'react-toastify';
->>>>>>> 58d2e79f7bc57a365772cf9c9109dc40ea439296
 import Avatar from 'assets/theme/Avatar/Avatar';
 import { getLoggedUserNickname } from 'utils/loggedUser';
 
@@ -164,10 +160,6 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
                   value={nickname}
                   type="text"
                   placeholder={getLoggedUserNickname()}
-<<<<<<< HEAD
-                  disabled={nicknameConfirm ? true : false}
-=======
->>>>>>> 58d2e79f7bc57a365772cf9c9109dc40ea439296
                   onChange={handleInput}
                 />
                 <div className={cx('inputBtn')}>
@@ -189,21 +181,6 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
             </div>
             <div className={cx('title')}>프로필 사진 변경</div>
             <div className={cx('avatar')}>
-<<<<<<< HEAD
-              <Avatar
-                size="large"
-                // onClick={() => fileInput.current.click()}
-                src={userProfileImg}
-              />
-              {/* <input
-                type="file"
-                style={{ display: 'none' }}
-                accept="image/jpg,impge/png,image/jpeg"
-                name="userProfilePhoto"
-                onChange={onChange}
-                ref={fileInput}
-              /> */}
-=======
               <Avatar size="large" src={userProfileImg} onClick={uploadImg} />
               <input
                 style={{ display: 'none' }}
@@ -213,7 +190,6 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
                 onChange={handleUploadFile}
                 ref={fileInput}
               />
->>>>>>> 58d2e79f7bc57a365772cf9c9109dc40ea439296
             </div>
           </main>
           <footer>
