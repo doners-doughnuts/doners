@@ -10,6 +10,7 @@ import styles from './DonateListContents.module.scss';
 import src from 'assets/images/img-covid19-category.png';
 import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
 import SyncLoader from 'react-spinners/SyncLoader';
+import DonateSearchBar from '../DonateSearchBar/DonateSearchBar';
 
 const cx = classNames.bind(styles);
 
@@ -151,13 +152,16 @@ const DonateListContents = () => {
             ) : (
               <>
                 <>
-                  <div className={cx('col-lg-4')}>
-                    <Checkbox selected={view} onChange={handleCheckbox}>
-                      모금 가능한 기부만 보기
-                    </Checkbox>
-                  </div>
-                  <div className={cx('col-lg-8')}>
-                    {/* <DonateListSortTab sort={sort} onClick={handleSortClick} /> */}
+                  <div className={cx('col-lg-12')}>
+                    <div className={cx('check-box')}>
+                      <Checkbox selected={view} onChange={handleCheckbox}>
+                        모금 가능한 기부만 보기
+                      </Checkbox>
+                    </div>
+                    <div className={cx('search-bar')}>
+                      <DonateSearchBar />
+                      {/* <DonateListSortTab sort={sort} onClick={handleSortClick} /> */}
+                    </div>
                   </div>
                   {donateList.length !== 0 ? (
                     donateList.map((data) => {

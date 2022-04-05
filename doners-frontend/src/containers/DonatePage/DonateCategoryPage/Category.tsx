@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const Category = () => {
+  const handleAlert = () => {};
   return (
     <div className={cx('category')}>
       <h1>Do-Nation!</h1>

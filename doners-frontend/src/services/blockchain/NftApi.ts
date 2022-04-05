@@ -51,6 +51,8 @@ export const setApprovalForAll = async (walletAddress: string) => {
 
 /* 각 카테고리 별 minting */
 export const mint = async (edition: string, walletAddress: string) => {
+  console.log(edition);
+  console.log(walletAddress);
   let result;
   switch (edition) {
     case 'COVID19':
