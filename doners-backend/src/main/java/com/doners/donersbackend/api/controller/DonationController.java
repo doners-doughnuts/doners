@@ -1,8 +1,8 @@
 package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
@@ -43,14 +43,14 @@ public class DonationController {
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponseDTO> register(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부 신청 정보", required = true) @Valid @RequestPart DonationInfoRequestDTO donationInfoRequestDTO,
+            @ApiParam(value = "기부 신청 정보", required = true) @Valid @RequestPart DonationRegisterPostDTO donationRegisterPostDTO,
             @ApiParam(value = "관계증명서") @RequestPart(required = false) MultipartFile certificate,
             @ApiParam(value = "대표 사진") @RequestPart(required = false) MultipartFile image,
             @ApiParam(value = "증빙 자료", required = true) @RequestPart List<MultipartFile> evidence
     ) {
 
         try {
-            if (!donationService.createDonation(accessToken, donationInfoRequestDTO, certificate, image, evidence)) {
+            if (!donationService.createDonation(accessToken, donationRegisterPostDTO, certificate, image, evidence)) {
                 return ResponseEntity.status(409).body(BaseResponseDTO.of("신청자에 대한 기부글이 이미 존재합니다.", 409));
             }
         } catch (IllegalArgumentException e) {
@@ -125,13 +125,13 @@ public class DonationController {
     @PatchMapping("/recommend")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationPatchDTO donationPatchDTO
+            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationRecommendPatchDTO donationRecommendPatchDTO
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
         try {
-            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationPatchDTO);
+            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationRecommendPatchDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
