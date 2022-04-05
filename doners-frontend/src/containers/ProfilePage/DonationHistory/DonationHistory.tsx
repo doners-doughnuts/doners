@@ -15,6 +15,9 @@ import {
 import { getWalletAccount } from 'utils/walletAddress';
 import { fToNow } from 'utils/formatTime';
 import { DonationTransactionType } from 'types/TransactionTypes';
+import { getUserNFTIdList } from 'services/blockchain/NftApi';
+import H2 from 'assets/theme/Typography/H2/H2';
+import H1 from 'assets/theme/Typography/H1/H1';
 
 const cx = classNames.bind(styles);
 
@@ -45,6 +48,7 @@ const cx = classNames.bind(styles);
 const DonationHistory = () => {
   const [historyList, setHistoryList] = useState<DonationTransactionType[]>([]);
   const [totalDonationAmount, setTotalDontaionAmount] = useState(0);
+  const [donationCount, setDonationCount] = useState(0);
 
   // TODO DELETE AFTER TEST (응답 포맷 확인용)
   const testDonate = async () => {
@@ -88,8 +92,18 @@ const DonationHistory = () => {
     }
   };
 
+  const getUserDonationCount = async () => {
+    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
+    const response = await getUserNFTIdList(await getWalletAccount());
+    // console.log(response);
+    setDonationCount(response.length);
+  };
+
   useEffect(() => {
     getUserDonationHistory();
+    getUserDonationCount();
   }, []);
 
   useEffect(() => {
@@ -98,15 +112,21 @@ const DonationHistory = () => {
 
   return (
     <div>
-      {/* <section className={cx('container')}></section> */}
-      <div className={cx('total_donation')}>
-        <H4>총 기부액: </H4>
-        {/* <div className={cx('money')}> */}
-        <div className={cx('icon')}>
-          <DollarIcon />
+      {/* <div className={cx('total_donation')}>
+        <H3>총</H3>
+        <div className={cx('title')}>
+          <H1>{String(donationCount)}</H1>
         </div>
-        <H4>{`${totalDonationAmount}  SSF`}</H4>
-        {/* <H4>{`${totalDonationAmount}  SSF`}</H4> */}
+        <H3>번의 기부</H3>
+      </div> */}
+      <div className={cx('total_donation_amount')}>
+        <H4>총 기부액</H4>
+        <div className={cx('amount')}>
+          <div className={cx('icon')}>
+            <DollarIcon />
+          </div>
+          <H2>{`${totalDonationAmount}  SSF`}</H2>
+        </div>
       </div>
       <hr />
       <div className={cx('donation_list')}>

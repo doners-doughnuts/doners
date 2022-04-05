@@ -9,13 +9,21 @@ import { getWalletAccount } from 'utils/walletAddress';
 import { getUserAddress, getUserProfile } from 'services/api/UserApi';
 import { getUserNFTIdList } from 'services/blockchain/NftApi';
 import { getLoggedUserNickname } from 'utils/loggedUser';
+import H3 from 'assets/theme/Typography/H3/H3';
+import H2 from 'assets/theme/Typography/H2/H2';
+import P from 'assets/theme/Typography/P/P';
 const cx = classNames.bind(styles);
+
+type nickNameType = {
+  nickname: string;
+};
 
 const UserProfile = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [profileImg, setProfileImg] = useState('');
   const [walletAddress, setWalletAddress] = useState<string>('');
   const [donationCount, setDonationCount] = useState(0);
+  const [walletOpen, setWalletOpen] = useState(false);
 
   const { nickname } = useParams();
 
@@ -50,6 +58,9 @@ const UserProfile = () => {
       setProfileImg(data.profileImage);
     }
   };
+  const handleWalletAddress = () => {
+    setWalletOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     getAccountInfo();
@@ -58,14 +69,25 @@ const UserProfile = () => {
 
   return (
     <div className={cx('container')}>
-      <div className={cx('profileimage')}>
-        <Avatar size="large" src={profileImg} onClick={openModal} />
-      </div>
-      <div className={cx('profile-info')}>
-        <div>닉네임: {nickname}</div>
-        <div>지갑주소: {walletAddress}</div>
-        <div>
-          총<b>{donationCount}</b>번의기부
+      <div className={cx('profile')}>
+        <div className={cx('profileimage')}>
+          <Avatar size="xlarge" src={profileImg} onClick={openModal} />
+        </div>
+        <div className={cx('profile-info')}>
+          <div className={cx('nickname')}>
+            <H2>{String(nickname)}</H2>
+          </div>
+          <div className={cx('wallet_check')} onClick={handleWalletAddress}>
+            <P color="gray">내 지갑 주소 확인하기</P>
+          </div>
+          {walletOpen ? (
+            <div>
+              <H3>{walletAddress}</H3>
+            </div>
+          ) : null}
+          {/* <div>
+            총<b>{donationCount}</b>번의기부
+          </div> */}
         </div>
       </div>
       <ProfileModal open={modalOpen} close={closeModal} />

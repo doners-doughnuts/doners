@@ -20,6 +20,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [walletAddress, setWalletAddress] = useState<string>('');
   const [ssf, setSSF] = useState(0);
+  const [isSend, setIsSend] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   };
 
   const setValue = async () => {
+    setIsSend(true);
     const formData = new FormData();
     formData.append('certificate', apply.certificate);
     formData.append('image', apply.image);
@@ -139,7 +141,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
           />
         </div>
         <div className={cx('icon')}>
-          <img src={allow} />
+          <img src={allow} alt="icon" />
         </div>
         <div className={cx('trans')}>
           <Input placeholder={`SSF`} value={`${ssf} SSF`} disabled={true} />
@@ -147,7 +149,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       </div>
       <div className={cx('nextbtn')}>
         {apply.budget.length !== 0 ? (
-          <Button color={'alternate'} onClick={setValue}>
+          <Button color={'alternate'} onClick={setValue} disabled={isSend}>
             완료
           </Button>
         ) : (

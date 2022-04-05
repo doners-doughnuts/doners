@@ -15,32 +15,30 @@ type ProfileType = {
 };
 const ProfileDetail = ({ focus }: ProfileType) => {
   return (
-    <div>
-      <section className={cx('container')}>
-        <div className={cx('row')}>
-          <div className={cx('col-lg-12')}>
-            <ProfileTab focus={focus} />
-            <div className={cx('inner-container')}>
-              <main className={cx('content')}>
-                {focus === 1 ? (
-                  <div>
-                    <MyNFT />
-                  </div>
-                ) : focus === 2 ? (
-                  <div>
-                    <DonationHistory />
-                  </div>
-                ) : focus === 3 ? (
-                  <div>
-                    <FundHistory />
-                  </div>
-                ) : null}
-              </main>
-            </div>
+    <section className={cx('container')}>
+      <div className={cx('row')}>
+        <div className={cx('col-lg-12')}>
+          <ProfileTab focus={focus} />
+          <div className={cx('inner-container')}>
+            <main className={cx('content')}>
+              {focus === 1 ? (
+                <div>
+                  <MyNFT />
+                </div>
+              ) : focus === 2 ? (
+                <div>
+                  <DonationHistory />
+                </div>
+              ) : focus === 3 ? (
+                <div>
+                  <FundHistory />
+                </div>
+              ) : null}
+            </main>
           </div>
         </div>
-      </section>{' '}
-    </div>
+      </div>
+    </section>
   );
 };
 
