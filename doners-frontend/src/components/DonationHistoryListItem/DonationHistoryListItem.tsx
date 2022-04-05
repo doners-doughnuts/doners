@@ -15,8 +15,8 @@ const DonationHistoryListItem = ({
   account,
   date,
   value,
+  donationId,
   donationTitle,
-  donationUrl,
 }: DonationTransactionDetailType) => {
   // console.log(fDateTime(new Date(date).toDateString()));
 
@@ -37,12 +37,12 @@ const DonationHistoryListItem = ({
           {/* <div className={cx('parti')}>기부참여</div> */}
           <div onClick={() => console.log('TODO')} className={cx('open-btn')}>
             {/* <P color="green">기부글 상세보기</P> */}
-            {/* <Link to={`/fundraisings/${donationId}`} className={cx('open-btn')}>
+            <Link to={`/fundraisings/${donationId}`} className={cx('open-btn')}>
               기부글 상세보기
-            </Link> */}
-            <a href={donationUrl} className={cx('open-btn')}>
+            </Link>
+            {/* <a href={donationUrl} className={cx('open-btn')}>
               기부글 상세보기
-            </a>
+            </a> */}
             {/* <Link to={} className={cx('open-btn')}>
               
             </Link> */}

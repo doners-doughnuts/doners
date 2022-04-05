@@ -38,6 +38,9 @@ const FundingItem = ({ item }: FundingItemProps) => {
   };
 
   const closeModal = () => {
+    //TODO 모금액 수령이 완료되었는지 검사
+    // const response = await fundraiserIsWithdraw(item.contractAddress);
+    // console.log(response);
     setModalOpen(false);
   };
 
@@ -51,7 +54,10 @@ const FundingItem = ({ item }: FundingItemProps) => {
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
-    const currentBalance = await nowBalance(item.contractAddress);
+    // TODO const currentBalance = await nowBalance(item.contrazctAddress);
+    const currentBalance = await nowBalance(
+      '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA'
+    );
     // console.log(currentBalance);
     setCurrent(currentBalance);
   };
@@ -92,7 +98,9 @@ const FundingItem = ({ item }: FundingItemProps) => {
         <div className={cx('item-info-wrap')}>
           {item.donationIsApproved ? (
             !checkClosedDonation(item.endDate) ? (
-              item.donationIsReceived ? (
+              // TODO 대체
+              // item.donationIsReceived ? (
+              false ? (
                 <Tag color="black">기부금 수령 완료</Tag>
               ) : (
                 <div
