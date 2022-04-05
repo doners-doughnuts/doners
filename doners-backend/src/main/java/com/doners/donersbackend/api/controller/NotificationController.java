@@ -42,7 +42,7 @@ public class NotificationController {
                 return ResponseEntity.status(200).body(NotificationGetListWrapperResponseDTO.of("알림이 없습니다.", 200));
             }
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(BaseResponseDTO.of(e.getMessage(), 404));
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("알림 확인에 실패했습니다.", 409));
         }
