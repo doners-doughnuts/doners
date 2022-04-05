@@ -24,13 +24,13 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
   const [target, setTarget] = useState(item.targetAmount);
   const [current, setCurrent] = useState(99999);
   let rate = Math.floor((current / target) * 100);
-  console.log(item);
+  // console.log(item);
 
   /* 모금 달성률 */
   const calcAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
     const currentBalance = await nowBalance(item.contractAddress);
-    console.log(currentBalance);
+    // console.log(currentBalance);
     setCurrent(currentBalance);
   };
 
