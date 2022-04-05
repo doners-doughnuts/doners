@@ -18,7 +18,7 @@ contract FundraiserFactory {
 
     function createFundraiser(
         string memory title,
-        string memory url,
+        string memory id,
         string memory imageURL,
         string memory description,
         uint256 donationsGoal,
@@ -27,7 +27,7 @@ contract FundraiserFactory {
     ) public returns (address){
         Fundraiser fundraiser = new Fundraiser(
             title,
-            url,
+            id,
             imageURL,
             description,
             donationsGoal,
