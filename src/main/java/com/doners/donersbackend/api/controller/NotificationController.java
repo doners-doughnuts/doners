@@ -51,12 +51,11 @@ public class NotificationController {
 
     }
 
-    @ApiOperation(value = "알림 확인")
+    @ApiOperation(value = "알림 읽음 처리")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "알림이 있습니다."),
-            @ApiResponse(code = 204, message = "알림이 없습니다."),
-            @ApiResponse(code = 404, message = "알림 확인에 필요한 정보를 찾을 수 없습니다."),
-            @ApiResponse(code = 409, message = "알림 확인에 실패했습니다.")
+            @ApiResponse(code = 200, message = "알림을 읽었습니다."),
+            @ApiResponse(code = 404, message = "알림을 읽는 데 필요한 정보를 찾을 수 없습니다."),
+            @ApiResponse(code = 409, message = "알림을 읽는 데 실패했습니다.")
     })
     @PatchMapping
     public ResponseEntity<? extends BaseResponseDTO> read(
@@ -67,12 +66,12 @@ public class NotificationController {
         try {
             notificationService.readNotification(accessToken, notificationReadPatchDTO);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
+            return ResponseEntity.status(404).body(BaseResponseDTO.of("알림을 읽는 데 필요한 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("알림 확인에 실패했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("알림을 읽는 데 실패했습니다.", 409));
         }
 
-        return ResponseEntity.ok(BaseResponseDTO.of("알림을 확인했습니다.", 200));
+        return ResponseEntity.ok(BaseResponseDTO.of("알림을 읽었습니다.", 200));
 
     }
 
