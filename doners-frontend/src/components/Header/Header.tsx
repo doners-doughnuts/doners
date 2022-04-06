@@ -22,26 +22,6 @@ const Header = () => {
   const [ScrollActive, setScrollActive] = useState(false);
   const [loggedUserNickname, setLoggedUserNickname] = useState('');
   const [isLoggedAdmin, setIsLoggedAdmin] = useState(false);
-  // }
-  // function handleScroll() {
-  //   }
-  //     setScrollActive(false);
-  //     setScrollY(window.pageYOffset);
-  //     setScrollActive(true);
-  //     setScrollY(window.pageYOffset);
-  //   if (ScrollY > 45) {
-  //   } else {
-  const mynickname = useRecoilValue(nicknameState);
-
-  // useEffect(() => {
-  //   function scrollListener() {
-  //     window.addEventListener('scroll', handleScroll);
-  //   } //  window 에서 스크롤을 감시 시작
-  //   scrollListener(); // window 에서 스크롤을 감시
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   }; //  window 에서 스크롤을 감시를 종료
-  // });
 
   useEffect(() => {
     const sessionStorageUserNickname = getLoggedUserNickname();

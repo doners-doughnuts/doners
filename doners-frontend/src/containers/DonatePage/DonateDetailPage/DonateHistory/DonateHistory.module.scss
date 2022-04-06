@@ -40,8 +40,15 @@
 
   .history-item {
     @include flexbox(between, center);
+    border-bottom: 1px solid $gray-2;
     padding: 10px 20px;
 
+    .history-row {
+      width: 100%;
+    }
+    .from-account {
+      width: 83%;
+    }
     .money {
       @include flexbox;
     }
