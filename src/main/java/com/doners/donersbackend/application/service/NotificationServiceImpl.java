@@ -48,17 +48,17 @@ public class NotificationServiceImpl implements NotificationService {
         List<NotificationGetListResponseDTO> notificationGetListResponseDTOList = new ArrayList<>();
 
         donationList.forEach(donation -> {
-            // 종료 시간 지났으면
+            // 마감 시간 지났으면
             if (donation.isApproved() && donation.getEndDate() != null && LocalDate.now().isAfter(donation.getEndDate())) {
-                notificationGetListResponseDTOList.add(createNotification(donation, "종료", NotificationCode.PROGRESS));
+                notificationGetListResponseDTOList.add(createNotification(donation, "기부글이 마감되었습니다.", NotificationCode.PROGRESS));
             }
 
             // 승인된 상태라면
             if (donation.getApprovalStatusCode().equals(ApprovalStatusCode.APPROVAL)) {
-                notificationGetListResponseDTOList.add(createNotification(donation, "승인", NotificationCode.APPROVAL));
-                // 거절된 상태라면
+                notificationGetListResponseDTOList.add(createNotification(donation, "기부글 신청이 승인되었습니다.", NotificationCode.APPROVAL));
+            // 거절된 상태라면
             } else if (donation.getApprovalStatusCode().compareTo(ApprovalStatusCode.APPROVAL) > 0) {
-                notificationGetListResponseDTOList.add(createNotification(donation, "거절", NotificationCode.APPROVAL));
+                notificationGetListResponseDTOList.add(createNotification(donation, "기부글 신청이 반려되었습니다.", NotificationCode.APPROVAL));
             }
         });
 
@@ -87,37 +87,29 @@ public class NotificationServiceImpl implements NotificationService {
 
     }
 
-    public NotificationGetListResponseDTO createNotification(Donation donation, String status, NotificationCode notificationCode) {
+    public NotificationGetListResponseDTO createNotification(Donation donation, String description, NotificationCode notificationCode) {
 
         // 알림 존재 여부 확인
         Notification notification = notificationRepository.findByDonationAndNotificationCode(donation, notificationCode).orElse(null);
 
-        // 기존 알림이 있다면
-        if (notification != null) {
-            return NotificationGetListResponseDTO.builder()
-                    .notificationId(notification.getId())
-                    .donationId(donation.getId())
-                    .description(notification.getDescription())
-                    .createTime(notification.getCreateTime())
-                    .read(notification.isRead())
+        // 기존 알림이 없다면
+        if (notification == null) {
+            notification = Notification.builder()
+                    .description(description)
+                    .isRead(false)
+                    .notificationCode(notificationCode)
+                    .donation(donation)
                     .build();
+
+            notificationRepository.save(notification);
         }
 
-        Notification notificationInfo = Notification.builder()
-                .description("기부글이 " + status + "되었습니다.")
-                .isRead(false)
-                .notificationCode(notificationCode)
-                .donation(donation)
-                .build();
-
-        notificationRepository.save(notificationInfo);
-
         return NotificationGetListResponseDTO.builder()
-                .notificationId(notificationInfo.getId())
+                .notificationId(notification.getId())
                 .donationId(donation.getId())
-                .description(notificationInfo.getDescription())
-                .createTime(notificationInfo.getCreateTime())
-                .read(notificationInfo.isRead())
+                .description(notification.getDescription())
+                .createTime(notification.getCreateTime())
+                .read(notification.isRead())
                 .build();
 
     }
