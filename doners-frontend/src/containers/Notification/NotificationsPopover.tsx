@@ -22,11 +22,11 @@ const NotificationsPopover = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [totalUnReadCnt, setTotalUnReadCnt] = useState(0);
 
-  // const [notifications, setNotifications] =
-  //   useState<NotificationItemType[]>(_notificationList);
-  const [notifications, setNotifications] = useState<NotificationItemType[]>(
-    []
-  );
+  const [notifications, setNotifications] =
+    useState<NotificationItemType[]>(_notificationList);
+  // const [notifications, setNotifications] = useState<NotificationItemType[]>(
+  //   []
+  // );
 
   const handleOpen = () => {
     setOpen(true);
@@ -66,7 +66,7 @@ const NotificationsPopover = () => {
   };
 
   useEffect(() => {
-    getUserNotificationList();
+    // getUserNotificationList();
   }, []);
 
   return (
@@ -81,25 +81,23 @@ const NotificationsPopover = () => {
             <div className={cx('blocker')} onClick={handleClose}></div>
             <div className={cx('contents')}>
               <div className={cx('notification-header')}>
-                <H4>Notifications</H4>
-              </div>
-
-              <div className={cx('notification-sub-header')}>
-                총{' '}
-                <span className={cx('notification-unread-count')}>
-                  {totalUnReadCnt}
-                </span>{' '}
-                개의 새로운 알림이 있습니다
-              </div>
-              <div className={cx('notification-read-all')}>
-                {totalUnReadCnt > 0 && (
-                  <div title=" 전체읽음 처리">
-                    <button color="secondary" onClick={handleMarkAllAsRead}>
-                      {/* <CheckAllIcon /> */}
-                      {/* <Icon icon={doneAllFill} width={20} height={20} /> */}
-                    </button>
-                  </div>
-                )}
+                <div className={cx('notification-sub-header')}>
+                  <H4>Notifications</H4>총{' '}
+                  <span className={cx('notification-unread-count')}>
+                    {totalUnReadCnt}
+                  </span>{' '}
+                  개의 새로운 알림이 있습니다
+                </div>
+                <div className={cx('notification-read-all')}>
+                  {totalUnReadCnt >= 0 && (
+                    <div title=" 전체읽음 처리">
+                      <button color="secondary" onClick={handleMarkAllAsRead}>
+                        <CheckAllIcon />
+                        {/* <Icon icon={doneAllFill} width={20} height={20} /> */}
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <hr />
@@ -130,7 +128,7 @@ const NotificationsPopover = () => {
                       />
                     ))}
                 </div>
-                <hr />
+                {/* <hr /> */}
               </div>
               <div className={cx('reload-button')}>
                 <hr />

@@ -18,6 +18,8 @@
   text-align: center;
 }
 
+
+
 .blocker {
   position: fixed;
   top: 0;
@@ -38,7 +40,7 @@
     background-color: $black;
     border: none;
   }
-  
+
 }
 
 .contents {
@@ -57,26 +59,35 @@
   z-index: 999;
 
   font-size: small;
+  overflow: scroll;
+
+          
 
   .notification-header {
-    margin-bottom: 8px;
-    margin-left:  20px;
+    margin: 8px 24px 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .notification-sub-header {
+      line-height: 16px;
+      align-self: start;
+      font-size: smaller;
+    }
+    .notification-read-all {
+      justify-content: end;
+      align-items: flex-end;
+    }
   }
 
-  .notification-sub-header {
-    margin-top: 8px;
-    margin-bottom: 16px;
-    margin-left:  20px;
-  }
+
 
   .notification-unread-count {
     color: $red;
     font-weight: 600;
   }
 
-  .notification-read-all {
-    color: $green;
-  }
+
 
   .list {
     // overflow: scroll;
@@ -88,33 +99,37 @@
     }
     .list-header {
       display: flex;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: $black;
+      color: $white;
+      // background-color: rgba(0, 0, 0, 0.1);
       width: 100%;
       height: 32px;
       text-align: start;
       align-items: center;
       padding-left: 15px;
-    }
-  }
+      
 
- 
+    }
 
   .reload-button {
-    position: absolute;
+    position: fixed;
+    // overflow-y: scroll;
     width: 100%;
     text-align: center;
     margin-top: 20px; 
-    bottom: 0;
-    // background-color: $green;
+    // bottom: 0;
+    background-color: $green;
     border-radius: 0 0 8px 8px;
     bottom: 0;
     // -color: rgba(0, 0, 0, 0.1);
-
+  
     button {
       margin-top: 10px;
       margin-bottom: 10px;
       color: $gray-4;
     }
   }
+  }
 }
+
 
