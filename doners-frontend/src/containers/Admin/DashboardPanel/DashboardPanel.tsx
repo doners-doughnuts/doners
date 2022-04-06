@@ -28,7 +28,7 @@ const DashboardPanel = ({
           </div>
           <div className={cx('col-lg-4', 'col-md-4', 'col-sm-4')}>
             <DashboardCard
-              header="기부신청 미처리 건"
+              header="신규 기부신청"
               content={pendingCount}
               label="건"
             />

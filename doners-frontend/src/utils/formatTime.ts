@@ -51,8 +51,10 @@ export function checkClosedDonation(date: string) {
   const end = new Date(new Date(date).toDateString()).getTime();
 
   const diff = now - end;
-  const result = Math.abs(diff / (1000 * 3600 * 24));
-  // console.log(result);
+  // const result = Math.abs(diff / (1000 * 3600 * 24));
+  //* @신지우 수정 (절댓값)
+  const result = Math.floor(diff / (1000 * 3600 * 24));
+  // console.log(result > 0, result);
   return result > 0;
 }
 

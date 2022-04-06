@@ -82,7 +82,15 @@
   .value-row {
     @include flexbox(start, end);
     margin-top: 5px;
+    align-items: baseline;
+
+    .value-info {
+      font-family: $font-number;
+      font-size: xx-large;
+    }
+
     .value-title {
+      margin-bottom: 5px;
       margin-right: 10px;
     }
   }
