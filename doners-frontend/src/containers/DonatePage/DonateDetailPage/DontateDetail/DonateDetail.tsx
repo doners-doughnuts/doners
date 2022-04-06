@@ -73,6 +73,7 @@ const DonateDetail = () => {
 
   const handleCloseClick = () => {
     setIsOpen(false);
+    getDetail();
   };
 
   useEffect(() => {

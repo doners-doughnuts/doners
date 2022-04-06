@@ -20,7 +20,6 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
-
   const handleDeleteClick = () => {
     delComment();
   };

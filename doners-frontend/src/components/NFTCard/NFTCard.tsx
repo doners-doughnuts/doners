@@ -43,10 +43,11 @@ const NFTCard = ({ metadataUri }: any) => {
     setMetadata(response);
   };
 
+  // 여기에 업데이트 해야함 기존에는 useEffect -> metadataUri가 바뀌었을 때 다시 getMetadata 호출해주어야 바뀐것이 반영됨.
   useEffect(() => {
     // console.log(metadataUri);
     getMetadata();
-  }, []);
+  }, [metadataUri]);
 
   return (
     <>

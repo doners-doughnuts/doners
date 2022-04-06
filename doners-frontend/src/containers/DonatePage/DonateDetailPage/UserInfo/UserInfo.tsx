@@ -15,7 +15,6 @@ type UserInfoProps = {
 };
 const UserInfo = ({ data }: UserInfoProps) => {
   const navigate = useNavigate();
-
   const handleNavigate = () => {
     navigate(`/profile/${data.nickname}`);
   };
@@ -51,6 +50,14 @@ const UserInfo = ({ data }: UserInfoProps) => {
             <P color="orange">{data.exist ? '이력 존재' : '이력 미존재'}</P>
           </dd>
         </dl>
+        {data.deputy ? (
+          <dl>
+            <dt>수혜자 성명</dt>
+            <dd>
+              <P>{data.beneficiaryName}</P>
+            </dd>
+          </dl>
+        ) : null}
       </div>
       <div className={cx('profile-btn')}>
         <button onClick={handleNavigate}>프로필 이동</button>
