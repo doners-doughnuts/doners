@@ -105,6 +105,13 @@ const ApprovalModal = ({
   });
   const [files, setFiles] = useState<EvidenceType[]>([]);
 
+  /**
+   * 스마트 컨트랙트 중복 요청 방지용 flag.
+   * @default false: 아직 한 번도 통신이 이뤄지지 않은 상태.
+   */
+  const [preventDuplicatedRequest, setPreventDuplicatedRequest] =
+    useState<boolean>(false);
+
   const getDonationDetailInfo = async () => {
     const response = await getDonationDetail(donation.donationId);
     // const donationDetail: DontationDetailType = response.data;
@@ -132,6 +139,7 @@ const ApprovalModal = ({
     // contract address가 반환된다
     // ex. 0xc86F168f8D5b22C677c0184C2865C11Dc5921951
     if (donationDetail) {
+      setPreventDuplicatedRequest(true);
       const fundContractAddress: string = await createFundraiser(
         process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!,
         await getWalletAccount(),
@@ -158,8 +166,8 @@ const ApprovalModal = ({
           toast.success('기부 신청이 승인처리 되었습니다.');
           setStatus(true);
           onClose();
-          // TODO 승인 실패 처리
         } else {
+          // (완료) 승인 실패 처리
           toast.error(
             '신청 승인 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.'
           );
@@ -180,7 +188,7 @@ const ApprovalModal = ({
       setStatus(false);
       onClose();
     } else {
-      // TODO 승인거절 실패 처리
+      // (완료) 승인거절 실패 처리
       toast.error(
         '신청 거부 처리에 실패하였습니다. 잠시 후 다시 시도해주세요.'
       );
@@ -245,7 +253,8 @@ const ApprovalModal = ({
                       fullWidth
                       onClick={handleApprove}
                       disabled={
-                        donationDetail?.approvalStatusCode === 'APPROVAL'
+                        donationDetail?.approvalStatusCode === 'APPROVAL' ||
+                        preventDuplicatedRequest
                       }
                     >
                       승인

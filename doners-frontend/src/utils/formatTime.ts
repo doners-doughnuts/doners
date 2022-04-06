@@ -52,7 +52,8 @@ export function checkClosedDonation(date: string) {
 
   const diff = now - end;
   const result = Math.abs(diff / (1000 * 3600 * 24));
-  return result < 0;
+  // console.log(result);
+  return result > 0;
 }
 
 /**

@@ -11,7 +11,11 @@ import NFTDetail from '../NFTDetail/NFTDetail';
 
 const cx = classNames.bind(styles);
 
-const MyNFT = () => {
+type MyNFTType = {
+  walletAddress: string;
+};
+
+const MyNFT = ({ walletAddress }: MyNFTType) => {
   const navigate = useNavigate();
   const [nftList, setNftList] = useState([]);
 
@@ -20,7 +24,7 @@ const MyNFT = () => {
     // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // const result = await getWalletAccount();
     // console.log(result);
-    const response = await getUserNFTMetadataList(await getWalletAccount());
+    const response = await getUserNFTMetadataList(walletAddress);
     console.log(response);
     setNftList(response);
   };

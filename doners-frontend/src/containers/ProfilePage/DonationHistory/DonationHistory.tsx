@@ -50,15 +50,15 @@ const DonationHistory = () => {
   const [totalDonationAmount, setTotalDontaionAmount] = useState(0);
   const [donationCount, setDonationCount] = useState(0);
 
-  // TODO DELETE AFTER TEST (응답 포맷 확인용)
-  const testDonate = async () => {
-    const response = await donate(
-      '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA',
-      await getWalletAccount(),
-      1
-    );
-    console.log(response);
-  };
+  // // TODO DELETE AFTER TEST (응답 포맷 확인용)
+  // const testDonate = async () => {
+  //   const response = await donate(
+  //     '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA',
+  //     await getWalletAccount(),
+  //     1
+  //   );
+  //   console.log(response);
+  // };
 
   const getUserDonationHistory = async () => {
     const response = await allFundraiserMyDonationData(
@@ -67,7 +67,7 @@ const DonationHistory = () => {
     console.log(response);
     const list: Array<DonationTransactionType> = [];
     response.forEach((e) => {
-      // TODO API 응답 수정된 것에 따라서 수정
+      // (완료) API 응답 수정된 것에 따라서 수정
       list.push({
         fromAccount: e[0],
         toAccount: e[1],
