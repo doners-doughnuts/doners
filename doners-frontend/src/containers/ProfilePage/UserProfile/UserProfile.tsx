@@ -65,7 +65,7 @@ const UserProfile = () => {
   useEffect(() => {
     getAccountInfo();
     getUserDonationCount();
-  }, []);
+  }, [nickname]);
 
   return (
     <div className={cx('container')}>
