@@ -29,9 +29,7 @@ const TransactionList = ({ transactionList }: any) => {
               ? transactionList
                   .slice(0, transactionList.length - 1)
                   .map((item: any, idx: number) => (
-                    <>
-                      <TransactionListItem key={idx} item={item} />
-                    </>
+                    <TransactionListItem key={idx} item={item} />
                   ))
               : null}
           </div>
