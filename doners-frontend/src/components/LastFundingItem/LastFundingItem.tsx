@@ -6,6 +6,7 @@ import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import {
   ApplicationProfileListType,
@@ -26,8 +27,15 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
   const [collectedBalance, setCollectedBalance] = useState(0);
   const [isWithdrawn, setIsWithdrawn] = useState(false);
 
+  const navigate = useNavigate();
+
   let rate = Math.floor((current / target) * 100);
   // console.log(item);
+
+  /* 기부글 상세로 이동 */
+  const handleThumbnailClick = () => {
+    navigate('/fundraisings/' + item.donationId);
+  };
 
   /* 기부금 수령 여부 */
   /* 최종 모금 달성률 */
@@ -78,7 +86,7 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
             <div className={cx('tag')}>
               <Tag color="black">{CategoryCode[item.donationCategoryCode]}</Tag>
             </div>
-            <div className={cx('img-wrap')}>
+            <div className={cx('img-wrap')} onClick={handleThumbnailClick}>
               <img src={item.thumbnailImage} alt="" />
             </div>
           </div>

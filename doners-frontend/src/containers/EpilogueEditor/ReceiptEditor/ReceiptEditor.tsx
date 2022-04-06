@@ -63,7 +63,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
     .reduce((prev, curr) => prev + curr, 0);
 
   const handleHistoryDelete = (epilogueBudgetSequence: number): void => {
-    console.log(epilogueBudgetSequence);
+    // console.log(epilogueBudgetSequence);
     setHistoryList(
       historyList.filter(
         (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
@@ -98,7 +98,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
       </div>
       <div className={cx('history-list')}>
         {historyList.map((data, idx) => {
-          console.log(data);
+          // console.log(data);
           return (
             <HistoryItem
               value={data}

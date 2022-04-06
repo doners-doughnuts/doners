@@ -123,7 +123,7 @@ const EpilogueDetailHeader = ({
                 <H4> ~ </H4>
                 <H4>{endDate}</H4>
               </div>
-              <Link to="">
+              <Link to={`/fundraisings/${donationId}`}>
                 <div className={cx('detail_link')}>
                   <P color="green">기부 상세 보기</P>
                 </div>
@@ -131,7 +131,9 @@ const EpilogueDetailHeader = ({
             </div>
           </div>
           <div className={cx('user-info')}>
-            <Avatar src={profile} />
+            <Link to={`/profile/${writer}`}>
+              <Avatar src={profile} />
+            </Link>
             <div className={cx('name')}>
               <P>{writer}</P>
             </div>
