@@ -31,7 +31,7 @@ import { Metadata } from 'assets/metadata/_ipfsMetadatas';
 //   'patient' = 4,
 // }
 
-// TODO DELETE AFTER USE
+// DELETE AFTER USE
 export const nftTest = async (walletAddress: string) => {
   //! mm setAppovalForAll 해야 ERC721 거래가능? 필요한가?
   // setApprovalForAll(walletAddress);

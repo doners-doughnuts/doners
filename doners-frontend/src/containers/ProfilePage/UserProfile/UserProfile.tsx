@@ -18,14 +18,14 @@ type nickNameType = {
   nickname: string;
 };
 
-const UserProfile = () => {
+const UserProfile = ({ nickname }: nickNameType) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [profileImg, setProfileImg] = useState('');
   const [walletAddress, setWalletAddress] = useState<string>('');
   const [donationCount, setDonationCount] = useState(0);
   const [walletOpen, setWalletOpen] = useState(false);
 
-  const { nickname } = useParams();
+  // const { nickname } = useParams();
 
   const openModal = () => {
     // 사용자 본인인지 검사

@@ -36,7 +36,7 @@ const DonationHistoryListItem = ({
           <div className={cx('money')}>{`${value} SSF`}</div>
           <div className={cx('parti')}>{toAccount}</div>
           {/* <div className={cx('parti')}>기부참여</div> */}
-          <div onClick={() => console.log('TODO')} className={cx('open-btn')}>
+          <div className={cx('open-btn')}>
             <Link to={`/fundraisings/${donationId}`} className={cx('open-btn')}>
               기부글 상세보기
             </Link>

@@ -18,6 +18,7 @@ import { DontationDetailType } from 'types/DonationTypes';
 import H5 from 'assets/theme/Typography/H5/H5';
 import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import { calcDday, checkClosedDonation } from 'utils/formatTime';
+import { useNavigate } from 'react-router';
 
 const cx = classNames.bind(styles);
 
@@ -35,6 +36,8 @@ const FundingItem = ({ item }: FundingItemProps) => {
   //// const [applicationDetail, setApplicationDetail] =
   ////   useState<DontationDetailType>();
 
+  const navigate = useNavigate();
+
   const openModal = () => {
     setModalOpen(true);
   };
@@ -44,18 +47,23 @@ const FundingItem = ({ item }: FundingItemProps) => {
     setModalOpen(false);
   };
 
-  // TODO 백엔드에 api에 추가적으로 데이터 요청 (임시로 개별적으로 불러오는중)
+  // (완료) 백엔드에 api에 추가적으로 데이터 요청 (임시로 개별적으로 불러오는중)
   // const getApplicationDetail = async () => {
   //   const response = await getDonationDetail(item.donationId);
   //   console.log(response.data);
   //   setApplicationDetail(response.data);
   // };
 
+  /* 기부글 상세로 이동 */
+  const handleThumbnailClick = () => {
+    navigate('/fundraisings/' + item.donationId);
+  };
+
   /* 기부금 수령 여부 */
   const checkWithdrawState = async () => {
-    //TODO 모금액 수령이 완료되었는지 검사
+    // (완료) 모금액 수령이 완료되었는지 검사
     const response = await fundraiserIsWithdraw(item.contractAddress);
-    console.log(response);
+    // console.log('모금액 수령 여부: ', response);
     setIsWithdrawn(response);
   };
 
@@ -81,6 +89,8 @@ const FundingItem = ({ item }: FundingItemProps) => {
   //   }
   // };
 
+  // console.log(checkClosedDonation(item.endDate));
+
   useEffect(() => {
     //// getApplicationDetail();
     //* 관리자 승인 전이면 contractAddress가 아직 존재하지 않음
@@ -99,7 +109,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
             <div className={cx('tag')}>
               <Tag color="black">{CategoryCode[item.donationCategoryCode]}</Tag>
             </div>
-            <div className={cx('img-wrap')}>
+            <div className={cx('img-wrap')} onClick={handleThumbnailClick}>
               <img src={item.thumbnailImage} alt="" />
             </div>
           </div>
