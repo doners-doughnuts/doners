@@ -36,6 +36,7 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
   const [approveLoading, setApproveLoading] = useState(false);
   const [donateLoading, setDonateLoading] = useState(false);
   const [completeLoading, setCompleteLoading] = useState(false);
+  const [mintLoading, setMintLoading] = useState(false);
 
   const getAccount = async () => {
     const value = await getWalletAccount();
@@ -92,16 +93,17 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
       if (donateResult.status) {
         setDonateLoading(false);
       }
+      setMintLoading(true);
+      const mintResult = await mint(data.categoryCode, account);
+      console.log(mintResult);
+      if (mintResult.status) {
+        setMintLoading(false);
+      }
       setCompleteLoading(true);
       setTimeout(() => {
         setCompleteLoading(false);
         onClose();
       }, 3000);
-      await setApprovalForAll(account);
-
-      const mintResult = await mint(data.categoryCode, account);
-      // const mintResult = await mint('COVID19', account);
-      console.log(mintResult);
     } catch (error) {
       console.log(error);
     }
@@ -135,6 +137,14 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               alt="loading spinner"
             />
             <H3>송금하는중이에요.</H3>
+          </div>
+        ) : mintLoading ? (
+          <div className={cx('loading-spinner')}>
+            <img
+              src="https://static.toss.im/3d-emojis/u1F389_apng.png"
+              alt="loading spinner"
+            />
+            <H3>NFT를 발급해줄게요.</H3>
           </div>
         ) : completeLoading ? (
           <div className={cx('loading-spinner')}>

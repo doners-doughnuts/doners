@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router';
 import { deleteBoard, getBoardDetail } from 'services/api/Board';
 import { getUserProfile } from 'services/api/UserApi';
 import { Link } from 'react-router-dom';
+import { fDate, fToNow } from 'utils/formatTime';
 
 const cx = classNames.bind(styles);
 const BoardContents = () => {
@@ -84,10 +85,10 @@ const BoardContents = () => {
     }
   };
 
-  function formatDate(value: string) {
-    const date = new Date(value);
-    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
-  }
+  // function formatDate(value: string) {
+  //   const date = new Date(value);
+  //   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
+  // }
 
   return (
     <div className={cx('inner-container')}>
@@ -114,7 +115,9 @@ const BoardContents = () => {
         <div className={cx('info-wrap')}>
           <div className={cx('article-info')}>
             <div>
-              <P color="gray">{`작성일: ${formatDate(createTime)}`}</P>
+              {createTime ? (
+                <P color="gray">{`작성일: ${fToNow(createTime)}`}</P>
+              ) : null}
               <div className={cx('sub-info')}>
                 <div className={cx('views')}>
                   <ViewsIcon className={cx('icon')} fill="gray" />

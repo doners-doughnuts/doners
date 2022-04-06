@@ -29,8 +29,9 @@ const DonateContent = ({ data }: DonateContentProps) => {
         <H3>모금 신청자의 글</H3>
       </div>
       <div className={cx('content')}>
-        {/* <Viewer initialValue={data.description} /> */}
-        <P>test</P>
+        {/* {data.description} */}
+        <Viewer initialValue={data.description} />
+        {/* <P>test</P> */}
       </div>
       <div onClick={handleOpenModal} className={cx('open-btn')}>
         <P color="green">더보기</P>
