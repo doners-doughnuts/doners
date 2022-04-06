@@ -1,0 +1,45 @@
+@import 'assets/styles/main';
+
+.section {
+  position: relative;
+  height: 80vh;
+  width: 100vw;
+  border: 2px solid $black;
+  background-color: $gray-2;
+
+  .titlebox {
+    position: absolute;
+    text-align: center;
+    padding: 10px 50px;
+    right: 10%;
+    top: -5%;
+    background-color: $green;
+    border: 2px solid $black;
+    box-shadow: $btn-shadow;
+  }
+  .container {
+    @include flexbox(start);
+    .left {
+      position: relative;
+      margin: 25% auto;
+      .img1 {
+        position: absolute;
+        left: 30px;
+      }
+    }
+    .right {
+      margin: 0 400px;
+      .text {
+        width: 430px;
+        H5 {
+          color: $gray-4;
+        }
+      }
+      Button {
+        margin: 100px 0 0 200px;
+        width: 188px;
+        box-shadow: $btn-shadow;
+      }
+    }
+  }
+}

@@ -27,102 +27,118 @@ import Theme7 from 'assets/images/NFT/Theme7.png';
 import Theme8 from 'assets/images/NFT/Theme8.png';
 import Theme9 from 'assets/images/NFT/Theme9.png';
 import Theme10 from 'assets/images/NFT/Theme10.png';
+import H1 from 'assets/theme/Typography/H1/H1';
+import H2 from 'assets/theme/Typography/H2/H2';
+import H3 from 'assets/theme/Typography/H3/H3';
+import H4 from 'assets/theme/Typography/H4/H4';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 const IntroductionNFT = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   return (
     <section className={cx('container')}>
-      <div className={cx('row')}>
-        <div className={cx('col-lg-3')}>
-          <div className={cx('nft')}>
-            <img
-              className={cx('img', 'character-1')}
-              src={Frosting1}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-1')}
-              src={Decoration1}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-1')}
-              src={Expression1}
-              alt="nft"
-            />
+      <div>
+        <div className={cx('row')}>
+          <div className={cx('col-lg-3')}>
+            <div className={cx('nft')}>
+              <img
+                className={cx('img', 'character-1')}
+                src={Frosting1}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-1')}
+                src={Decoration1}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-1')}
+                src={Expression1}
+                alt="nft"
+              />
+            </div>
+          </div>
+          <div className={cx('col-lg-3')}>
+            <div className={cx('nft')}>
+              <img
+                className={cx('img', 'character-2')}
+                src={Frosting2}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-2')}
+                src={Decoration2}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-2')}
+                src={Expression2}
+                alt="nft"
+              />
+            </div>
+          </div>
+          <div className={cx('col-lg-3')}>
+            <div className={cx('nft')}>
+              <img
+                className={cx('img', 'character-3')}
+                src={Frosting3}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-3')}
+                src={Decoration3}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-3')}
+                src={Expression3}
+                alt="nft"
+              />
+            </div>
+          </div>
+          <div className={cx('col-lg-3')}>
+            <div className={cx('nft')}>
+              <img
+                className={cx('img', 'character-4')}
+                src={Frosting4}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-4')}
+                src={Decoration4}
+                alt="nft"
+              />
+              <img
+                className={cx('img', 'character-4')}
+                src={Expression4}
+                alt="nft"
+              />
+            </div>
           </div>
         </div>
-        <div className={cx('col-lg-3')}>
-          <div className={cx('nft')}>
-            <img
-              className={cx('img', 'character-2')}
-              src={Frosting2}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-2')}
-              src={Decoration2}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-2')}
-              src={Expression2}
-              alt="nft"
-            />
+        <div
+          data-aos="fade-up"
+          data-aos-anchor-placement="top-bottom"
+          className={cx('theme-container')}
+        >
+          <div className={cx('theme-wrap')}>
+            <img className={cx('theme')} src={Theme1} alt="nft" />
+            <img className={cx('theme')} src={Theme2} alt="nft" />
+            <img className={cx('theme')} src={Theme3} alt="nft" />
+            <img className={cx('theme')} src={Theme4} alt="nft" />
+            <img className={cx('theme')} src={Theme5} alt="nft" />
+            <img className={cx('theme')} src={Theme6} alt="nft" />
+            <img className={cx('theme')} src={Theme7} alt="nft" />
+            <img className={cx('theme')} src={Theme8} alt="nft" />
+            <img className={cx('theme')} src={Theme9} alt="nft" />
+            <img className={cx('theme')} src={Theme10} alt="nft" />
           </div>
-        </div>
-        <div className={cx('col-lg-3')}>
-          <div className={cx('nft')}>
-            <img
-              className={cx('img', 'character-3')}
-              src={Frosting3}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-3')}
-              src={Decoration3}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-3')}
-              src={Expression3}
-              alt="nft"
-            />
-          </div>
-        </div>
-        <div className={cx('col-lg-3')}>
-          <div className={cx('nft')}>
-            <img
-              className={cx('img', 'character-4')}
-              src={Frosting4}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-4')}
-              src={Decoration4}
-              alt="nft"
-            />
-            <img
-              className={cx('img', 'character-4')}
-              src={Expression4}
-              alt="nft"
-            />
-          </div>
-        </div>
-      </div>
-      <div className={cx('theme-container')}>
-        <div className={cx('theme-wrap')}>
-          <img className={cx('theme')} src={Theme1} alt="nft" />
-          <img className={cx('theme')} src={Theme2} alt="nft" />
-          <img className={cx('theme')} src={Theme3} alt="nft" />
-          <img className={cx('theme')} src={Theme4} alt="nft" />
-          <img className={cx('theme')} src={Theme5} alt="nft" />
-          <img className={cx('theme')} src={Theme6} alt="nft" />
-          <img className={cx('theme')} src={Theme7} alt="nft" />
-          <img className={cx('theme')} src={Theme8} alt="nft" />
-          <img className={cx('theme')} src={Theme9} alt="nft" />
-          <img className={cx('theme')} src={Theme10} alt="nft" />
         </div>
       </div>
     </section>
