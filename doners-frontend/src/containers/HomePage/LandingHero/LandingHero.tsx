@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import H1 from 'assets/theme/Typography/H1/H1';
 
+import { useEffect } from 'react';
 const cx = classNames.bind(styles);
+
 const LandingHero = () => {
   const navigate = useNavigate();
   const onClick = () => {

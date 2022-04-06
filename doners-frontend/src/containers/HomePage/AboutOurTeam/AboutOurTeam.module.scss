@@ -1,0 +1,83 @@
+@import 'assets/styles/main';
+
+.section {
+  height: 100vh;
+  width: 100vw;
+}
+
+.About {
+  height: 800px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.background {
+  background-color: #e8e5e2;
+  width: 150%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 60%;
+  border-radius: 50%;
+}
+
+.team-character {
+  width: 250px;
+  height: 250px;
+}
+.section {
+  .teamName {
+    position: absolute;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: white;
+    bottom: 30px;
+    right: 400px;
+    font-size: 60px;
+    font-family: 'Hand Writting';
+    z-index: 3;
+  }
+}
+
+.teammate1 {
+  position: absolute;
+  top: 500px;
+  left: 200px;
+  z-index: 2;
+}
+.teammate2 {
+  position: absolute;
+  top: 400px;
+  left: 600px;
+  z-index: 2;
+}
+.teammate3 {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  z-index: 2;
+  transform: rotate(-30deg);
+}
+.teammate4 {
+  position: absolute;
+  top: 500px;
+  right: 400px;
+  transform: rotate(20deg);
+  z-index: 2;
+}
+.teammate5 {
+  position: absolute;
+  top: 200px;
+  right: 600px;
+  z-index: 2;
+  transform: rotate(180deg);
+}
+
+.teammate6 {
+  position: absolute;
+  top: 300px;
+  right: 200px;
+  z-index: 2;
+  transform: rotate(60deg);
+}
