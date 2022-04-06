@@ -53,13 +53,13 @@ const NotificationsPopover = () => {
 
   const getUserNotificationList = async () => {
     const response = await getNotificationList();
-    console.log('알림 목록: ', response.data);
+    // console.log('알림 목록: ', response.data);
 
     // 전체 안 읽은 알림 개수:
     const cnt = response.data.notificationGetListResponseDTOList.filter(
       (item: { read: boolean }) => !item.read
     ).length;
-    console.log(cnt);
+    // console.log(cnt);
     setTotalUnReadCnt(cnt);
 
     // 전처리 후 저장) 알림 목록을 읽음 -> 안읽음 기준으로 정렬

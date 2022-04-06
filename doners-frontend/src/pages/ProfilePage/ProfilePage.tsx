@@ -23,7 +23,7 @@ const ProfilePage = ({ focus }: ProfilePageProps) => {
 
   useEffect(() => {
     getWalletAddress();
-  }, []);
+  }, [nickname]);
 
   return (
     <div>
@@ -31,7 +31,7 @@ const ProfilePage = ({ focus }: ProfilePageProps) => {
       {nickname && walletAddress ? (
         <ProfileDetail
           focus={focus}
-          nickname={nickname!}
+          nickname={nickname}
           walletAddress={walletAddress}
         />
       ) : null}

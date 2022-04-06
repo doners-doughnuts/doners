@@ -25,7 +25,7 @@ const MyNFT = ({ walletAddress }: MyNFTType) => {
     // const result = await getWalletAccount();
     // console.log(result);
     const response = await getUserNFTMetadataList(walletAddress);
-    console.log(response);
+    // console.log(response);
     setNftList(response);
   };
 
@@ -34,19 +34,16 @@ const MyNFT = ({ walletAddress }: MyNFTType) => {
   };
 
   useEffect(() => {
+    setNftList([]);
     getNftList();
-  }, []);
-
-  useEffect(() => {
-    console.log(nftList);
-  }, [nftList]);
+  }, [walletAddress]);
 
   return (
     <div>
       <section className={cx('container')}>
         {/* <div className={cx('col-lg-12')}> */}
         <div className={cx('row')}>
-          {nftList.length > 0 ? (
+          {nftList ? (
             nftList.map((item: string, idx) => (
               <div
                 key={idx}
