@@ -343,8 +343,9 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public DonationCheckResponseDTO checkDonation(String accessToken) {
 
+        // 승인 전이거나 승인이 되고, 마감일이 오늘 이후라면 신청 기록 존재
         return DonationCheckResponseDTO.builder()
-                .check(donationRepository.findByUserAndIsApprovedAndEndDateGreaterThanEqual(convertAccessTokenToUser(accessToken), true, LocalDate.now()).orElse(null) != null)
+                .check(donationRepository.findByUserAndApprovalStatusCodeLessThanEqualAndEndDateGreaterThanEqual(convertAccessTokenToUser(accessToken), ApprovalStatusCode.APPROVAL, LocalDate.now()).orElse(null) != null)
                 .build();
 
     }
