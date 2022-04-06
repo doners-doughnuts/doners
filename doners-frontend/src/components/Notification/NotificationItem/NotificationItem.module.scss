@@ -3,11 +3,12 @@
 .item {
   padding: 20px 30px 20px 30px;
   display: flex;
- flex-direction: row;
- justify-content: space-between;
- align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   // background-color: $yellow;
   white-space: nowrap;
+  cursor: pointer;
 
   .item-content {
     line-height: normal;
@@ -16,11 +17,10 @@
       font-size: smaller;
     }
 
-
-  .item-description {
-    width: 100%;
-    font-size: small;
-  }
+    .item-description {
+      width: 100%;
+      font-size: small;
+    }
   }
 
   .item-label {
@@ -32,13 +32,10 @@
     font-size: smaller;
   }
 
-  
-
   &:hover {
-    background-color: rgba(255,255,255,0.1);;
+    background-color: rgba(255, 255, 255, 0.1);
   }
-
-}   
+}
 
 .notification-new {
   background-color: $yellow;

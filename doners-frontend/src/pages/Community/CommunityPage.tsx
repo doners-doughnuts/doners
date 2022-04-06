@@ -34,9 +34,11 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
       const response = await checkApporveDonation();
       const admin = await isAdmin();
 
-      if (!exist && !response && !admin) {
-        toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');
-        navigate('');
+      if (!exist || !response) {
+        if (!admin) {
+          toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');
+          navigate('/');
+        }
       }
     } catch (error) {
       toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');

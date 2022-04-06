@@ -34,25 +34,27 @@ const MyNFT = ({ walletAddress }: MyNFTType) => {
   };
 
   useEffect(() => {
-    setNftList([]);
+    // setNftList([]);
     getNftList();
   }, [walletAddress]);
 
   return (
     <div>
       <section className={cx('container')}>
-        {/* <div className={cx('col-lg-12')}> */}
         <div className={cx('row')}>
           {nftList ? (
-            nftList.map((item: string, idx) => (
-              <div
-                key={idx}
-                className={cx('col-lg-2.5', 'col-md-3', 'col-sm-2')}
-                // onClick={() => openModal()}
-              >
-                <NFTCard metadataUri={item} />
-              </div>
-            ))
+            nftList.map((item: string, idx) => {
+              console.log(item, idx);
+              return (
+                <div
+                  key={idx}
+                  className={cx('col-lg-2.5', 'col-md-3', 'col-sm-2')}
+                  // onClick={() => openModal()}
+                >
+                  <NFTCard metadataUri={item} />
+                </div>
+              );
+            })
           ) : (
             <div>
               <div className={cx('col-lg-3', 'col-md-3', 'col-sm-2')}>
