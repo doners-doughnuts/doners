@@ -1,6 +1,6 @@
 @import 'assets/styles/main';
 
 .outlet {
-  @include column-flexbox;
-  min-height: 80vh;
+  @include column-flexbox(start);
+  min-height: 90vh;
 }
