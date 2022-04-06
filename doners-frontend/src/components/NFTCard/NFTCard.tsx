@@ -14,7 +14,7 @@ import NFTDetail from 'containers/ProfilePage/NFTDetail/NFTDetail';
 const cx = classNames.bind(styles);
 
 const NftEdition: Record<string, string> = {
-  corona: '코로나19',
+  covid: '코로나19',
   single: '미혼모',
   warrior: '참전용사',
   patient: '희귀병환자',

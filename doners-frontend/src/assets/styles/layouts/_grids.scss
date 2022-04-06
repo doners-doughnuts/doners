@@ -30,7 +30,7 @@
     @for $i from 1 through $lg-columns {
       .col-lg-#{$i} {
         // width: percentage($i / $lg-columns);
-        padding: $gutter / 2;
+        padding: 10px;
         width: ($lg-unit + $gutter) * $i;
       }
     }
