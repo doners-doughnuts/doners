@@ -62,6 +62,7 @@ public class DonationServiceImpl implements DonationService {
                 .description(donationRegisterPostDTO.getDescription())
                 .account(user.getUserAccount())
                 .amount(donationRegisterPostDTO.getTargetAmount())
+                .startDate(LocalDate.now())
                 .endDate(donationRegisterPostDTO.getEndDate())
                 .user(user)
                 .build();
