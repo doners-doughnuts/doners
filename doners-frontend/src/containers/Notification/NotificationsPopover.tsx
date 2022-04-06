@@ -31,7 +31,7 @@ const NotificationsPopover = () => {
   // const totalUnReadCnt = notifications.filter(
   //   (item) => !item.notificationIsRead
   // ).length;
-  // setTotalUnReadCnt(cnt);
+  // git setTotalUnReadCnt(cnt);
 
   const handleOpen = () => {
     setOpen(true);
@@ -84,8 +84,11 @@ const NotificationsPopover = () => {
       <div>
         <div onClick={handleOpen}>
           <NotificationIcon />
-          <div className={cx('badge')}>{totalUnReadCnt}</div>
+          {totalUnReadCnt > 0 ? (
+            <div className={cx('badge')}>{totalUnReadCnt}</div>
+          ) : null}
         </div>
+
         {open ? (
           <div className={cx('popover', { open: open })}>
             <div className={cx('blocker')} onClick={handleClose}></div>
