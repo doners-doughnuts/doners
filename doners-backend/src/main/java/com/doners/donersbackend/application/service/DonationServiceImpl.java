@@ -69,7 +69,7 @@ public class DonationServiceImpl implements DonationService {
         // 대리인
         if (donationRegisterPostDTO.isDeputy()) {
             donation.changeBeneficiary(donationRegisterPostDTO.getBeneficiaryName(), donationRegisterPostDTO.getBeneficiaryPhone());
-        // 본인
+            // 본인
         } else {
             donation.changeBeneficiary(user.getUserName(), donationRegisterPostDTO.getPhone());
         }
@@ -119,7 +119,7 @@ public class DonationServiceImpl implements DonationService {
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
-        // 모금 가능한 기부만 보기
+            // 모금 가능한 기부만 보기
         } else {
             LocalDate now = LocalDate.now();
 
@@ -272,7 +272,7 @@ public class DonationServiceImpl implements DonationService {
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
-        // 모금 가능한 기부만 보기
+            // 모금 가능한 기부만 보기
         } else {
             LocalDate now = LocalDate.now();
 
@@ -344,10 +344,20 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public DonationCheckResponseDTO checkDonation(String accessToken) {
 
-        User user = convertAccessTokenToUser(accessToken);
+        return DonationCheckResponseDTO.builder()
+                .check(donationRepository.findByUserAndIsApprovedAndEndDateGreaterThanEqual(convertAccessTokenToUser(accessToken), true, LocalDate.now()).orElse(null) != null)
+                .build();
+
+    }
+
+    @Override
+    public DonationCheckResponseDTO checkApprovedDonation(String accessToken) {
+
+        List<Donation> donationList = donationRepository.findByUserAndIsApproved(convertAccessTokenToUser(accessToken), true)
+                .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다"));
 
         return DonationCheckResponseDTO.builder()
-                .apply(donationRepository.findByUserAndIsApprovedAndEndDateGreaterThanEqual(user, true, LocalDate.now()).orElse(null) != null)
+                .check(donationList.size() > 0)
                 .build();
 
     }

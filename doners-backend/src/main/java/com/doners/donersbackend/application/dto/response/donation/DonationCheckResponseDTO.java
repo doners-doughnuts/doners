@@ -12,12 +12,12 @@ import lombok.ToString;
 @ToString
 public class DonationCheckResponseDTO extends BaseResponseDTO {
 
-    @ApiModelProperty(name = "신청 기록 존재 여부")
-    private boolean apply;
+    @ApiModelProperty(name = "기록 존재 여부")
+    private boolean check;
 
     @Builder
-    public DonationCheckResponseDTO(boolean apply) {
-        this.apply = apply;
+    public DonationCheckResponseDTO(boolean check) {
+        this.check = check;
     }
 
     public static DonationCheckResponseDTO of(String message, Integer statusCode, DonationCheckResponseDTO donationCheckResponseDTO) {
