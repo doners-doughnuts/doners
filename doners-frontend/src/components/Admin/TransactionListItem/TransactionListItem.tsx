@@ -1,3 +1,4 @@
+import Tag from 'assets/theme/Tag/Tag';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { fFundraiserContractTime } from 'utils/formatTime';
@@ -27,10 +28,19 @@ const TransactionListItem = (item: any) => {
     <div className={cx('item')}>
       <div className={cx('vl')}></div>
       <span className={cx('dot')}></span>
-      <div>to: {item.item[0]}</div>
-      <div>value: {item.item[3]} SSF</div>
-      <div>from: {item.item[1]}</div>
-      <div>time: {fFundraiserContractTime(item.item[2])}</div>
+      <div className={cx('history-item')}>
+        <div className={cx('history-timestamp')}>
+          {fFundraiserContractTime(item.item[2])}
+        </div>
+        <div className={cx('history-address')}>
+          <div>to: {item.item[0]}</div>
+          {/* <div>value: {item.item[3]} SSF</div> */}
+          <div>from: {item.item[1]}</div>
+        </div>
+      </div>
+      <div className={cx('history-value')}>
+        <Tag color="red">{`${item.item[3]} SSF`}</Tag>
+      </div>
     </div>
   );
 };
