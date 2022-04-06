@@ -185,7 +185,7 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
               <input
                 style={{ display: 'none' }}
                 type="file"
-                accept="image/jpg,impge/png,image/jpeg"
+                accept="image/jpg,image/png,image/jpeg"
                 name="userProfilePhoto"
                 onChange={handleUploadFile}
                 ref={fileInput}
