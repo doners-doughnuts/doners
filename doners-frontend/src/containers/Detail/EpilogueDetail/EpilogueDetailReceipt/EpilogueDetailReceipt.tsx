@@ -14,8 +14,8 @@ const EpilogueDetailReceipt = ({ history }: any) => {
       <TotalDonate />
       <div className={cx('history')}>
         {history.map((data: any, idx: number) => {
-          console.log(data);
-          return <HistoryItem value={data} key={idx} />;
+          // console.log(data);
+          return <HistoryItem value={data} key={idx} viewOnly />;
         })}
       </div>
     </div>

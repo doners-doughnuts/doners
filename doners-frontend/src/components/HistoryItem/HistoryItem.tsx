@@ -5,7 +5,7 @@ import { ReactComponent as RemoveIcon } from 'assets/images/icon/remove.svg';
 
 const cx = classNames.bind(styles);
 
-const HistoryItem = ({ value, onDelete }: any) => {
+const HistoryItem = ({ value, onDelete, viewOnly }: any) => {
   const money = Number(value.epilogueBudgetAmount);
   return (
     <div className={cx('history-item')}>
@@ -16,7 +16,7 @@ const HistoryItem = ({ value, onDelete }: any) => {
           className={cx('icon')}
           onClick={() => onDelete(value.epilogueBudgetSequence)}
         >
-          <RemoveIcon />
+          {!viewOnly ? <RemoveIcon /> : null}
         </div>
       </div>
     </div>

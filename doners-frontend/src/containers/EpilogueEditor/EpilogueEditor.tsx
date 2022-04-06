@@ -58,6 +58,8 @@ function EpilogueEditor({ modify = false }: EditType) {
   useEffect(() => {
     if (modify && isLoading) {
       getDetail();
+    } else {
+      if (id) setDonationId(id);
     }
   }, [isLoading]);
 

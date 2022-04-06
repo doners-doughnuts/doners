@@ -38,6 +38,7 @@ const DonateDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isExist, setIsExist] = useState(false);
   const [isOwn, setIsOwn] = useState(false);
+  const [epilogueId, setEpilogueId] = useState('');
 
   const [donationData, setDonationData] = useState({
     achievementRate: 0,
@@ -98,6 +99,8 @@ const DonateDetail = () => {
         const data = detailResponse.data;
         const epilogueResponse = await getEpilogueExist(donation_id);
         const epilData = epilogueResponse.data;
+        // console.log(epilData);
+        setEpilogueId(epilData.epilogueId);
         setIsLoading(false);
         setDonationData(data);
         setIsExist(epilData.exists);
@@ -136,7 +139,7 @@ const DonateDetail = () => {
                   {checkClosedDonation(donationData.endDate) ? (
                     isExist ? (
                       // TODO
-                      <Link to={`/epilogue/${donation_id}`}>
+                      <Link to={`/community/epilogue/${epilogueId}`}>
                         <Button color="secondary" size="large" fullWidth>
                           감사후기 보러가기
                         </Button>

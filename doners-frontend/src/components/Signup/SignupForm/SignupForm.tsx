@@ -64,12 +64,14 @@ const SignupForm = () => {
 
   const checkNicknameApi = async () => {
     try {
-      const result = await checkNickname(values.nickname);
-      console.log(result);
+      await checkNickname(values.nickname);
+      // console.log(result);
       setNicknameCheck(true);
       toast.success('사용가능한 닉네임입니다.');
     } catch (error) {
+      console.log(error);
       toast.error('사용중인 닉네임입니다.');
+      // setNicknameCheck(false)
     }
   };
 
@@ -83,13 +85,14 @@ const SignupForm = () => {
   const sendEmail = async () => {
     try {
       setIsEmailSend(true);
-      setTimeout(async () => {
-        await emailSend(values.email);
-        setThrottle(false);
-        toast.success('이메일을 발송했습니다. 이메일을 확인해주세요.');
-      }, 300);
+      // setTimeout(async () => {
+      await emailSend(values.email);
+      setThrottle(false);
+      toast.success('이메일을 발송했습니다. 이메일을 확인해주세요.');
+      // }, 300);
     } catch (error) {
       toast.error('이미 사용중인 이메일입니다.');
+      setIsEmailSend(false);
     }
   };
   useEffect(() => {
@@ -142,6 +145,7 @@ const SignupForm = () => {
                     error={errors.nickname ? true : false}
                     onChange={handleChange}
                     size="large"
+                    disabled={nicknameCheck}
                   />
                 </div>
                 <div className={cx('button')}>
@@ -170,6 +174,7 @@ const SignupForm = () => {
                     name="email"
                     error={errors.email ? true : false}
                     onChange={handleChange}
+                    disabled={isEmailSend}
                     size="large"
                   />
                 </div>

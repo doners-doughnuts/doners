@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
 import { calcDday } from 'utils/formatTime';
+import DonateContent from '../DonateContent/DonateContent';
 // import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
 
@@ -73,7 +74,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
           <H4>SSF</H4>
         </div>
       </div>
-      {data.startDate ? (
+      {data.approvalStatusCode !== 'BEFORE_CONFIRMATION' ? (
         <div className={cx('progress-info')}>
           <Progressbar value={rate} />
           <div className={cx('progress-rate')}>
@@ -83,8 +84,31 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
         </div>
       ) : null}
       <div>
+        <div className={cx('donate-title')}>{/* <H3>신청자의 글</H3> */}</div>
+        <div className={cx('donate-plan')}>
+          <div className={cx('detail-plan')}>
+            <H4>신청자의 글</H4>
+            <div className={cx('ocBtn')} onClick={handleHistoryListClick}>
+              <H4 color="green">{isOpen ? '닫기' : '더보기'}</H4>
+            </div>
+          </div>
+          {isOpen ? (
+            <div className={cx('history-items')}>
+              {data.budget.map((value) => {
+                return (
+                  <div className={cx('history-item')} key={value.sequence}>
+                    <P>{value.plan}</P>
+                    <div className={cx('value')}>
+                      <P>{`${value.amount.toLocaleString()}SSF`}</P>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </div>
         <div className={cx('donate-title')}>
-          <H3>모금액 활용계획</H3>
+          {/* <H3>모금액 활용계획</H3> */}
         </div>
         <div className={cx('donate-plan')}>
           <div className={cx('detail-plan')}>
