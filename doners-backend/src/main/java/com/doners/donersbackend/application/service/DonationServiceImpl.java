@@ -1,7 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationInfoRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
 import com.doners.donersbackend.domain.dao.donation.Donation;
@@ -49,35 +49,35 @@ public class DonationServiceImpl implements DonationService {
 
     @Transactional
     @Override
-    public Boolean createDonation(String accessToken, DonationInfoRequestDTO donationInfoRequestDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
+    public Boolean createDonation(String accessToken, DonationRegisterPostDTO donationRegisterPostDTO, MultipartFile certificate, MultipartFile image, List<MultipartFile> evidence) {
 
         User user = convertAccessTokenToUser(accessToken);
 
         Donation donation = Donation.builder()
-                .phone(donationInfoRequestDTO.getPhone())
-                .isDeputy(donationInfoRequestDTO.isDeputy())
-                .title(donationInfoRequestDTO.getTitle())
-                .categoryCode(donationInfoRequestDTO.getCategoryCode())
+                .phone(donationRegisterPostDTO.getPhone())
+                .isDeputy(donationRegisterPostDTO.isDeputy())
+                .title(donationRegisterPostDTO.getTitle())
+                .categoryCode(donationRegisterPostDTO.getCategoryCode())
                 .approvalStatusCode(ApprovalStatusCode.BEFORE_CONFIRMATION)
-                .description(donationInfoRequestDTO.getDescription())
+                .description(donationRegisterPostDTO.getDescription())
                 .account(user.getUserAccount())
-                .amount(donationInfoRequestDTO.getTargetAmount())
-                .endDate(donationInfoRequestDTO.getEndDate())
+                .amount(donationRegisterPostDTO.getTargetAmount())
+                .endDate(donationRegisterPostDTO.getEndDate())
                 .user(user)
                 .build();
 
         // 대리인
-        if (donationInfoRequestDTO.isDeputy()) {
-            donation.changeBeneficiary(donationInfoRequestDTO.getBeneficiaryName(), donationInfoRequestDTO.getBeneficiaryPhone());
+        if (donationRegisterPostDTO.isDeputy()) {
+            donation.changeBeneficiary(donationRegisterPostDTO.getBeneficiaryName(), donationRegisterPostDTO.getBeneficiaryPhone());
             // 본인
         } else {
-            donation.changeBeneficiary(user.getUserName(), donationInfoRequestDTO.getPhone());
+            donation.changeBeneficiary(user.getUserName(), donationRegisterPostDTO.getPhone());
         }
 
         donationRepository.save(donation);
 
         // 예산안
-        donationInfoRequestDTO.getBudget().forEach(donationBudgetRequestDTO ->
+        donationRegisterPostDTO.getBudget().forEach(donationBudgetRequestDTO ->
                 donationBudgetRepository.save(
                         DonationBudget.builder()
                                 .plan(donationBudgetRequestDTO.getPlan())
@@ -92,7 +92,7 @@ public class DonationServiceImpl implements DonationService {
         uploadDonationFile(donation, image, evidence);
 
         // 대리인일 경우 관계 증명서 업로드
-        if (donationInfoRequestDTO.isDeputy()) uploadCertificateFile(donation, certificate);
+        if (donationRegisterPostDTO.isDeputy()) uploadCertificateFile(donation, certificate);
 
         return true;
 
@@ -292,6 +292,7 @@ public class DonationServiceImpl implements DonationService {
             if (donationApproveRequestDTO.getRejectionCode() == null) throw new NullPointerException();
 
             donation.changeApprovalStatusCode(donationApproveRequestDTO.getRejectionCode());
+            donation.changeIsDeleted();
 
             donationRepository.save(donation);
 

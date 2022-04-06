@@ -12,11 +12,11 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@ApiModel("DonationInfoRequestDTO")
+@ApiModel("DonationRegisterPostDTO")
 @Getter
 @ToString
 @NoArgsConstructor
-public class DonationInfoRequestDTO {
+public class DonationRegisterPostDTO {
 
     @ApiModelProperty(name = "신청자(본인 / 대리인) 전화번호")
     @NotBlank
