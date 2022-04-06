@@ -10,6 +10,7 @@
     height: fit-content;
     z-index: -1;
   }
+  
   img {
     position: absolute;
     width: 100%;
@@ -20,12 +21,14 @@
     position: relative;
     margin-bottom: 50px;
     min-height: 80vh;
+    overflow: scroll;
 
     .vl {
       position: absolute;
       border-left: 2px solid $black;
       height: 100%;
       margin-left: 2rem;
+      max-height: 40vh;
       z-index: -1;
     }
   }
@@ -46,6 +49,7 @@
   .content {
     padding-top: 60px;
     padding-left: 20px;
+    padding-right: 25px;
     font-size: small;
   }
 }
