@@ -10,16 +10,21 @@
   background-color: $background-shadow;
 
   .card-header {
-    font-size: 36px;
+    font-size: small;
+    font-weight: 500;
+    color: $gray-4;
+    margin-bottom: 12px;
   }
 
   .card-content {
-    font-size: 36px;
     margin-right: 4px;
+    font-size: xx-large;
+    font-family: $font-number;
   }
 
   .card-content-label {
     font-size: 18px;
     font-family: 'Noto Sans';
+    font-size: medium;
   }
 }
