@@ -99,8 +99,8 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
       }, 3000);
       await setApprovalForAll(account);
 
-      // const mintResult = await mint(data.categoryCode, account);
-      const mintResult = await mint('COVID19', account);
+      const mintResult = await mint(data.categoryCode, account);
+      // const mintResult = await mint('COVID19', account);
       console.log(mintResult);
     } catch (error) {
       console.log(error);

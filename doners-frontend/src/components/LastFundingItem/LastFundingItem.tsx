@@ -94,7 +94,7 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
           <div className={cx('title')}>{item.donationTitle}</div>
           <div className={cx('value-row')}>
             <div className={cx('value-title')}>최종 모금액:</div>
-            <H2>{String(item.targetAmount)}</H2>
+            <H2>{String(item.targetAmount * 10000)}</H2>
             <H4>SSF</H4>
           </div>
           <Progressbar value={Math.floor((current / target) * 100)} />
