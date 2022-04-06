@@ -50,11 +50,11 @@
     align-items: center;
     padding: 0;
     // white-space: nowrap;
-    justify-content: end;
+    justify-content: flex-end;
 
     .row {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
       // todo
       column-gap: 2rem;
