@@ -4,69 +4,51 @@
   display: flex;
   align-items: center;
   height: min-content;
+  padding: 10px 30px;
+  // flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+  .dot-wrapper {
+    // width: 100%;
+    width: fit-content;
+   justify-content: left;
+
+    .dot {
+      height: 16px;
+      width: 16px;
+      background-color: $black;
+      border-radius: 100%;
+      // align-content: flex-start;
+    }
+  }
 
   .history-item {
-    @include flexbox(between);
+    // justify-content: space-evenly;
+    // @include flexbox(between);
     flex-direction: column;
     // border-bottom: 1px solid $gray-2;
     // height: 100%;
-    padding: 10px 20px;
-    font-size: x-small;
+    font-size: smaller;
     text-align: start;
-    align-items: flex-start;
-    margin-left: 10px;
-    margin-right: 10px;
-    // width: 80%;
+    margin-left: 30px;
+    // margin-right: 10px;
+    width: 100%;
 
     .history-timestamp {
       color: $gray-3;
     }
 
-    .history-balance {
-      // width: 100%;
-      padding-right: 20px;
-    }
-
     .history-address {
       word-break: break-all;
+      align-items: flex-start;
     }
 
-    .from-account {
-      width: 83%;
-    }
-    .money {
-      @include flexbox;
+    .history-balance {
+      // width: 100%;
+      height: min-content;
+      align-content: flex-end;
     }
   }
-
-  .vl {
-    position: absolute;
-    border-left: 2px solid $black;
-    top: 0;
-    height: max-content;
-    margin-left: 10px;
-    z-index: -1;
     
-
-  }
-  
-  .dot {
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    margin-left: 4px;
-    background-color: $black;
-    border-radius: 100%;
-    // display: inline-block;
-  }
 }
-
-
-// .history {
-//   // border: 2px solid $black;
-//   border-top: none;
-//   padding: 20px;
-//   max-height: 380px;
-//   overflow: scroll;
-
-// }

@@ -17,6 +17,7 @@ import { useParams } from 'react-router';
 import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
 import { checkClosedDonation } from 'utils/formatTime';
 import { Link } from 'react-router-dom';
+import { CategoryCode } from 'types/ApplicationTypes';
 
 const cx = classNames.bind(styles);
 
@@ -24,13 +25,13 @@ type budgetType = {
   budget: Array<{ plan: string; amount: number; sequence: number }>;
 };
 
-// TODO export (리팩토링 시 따로 뺴기)
-export const CategoryCode: Record<string, string> = {
-  COVID19: '코로나19',
-  WARRIOR: '참전용사',
-  PATIENT: '희귀질환',
-  SINGLE: '미혼모/부',
-};
+// // TODO export (리팩토링 시 따로 뺴기)
+// export const CategoryCode: Record<string, string> = {
+//   COVID19: '코로나19',
+//   WARRIOR: '참전용사',
+//   PATIENT: '희귀질환',
+//   SINGLE: '미혼모/부',
+// };
 
 const DonateDetail = () => {
   const [isOpen, setIsOpen] = useState(false);

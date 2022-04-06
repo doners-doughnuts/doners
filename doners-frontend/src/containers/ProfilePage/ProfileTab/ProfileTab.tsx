@@ -7,14 +7,13 @@ const cx = classNames.bind(styles);
 
 type TabType = {
   focus: number;
+  nickname: string;
 };
 
-const ProfileTab = ({ focus }: TabType) => {
-  const { nickname } = useParams();
-
-  useEffect(() => {
-    // console.log(nickname);
-  }, []);
+const ProfileTab = ({ focus, nickname }: TabType) => {
+  // useEffect(() => {
+  //   // console.log(nickname);
+  // }, []);
 
   return (
     <div>
