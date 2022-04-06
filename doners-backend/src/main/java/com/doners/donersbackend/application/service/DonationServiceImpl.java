@@ -69,7 +69,7 @@ public class DonationServiceImpl implements DonationService {
         // 대리인
         if (donationRegisterPostDTO.isDeputy()) {
             donation.changeBeneficiary(donationRegisterPostDTO.getBeneficiaryName(), donationRegisterPostDTO.getBeneficiaryPhone());
-            // 본인
+        // 본인
         } else {
             donation.changeBeneficiary(user.getUserName(), donationRegisterPostDTO.getPhone());
         }
@@ -307,7 +307,7 @@ public class DonationServiceImpl implements DonationService {
 
         User user = convertAccessTokenToUser(accessToken);
 
-        if (user.getUserCode() != UserCode.ADMIN) return 0;
+        if (!user.getUserCode().equals(UserCode.ADMIN)) return 0;
 
         Donation donation = donationRepository.findById(donationApproveRequestDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
