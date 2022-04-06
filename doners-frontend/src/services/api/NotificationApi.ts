@@ -8,7 +8,7 @@ const COMMON = '/notification';
  */
 export const getNotificationList = async () => {
   const response = await instance.get(COMMON);
-  console.log(response);
+  // console.log(response);
   return response;
 };
 
