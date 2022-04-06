@@ -1,8 +1,8 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
 import com.doners.donersbackend.domain.dao.donation.Donation;
 import com.doners.donersbackend.domain.dao.donation.DonationBudget;
@@ -69,7 +69,7 @@ public class DonationServiceImpl implements DonationService {
         // 대리인
         if (donationRegisterPostDTO.isDeputy()) {
             donation.changeBeneficiary(donationRegisterPostDTO.getBeneficiaryName(), donationRegisterPostDTO.getBeneficiaryPhone());
-            // 본인
+        // 본인
         } else {
             donation.changeBeneficiary(user.getUserName(), donationRegisterPostDTO.getPhone());
         }
@@ -119,6 +119,7 @@ public class DonationServiceImpl implements DonationService {
                             .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
                     break;
             }
+        // 모금 가능한 기부만 보기
         } else {
             LocalDate now = LocalDate.now();
 
@@ -243,31 +244,60 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page) {
+    public DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page, boolean view) {
 
         List<Donation> donationList = new ArrayList<>();
 
-        switch (type) {
-            // 제목 + 사연
-            case "td":
-                donationList = donationRepository.findByCategoryCodeAndTitleContainingOrDescriptionContaining(category, keyword, keyword, PageRequest.of(page - 1, 9))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
-            // 제목
-            case "t":
-                donationList = donationRepository.findByCategoryCodeAndTitleContaining(category, keyword, PageRequest.of(page - 1, 9))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
-            // 사연
-            case "d":
-                donationList = donationRepository.findByCategoryCodeAndDescriptionContaining(category, keyword, PageRequest.of(page - 1, 9))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
-            // 닉네임
-            case "n":
-                donationList = donationRepository.findByCategoryCodeAndUser(category, userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(page - 1, 9))
-                        .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
-                break;
+        // 전체 보기
+        if (!view) {
+            switch (type) {
+                // 제목 + 사연
+                case "td":
+                    donationList = donationRepository.findByCategoryCodeAndTitleContainingOrDescriptionContaining(category, keyword, keyword, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 제목
+                case "t":
+                    donationList = donationRepository.findByCategoryCodeAndTitleContaining(category, keyword, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 사연
+                case "d":
+                    donationList = donationRepository.findByCategoryCodeAndDescriptionContaining(category, keyword, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 닉네임
+                case "n":
+                    donationList = donationRepository.findByCategoryCodeAndUser(category, userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+            }
+        // 모금 가능한 기부만 보기
+        } else {
+            LocalDate now = LocalDate.now();
+
+            switch (type) {
+                // 제목 + 사연
+                case "td":
+                    donationList = donationRepository.findByCategoryCodeAndTitleContainingOrDescriptionContainingAndEndDateGreaterThanEqual(category, keyword, keyword, now, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 제목
+                case "t":
+                    donationList = donationRepository.findByCategoryCodeAndTitleContainingAndEndDateGreaterThanEqual(category, keyword, now, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 사연
+                case "d":
+                    donationList = donationRepository.findByCategoryCodeAndDescriptionContainingAndEndDateGreaterThanEqual(category, keyword, now, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+                // 닉네임
+                case "n":
+                    donationList = donationRepository.findByCategoryCodeAndUserAndEndDateGreaterThanEqual(category, userRepository.findByUserNicknameAndUserIsDeleted(keyword, false).orElse(null), now, PageRequest.of(page - 1, 9))
+                            .orElseThrow(() -> new IllegalArgumentException("기부글 목록을 찾을 수 없습니다."));
+                    break;
+            }
         }
 
         return convertDonationListToDTO(donationList);

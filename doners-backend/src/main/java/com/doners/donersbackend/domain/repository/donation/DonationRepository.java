@@ -35,9 +35,16 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     Optional<List<Donation>> findByCategoryCodeAndUser(CategoryCode category, User user, Pageable pageable);
 
-    Optional<List<Donation>> findByUserOrderByEndDateDesc(User user);
+    @Query("SELECT d FROM Donation d WHERE d.categoryCode = :categoryCode AND (d.title LIKE %:title% OR d.description LIKE %:description%) AND d.endDate >= :today")
+    Optional<List<Donation>> findByCategoryCodeAndTitleContainingOrDescriptionContainingAndEndDateGreaterThanEqual(CategoryCode categoryCode, String title, String description, LocalDate today, Pageable pageable);
 
-    Optional<Donation> findByUserAndIsDeleted(User user, boolean delete);
+    Optional<List<Donation>> findByCategoryCodeAndTitleContainingAndEndDateGreaterThanEqual(CategoryCode category, String title, LocalDate today, Pageable pageable);
+
+    Optional<List<Donation>> findByCategoryCodeAndDescriptionContainingAndEndDateGreaterThanEqual(CategoryCode category, String description, LocalDate today, Pageable pageable);
+
+    Optional<List<Donation>> findByCategoryCodeAndUserAndEndDateGreaterThanEqual(CategoryCode category, User user, LocalDate today, Pageable pageable);
+
+    Optional<List<Donation>> findByUserOrderByEndDateDesc(User user);
 
     Optional<Donation> findByUserAndIsApprovedAndEndDateGreaterThanEqual(User user, boolean approve, LocalDate today);
 
