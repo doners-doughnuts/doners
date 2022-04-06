@@ -139,7 +139,7 @@ const addMetadata = (_dna, _tokenId) => {
       date: dateTime,
       compiler: "Doners NFT Engine",
       //! NFT 카테고리 (총 4종류: covid / warrior / single / patient)
-      edition: 'covid', // by layer configurations
+      edition: 'patient', // by layer configurations
     },
     ...extraMetadata,
   };
@@ -371,7 +371,7 @@ const startCreating = async () => {
           // 2xxxxx: single
           // 3xxxxx: warrior
           // 4xxxxx: patient
-          const tokenId = 3000000 + abstractedIndexes[0];
+          const tokenId = 4000000 + abstractedIndexes[0];
 
           debugLogs ? console.log("Clearing canvas") : null;
           ctx.clearRect(0, 0, format.width, format.height);
