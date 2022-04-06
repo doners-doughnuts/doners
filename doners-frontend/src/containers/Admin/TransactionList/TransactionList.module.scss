@@ -19,14 +19,15 @@
   .inner-container {
     position: relative;
     margin-bottom: 50px;
+    min-height: 80vh;
 
-    // .vl {
-    //   position: absolute;
-    //   border-left: 2px solid $black;
-    //   height: 100%;
-    //   margin-left: 2rem;
-    //   z-index: -1;
-    // }
+    .vl {
+      position: absolute;
+      border-left: 2px solid $black;
+      height: 100%;
+      margin-left: 2rem;
+      z-index: -1;
+    }
   }
   
   
