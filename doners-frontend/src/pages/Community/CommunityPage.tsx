@@ -11,6 +11,8 @@ import { getWalletAccount } from 'utils/walletAddress';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { checkApporveDonation } from 'services/api/Donation';
+import { isAdmin } from 'utils/loggedUser';
 
 const cx = classNames.bind(styles);
 
@@ -29,9 +31,12 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
     try {
       const account = await getWalletAccount();
       const exist = await isMembership(account);
-      if (!exist) {
+      const response = await checkApporveDonation();
+      const admin = await isAdmin();
+
+      if (!exist && !response && !admin) {
         toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');
-        navigate('/');
+        navigate('');
       }
     } catch (error) {
       toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');
