@@ -32,6 +32,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
   const [current, setCurrent] = useState(item.donationIsApproved ? 999999 : 0);
   const [modalOpen, setModalOpen] = useState(false);
   const [isWithdrawn, setIsWithdrawn] = useState(false);
+  const [collectedBalance, setCollectedBalance] = useState(0);
 
   //// const [applicationDetail, setApplicationDetail] =
   ////   useState<DontationDetailType>();
@@ -60,15 +61,17 @@ const FundingItem = ({ item }: FundingItemProps) => {
   };
 
   /* 기부금 수령 여부 */
+  /* 최종 모금 달성률 */
   const checkWithdrawState = async () => {
     // (완료) 모금액 수령이 완료되었는지 검사
     const response = await fundraiserIsWithdraw(item.contractAddress);
-    // console.log('모금액 수령 여부: ', response);
-    setIsWithdrawn(response);
+    console.log('모금액 수령 여부: ', response);
+    setIsWithdrawn(response.isWithdraw);
+    setCollectedBalance(response.targetMoney);
   };
 
-  /* 모금 달성률 */
-  const calcAchievementRate = async () => {
+  /* 현재 모금 달성률 */
+  const calcCurrentAchievementRate = async () => {
     // let rate = Math.floor((current / target) * 100);
     const currentBalance = await nowBalance(item.contractAddress);
     // console.log(currentBalance);
@@ -95,7 +98,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
     //// getApplicationDetail();
     //* 관리자 승인 전이면 contractAddress가 아직 존재하지 않음
     if (item.donationIsApproved) {
-      calcAchievementRate();
+      calcCurrentAchievementRate();
       checkWithdrawState();
     }
     // calcDday();
@@ -168,17 +171,25 @@ const FundingItem = ({ item }: FundingItemProps) => {
           <div className={cx('title')}>{item.donationTitle}</div>
           <div className={cx('value-row')}>
             <div className={cx('value-title')}>목표금액:</div>
-            <H2>{String(item.targetAmount)}</H2>
-            <H4>SSF</H4>
+            <div className={cx('value-info')}>{String(item.targetAmount)}</div>
+            <div className={cx('value-title')}>SSF</div>
           </div>
           <Progressbar value={Math.floor((current / target) * 100)} />
           <div className={cx('date-row')}>
             <div className={cx('date-title')}>
               <Span color="gray">모금액 달성률 : </Span>{' '}
               <Span color="green">
-                {String(Math.floor((current / target) * 100)).concat('%')}
+                {checkClosedDonation(item.endDate)
+                  ? String(
+                      Math.floor((collectedBalance / target) * 100)
+                    ).concat('%')
+                  : String(Math.floor((current / target) * 100)).concat('%')}
               </Span>
-              <Span color="gray">{`  (${current} SSF)`}</Span>{' '}
+              <Span color="gray">
+                {checkClosedDonation(item.endDate)
+                  ? `   (${collectedBalance} SSF)`
+                  : `  (${current} SSF)`}
+              </Span>{' '}
             </div>
           </div>
         </div>

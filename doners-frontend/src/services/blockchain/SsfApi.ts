@@ -224,13 +224,18 @@ export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
   const isWithdraw = await FundraiserContract(fundraiserAddress)
     .methods.isWithdraw()
     .call();
+  // .then(console.log)
+  // .catch(console.log);
   const withdrawMoney = await FundraiserContract(fundraiserAddress)
     .methods.donationCollectMoney()
     .call();
+  // .then(console.log)
+  // .catch(console.log);
   const withdrawData: { isWithdraw: boolean; targetMoney: number } = {
     isWithdraw: isWithdraw,
     targetMoney: withdrawMoney,
   };
+  console.log(withdrawData);
   return withdrawData;
 };
 
