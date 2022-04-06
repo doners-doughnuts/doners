@@ -17,48 +17,61 @@
     border-radius: 20px;
     background-color: $white;
 
-    // display: flex;
-    // justify-content: space-between;
+    .row {
+      overflow: scroll;
+      height: 100%;
 
-    .userInfo,
-    .donateContent,
-    .donationDetail {
-      height: 300px;
-    }
-    .close-btn {
-      width: fit-content;
-    }
+      // display: flex;
+      // justify-content: space-between;
 
-    .header {
-      width: 100%;
-      @include flexbox(between);
-    }
+      // .userInfo,
+      // .donateContent,
+      // .donationDetail {
+      //   height: 300px;
+      // }
 
-    .select-box {
-      margin-bottom: 20px;
-    }
-    .button-group {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .button {
-        width: 45%;
+      .close-btn {
+        width: fit-content;
       }
-    }
 
-    .content {
-      min-height: fit-content;
-      border: 2px solid $black;
-
-      img {
-        width: 100px;
+      .header {
+        width: 100%;
+        @include flexbox(between);
       }
-    }
 
-    .fileuploadlist {
-      margin-bottom: 20px;
+      .select-box {
+        margin-bottom: 20px;
+      }
+
+      .button-group {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .button {
+          width: 45%;
+        }
+      }
+
+      .content {
+        min-height: fit-content;
+        border: 2px solid $black;
+
+        img {
+          width: 100px;
+        }
+      }
+
+      .file {
+        height: 265px;
+        overflow: scroll;
+
+        .fileuploadlist {
+          margin-bottom: 20px;
+        }
+      }
+      
     }
   }
 }
@@ -68,10 +81,12 @@
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-bg-show 0.3s;
 }
+
 @keyframes modal-bg-show {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
