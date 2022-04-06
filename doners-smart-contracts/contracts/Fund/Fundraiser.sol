@@ -17,6 +17,7 @@ contract Fundraiser is Ownable {
     address public custodian; // 후견인 주소
     IERC20 public erc20Contract; // ssafyContract를 가져오기위한 토큰 컨트랙트 인터페이스
     bool public isWithdraw; // 기부 수령 확인
+    uint256 public donationCollectMoney;
 
     struct Donation {
         address fromAccount;
@@ -55,6 +56,7 @@ contract Fundraiser is Ownable {
             address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)
         ); // ssafycontract 주소 주입
         isWithdraw = false;
+        donationCollectMoney = 0;
     }
 
     function myDonationsCount(address _sender)
@@ -93,7 +95,7 @@ contract Fundraiser is Ownable {
                 id
             )
         );
-
+        donationCollectMoney += _amount;
         donationsCount++;
         require(erc20Contract.approve(address(this), _amount), "address fail");
         require(erc20Contract.approve(sender, _amount), "msg.sender fail");
@@ -140,8 +142,6 @@ contract Fundraiser is Ownable {
         require(erc20Contract.approve(sender, balance), "msg.sender fail");
         require(balance > 0, "contract have no money");
 
-        erc20Contract.transfer(beneficiary, balance); // 현재 컨트랙트의 금액을 beneficiary에게 송금처리한다.
-
         withdrawData = Donation({
             fromAccount: sender,
             toAccount: address(this),
@@ -150,6 +150,8 @@ contract Fundraiser is Ownable {
             donationTitle: title,
             donationId: id
         });
+
+        erc20Contract.transfer(beneficiary, balance); // 현재 컨트랙트의 금액을 beneficiary에게 송금처리한다.
 
         emit Withdraw(balance);
     }

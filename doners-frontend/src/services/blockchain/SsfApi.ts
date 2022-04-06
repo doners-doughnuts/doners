@@ -5,25 +5,10 @@ import {
   Web3Client,
 } from 'services/web3';
 
-/**
- * 필요한 기능
- * [Doation(SSF)]
- * - 현재 ETH 시세
- * - 지갑 balance
- * - 오늘 거래된 SSF 총향
- * - transaction stages (SSF)
- * - 기부금 수령하기
- * -
- */
-
 /* Wallet ETH balance 조회 */
 export const getETHBalance = async (walletAddress: string) => {
   const balance = await Web3Client.eth.getBalance(walletAddress);
   console.log(balance, 'ETH');
-  // TIL: (위 2줄과 동일함, 그냥 값 찍어보는 용도라면 await 안 걸고 then()에서 찍어봐도 됨)
-  //// Web3Client.eth.getBalance(walletAddress).then(console.log);
-  // const result = await SsfContract.methods.balanceOf(walletAddress).call(); // 29803630997051883414242659
-  // const format = Web3Client.utils.fromWei(result); // 29803630.997051883414242659
 };
 
 /* Wallet SSF(token) balance 조회 */
@@ -33,7 +18,6 @@ export const getSSFBalance = async (walletAddress: string) => {
 };
 
 /* 기부금 만들기 */
-// fundRaisingCloses -> 초단위로 변환!!
 export const createFundraiser = async (
   factoryAddress: string, // 팩토리 컨트랙트 주소
   walletAddress: string, // 현재 지갑주소
@@ -78,24 +62,6 @@ export const getFundraiserFactoryArray = async (factoryAddress: string) => {
 };
 
 // /* 기부 모금하기 */
-// export const donate = async (
-//   fundraiserAddress: string,
-//   walletAddress: string,
-//   donateAmount: number
-// ) => {
-//   //  contract에 송금 및 인출 가능하게 ssafycontract를 approve하는코드
-//   const result = await SSFContract.methods
-//     .approve(fundraiserAddress, donateAmount)
-//     .send({ from: walletAddress });
-
-//   console.log(result);
-
-//   // 기부하는 코드
-//   await FundraiserContract(fundraiserAddress)
-//     .methods.donate(donateAmount)
-//     .send({ from: walletAddress });
-// };
-
 export const approveTransaction = async (
   fundraiserAddress: string,
   walletAddress: string,
@@ -255,9 +221,17 @@ export const nowFundraiserCount = async (fundraiserAddress: string) => {
 
 // /* Fundraiser 수령 여부 */
 export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
-  return await FundraiserContract(fundraiserAddress)
+  const isWithdraw = await FundraiserContract(fundraiserAddress)
     .methods.isWithdraw()
     .call();
+  const withdrawMoney = await FundraiserContract(fundraiserAddress)
+    .methods.donationCollectMoney()
+    .call();
+  const withdrawData: { isWithdraw: boolean; targetMoney: number } = {
+    isWithdraw: isWithdraw,
+    targetMoney: withdrawMoney,
+  };
+  return withdrawData;
 };
 
 // TODO delete (test code)
