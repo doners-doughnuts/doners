@@ -229,8 +229,6 @@ public class DonationServiceImpl implements DonationService {
     @Override
     public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO) {
 
-        convertAccessTokenToUser(accessToken);
-
         Donation donation = donationRepository.findById(donationRecommendPatchDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
