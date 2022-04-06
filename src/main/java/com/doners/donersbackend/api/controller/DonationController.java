@@ -206,11 +206,11 @@ public class DonationController {
 
     }
 
-    @ApiOperation(value = "기부글 신청 기록 확인")
+    @ApiOperation(value = "기부글 신청 기록 존재 여부 확인")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "기부글 신청 기록이 이미 존재합니다."),
+            @ApiResponse(code = 200, message = "기부글 신청 기록이 존재합니다."),
             @ApiResponse(code = 200, message = "기부글 신청 기록이 존재하지 않습니다."),
-            @ApiResponse(code = 409, message = "기부글 신청 기록 확인에 실패했습니다.")
+            @ApiResponse(code = 409, message = "기부글 신청 기록 존재 여부 확인에 실패했습니다.")
     })
     @GetMapping("/check")
     public ResponseEntity<? extends BaseResponseDTO> check(
@@ -220,13 +220,38 @@ public class DonationController {
         try {
             DonationCheckResponseDTO donationCheckResponseDTO = donationService.checkDonation(accessToken);
 
-            if (donationCheckResponseDTO.isApply()) {
-                return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 이미 존재합니다.", 200, donationCheckResponseDTO));
+            if (donationCheckResponseDTO.isCheck()) {
+                return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 존재합니다.", 200, donationCheckResponseDTO));
             }
 
             return ResponseEntity.ok(DonationCheckResponseDTO.of("기부글 신청 기록이 존재하지 않습니다.", 200, donationCheckResponseDTO));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 기록 확인에 실패했습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부글 신청 기록 존재 여부 확인에 실패했습니다.", 409));
+        }
+
+    }
+
+    @ApiOperation(value = "승인된 기부글 존재 여부 확인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "승인된 기부글이 존재합니다."),
+            @ApiResponse(code = 200, message = "승인된 기부글이 존재하지 않습니다."),
+            @ApiResponse(code = 409, message = "승인된 기부글 존재 여부 확인에 실패했습니다.")
+    })
+    @GetMapping("/check/approve")
+    public ResponseEntity<? extends BaseResponseDTO> checkApproved(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken
+    ) {
+
+        try {
+            DonationCheckResponseDTO donationCheckResponseDTO = donationService.checkApprovedDonation(accessToken);
+
+            if (donationCheckResponseDTO.isCheck()) {
+                return ResponseEntity.ok(DonationCheckResponseDTO.of("승인된 기부글이 존재합니다.", 200, donationCheckResponseDTO));
+            }
+
+            return ResponseEntity.ok(DonationCheckResponseDTO.of("승인된 기부글이 존재하지 않습니다.", 200, donationCheckResponseDTO));
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("승인된 기부글 존재 여부 확인에 실패했습니다.", 409));
         }
 
     }

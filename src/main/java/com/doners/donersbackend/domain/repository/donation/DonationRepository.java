@@ -46,6 +46,8 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     Optional<List<Donation>> findByUserOrderByEndDateDesc(User user);
 
+    Optional<List<Donation>> findByUserAndIsApproved(User user, boolean approve);
+
     Optional<Donation> findByUserAndIsApprovedAndEndDateGreaterThanEqual(User user, boolean approve, LocalDate today);
 
 }
