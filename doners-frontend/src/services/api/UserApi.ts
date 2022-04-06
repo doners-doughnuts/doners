@@ -27,12 +27,12 @@ export const login = async (userAccount: string) => {
 
 /* 닉네임 중복검사 */
 export const checkNickname = async (userNickname: string) => {
-  try {
-    const response = await instance.get(`/user/check/${userNickname}`);
-    return response;
-  } catch (error) {
-    return false;
-  }
+  // try {
+  const response = await instance.get(`/user/check/${userNickname}`);
+  return response;
+  // } catch (error) {
+  //   return false;
+  // }
 };
 
 export const signup = async (body: SignUpValidationProps) => {
