@@ -1,42 +1,36 @@
 @import 'assets/styles/main';
 
 .item {
-// display: flex;
+  display: flex;
   align-items: center;
-  .vl {
-    position: absolute;
-    border-left: 2px solid $black;
-    top: 0;
-    height: 100%;
-    margin-left: 2rem;
-    z-index: -1;
-  }
-  
-  .dot {
-    height: 25px;
-    width: 25px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-  }
-}
-
-
-.history {
-  // border: 2px solid $black;
-  border-top: none;
-  padding: 20px;
-  max-height: 380px;
-  overflow: scroll;
+  height: min-content;
 
   .history-item {
-    @include flexbox(between, center);
-    border-bottom: 1px solid $gray-2;
+    @include flexbox(between);
+    flex-direction: column;
+    // border-bottom: 1px solid $gray-2;
+    // height: 100%;
     padding: 10px 20px;
+    font-size: x-small;
+    text-align: start;
+    align-items: flex-start;
+    margin-left: 10px;
+    margin-right: 10px;
+    // width: 80%;
 
-    .history-row {
-      width: 100%;
+    .history-timestamp {
+      color: $gray-3;
     }
+
+    .history-balance {
+      // width: 100%;
+      padding-right: 20px;
+    }
+
+    .history-address {
+      word-break: break-all;
+    }
+
     .from-account {
       width: 83%;
     }
@@ -44,4 +38,35 @@
       @include flexbox;
     }
   }
+
+  .vl {
+    position: absolute;
+    border-left: 2px solid $black;
+    top: 0;
+    height: max-content;
+    margin-left: 10px;
+    z-index: -1;
+    
+
+  }
+  
+  .dot {
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    margin-left: 4px;
+    background-color: $black;
+    border-radius: 100%;
+    // display: inline-block;
+  }
 }
+
+
+// .history {
+//   // border: 2px solid $black;
+//   border-top: none;
+//   padding: 20px;
+//   max-height: 380px;
+//   overflow: scroll;
+
+// }
