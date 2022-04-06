@@ -55,9 +55,9 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     formData.append('certificate', apply.certificate);
     formData.append('image', apply.image);
     const fileevi = apply.evidence;
-    fileevi.forEach((file: string | Blob) => {
-      formData.append('evidence', file);
-    });
+    // fileevi.forEach((file: string | Blob) => {
+    //   formData.append('evidence', file);
+    // });
 
     for (let i = 0; i < apply.evidence.length; i++) {
       formData.append('evidence', apply.evidence[i]);
@@ -72,7 +72,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
       }))
       .map((data, idx) => ({ ...data, sequence: idx }));
     formData.append(
-      'donationInfoRequestDTO',
+      'donationRegisterPostDTO ',
       new Blob(
         [
           JSON.stringify({
