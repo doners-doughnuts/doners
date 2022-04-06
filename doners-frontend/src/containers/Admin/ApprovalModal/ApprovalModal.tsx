@@ -209,11 +209,13 @@ const ApprovalModal = ({
                 </div>
               </div>
             </div>
-            {/* <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}></div> */}
-            <div className={cx('col-lg-5', 'col-md-6', 'col-sm-4', 'userInfo')}>
+            <div className={cx('col-lg-6', 'donationDetail')}>
+              <DonateInfo data={donationDetail} />
+            </div>
+            <div className={cx('col-lg-5', 'col-md-5', 'col-sm-4', 'userInfo')}>
               <UserInfo data={donationDetail} />
             </div>
-            <div
+            {/* <div
               className={cx(
                 'col-lg-6',
                 'col-md-6',
@@ -222,10 +224,8 @@ const ApprovalModal = ({
               )}
             >
               <DonateContent data={donationDetail} />
-            </div>
-            <div className={cx('col-lg-5', 'donationDetail')}>
-              <DonateInfo data={donationDetail} />
-            </div>
+            </div> */}
+
             <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
               <div className={cx('file')}>
                 <H3>증빙자료</H3>
@@ -239,40 +239,42 @@ const ApprovalModal = ({
                       />
                     ))}
                 </div>
-                <div className={cx('select-box')}>
-                  <b>기부 신청 반려사유 선택</b>
-                  <Selectbox
-                    onChange={(e) => setApprovalStatus(e.value)}
-                    options={options}
-                  />
+              </div>
+            </div>
+            <div className={cx('col-lg-5', 'col-md-5', 'col-sm-4')}>
+              <div className={cx('select-box')}>
+                <H3>기부 신청 반려사유 선택</H3>
+                <Selectbox
+                  onChange={(e) => setApprovalStatus(e.value)}
+                  options={options}
+                />
+              </div>
+              <div className={cx('button-group')}>
+                <div className={cx('button')}>
+                  <Button
+                    color="secondary"
+                    fullWidth
+                    onClick={handleApprove}
+                    disabled={
+                      donationDetail?.approvalStatusCode === 'APPROVAL' ||
+                      preventDuplicatedRequest
+                    }
+                  >
+                    승인
+                  </Button>
                 </div>
-                <div className={cx('button-group')}>
-                  <div className={cx('button')}>
-                    <Button
-                      color="secondary"
-                      fullWidth
-                      onClick={handleApprove}
-                      disabled={
-                        donationDetail?.approvalStatusCode === 'APPROVAL' ||
-                        preventDuplicatedRequest
-                      }
-                    >
-                      승인
-                    </Button>
-                  </div>
-                  <div className={cx('button')}>
-                    <Button
-                      color="alternate"
-                      fullWidth
-                      onClick={handleDecline}
-                      disabled={
-                        donationDetail?.approvalStatusCode !==
-                        'BEFORE_CONFIRMATION'
-                      }
-                    >
-                      거절
-                    </Button>
-                  </div>
+                <div className={cx('button')}>
+                  <Button
+                    color="alternate"
+                    fullWidth
+                    onClick={handleDecline}
+                    disabled={
+                      donationDetail?.approvalStatusCode !==
+                      'BEFORE_CONFIRMATION'
+                    }
+                  >
+                    거절
+                  </Button>
                 </div>
               </div>
             </div>
