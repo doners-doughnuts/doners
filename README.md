@@ -9,26 +9,81 @@
 ## 목차
 
 1. [**서비스 소개**](#1)
-2. [**기술 스택**](#2)
-3. [**시스템 아키텍처**](#3)
-4. [**주요 기능**](#4)
-5. [**UCC 보러가기**](#5)
-6. [**협업 관리**](#6)
-7. [**팀원 소개**](#7)
-8. [**프로젝트 기간**](#8)
-9. [**프로젝트 관련 문서**](#9)
+2. [**UCC 보러가기**](#2)
+3. [**프로젝트 기간**](#3)
+4. [**팀원 소개**](#4)
+5. [**기술 스택**](#5)
+6. [**시스템 아키텍처**](#6)
+7. [**주요 기능**](#7)
+8. [**프로젝트 관련 문서**](#8)
 
-<br />
+<br/><br/>
 
 <div id="1"></div>
 
 ## 💡 서비스 소개
-> 사회적으로 힘든 여러 계층에 대한 모금 서비스와 모금 참여자들(NFT소유)만의 커뮤니티 형성 및 혜택 제공
 
+### 안전한 기부, Doners와 함께 하세요 😎
 
-<br/>
+> [코로나19, 희귀질환, 참전용사, 미혼모/부]  도움을 간절히 바라는 분들이 계십니다. <br/>
+> 사연을 읽고 그들에게 힘을 주세요. 사연에 대한 진실은 자료를 통해 직접 판단하실 수 있습니다. <br/>
+> 
+> 기부 천사 당신에게는 다양한 혜택과 Doners만의 귀엽고 소중한 NFT를 발행해 드립니다! <br/>
+> NFT를 가지고 국내 수많은 기부 천사들과 소통하며 선한 영향력을 행사해 주세요!! <br/>
+>
+> 서로가 서로를 돕는 세상, Doners가 만들어갑니다💗
+
+<br/><br/>
 
 <div id="2"></div>
+
+## 🎥 [UCC 보러가기]()
+
+
+<br/><br/>
+
+<div id="3"></div>
+
+## 📆 프로젝트 기간
+### 22.02.21 ~ 22.04.08
+- 기획 및 설계 : 22.02.21 ~ 22.03.11
+- 프로젝트 구현 : 22.03.14 ~ 22.04.06
+- 버그 수정 및 산출물 정리 : 22.04.06 ~ 22.04.08
+
+
+<br/><br/>
+
+<div id="4"></div>
+
+## 👪 팀원 소개
+<table>
+    <tr>
+        <td height="140px" align="center"> <a href="https://github.com/">
+            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 👑 손창현 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/">
+            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙂 박기범 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/">
+            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😆 정홍진 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/">
+            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😁 송민수 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/">
+            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙄 신지우 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/">
+            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😶 이선민 <br>(Front-End) </a> <br></td>
+    </tr>
+    <tr>
+        <td align="center">REST API<br/>CI/CD<br/>Infra<br/></td>
+        <td align="center">REST API</td>
+        <td align="center">REST API<br/>SMART CONTRACT<br/></td>
+        <td align="center">UI/UX</td>
+        <td align="center">UI/UX</td>
+        <td align="center">UI/UX</td>
+    </tr>
+</table>
+
+<br/><br/>
+
+<div id="5"></div>
 
 ## 🛠️ 기술 스택
 <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=#007396" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>  <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=black" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/JSON Web Tokens-000000?style=for-the-badge&logo=JSON Web Tokens&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <br>
@@ -71,18 +126,17 @@
 
 </details>
 
-<br />
+<br/><br/>
 
-<div id="3"></div>
+<div id="6"></div>
 
 ## 🗂️ 시스템 아키텍처
 
-<br />
+<br/><br/>
 
-<div id="4"></div>
+<div id="7"></div>
 
 ## 🖥️ 주요 기능 
-<br>
 
 ### 로그인 (메타마스크 지갑 연동)
 - 메타마스크 지갑 주소로 회원가입을 진행하고 
@@ -122,63 +176,10 @@
 | :---------------------------------------------------------------------------: |
 |  <img src="./readme_assets/community.gif" alt="사용자 커뮤니티" />  |
 
-<br/>
+<br/><br/>
 
-<div id="5"></div>
-
-## 🎥 [UCC 보러가기]()
-
-
-<br />
-
-<div id="6"></div>
-
-## 👥 협업 관리
-
-<br />
-
-<div id="7"></div>
-
-## 👪 팀원 소개
-<table>
-    <tr>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 👑 손창현 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙂 박기범 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😆 정홍진 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😁 송민수 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙄 신지우 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😶 이선민 <br>(Front-End) </a> <br></td>
-    </tr>
-    <tr>
-        <td align="center">REST API<br/>CI/CD<br/>Infra<br/></td>
-        <td align="center">REST API</td>
-        <td align="center">REST API</td>
-        <td align="center">React</td>
-        <td align="center">React</td>
-        <td align="center">React</td>
-    </tr>
-</table>
-
-<br />
 
 <div id="8"></div>
-
-## 📆 프로젝트 기간
-### 22.2.21 ~ 22.4.8
-- 기획 및 설계 : 22.2.21 ~ 22.3.11
-- 프로젝트 구현 : 22.3.14 ~ 22.4.
-- 버그 수정 및 산출물 정리 : 22.4. ~ 8
-
-
-<br />
-
-<div id="9"></div>
 
 ## 📋 프로젝트 관련 문서
 |  구분  |  링크  |
@@ -192,6 +193,6 @@
 | 와이어프레임 | [와이어프레임 바로가기](/docs/와이어프레임.md) |
 | 컨벤션 | [컨벤션 바로가기](/docs/컨벤션.md) |
 | 포팅매뉴얼 | [포팅매뉴얼 바로가기](/exec/서울_4반_A404_포팅매뉴얼.pdf) |
-| 외부서비스 정보 | [외부서비스 정보 바로가기](/exec/서울_4반_A404_외부서비스_정보.pdf) |
+| 외부서비스 정보 | [외부서비스 정보 바로가기](/exec/서울_4반_A404_외부서비스정보.pdf) |
 | 시연 시나리오 | [시연 시나리오 바로가기](/exec/서울_4반_A404_시연시나리오.pdf) |
 | 발표자료 | [발표자료 바로가기](/docs/서울_4반_A404_발표자료.pdf) |
