@@ -71,6 +71,10 @@ const AdminPage = () => {
 
     //(임시)
     // const response: TransactionListItemType[] = [];
+    // 1. 각각
+    // 2. 첫번쨰목록 -> 두번째목록 append
+    // 3. .
+    // 4. 정렬을 프론트에서
 
     setTransactionList(response);
 

@@ -26,7 +26,7 @@ export default function Web3Test() {
     // setApprovalForAll('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // nftTest('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
     // getUserNFTList('0xb72207EB8c21c7698d493Da3bB273F6C8a76E367')
-    // createDoughnut();
+    createDoughnut();
     //? (성공)
     // getMetadataFromTokenId(1000001);
     //? 없는 토큰 아이디일 경우
