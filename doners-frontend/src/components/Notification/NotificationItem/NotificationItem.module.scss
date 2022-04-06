@@ -2,18 +2,48 @@
 
 .item {
   padding: 20px 30px 20px 30px;
-  position: relative;
-  // background-color: $white;
+  display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ align-items: center;
+  // background-color: $yellow;
+  white-space: nowrap;
+
+  .item-content {
+    line-height: normal;
+    .item-date {
+      color: $gray-4;
+      font-size: smaller;
+    }
+
+
+  .item-description {
+    width: 100%;
+    font-size: small;
+  }
+  }
 
   .item-label {
-    color: $red; 
+    display: flex;
+    // justify-content: flex-end;
+    align-items: flex-end;
+    color: $gray-3;
+    width: fit-content;
+    font-size: smaller;
   }
 
-  .item-date {
-    color: $gray-4;
-  }
+  
 
   &:hover {
-    background-color: rgba(0,0,0,0.1);;
+    background-color: rgba(255,255,255,0.1);;
+  }
+
+}   
+
+.notification-new {
+  background-color: $yellow;
+
+  .item-label {
+    color: $red;
   }
 }
