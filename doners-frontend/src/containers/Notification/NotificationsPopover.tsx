@@ -29,7 +29,7 @@ const NotificationsPopover = () => {
   );
 
   // const totalUnReadCnt = notifications.filter(
-  //   (item) => !item.notificationIsRead
+  //   (item) => !item.read
   // ).length;
   // git setTotalUnReadCnt(cnt);
 
@@ -57,8 +57,9 @@ const NotificationsPopover = () => {
 
     // 전체 안 읽은 알림 개수:
     const cnt = response.data.notificationGetListResponseDTOList.filter(
-      (item: { notificationIsRead: boolean }) => !item.notificationIsRead
+      (item: { read: boolean }) => !item.read
     ).length;
+    console.log(cnt);
     setTotalUnReadCnt(cnt);
 
     // 전처리 후 저장) 알림 목록을 읽음 -> 안읽음 기준으로 정렬
@@ -67,7 +68,7 @@ const NotificationsPopover = () => {
         a: any,
         b: any
       ) {
-        return a.notificationIsRead - b.notificationIsRead;
+        return a.read - b.read;
       })
     );
   };
@@ -75,7 +76,7 @@ const NotificationsPopover = () => {
   useEffect(() => {
     getUserNotificationList();
     // notifications.sort(function (a: any, b: any) {
-    //   return a.notificationIsRead - b.notificationIsRead;
+    //   return a.read - b.read;
     // });
   }, []);
 
@@ -124,6 +125,7 @@ const NotificationsPopover = () => {
                       <NotificationItem
                         key={notification.notificationId}
                         item={notification}
+                        triggerRefresh={getUserNotificationList}
                       />
                     ))}
                 </div>
@@ -138,6 +140,7 @@ const NotificationsPopover = () => {
                       <NotificationItem
                         key={notification.notificationId}
                         item={notification}
+                        triggerRefresh={getUserNotificationList}
                       />
                     ))}
                 </div>

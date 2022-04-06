@@ -3,5 +3,5 @@ export type NotificationItemType = {
   description: string;
   donationId: string;
   notificationId: string;
-  notificationIsRead: boolean;
+  read: boolean;
 };
