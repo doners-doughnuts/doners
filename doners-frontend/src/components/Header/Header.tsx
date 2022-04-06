@@ -51,7 +51,7 @@ const Header = () => {
       setLoggedUserNickname(sessionStorageUserNickname);
     }
 
-    console.log(isAdmin());
+    // console.log(isAdmin());
     setIsLoggedAdmin(isAdmin());
   }, [getLoggedUserInfo()]);
 
