@@ -22,11 +22,16 @@ const NotificationsPopover = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [totalUnReadCnt, setTotalUnReadCnt] = useState(0);
 
-  const [notifications, setNotifications] =
-    useState<NotificationItemType[]>(_notificationList);
-  // const [notifications, setNotifications] = useState<NotificationItemType[]>(
-  //   []
-  // );
+  // const [notifications, setNotifications] =
+  // useState<NotificationItemType[]>(_notificationList);
+  const [notifications, setNotifications] = useState<NotificationItemType[]>(
+    []
+  );
+
+  // const totalUnReadCnt = notifications.filter(
+  //   (item) => !item.notificationIsRead
+  // ).length;
+  // setTotalUnReadCnt(cnt);
 
   const handleOpen = () => {
     setOpen(true);
@@ -42,7 +47,6 @@ const NotificationsPopover = () => {
     notifications
       .slice(0, totalUnReadCnt)
       .forEach(async (item) => await readNotification(item.notificationId));
-
     // 알림 목록 갱신(새로고침)
     getUserNotificationList();
   };
@@ -52,21 +56,27 @@ const NotificationsPopover = () => {
     console.log('알림 목록: ', response.data);
 
     // 전체 안 읽은 알림 개수:
-    const cnt = response.data.filter(
+    const cnt = response.data.notificationGetListResponseDTOList.filter(
       (item: { notificationIsRead: boolean }) => !item.notificationIsRead
     ).length;
     setTotalUnReadCnt(cnt);
 
     // 전처리 후 저장) 알림 목록을 읽음 -> 안읽음 기준으로 정렬
     setNotifications(
-      response.data.notificationList.sort(function (a: any, b: any) {
+      response.data.notificationGetListResponseDTOList.sort(function (
+        a: any,
+        b: any
+      ) {
         return a.notificationIsRead - b.notificationIsRead;
       })
     );
   };
 
   useEffect(() => {
-    // getUserNotificationList();
+    getUserNotificationList();
+    // notifications.sort(function (a: any, b: any) {
+    //   return a.notificationIsRead - b.notificationIsRead;
+    // });
   }, []);
 
   return (

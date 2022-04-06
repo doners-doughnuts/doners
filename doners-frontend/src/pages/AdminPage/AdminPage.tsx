@@ -15,6 +15,7 @@ import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
 import { TransactionListItemType } from 'types/TransactionTypes';
 import { allFundraiserData, allWithdrawData } from 'services/blockchain/SsfApi';
 import H1 from 'assets/theme/Typography/H1/H1';
+import H3 from 'assets/theme/Typography/H3/H3';
 
 const cx = classNames.bind(styles);
 
@@ -91,8 +92,8 @@ const AdminPage = () => {
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
-        <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-          <H1>Dashboard</H1>
+        <div className={cx('page-title', 'col-lg-6', 'col-md-6', 'col-sm-4')}>
+          Dashboard
         </div>
         <DashboardPanel
           nftCount={nftCount}
