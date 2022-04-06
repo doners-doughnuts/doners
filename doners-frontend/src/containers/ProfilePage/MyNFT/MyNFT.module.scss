@@ -1,7 +1,7 @@
 @import 'assets/styles/main';
 
 .row {
-  @include flexbox(between);
+  @include flexbox(start);
 
   .empty {
     .card {
