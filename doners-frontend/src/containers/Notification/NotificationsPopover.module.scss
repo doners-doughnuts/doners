@@ -1,7 +1,7 @@
 @import 'assets/styles/main';
 
 .popup { display: none; }
-.popup.open { display: block; }
+.popup.open { display: block;  }
 
 .badge {
   position: absolute;
@@ -18,6 +18,8 @@
   text-align: center;
 }
 
+
+
 .blocker {
   position: fixed;
   top: 0;
@@ -31,20 +33,6 @@
 }
 .popover {
   top: 100px;
-  // position: relative;
-  // border: 1px solid #ccc;
-  // border-radius: 5px;
-  // width: 200px;
-  // height: 100px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // background: #FFF;
-
-  // position: fixed;
-  // top: 50vh;
-  // left: 50vw;
-  // transform: translate(-50%, -50%);
 
 
   hr {
@@ -52,13 +40,13 @@
     background-color: $black;
     border: none;
   }
-  
+
 }
 
 .contents {
   background-color: $background-shadow;
   // background-color: #ffe06f;
-  background-color: $yellow;
+  // background-color: $white;
   position: absolute;
   top: 100;
   right: 0;
@@ -71,48 +59,77 @@
   z-index: 999;
 
   font-size: small;
+  overflow: scroll;
+
+          
 
   .notification-header {
-    margin-bottom: 8px;
-    margin-left:  20px;
+    margin: 8px 24px 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .notification-sub-header {
+      line-height: 16px;
+      align-self: start;
+      font-size: smaller;
+    }
+    .notification-read-all {
+      justify-content: end;
+      align-items: flex-end;
+    }
   }
 
-  .notification-sub-header {
-    margin-top: 8px;
-    margin-bottom: 16px;
-    margin-left:  20px;
-  }
+
 
   .notification-unread-count {
     color: $red;
     font-weight: 600;
   }
 
-  .notification-read-all {
-    color: $green;
-  }
 
-  .list-header {
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.1);
-    width: 100%;
-    height: 32px;
-    text-align: start;
-    align-items: center;
-    padding-left: 15px;
-  }
+
+  .list {
+    // overflow: scroll;
+    
+    .list-new,
+    .list-prev {
+      overflow: scroll;
+      
+    }
+    .list-header {
+      display: flex;
+      background-color: $black;
+      color: $white;
+      // background-color: rgba(0, 0, 0, 0.1);
+      width: 100%;
+      height: 32px;
+      text-align: start;
+      align-items: center;
+      padding-left: 15px;
+      
+
+    }
 
   .reload-button {
-    position: absolute;
+    position: fixed;
+    // overflow-y: scroll;
     width: 100%;
     text-align: center;
     margin-top: 20px; 
-    margin-bottom: 20px;
+    // bottom: 0;
+    background-color: $green;
+    border-radius: 0 0 8px 8px;
     bottom: 0;
-
+    // -color: rgba(0, 0, 0, 0.1);
+  
     button {
-      color: $black;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      color: $gray-4;
     }
   }
+  }
 }
+
 

@@ -62,8 +62,6 @@ public class NotificationServiceImpl implements NotificationService {
             }
         });
 
-        if (notificationGetListResponseDTOList.size() == 0) return null;
-
         return NotificationGetListWrapperResponseDTO.builder()
                 .notificationGetListResponseDTOList(notificationGetListResponseDTOList)
                 .build();
