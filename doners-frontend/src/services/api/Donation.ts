@@ -72,7 +72,11 @@ export const getSearchDonation = async (
   const result = await instance.get(
     `/donation/search?category=${category}&page=${page}&keyword=${keyword}&type=${type}`
   );
-  // const result: DontationDetailType = _donationDetail;
+  return result;
+};
+
+export const checkApporveDonation = async () => {
+  const result = await instance.get(`/donation/check/approve`);
   return result;
 };
 
