@@ -15,7 +15,7 @@ const EpilogueDetailReceipt = ({ history }: any) => {
       <div className={cx('history')}>
         {history.map((data: any, idx: number) => {
           // console.log(data);
-          return <HistoryItem value={data} key={idx} />;
+          return <HistoryItem value={data} key={idx} viewOnly />;
         })}
       </div>
     </div>

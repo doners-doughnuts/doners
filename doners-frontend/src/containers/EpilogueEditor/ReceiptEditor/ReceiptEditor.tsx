@@ -22,7 +22,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
   const [initlength, setLength] = useState(0);
 
   useEffect(() => {
-    if (!list) {
+    if (list) {
       list.map((data: historyType, idx: number) => {
         data.epilogueBudgetSequence = idx;
         return data;
@@ -104,6 +104,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
               value={data}
               key={idx}
               onDelete={handleHistoryDelete}
+              viewOnly={false}
             />
           );
         })}
