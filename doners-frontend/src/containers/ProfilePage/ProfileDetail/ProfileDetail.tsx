@@ -24,17 +24,11 @@ const ProfileDetail = ({ focus, nickname, walletAddress }: ProfileType) => {
           <div className={cx('inner-container')}>
             <main className={cx('content')}>
               {focus === 1 ? (
-                <div>
-                  <MyNFT walletAddress={walletAddress} />
-                </div>
+                <MyNFT walletAddress={walletAddress} />
               ) : focus === 2 ? (
-                <div>
-                  <DonationHistory />
-                </div>
+                <DonationHistory />
               ) : focus === 3 ? (
-                <div>
-                  <FundHistory />
-                </div>
+                <FundHistory />
               ) : null}
             </main>
           </div>

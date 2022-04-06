@@ -136,7 +136,7 @@ export const getUserNFTIdList = async (walletAddress: string) => {
 // (https://ethereum.stackexchange.com/a/98495)
 export const getUserNFTMetadataList = async (walletAddress: string) => {
   //? 성공
-  console.log(walletAddress);
+  // console.log(walletAddress);
   let result = await DDHelperContract.methods
     .getTokenMetadatasByOwner(walletAddress)
     .call();
@@ -146,7 +146,7 @@ export const getUserNFTMetadataList = async (walletAddress: string) => {
     uri.replace('ipfs://', 'https://ipfs.io/ipfs/')
   );
 
-  console.log('보유 NFT의 Metadata 목록: ', result);
+  // console.log('보유 NFT의 Metadata 목록: ', result);
   return result;
 };
 
