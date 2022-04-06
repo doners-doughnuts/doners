@@ -23,8 +23,7 @@ public class NotificationController {
 
     @ApiOperation(value = "기부글 알림")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "알림이 있습니다."),
-            @ApiResponse(code = 204, message = "알림이 없습니다."),
+            @ApiResponse(code = 200, message = "알림 확인에 성공했습니다."),
             @ApiResponse(code = 404, message = "알림 확인에 필요한 정보를 찾을 수 없습니다."),
             @ApiResponse(code = 409, message = "알림 확인에 실패했습니다.")
     })
@@ -33,21 +32,14 @@ public class NotificationController {
             @ApiIgnore @RequestHeader("Authorization") String accessToken
     ) {
 
-        NotificationGetListWrapperResponseDTO notificationGetListWrapperResponseDTO = null;
-
         try {
-            notificationGetListWrapperResponseDTO = notificationService.getNotification(accessToken);
-
-            if (notificationGetListWrapperResponseDTO == null) {
-                return ResponseEntity.status(204).body(NotificationGetListWrapperResponseDTO.of("알림이 없습니다.", 204));
-            }
+            return ResponseEntity.ok(NotificationGetListWrapperResponseDTO.of("알림 확인에 성공했습니다.", 200, notificationService.getNotification(accessToken)));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("알림 확인에 필요한 정보를 찾을 수 없습니다.", 404));
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("알림 확인에 실패했습니다.", 409));
         }
 
-        return ResponseEntity.ok(NotificationGetListWrapperResponseDTO.of("알림이 있습니다.", 200, notificationGetListWrapperResponseDTO));
 
     }
 

@@ -12,8 +12,7 @@ type NotificationItemProps = {
 };
 
 const NotificationItem = ({ item }: NotificationItemProps) => {
-  const [isRead, setIsRead] = useState(false);
-  // const [notification, setNotification] = useState<NotificationItemType>();
+  // const [isRead, setIsRead] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = async () => {
@@ -23,11 +22,18 @@ const NotificationItem = ({ item }: NotificationItemProps) => {
 
   return (
     <>
-      <div className={cx('item')} onClick={handleClick}>
-        <div className={cx('item-date')}>{item.createTime}</div>
-        {item.description}
+      <div
+        className={cx('item', {
+          'notification-new': !item.notificationIsRead,
+        })}
+        onClick={handleClick}
+      >
+        <div className={cx('item-content')}>
+          <div className={cx('item-date')}>{item.createTime}</div>
+          <div className={cx('item-description')}>{item.description}</div>
+        </div>
         <div className={cx('item-label')}>
-          {item.notificationIsRead ? '읽음' : '안읽음'}
+          {item.notificationIsRead ? '읽음' : 'NEW'}
         </div>
       </div>
     </>

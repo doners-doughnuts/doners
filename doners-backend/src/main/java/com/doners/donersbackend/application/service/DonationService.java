@@ -31,13 +31,16 @@ public interface DonationService {
     DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO);
 
     // 기부글 검색
-    DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page);
+    DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page, boolean view);
 
     // 기부글 승인
     Integer approveDonation(String accessToken, DonationApproveRequestDTO donationApproveRequestDTO) throws NullPointerException;
 
     // 기부글 신청 여부
     DonationCheckResponseDTO checkDonation(String accessToken);
+
+    // 기부글 신청 여부 (승인된 게 있는지)
+    DonationCheckResponseDTO checkApprovedDonation(String accessToken);
 
     // 대표 사진 및 증빙 자료 업로드
     void uploadDonationFile(Donation donation, MultipartFile image, List<MultipartFile> evidence);
