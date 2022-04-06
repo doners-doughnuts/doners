@@ -6,6 +6,10 @@ import { ReactComponent as WaveIcon } from 'assets/images/icon/wave.svg';
 import { DontationDetailType } from 'types/DonationTypes';
 import { nowBalance, nowFundraiserData } from 'services/blockchain/SsfApi';
 import { useEffect, useState } from 'react';
+import Tag from 'assets/theme/Tag/Tag';
+import H4 from 'assets/theme/Typography/H4/H4';
+import Span from 'assets/theme/Typography/Span/Span';
+import { fDateDash, fFundraiserContractTime, fToNow } from 'utils/formatTime';
 
 const cx = classNames.bind(styles);
 type DonateHistoryProps = {
@@ -14,7 +18,6 @@ type DonateHistoryProps = {
 const DonateHistory = ({ data }: DonateHistoryProps) => {
   const [history, setHistory] = useState([]);
   const [current, setCurrent] = useState(0);
-
   const getDonateHistory = async () => {
     if (data.contractAddress) {
       const result = await nowFundraiserData(data.contractAddress);
@@ -33,6 +36,10 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
     getDonateHistory();
     getCurrentBalance();
   }, [data]);
+
+  useEffect(() => {
+    console.log(history);
+  }, [history]);
 
   return (
     <div className={cx('inner-container')}>
@@ -60,10 +67,17 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
           history.map((data: any, idx) => {
             return (
               <div className={cx('history-item')} key={idx}>
-                <P>{data.account}</P>
+                <div className={cx('history-row')}>
+                  <div className={cx('from-account')}>
+                    <P>{data.fromAccount}</P>
+                    <Span>{fToNow(fFundraiserContractTime(data.date))}</Span>
+                  </div>
+                </div>
                 <div className={cx('money')}>
-                  <P>{data.value}</P>
-                  <P>SSF</P>
+                  <Tag color="green">{`${data.value} SSF`}</Tag>
+                  {/* <Tag>{`${data.value}SSF`}</Tag> */}
+                  {/* <P>{data.value}</P> */}
+                  {/* <P>SSF</P> */}
                 </div>
               </div>
             );

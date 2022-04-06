@@ -29,6 +29,7 @@ export function fDateTimeSuffix(date: string) {
 }
 
 export function fToNow(date: string) {
+  console.log(date);
   //// return formatDistanceToNow(new Date(date), { addSuffix: true, });
   return formatDistanceToNowStrict(new Date(date), {
     locale: local,
@@ -46,11 +47,12 @@ export function fDateDash(date: string) {
  * @returns true: 마감된 기부 / false: 모금가능한 기부
  */
 export function checkClosedDonation(date: string) {
-  // return (Date.now() - new Date('2022-04-05').getTime())- (1000 * 3600 * 24) -1)));
-  // Date.now() - new Date('2022-04-05').getTime()) /
-  //                 (1000 * 3600 * 24) -
-  //                 1
-  return differenceInDays(new Date(date), new Date()) <= 0;
+  const now = new Date(new Date().toDateString()).getTime();
+  const end = new Date(new Date(date).toDateString()).getTime();
+
+  const diff = now - end;
+  const result = Math.abs(diff / (1000 * 3600 * 24));
+  return result < 0;
 }
 
 /**
