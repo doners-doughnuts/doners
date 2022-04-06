@@ -46,11 +46,7 @@ instance.interceptors.response.use(
           console.log('400 ERROR, not authorized.');
           break;
         case 401:
-          // navigate('signup');
           history.push('/signup');
-          // console.log('401error!');
-          //! history.push() 만 했을 때, url만 변경이 되고, 페이지가 reload되지 않는 문제
-          // (https://stackoverflow.com/questions/42941708/react-history-push-is-updating-url-but-not-navigating-to-it-in-browser)
           // 강제로 새로고침 (임시)
           window.location.reload();
           toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
