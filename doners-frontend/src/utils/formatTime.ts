@@ -41,6 +41,10 @@ export function fDateDash(date: string) {
   return format(new Date(date), 'yyyy-MM-dd');
 }
 
+export function fDateChange(date: string) {
+  return String(new Date(date).getTime());
+}
+
 /**
  * 모금가능한 기부인지 검사하는 함수
  * @param {date} expire-date of the Donation
@@ -64,9 +68,12 @@ export function checkClosedDonation(date: string) {
  * @returns D-day string
  */
 export function calcDday(endDate: string) {
-  const dday = Math.ceil(
-    (Date.now() - new Date(endDate).getTime()) / (1000 * 3600 * 24) - 1
-  );
+  const now = new Date(new Date().toDateString()).getTime();
+  const end = new Date(new Date(endDate).toDateString()).getTime();
+
+  const diff = now - end;
+  const dday = Math.floor(diff / (1000 * 3600 * 24));
+
   if (dday === 0) {
     return '(마감일)';
   } else {
