@@ -7,6 +7,10 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { TransactionListItemType } from 'types/TransactionTypes';
 import TransactionListItem from 'components/Admin/TransactionListItem/TransactionListItem';
+import P from 'assets/theme/Typography/P/P';
+import Span from 'assets/theme/Typography/Span/Span';
+import { fFundraiserContractTime, fToNow } from 'utils/formatTime';
+import Tag from 'assets/theme/Tag/Tag';
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +38,27 @@ const TransactionList = ({ transactionList }: any) => {
                   <TransactionListItem key={idx} item={item} />
                 ))
             : null}
+
+          {transactionList.length > 0 &&
+            transactionList.map((data: any, idx: number) => {
+              console.log(data);
+              return (
+                <div className={cx('history-item')} key={idx}>
+                  <div className={cx('history-row')}>
+                    <div className={cx('from-account')}>
+                      <P>{data.fromAccount}</P>
+                      {/* <Span>{fToNow(fFundraiserContractTime(data.date))}</Span> */}
+                    </div>
+                  </div>
+                  <div className={cx('money')}>
+                    <Tag color="green">{`${data.value} SSF`}</Tag>
+                    {/* <Tag>{`${data.value}SSF`}</Tag> */}
+                    {/* <P>{data.value}</P> */}
+                    {/* <P>SSF</P> */}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

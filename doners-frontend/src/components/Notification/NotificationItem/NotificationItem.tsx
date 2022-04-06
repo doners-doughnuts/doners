@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { readNotification } from 'services/api/NotificationApi';
 import { NotificationItemType } from 'types/NotificationTypes';
+import { getLoggedUserId } from 'utils/loggedUser';
 import styles from './NotificationItem.module.scss';
 
 const cx = classNames.bind(styles);
@@ -17,7 +18,7 @@ const NotificationItem = ({ item }: NotificationItemProps) => {
 
   const handleClick = async () => {
     await readNotification(item.notificationId);
-    navigate(`/fundraisings/${item.donationId}`);
+    navigate(`/profile/fundhistory${getLoggedUserId()}`);
   };
 
   return (
