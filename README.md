@@ -1,8 +1,7 @@
 <div align="center">
   <br />
-  <img src="./readme_assets/doners.png" alt="Doners" />
+  <img src="./readme_assets/doners_intro.png" alt="Doners" />
   <br />
-  <h1>기부하고 NFT 받기</h1>
   <br />
 </div>
 
