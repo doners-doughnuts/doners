@@ -39,6 +39,9 @@ public interface DonationService {
     // 기부글 신청 여부
     DonationCheckResponseDTO checkDonation(String accessToken);
 
+    // 기부글 신청 여부 (승인된 게 있는지)
+    DonationCheckResponseDTO checkApprovedDonation(String accessToken);
+
     // 대표 사진 및 증빙 자료 업로드
     void uploadDonationFile(Donation donation, MultipartFile image, List<MultipartFile> evidence);
 
