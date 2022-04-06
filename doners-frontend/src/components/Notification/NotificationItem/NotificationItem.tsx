@@ -3,29 +3,32 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { readNotification } from 'services/api/NotificationApi';
 import { NotificationItemType } from 'types/NotificationTypes';
-import { getLoggedUserId } from 'utils/loggedUser';
+import { getLoggedUserId, getLoggedUserNickname } from 'utils/loggedUser';
 import styles from './NotificationItem.module.scss';
 
 const cx = classNames.bind(styles);
 
 type NotificationItemProps = {
   item: NotificationItemType;
+  triggerRefresh: any;
 };
 
-const NotificationItem = ({ item }: NotificationItemProps) => {
+const NotificationItem = ({ item, triggerRefresh }: NotificationItemProps) => {
   // const [isRead, setIsRead] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    await readNotification(item.notificationId);
-    navigate(`/profile/fundhistory${getLoggedUserId()}`);
+    const response = await readNotification(item.notificationId);
+    console.log(response);
+    triggerRefresh();
+    navigate(`/profile/fundhistory/${getLoggedUserNickname()}`);
   };
 
   return (
     <>
       <div
         className={cx('item', {
-          'notification-new': !item.notificationIsRead,
+          'notification-new': !item.read,
         })}
         onClick={handleClick}
       >
@@ -33,9 +36,7 @@ const NotificationItem = ({ item }: NotificationItemProps) => {
           <div className={cx('item-date')}>{item.createTime}</div>
           <div className={cx('item-description')}>{item.description}</div>
         </div>
-        <div className={cx('item-label')}>
-          {item.notificationIsRead ? '읽음' : 'NEW'}
-        </div>
+        <div className={cx('item-label')}>{item.read ? '읽음' : 'NEW'}</div>
       </div>
     </>
   );

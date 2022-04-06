@@ -12,11 +12,13 @@ import styles from './ApplicationListItem.module.scss';
 const cx = classNames.bind(styles);
 
 const ApplicationListItem = (item: any) => {
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const { donationId, thumbnail, title, beneficiaryName, targetAmount } =
     item.item;
+
+  console.log(status);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -38,9 +40,9 @@ const ApplicationListItem = (item: any) => {
         </span>
         <span className={cx('status')}>
           {status ? (
-            <Tag color="green">승인 대기중</Tag>
-          ) : (
             <Tag color="black">처리 완료</Tag>
+          ) : (
+            <Tag color="green">승인 대기중</Tag>
           )}
         </span>
       </div>
