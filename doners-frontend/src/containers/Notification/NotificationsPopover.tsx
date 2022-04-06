@@ -20,13 +20,13 @@ const cx = classNames.bind(styles);
 
 const NotificationsPopover = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [totalUnReadCnt, setTotalUnReadCnt] = useState(0);
 
   const [notifications, setNotifications] =
     useState<NotificationItemType[]>(_notificationList);
-  const totalUnReadCnt = notifications.filter(
-    (item) => !item.notificationIsRead
-  ).length;
+  // const [notifications, setNotifications] = useState<NotificationItemType[]>(
+  //   []
+  // );
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,16 +48,18 @@ const NotificationsPopover = () => {
   };
 
   const getUserNotificationList = async () => {
-    const { data } = await getNotificationList();
-    console.log(data);
+    const response = await getNotificationList();
+    console.log('알림 목록: ', response.data);
 
-    // TODO
-    // setNotifications(data);
+    // 전체 안 읽은 알림 개수:
+    const cnt = response.data.filter(
+      (item: { notificationIsRead: boolean }) => !item.notificationIsRead
+    ).length;
+    setTotalUnReadCnt(cnt);
 
     // 전처리 후 저장) 알림 목록을 읽음 -> 안읽음 기준으로 정렬
     setNotifications(
-      data.notificationList.sort(function (a: any, b: any) {
-        console.log(a);
+      response.data.notificationList.sort(function (a: any, b: any) {
         return a.notificationIsRead - b.notificationIsRead;
       })
     );
@@ -65,12 +67,6 @@ const NotificationsPopover = () => {
 
   useEffect(() => {
     // getUserNotificationList();
-    setNotifications(
-      _notificationList.sort(function (a: any, b: any) {
-        console.log(a);
-        return a.notificationIsRead - b.notificationIsRead;
-      })
-    );
   }, []);
 
   return (
@@ -85,77 +81,53 @@ const NotificationsPopover = () => {
             <div className={cx('blocker')} onClick={handleClose}></div>
             <div className={cx('contents')}>
               <div className={cx('notification-header')}>
-                <H4>Notifications</H4>
-              </div>
-
-              <div className={cx('notification-sub-header')}>
-                총{' '}
-                <span className={cx('notification-unread-count')}>
-                  {totalUnReadCnt}
-                </span>{' '}
-                개의 새로운 알림이 있습니다
-              </div>
-              <div className={cx('notification-read-all')}>
-                {totalUnReadCnt > 0 && (
-                  <div title=" 전체읽음 처리">
-                    <button color="secondary" onClick={handleMarkAllAsRead}>
-                      {/* <CheckAllIcon /> */}
-                      {/* <Icon icon={doneAllFill} width={20} height={20} /> */}
-                    </button>
-                  </div>
-                )}
+                <div className={cx('notification-sub-header')}>
+                  <H4>Notifications</H4>총{' '}
+                  <span className={cx('notification-unread-count')}>
+                    {totalUnReadCnt}
+                  </span>{' '}
+                  개의 새로운 알림이 있습니다
+                </div>
+                <div className={cx('notification-read-all')}>
+                  {totalUnReadCnt >= 0 && (
+                    <div title=" 전체읽음 처리">
+                      <button color="secondary" onClick={handleMarkAllAsRead}>
+                        <CheckAllIcon />
+                        {/* <Icon icon={doneAllFill} width={20} height={20} /> */}
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <hr />
-              <div>
-                <div className={cx('list-header')}>새로운 알림</div>
-                <hr />
-                {/* <Scrollbar sx={{ height: { xs: 340, sm: 'auto' } }}> */}
-                {/* <List
-                  disablePadding
-                  subheader={
-                    <ListSubheader
-                      disableSticky
-                      sx={{ py: 1, px: 2.5, typography: 'overline' }}
-                    >
-                      New
-                    </ListSubheader>
-                  }
-                > */}
-                {notifications.slice(0, totalUnReadCnt).map((notification) => (
-                  <NotificationItem
-                    key={notification.notificationId}
-                    item={notification}
-                  />
-                ))}
-                {/* </List> */}
+              <div className={cx('list')}>
+                <div className={cx('list-new')}>
+                  <div className={cx('list-header')}>새로운 알림</div>
+                  {/* <hr /> */}
+                  {notifications
+                    .slice(0, totalUnReadCnt)
+                    .map((notification) => (
+                      <NotificationItem
+                        key={notification.notificationId}
+                        item={notification}
+                      />
+                    ))}
+                </div>
 
-                {/* <list
-                  disablePadding
-                  subheader={
-                    <ListSubheader
-                      disableSticky
-                      sx={{ py: 1, px: 2.5, typography: 'overline' }}
-                    >
-                      Previous Notifications
-                    </ListSubheader>
-                  }
-                > */}
-                <hr />
-                <div className={cx('list-header')}>읽은 알림</div>
-                <hr />
-                {notifications
-                  .slice(totalUnReadCnt, notifications.length)
-                  .map((notification) => (
-                    <NotificationItem
-                      key={notification.notificationId}
-                      item={notification}
-                    />
-                  ))}
-
-                {/* </List> */}
-                {/* </Scrollbar> */}
-
+                {/* <hr /> */}
+                <div className={cx('list-prev')}>
+                  <div className={cx('list-header')}>읽은 알림</div>
+                  {/* <hr /> */}
+                  {notifications
+                    .slice(totalUnReadCnt, notifications.length)
+                    .map((notification) => (
+                      <NotificationItem
+                        key={notification.notificationId}
+                        item={notification}
+                      />
+                    ))}
+                </div>
                 {/* <hr /> */}
               </div>
               <div className={cx('reload-button')}>
