@@ -7,7 +7,7 @@ import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { getDonationDetail } from 'services/api/Donation';
-import { nowBalance } from 'services/blockchain/SsfApi';
+import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import styles from './TotalDonate.module.scss';
 
 const cx = classNames.bind(styles);
@@ -15,47 +15,56 @@ const cx = classNames.bind(styles);
 type donationProps = {
   donation_id: string;
 };
-const TotalDonate = ({ donation_id }: any) => {
+const TotalDonate = ({ donationId }: any) => {
   const [contractAddress, setContractAddress] = useState('');
-  const [current, setCurrent] = useState(0);
   const [targetAmount, setTargetAmount] = useState(0);
   const [rate, setRate] = useState(0);
 
+  const [collectedBalance, setCollectedBalance] = useState(0);
+
   const handleDonateDetail = async () => {
-    const result = await getDonationDetail(donation_id);
+    const result = await getDonationDetail(donationId);
+    console.log(result);
     setContractAddress(result.data.contractAddress);
     setTargetAmount(result.data.targetAmount);
-    console.log(result);
   };
 
-  const getCurrentBalance = async () => {
-    if (contractAddress) {
-      const result = await nowBalance(contractAddress);
-      setCurrent(result);
-    }
+  const checkWithdrawState = async () => {
+    // (완료) 모금액 수령이 완료되었는지 검사
+    const response = await fundraiserIsWithdraw(contractAddress);
+    setCollectedBalance(response.targetMoney);
   };
+
+  // const getCurrentBalance = async () => {
+  //   if (contractAddress) {
+  //     const result = await nowBalance(contractAddress);
+  //     setCurrent(result);
+  //   }
+  // };
 
   useEffect(() => {
-    if (donation_id) {
+    if (donationId) {
       handleDonateDetail();
     }
-  }, [donation_id]);
+  }, [donationId]);
 
   useEffect(() => {
-    getCurrentBalance();
+    // getCurrentBalance();
+    if (contractAddress) {
+      checkWithdrawState();
+    }
   }, [contractAddress]);
 
   useEffect(() => {
-    const result = Math.floor((current / targetAmount) * 100);
-    console.log(result);
+    const result = Math.floor((collectedBalance / targetAmount) * 100);
     setRate(result);
-  }, [current]);
+  }, [collectedBalance]);
 
   return (
     <div className={cx('form')}>
-      <P>총 모금액</P>
       <div className={cx('achieved-money')}>
-        <H1>{String(current)}</H1>
+        <H3>총 모금액</H3>
+        <H1>{String(collectedBalance)}</H1>
         <P>SSF</P>
       </div>
       <div className={cx('target-money')}>

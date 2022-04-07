@@ -27,10 +27,6 @@ import Theme7 from 'assets/images/NFT/Theme7.png';
 import Theme8 from 'assets/images/NFT/Theme8.png';
 import Theme9 from 'assets/images/NFT/Theme9.png';
 import Theme10 from 'assets/images/NFT/Theme10.png';
-import H1 from 'assets/theme/Typography/H1/H1';
-import H2 from 'assets/theme/Typography/H2/H2';
-import H3 from 'assets/theme/Typography/H3/H3';
-import H4 from 'assets/theme/Typography/H4/H4';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
