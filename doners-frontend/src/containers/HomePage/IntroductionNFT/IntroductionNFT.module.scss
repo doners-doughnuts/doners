@@ -29,6 +29,7 @@
 }
 .theme-wrap {
   display: flex;
+  padding-left: 10px;
   animation: move 10s infinite alternate;
   animation-timing-function: ease-in-out;
 }
@@ -44,7 +45,7 @@
     transform: translate(0, 0);
   }
   25% {
-    transform: translate(-285px, 0);
+    transform: translate(-275px, 0);
   }
   50% {
     transform: translate(-570px, 0);

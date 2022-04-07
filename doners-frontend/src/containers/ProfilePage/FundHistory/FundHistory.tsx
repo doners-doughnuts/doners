@@ -32,6 +32,10 @@ const FundHistory = ({ nickname }: FundHistoryType) => {
     getApplicationList();
   }, [nickname]);
 
+  useEffect(() => {
+    console.log(applicationList);
+  }, [applicationList]);
+
   return (
     <div>
       {applicationList?.length > 0 ? (
@@ -56,7 +60,7 @@ const FundHistory = ({ nickname }: FundHistoryType) => {
                 if (idx !== 0) {
                   return (
                     <div key={idx}>
-                      <LastFundingItem item={applicationList[idx]} />
+                      <LastFundingItem item={item} />
                     </div>
                   );
                 }

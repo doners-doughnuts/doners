@@ -6,7 +6,7 @@ import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { nowBalance } from 'services/blockchain/SsfApi';
+import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
 import { calcDday } from 'utils/formatTime';
 import DonateContentModal from '../DonateContentModal/DonateContentModal';
@@ -21,26 +21,25 @@ type DonateInfoProps = {
 
 const DonateInfo = ({ data }: DonateInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [target, setTarget] = useState(3.89);
-  const [current, setCurrent] = useState(1.0);
   const [rate, setRate] = useState(0);
+  const [collectedBalance, setCollectedBalance] = useState(0);
   const [openContentModal, setOpenContentModal] = useState(false);
 
   useEffect(() => {
-    getCurrentBalance();
+    if (data.contractAddress) {
+      checkWithdrawState();
+    }
   }, [data]);
 
-  const getCurrentBalance = async () => {
-    if (data.contractAddress) {
-      const result = await nowBalance(data.contractAddress);
-      setCurrent(result);
-    }
+  const checkWithdrawState = async () => {
+    // (완료) 모금액 수령이 완료되었는지 검사
+    const response = await fundraiserIsWithdraw(data.contractAddress);
+    setCollectedBalance(response.targetMoney);
   };
-
   useEffect(() => {
-    const result = Math.floor((current / data.targetAmount) * 100);
+    const result = Math.floor((collectedBalance / data.targetAmount) * 100);
     setRate(result);
-  }, [current]);
+  }, [collectedBalance]);
 
   const handleHistoryListClick = () => {
     setIsOpen((prev) => !prev);
