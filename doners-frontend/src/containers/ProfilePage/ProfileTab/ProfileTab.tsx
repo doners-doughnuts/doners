@@ -27,7 +27,7 @@ const ProfileTab = ({ focus, nickname }: TabType) => {
               </li>
               <li
                 className={cx('tab-list-item', {
-                  'tab-is-active': focus === 2,
+                  'is-active': focus === 2,
                 })}
               >
                 <Link to={`/profile/donationhistory/${nickname}`}>
@@ -37,7 +37,7 @@ const ProfileTab = ({ focus, nickname }: TabType) => {
               {nickname === getLoggedUserNickname() ? (
                 <li
                   className={cx('tab-list-item', {
-                    'tab-is-active': focus === 3,
+                    'is-active': focus === 3,
                   })}
                 >
                   <Link to={`/profile/fundhistory/${nickname}`}>
