@@ -1,7 +1,4 @@
-import { vi } from 'date-fns/locale';
 import instance from 'services/axios';
-import { DontationDetailType } from 'types/DonationTypes';
-import _donationDetail from '_mocks_/donationDetail';
 
 type donationType = {
   category: string;
@@ -77,6 +74,11 @@ export const getSearchDonation = async (
 
 export const checkApporveDonation = async () => {
   const result = await instance.get(`/donation/check/approve`);
+  return result;
+};
+
+export const deleteClosedDonation = async (donationId: string) => {
+  const result = await instance.patch(`/donation/receipt`, { donationId });
   return result;
 };
 

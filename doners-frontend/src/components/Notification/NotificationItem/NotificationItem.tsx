@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { readNotification } from 'services/api/NotificationApi';
 import { NotificationItemType } from 'types/NotificationTypes';
-import { getLoggedUserId, getLoggedUserNickname } from 'utils/loggedUser';
+import { getLoggedUserNickname } from 'utils/loggedUser';
 import styles from './NotificationItem.module.scss';
 
 const cx = classNames.bind(styles);

@@ -19,6 +19,7 @@ export type DonateType = {
   thumbnail: string;
   title: string;
   beneficiaryName: string;
+  userNickname: string;
   targetAmount: number;
   endDate: string;
   contractAddress: string;

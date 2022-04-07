@@ -25,6 +25,9 @@ public class DonationGetListResponseDTO {
     @ApiModelProperty(name = "이름")
     private String beneficiaryName;
 
+    @ApiModelProperty(name = "닉네임")
+    private String userNickname;
+
     @ApiModelProperty(name = "목표 모금액")
     private double targetAmount;
 
@@ -35,11 +38,12 @@ public class DonationGetListResponseDTO {
     private String contractAddress;
 
     @Builder
-    public DonationGetListResponseDTO(String donationId, String thumbnail, String title, String beneficiaryName, double targetAmount, LocalDate endDate, String contractAddress) {
+    public DonationGetListResponseDTO(String donationId, String thumbnail, String title, String beneficiaryName, String userNickname, double targetAmount, LocalDate endDate, String contractAddress) {
         this.donationId = donationId;
         this.thumbnail = thumbnail;
         this.title = title;
         this.beneficiaryName = beneficiaryName;
+        this.userNickname = userNickname;
         this.targetAmount = targetAmount;
         this.endDate = endDate;
         this.contractAddress = contractAddress;

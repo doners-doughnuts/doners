@@ -10,6 +10,7 @@ import { checkClosedDonation } from 'utils/formatTime';
 import { nowBalance } from 'services/blockchain/SsfApi';
 import { useEffect, useState } from 'react';
 import H4 from 'assets/theme/Typography/H4/H4';
+import { getUserProfile } from 'services/api/UserApi';
 const cx = classNames.bind(styles);
 
 type DonateProps = {
@@ -19,6 +20,7 @@ type DonateProps = {
 const DonationCard = ({ data }: DonateProps) => {
   const [current, setCurrent] = useState(0);
   const [rate, setRate] = useState(0);
+  const [imgSrc, setImgSrc] = useState('');
 
   const getCurrentBalance = async () => {
     if (data.contractAddress) {
@@ -26,8 +28,19 @@ const DonationCard = ({ data }: DonateProps) => {
       setCurrent(result);
     }
   };
+
+  const getProfileImg = async () => {
+    const response = await getUserProfile(data.userNickname);
+    if (response) {
+      // 이미지등록
+      setImgSrc(response.data.profileImage);
+    }
+  };
+
   useEffect(() => {
+    console.log(data);
     getCurrentBalance();
+    getProfileImg();
   }, []);
 
   useEffect(() => {
@@ -39,7 +52,7 @@ const DonationCard = ({ data }: DonateProps) => {
     <div className={cx('card')}>
       <div className={cx('card-header')}>
         <div className={cx('user-info')}>
-          <Avatar />
+          <Avatar src={imgSrc} />
           <div className={cx('name')}>
             <div>{data.beneficiaryName}</div>
             {/* <Span>12일 전</Span> */}

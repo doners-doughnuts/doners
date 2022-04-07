@@ -1,10 +1,6 @@
-import Avatar from 'assets/theme/Avatar/Avatar';
 import classNames from 'classnames/bind';
 import styles from './NFTCard.module.scss';
-import Span from 'assets/theme/Typography/Span/Span';
-import H5 from 'assets/theme/Typography/H5/H5';
 import Tag from 'assets/theme/Tag/Tag';
-import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import { useEffect, useState } from 'react';
 import { getMetadataFromUri } from 'services/blockchain/NftApi';
 import { NftMetadataType } from 'types/NftTypes';

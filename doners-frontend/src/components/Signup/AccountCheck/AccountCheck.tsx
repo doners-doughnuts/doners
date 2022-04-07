@@ -5,7 +5,7 @@ import styles from './AccountCheck.module.scss';
 import character from 'assets/images/character-fox.png';
 import { ReactComponent as FoxIcon } from 'assets/images/icon/fox.svg';
 import { login } from 'services/api/UserApi';
-import { isLoggedState, signupState, nicknameState } from 'atoms/atoms';
+import { isLoggedState, signupState } from 'atoms/atoms';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -17,8 +17,6 @@ const cx = classNames.bind(styles);
 
 const AccountCheck = () => {
   const navigate = useNavigate();
-  const setNicknameState = useSetRecoilState(nicknameState);
-  // const setSignupState = useSetRecoilState(signupState);
   const [signupAccount, setSignupAccount] = useRecoilState(signupState);
   const setIsLoggedState = useSetRecoilState(isLoggedState);
 
