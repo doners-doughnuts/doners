@@ -258,26 +258,26 @@ public class DonationController {
 
     @ApiOperation(value = "기부 수령 완료 처리")
     @ApiResponses({
-            @ApiResponse(code=200, message="기부 수령 완료 처리에 성공했습니다."),
-            @ApiResponse(code=401, message="기부 수령 완료 처리 권한이 없습니다."),
-            @ApiResponse(code=409, message="기부 수령 완료 처리에 실패했습니다."),
+            @ApiResponse(code = 200, message = "기부 수령 완료 처리에 성공했습니다."),
+            @ApiResponse(code = 401, message = "기부 수령 완료 처리 권한이 없습니다."),
+            @ApiResponse(code = 409, message = "기부 수령 완료 처리에 실패했습니다."),
     })
     @PatchMapping("/receive")
     public ResponseEntity<? extends BaseResponseDTO> receiveDonation(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @RequestBody @ApiParam(value="기부 ID", required=true) DonationPatchDTO donationPatchDTO) {
+            @RequestBody @ApiParam(value = "기부 ID", required = true) DonationPatchDTO donationPatchDTO) {
 
         try {
             Integer code = donationService.receiveDonation(accessToken, donationPatchDTO);
 
-            if(code == 401) {
+            if (code == 401) {
                 return ResponseEntity.status(401).body(BaseResponseDTO.of("기부 수령 완료 처리 권한이 없습니다.", 401));
             }
         } catch (Exception e) {
             return ResponseEntity.status(409).body(BaseResponseDTO.of("기부 수령 완료 처리에 실패했습니다.", 409));
         }
 
-        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 수령 완료 처리에 성공했습니다.", 200));
+        return ResponseEntity.ok(BaseResponseDTO.of("기부 수령 완료 처리에 성공했습니다.", 200));
 
     }
 
