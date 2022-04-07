@@ -262,7 +262,7 @@ public class DonationController {
             @ApiResponse(code=401, message="기부 수령 완료 처리 권한이 없습니다."),
             @ApiResponse(code=409, message="기부 수령 완료 처리에 실패했습니다."),
     })
-    @PatchMapping("/receipt")
+    @PatchMapping("/receive")
     public ResponseEntity<? extends BaseResponseDTO> receiveDonation(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
             @RequestBody @ApiParam(value="기부 ID", required=true) DonationPatchDTO donationPatchDTO) {
