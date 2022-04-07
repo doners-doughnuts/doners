@@ -1,8 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationReceivedPatchDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
 import com.doners.donersbackend.domain.dao.donation.Donation;
@@ -72,7 +71,7 @@ public class DonationServiceImpl implements DonationService {
         // 대리인
         if (donationRegisterPostDTO.isDeputy()) {
             donation.changeBeneficiary(donationRegisterPostDTO.getBeneficiaryName(), donationRegisterPostDTO.getBeneficiaryPhone());
-        // 본인
+            // 본인
         } else {
             donation.changeBeneficiary(user.getUserName(), donationRegisterPostDTO.getPhone());
         }
@@ -230,9 +229,9 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationRecommendPatchDTO donationRecommendPatchDTO) {
+    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationPatchDTO) {
 
-        Donation donation = donationRepository.findById(donationRecommendPatchDTO.getDonationId())
+        Donation donation = donationRepository.findById(donationPatchDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 추천수 증가
@@ -365,6 +364,27 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
+    public Integer receiveDonation(String accessToken, DonationPatchDTO donationPatchDTO) {
+
+        User requestUser = convertAccessTokenToUser(accessToken);
+
+        Donation donation = donationRepository.findById(donationPatchDTO.getDonationId()).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
+
+        if (!requestUser.getId().equals(donation.getUser().getId())) return 401;
+
+        try {
+            donation.changeIsReceived();
+
+            donationRepository.save(donation);
+        } catch (Exception e) {
+            return 409;
+        }
+
+        return 200;
+
+    }
+
+    @Override
     public void uploadDonationFile(Donation donation, MultipartFile image, List<MultipartFile> evidence) {
 
         if (image != null) {
@@ -415,26 +435,6 @@ public class DonationServiceImpl implements DonationService {
 
         fileRepository.save(certificateFile);
 
-    }
-
-    @Override
-    public Integer receiveDonation(String accessToken, DonationReceivedPatchDTO donationReceivedPatchDTO) {
-        User requestUser = convertAccessTokenToUser(accessToken);
-
-        Donation donation = donationRepository.findById(donationReceivedPatchDTO.getDonationId()).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
-
-        if(!requestUser.getId().equals(donation.getUser().getId())) {
-            return 401;
-        }
-
-        try {
-            donation.changeIsReceived();
-            donationRepository.save(donation);
-        } catch (Exception e) {
-            return 409;
-        }
-
-        return 200;
     }
 
     private DonationGetListWrapperResponseDTO convertDonationListToDTO(List<Donation> donationList) {
