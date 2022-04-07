@@ -448,6 +448,7 @@ public class DonationServiceImpl implements DonationService {
                                 .thumbnail(getDonationImage(donation, true))
                                 .title(donation.getTitle())
                                 .beneficiaryName(donation.getBeneficiaryName())
+                                .userNickname(donation.getUser().getUserNickname())
                                 .contractAddress(donation.getContractAddress())
                                 .targetAmount(donation.getAmount())
                                 .endDate(donation.getEndDate())
