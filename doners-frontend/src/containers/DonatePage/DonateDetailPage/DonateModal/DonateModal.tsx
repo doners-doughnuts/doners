@@ -128,7 +128,9 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d-emojis/u1F913-apng.png"
               alt="loading spinner"
             />
-            <H3>잠시만요! 요청을 처리하고 있어요.</H3>
+            <div className={cx('text-background')}>
+              <H3 color="white">잠시만요! 요청을 처리하고 있어요.</H3>
+            </div>
           </div>
         ) : donateLoading ? (
           <div className={cx('loading-spinner')}>
@@ -136,7 +138,9 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d/money-wings-confetti-apng.png"
               alt="loading spinner"
             />
-            <H3>송금하는중이에요.</H3>
+            <div className={cx('text-background')}>
+              <H3>송금하는중이에요.</H3>
+            </div>
           </div>
         ) : mintLoading ? (
           <div className={cx('loading-spinner')}>
@@ -144,7 +148,9 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d-emojis/u1F389_apng.png"
               alt="loading spinner"
             />
-            <H3>NFT를 발급해줄게요.</H3>
+            <div className={cx('text-background')}>
+              <H3>NFT를 발급해줄게요.</H3>
+            </div>
           </div>
         ) : completeLoading ? (
           <div className={cx('loading-spinner')}>
@@ -152,7 +158,9 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d-emojis/u1F389_apng.png"
               alt="loading spinner"
             />
-            <H3>기부해줘서 고마워요.</H3>
+            <div className={cx('text-background')}>
+              <H3>기부해줘서 고마워요.</H3>
+            </div>
           </div>
         ) : (
           <section className={cx('modalForm')}>
@@ -201,7 +209,7 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
                         </div>
                         <H4>SSF</H4>
                       </div>
-                      <div>(약 900,000원)</div>
+                      <div>{`(약 ${money * 10000}원)`}</div>
                     </div>
                     <AddIcon onClick={handleAddClick} />
                   </div>

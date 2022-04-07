@@ -10,6 +10,11 @@
   z-index: 99;
   background-color: rgba(255, 255, 255, 0.5);
 
+  .text-background {
+    padding: 20px 40px;
+    background-color: $yellow;
+    border-radius: 20px;
+  }
   .loading-spinner {
     // background-color: ;
     width: 40vw;

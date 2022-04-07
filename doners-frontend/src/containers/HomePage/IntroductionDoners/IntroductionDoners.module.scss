@@ -1,7 +1,9 @@
 @import 'assets/styles/main';
 .section {
+  width: 100vw;
   border-bottom: 1px solid #bebebe;
   height: 90vh;
+  background-color: $gray-2;
 
   .contents {
     @include flexbox(start);
