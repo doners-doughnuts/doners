@@ -242,4 +242,5 @@ export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
 // TODO delete (test code)
 export const check = async () => {
   const account = await Web3Client.eth.requestAccounts();
+  return account;
 };

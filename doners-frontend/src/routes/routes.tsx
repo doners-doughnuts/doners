@@ -8,7 +8,6 @@ import DonateRegistPage from 'pages/Donate/DonateRegistPage';
 import SignupPage from 'pages/SignupPage/SignupPage';
 import HomePage from 'pages/HomePage/HomePage';
 import ProfilePage from 'pages/ProfilePage/ProfilePage';
-import Test from 'pages/Test/Test';
 import ApplyPage from 'pages/ApplyPage/ApplyPage';
 import { Navigate, useRoutes } from 'react-router';
 import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
@@ -17,7 +16,6 @@ import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
 import AdminPage from 'pages/AdminPage/AdminPage';
 import ApplyMainPage from 'pages/ApplyPage/ApplyMainPage';
 import ApplyFailPage from 'pages/ApplyPage/ApplyFailPage';
-import ErrorPage from 'pages/CommonPage/ErrorPage';
 import NotFoundPage from 'pages/CommonPage/NotFoundPage';
 
 export default function Router() {

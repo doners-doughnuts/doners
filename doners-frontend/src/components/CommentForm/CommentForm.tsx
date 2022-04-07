@@ -3,7 +3,7 @@ import Textarea from 'assets/theme/Textarea/Textarea';
 import H3 from 'assets/theme/Typography/H3/H3';
 import classNames from 'classnames/bind';
 import Comment from 'components/Comment/Comment';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import {
   getBoardComments,

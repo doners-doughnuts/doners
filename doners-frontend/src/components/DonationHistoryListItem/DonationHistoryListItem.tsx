@@ -1,9 +1,6 @@
-import P from 'assets/theme/Typography/P/P';
-import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import styles from './DonationHistoryListItem.module.scss';
-import { ReactComponent as RemoveIcon } from 'assets/images/icon/remove.svg';
-import { fDate, fDateTime, fFundraiserContractTime } from 'utils/formatTime';
+import { fFundraiserContractTime } from 'utils/formatTime';
 import { DonationTransactionType } from 'types/TransactionTypes';
 import { ReactComponent as DollarIcon } from 'assets/images/icon/dollar.svg';
 import { Link } from 'react-router-dom';

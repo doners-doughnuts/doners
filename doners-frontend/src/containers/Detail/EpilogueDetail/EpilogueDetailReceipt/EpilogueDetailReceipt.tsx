@@ -5,13 +5,13 @@ import TotalDonate from 'containers/EpilogueEditor/TotalDonate/TotalDonate';
 import styles from './EpilogueDetailReceipt.module.scss';
 const cx = classNames.bind(styles);
 
-const EpilogueDetailReceipt = ({ history }: any) => {
+const EpilogueDetailReceipt = ({ history, donationId }: any) => {
   return (
     <div className={cx('receipt')}>
       <div className={cx('badge')}>
-        <Badge color="green">모금액 사용 내역</Badge>
+        <Badge color="yellow">모금액 사용 내역</Badge>
       </div>
-      <TotalDonate />
+      <TotalDonate donationId={donationId} />
       <div className={cx('history')}>
         {history.map((data: any, idx: number) => {
           // console.log(data);

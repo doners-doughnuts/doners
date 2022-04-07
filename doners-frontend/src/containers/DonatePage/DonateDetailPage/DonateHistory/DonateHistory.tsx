@@ -4,7 +4,11 @@ import classNames from 'classnames/bind';
 import styles from './DonateHistory.module.scss';
 import { ReactComponent as WaveIcon } from 'assets/images/icon/wave.svg';
 import { DontationDetailType } from 'types/DonationTypes';
-import { nowBalance, nowFundraiserData } from 'services/blockchain/SsfApi';
+import {
+  fundraiserIsWithdraw,
+  nowBalance,
+  nowFundraiserData,
+} from 'services/blockchain/SsfApi';
 import { useEffect, useState } from 'react';
 import Tag from 'assets/theme/Tag/Tag';
 import H4 from 'assets/theme/Typography/H4/H4';
@@ -17,7 +21,9 @@ type DonateHistoryProps = {
 };
 const DonateHistory = ({ data }: DonateHistoryProps) => {
   const [history, setHistory] = useState([]);
-  const [current, setCurrent] = useState(0);
+  // const [current, setCurrent] = useState(0);
+  const [collectedBalance, setCollectedBalance] = useState(0);
+
   const getDonateHistory = async () => {
     if (data.contractAddress) {
       const result = await nowFundraiserData(data.contractAddress);
@@ -25,16 +31,26 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
     }
   };
 
-  const getCurrentBalance = async () => {
-    if (data.contractAddress) {
-      const result = await nowBalance(data.contractAddress);
-      setCurrent(result);
-    }
+  const checkWithdrawState = async () => {
+    // (완료) 모금액 수령이 완료되었는지 검사
+    const response = await fundraiserIsWithdraw(data.contractAddress);
+    setCollectedBalance(response.targetMoney);
   };
 
+  // const getCurrentBalance = async () => {
+  //   if (data.contractAddress) {
+  //     const result = await nowBalance(data.contractAddress);
+  //     setCurrent(result);
+  //   }
+  // };
+
   useEffect(() => {
-    getDonateHistory();
-    getCurrentBalance();
+    console.log(data);
+    if (data.contractAddress) {
+      getDonateHistory();
+      checkWithdrawState();
+    }
+    // getCurrentBalance();
   }, [data]);
 
   useEffect(() => {
@@ -57,7 +73,7 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
           </div>
           <div className={cx('money')}>
             <P>총 모금액</P>
-            <H3>{String(current)}</H3>
+            <H3>{String(collectedBalance)}</H3>
             <P>SSF</P>
           </div>
         </div>

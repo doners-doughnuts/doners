@@ -37,6 +37,7 @@
   padding: 20px;
   max-height: 380px;
   overflow: scroll;
+  overflow-x: hidden;
 
   .history-item {
     @include flexbox(between, center);

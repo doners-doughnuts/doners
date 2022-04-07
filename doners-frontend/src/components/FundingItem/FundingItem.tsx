@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
-import H2 from 'assets/theme/Typography/H2/H2';
-import H4 from 'assets/theme/Typography/H4/H4';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
 import styles from './FundingItem.module.scss';
@@ -13,9 +11,6 @@ import {
   CategoryCode,
   ApplicationStatusCode,
 } from 'types/ApplicationTypes';
-import { getDonationDetail } from 'services/api/Donation';
-import { DontationDetailType } from 'types/DonationTypes';
-import H5 from 'assets/theme/Typography/H5/H5';
 import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import { calcDday, checkClosedDonation } from 'utils/formatTime';
 import { useNavigate } from 'react-router';
@@ -28,15 +23,12 @@ type FundingItemProps = {
 };
 
 const FundingItem = ({ item, isOwner }: FundingItemProps) => {
-  const [target, setTarget] = useState(item.targetAmount);
+  // const [target, setTarget] = useState(item.targetAmount);
   // 관리자 승인이 된 모금이라면, 애니메이션 효과를 위해 99999로 설정
   const [current, setCurrent] = useState(item.donationIsApproved ? 999999 : 0);
   const [modalOpen, setModalOpen] = useState(false);
   const [isWithdrawn, setIsWithdrawn] = useState(false);
   const [collectedBalance, setCollectedBalance] = useState(0);
-
-  //// const [applicationDetail, setApplicationDetail] =
-  ////   useState<DontationDetailType>();
 
   const navigate = useNavigate();
 
@@ -49,13 +41,6 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
     setModalOpen(false);
   };
 
-  // (완료) 백엔드에 api에 추가적으로 데이터 요청 (임시로 개별적으로 불러오는중)
-  // const getApplicationDetail = async () => {
-  //   const response = await getDonationDetail(item.donationId);
-  //   console.log(response.data);
-  //   setApplicationDetail(response.data);
-  // };
-
   /* 기부글 상세로 이동 */
   const handleThumbnailClick = () => {
     navigate('/fundraisings/' + item.donationId);
@@ -64,7 +49,6 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
   /* 기부금 수령 여부 */
   /* 최종 모금 달성률 */
   const checkWithdrawState = async () => {
-    // (완료) 모금액 수령이 완료되었는지 검사
     const response = await fundraiserIsWithdraw(item.contractAddress);
     console.log('모금액 수령 여부: ', response);
     setIsWithdrawn(response.isWithdraw);
@@ -79,24 +63,7 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
     setCurrent(currentBalance);
   };
 
-  /* 디데이 */
-  //* utils/formatTime.ts 로 분리해둠
-  // const calcDday = () => {
-  //   const dday = Math.ceil(
-  //     (Date.now() - new Date(item.endDate).getTime()) / (1000 * 3600 * 24) - 1
-  //   );
-  //   if (dday === 0) {
-  //     setDday('(마감일)');
-  //   } else {
-  //     const label = dday > 0 ? '+' : '';
-  //     setDday('(D' + label + dday + ')');
-  //   }
-  // };
-
-  // console.log(checkClosedDonation(item.endDate));
-
   useEffect(() => {
-    //// getApplicationDetail();
     //* 관리자 승인 전이면 contractAddress가 아직 존재하지 않음
     if (item.donationIsApproved) {
       calcCurrentAchievementRate();
@@ -157,6 +124,7 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
               close={closeModal}
               contractAddress={item.contractAddress}
               targetAmount={item.targetAmount}
+              donationId={item.donationId}
             />
           ) : null}
 
@@ -177,16 +145,20 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
             <div className={cx('value-info')}>{String(item.targetAmount)}</div>
             <div className={cx('value-title')}>SSF</div>
           </div>
-          <Progressbar value={Math.floor((current / target) * 100)} />
+          <Progressbar
+            value={Math.floor((current / item.targetAmount) * 100)}
+          />
           <div className={cx('date-row')}>
             <div className={cx('date-title')}>
               <Span color="gray">모금액 달성률 : </Span>{' '}
               <Span color="green">
                 {checkClosedDonation(item.endDate)
                   ? String(
-                      Math.floor((collectedBalance / target) * 100)
+                      Math.floor((collectedBalance / item.targetAmount) * 100)
                     ).concat('%')
-                  : String(Math.floor((current / target) * 100)).concat('%')}
+                  : String(
+                      Math.floor((current / item.targetAmount) * 100)
+                    ).concat('%')}
               </Span>
               <Span color="gray">
                 {checkClosedDonation(item.endDate)

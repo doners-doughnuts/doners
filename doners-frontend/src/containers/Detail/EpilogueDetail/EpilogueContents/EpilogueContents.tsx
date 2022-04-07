@@ -74,7 +74,7 @@ const EpilogueContents = () => {
       <main className={cx('content')}>
         {contents !== '' ? <Viewer initialValue={contents} /> : null}
       </main>
-      <EpilogueDetailReceipt history={historyList} />
+      <EpilogueDetailReceipt history={historyList} donationId={donationId} />
     </div>
   );
 };

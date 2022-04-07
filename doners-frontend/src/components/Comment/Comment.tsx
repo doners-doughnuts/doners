@@ -7,7 +7,7 @@ import H4 from 'assets/theme/Typography/H4/H4';
 import Span from 'assets/theme/Typography/Span/Span';
 import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import { deleteComments, modifyComment } from 'services/api/Comment';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
 import { Link } from 'react-router-dom';
 import { fToNow } from 'utils/formatTime';
@@ -25,12 +25,11 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
   };
 
   const delComment = async () => {
-    const result = await deleteComments(id);
+    await deleteComments(id);
     onDelete(id);
-    console.log(result);
   };
 
-  const checkUser = () => {
+  const checkUser = useCallback(() => {
     const user = sessionStorage.getItem('user');
     if (typeof user === 'string') {
       const Juser = JSON.parse(user);
@@ -38,11 +37,10 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
         setIsOwn(true);
       }
     }
-  };
+  }, [nickname]);
 
   const getProfileImg = async () => {
     const response = await getUserProfile(nickname);
-    console.log(response);
     if (response) {
       // 이미지등록
       setImgSrc(response.data.profileImage);

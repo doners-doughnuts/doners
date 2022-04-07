@@ -11,15 +11,11 @@ import {
   getLoggedUserNickname,
   isAdmin,
 } from 'utils/loggedUser';
-import { useRecoilValue } from 'recoil';
-import { isLoggedState, nicknameState } from 'atoms/atoms';
 import NotificationsPopover from 'containers/Notification/NotificationsPopover';
 
 const cx = classNames.bind(styles);
 const Header = () => {
   const [isLogged, setIsLogged] = useState(false);
-  // const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
-  const [ScrollActive, setScrollActive] = useState(false);
   const [loggedUserNickname, setLoggedUserNickname] = useState('');
   const [isLoggedAdmin, setIsLoggedAdmin] = useState(false);
 
@@ -39,13 +35,7 @@ const Header = () => {
     <section className={cx('container')}>
       <div className={cx('row')}>
         <div className={cx('col-lg-12')}>
-          <div
-            className={
-              ScrollActive
-                ? [styles.header, styles.fixed].join(' ')
-                : styles['header']
-            }
-          >
+          <div className={cx('header')}>
             <div className={cx('header-leftside')}>
               <ul className={cx('header-list')}>
                 <Link to="/">

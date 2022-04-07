@@ -1,5 +1,3 @@
-import H2 from 'assets/theme/Typography/H2/H2';
-import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import styles from './DashboardCard.module.scss';
 

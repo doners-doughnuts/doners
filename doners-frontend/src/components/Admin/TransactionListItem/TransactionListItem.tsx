@@ -1,6 +1,5 @@
 import Tag from 'assets/theme/Tag/Tag';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
 import { fFundraiserContractTime } from 'utils/formatTime';
 import styles from './TransactionListItem.module.scss';
 

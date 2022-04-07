@@ -1,12 +1,8 @@
 import Avatar from 'assets/theme/Avatar/Avatar';
 import Tag from 'assets/theme/Tag/Tag';
-import H2 from 'assets/theme/Typography/H2/H2';
-import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
-import { ApplicationListItemType } from 'pages/AdminPage/AdminPage';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import styles from './ApplicationListItem.module.scss';
 
 const cx = classNames.bind(styles);
@@ -15,10 +11,7 @@ const ApplicationListItem = (item: any) => {
   const [status, setStatus] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { donationId, thumbnail, title, beneficiaryName, targetAmount } =
-    item.item;
-
-  // console.log(account);
+  const { thumbnail, title, beneficiaryName } = item.item;
 
   const handleOpenModal = () => {
     setOpenModal(true);
