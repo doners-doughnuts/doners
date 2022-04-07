@@ -26,9 +26,13 @@
         width: 100%;
         @include flexbox(between);
       }
+
+      .donationDetail {
+        height: 40vh;
+      }
       .userInfo {
         position: relative;
-        height: fit-content;
+        height: 40vh;
 
         .select-box {
           position: absolute;
@@ -40,7 +44,7 @@
       .button-group {
         @include flexbox(between, center);
         position: absolute;
-        bottom: 65px;
+        bottom: 35px;
         right: 65px;
         .button {
           width: 45%;
