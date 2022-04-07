@@ -12,8 +12,17 @@
 
   .text-background {
     padding: 20px 40px;
-    background-color: $yellow;
     border-radius: 20px;
+
+    &.green {
+      background-color: $green;
+    }
+    &.yellow {
+      background-color: $yellow;
+    }
+    &.red {
+      background-color: $red;
+    }
   }
   .loading-spinner {
     // background-color: ;
