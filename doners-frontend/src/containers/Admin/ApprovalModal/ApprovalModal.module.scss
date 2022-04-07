@@ -12,24 +12,12 @@
 
   .container {
     position: relative;
-    height: 90vh;
+    height: 75vh;
     padding: 30px;
     border-radius: 20px;
     background-color: $white;
 
     .row {
-      overflow: scroll;
-      height: 100%;
-
-      // display: flex;
-      // justify-content: space-between;
-
-      // .userInfo,
-      // .donateContent,
-      // .donationDetail {
-      //   height: 300px;
-      // }
-
       .close-btn {
         width: fit-content;
       }
@@ -38,17 +26,22 @@
         width: 100%;
         @include flexbox(between);
       }
+      .userInfo {
+        position: relative;
+        height: fit-content;
 
-      .select-box {
-        margin-bottom: 20px;
+        .select-box {
+          position: absolute;
+          // top: 400px;
+          margin-top: 15px;
+        }
       }
 
       .button-group {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
+        @include flexbox(between, center);
+        position: absolute;
+        bottom: 65px;
+        right: 65px;
         .button {
           width: 45%;
         }
@@ -71,7 +64,6 @@
           margin-bottom: 20px;
         }
       }
-      
     }
   }
 }
