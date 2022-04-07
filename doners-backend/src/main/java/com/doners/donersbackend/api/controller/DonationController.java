@@ -1,8 +1,10 @@
 package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationReceivedPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
@@ -13,6 +15,7 @@ import com.doners.donersbackend.domain.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -256,4 +259,26 @@ public class DonationController {
 
     }
 
+    @ApiOperation(value = "기부 수령 완료 처리)")
+    @ApiResponses({
+            @ApiResponse(code=200, message="기부 수령 완료 처리 성공"),
+            @ApiResponse(code=401, message="수령 완료 처리할 권한이 없습니다."),
+            @ApiResponse(code=409, message="기부 수령 완료 처리 실패"),
+    })
+    @PatchMapping("/receipt")
+    public ResponseEntity<? extends BaseResponseDTO> receiveDonation(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @RequestBody @ApiParam(value="기부 ID", required=true) DonationReceivedPatchDTO donationReceivedPatchDTO) {
+        try {
+            Integer code = donationService.receiveDonation(accessToken, donationReceivedPatchDTO);
+
+            if(code == 401) {
+                return ResponseEntity.status(401).body(BaseResponseDTO.of("수령 완료 처리할 권한이 없습니다.", 401));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기기부 수령 완료 처리 실패", 409));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 수령 완료 처리 성공", 200));
+    }
 }

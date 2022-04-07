@@ -1,6 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationReceivedPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.response.donation.*;
@@ -65,6 +66,7 @@ public class DonationServiceImpl implements DonationService {
                 .startDate(LocalDate.now())
                 .endDate(donationRegisterPostDTO.getEndDate())
                 .user(user)
+                .isReceived(false)
                 .build();
 
         // 대리인
@@ -215,7 +217,7 @@ public class DonationServiceImpl implements DonationService {
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
                 .deputy(donation.isDeputy())
-                .exist(donationRepository.existsByIdAndIsDeleted(donationId, true))
+                .exist(donationRepository.existsByIdAndIsReceived(donationId, true))
                 .approvalStatusCode(donation.getApprovalStatusCode())
                 .evidence(evidence)
                 .build();
@@ -413,6 +415,26 @@ public class DonationServiceImpl implements DonationService {
 
         fileRepository.save(certificateFile);
 
+    }
+
+    @Override
+    public Integer receiveDonation(String accessToken, DonationReceivedPatchDTO donationReceivedPatchDTO) {
+        User requestUser = convertAccessTokenToUser(accessToken);
+
+        Donation donation = donationRepository.findById(donationReceivedPatchDTO.getDonationId()).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
+
+        if(!requestUser.getId().equals(donation.getUser().getId())) {
+            return 401;
+        }
+
+        try {
+            donation.changeIsReceived();
+            donationRepository.save(donation);
+        } catch (Exception e) {
+            return 409;
+        }
+
+        return 200;
     }
 
     private DonationGetListWrapperResponseDTO convertDonationListToDTO(List<Donation> donationList) {
