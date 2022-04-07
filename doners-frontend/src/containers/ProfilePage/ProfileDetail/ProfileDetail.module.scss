@@ -12,15 +12,4 @@
   .content {
     width: 100%;
   }
-  .article-header {
-    margin-bottom: 50px;
-  }
-  .button-wrap {
-    @include flexbox(end, center);
-
-    .buttons {
-      @include flexbox(between, center);
-      width: 180px;
-    }
-  }
 }
