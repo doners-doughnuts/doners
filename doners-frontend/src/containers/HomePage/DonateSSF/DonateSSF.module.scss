@@ -1,43 +1,68 @@
 @import 'assets/styles/main';
-
 .section {
-  position: relative;
-  height: 80vh;
   width: 100vw;
-  border: 2px solid $black;
+  position: relative;
+  // background-color: $gray-2;
 
   .titlebox {
     position: absolute;
     text-align: center;
     padding: 10px 50px;
-    right: 10%;
-    top: -5%;
+    left: 10%;
+    top: -30px;
     background-color: $green;
-    border: 2px solid $black;
     box-shadow: $btn-shadow;
   }
   .container {
-    @include flexbox(start);
-    .left {
-      position: relative;
-      margin: 25% auto;
-      .img1 {
-        position: absolute;
-        left: 30px;
-      }
+    width: 100vw;
+    margin-bottom: 0;
+    position: relative;
+
+    .category-wrapper {
+      padding-bottom: 0;
     }
-    .right {
-      margin: 0 400px;
-      .text {
-        width: 430px;
-        H5 {
-          color: $gray-4;
+    .contents {
+      padding-top: 150px;
+
+      .left-content {
+        .title {
+          color: $green;
+          font-size: 28px;
+          margin-bottom: 30px;
+        }
+
+        .textbox {
+          .text {
+            font-size: 50px;
+            line-height: 1.5;
+          }
+        }
+        .sub-textbox {
+          margin-top: 40px;
+          .sub-text {
+            font-size: 18px;
+            font-weight: 300;
+            color: $gray-3;
+            margin-top: 10px;
+          }
         }
       }
-      Button {
-        margin: 100px 0 0 200px;
-        width: 188px;
-        box-shadow: $btn-shadow;
+
+      .right-content {
+        .image {
+          position: relative;
+          background-color: $gray-2;
+          img {
+            width: 100%;
+            height: 600px;
+          }
+          .btn {
+            position: absolute;
+            width: 200px;
+            bottom: 10%;
+            left: 40%;
+          }
+        }
       }
     }
   }

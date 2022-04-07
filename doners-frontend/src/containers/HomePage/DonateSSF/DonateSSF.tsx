@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import H4 from 'assets/theme/Typography/H4/H4';
 import H5 from 'assets/theme/Typography/H5/H5';
 import coin from 'assets/images/landing/ssfcoin.png';
+import category from 'assets/images/img-category.png';
 import docs from 'assets/images/landing/docs.png';
 import H2 from 'assets/theme/Typography/H2/H2';
 import H1 from 'assets/theme/Typography/H1/H1';
@@ -27,23 +28,38 @@ const DonateSSF = () => {
           <H1>Currently on Doners...</H1>
         </div>
         <div className={cx('container')}>
-          <div className={cx('left')}>
-            <div data-aos="fade-up-right">
-              <img src={coin} className={cx('img1')} />
-            </div>
-            <img src={docs} className={cx('img2')} />
-          </div>
-          <div className={cx('right')}>
-            <div className={cx('text')}>
-              <H4>
-                희귀질환, 참전용사, 미혼모·부, 코로나19 카테고리에 따라 도움이
-                필요한 곳에 직접 SSF로 기부할 수 있습니다.
-              </H4>
-              <H5>SSF란? SSAFY ERC-20 TOKEN </H5>
-            </div>
-            <div className={cx('btn')}>
-              <Link to="/category"></Link>
-              <Button color={'primary'}>Donate</Button>
+          <div className={cx('row')}>
+            <div className={cx('col-lg-12', 'category-wrapper')}>
+              <div className={cx('contents')}>
+                <div className={cx('left-content')}>
+                  <div data-aos="fade-up" className={cx('title')}>
+                    <h3>카테고리</h3>
+                  </div>
+                  <div data-aos="fade-up" className={cx('textbox')}>
+                    <h2 className={cx('text')}>도움이 필요한 사람들에게</h2>
+                    <h2 className={cx('text')}>따뜻한 손길을</h2>
+                  </div>
+                  <div data-aos="fade-up" className={cx('sub-textbox')}>
+                    <h3 className={cx('sub-text')}>
+                      희귀질환, 참전용사, 미혼모·부, 코로나19 카테고리에서
+                    </h3>
+                    <h3 className={cx('sub-text')}>
+                      도움이 필요한 곳에 기부할 수 있습니다.
+                    </h3>
+                  </div>
+                </div>
+                <div className={cx('right-content')}>
+                  <div data-aos="fade-up-right" className={cx('image')}>
+                    <img src={category} alt="category" />
+                    <div className={cx('btn')}>
+                      <Link to="/category"></Link>
+                      <Button color={'primary'} fullWidth>
+                        기부하러 가기
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
