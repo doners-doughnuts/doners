@@ -57,26 +57,26 @@
 ## 👪 팀원 소개
 <table>
     <tr>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 👑 손창현 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙂 박기범 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😆 정홍진 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😁 송민수 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙄 신지우 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😶 이선민 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/changhyuns">
+            <img src="https://avatars.githubusercontent.com/changhyuns" width="140px" /> <br><br> 👑 손창현 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/kibum414">
+            <img src="https://avatars.githubusercontent.com/kibum414" width="140px" /> <br><br> 🙂 박기범 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/JeongHongJin">
+            <img src="https://avatars.githubusercontent.com/JeongHongJin" width="140px" /> <br><br> 😆 정홍진 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/thdalstn6352">
+            <img src="https://avatars.githubusercontent.com/thdalstn6352" width="140px" /> <br><br> 😁 송민수 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/eazae">
+            <img src="https://avatars.githubusercontent.com/eazae" width="140px" /> <br><br> 🙄 신지우 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/j-ij-i">
+            <img src="https://avatars.githubusercontent.com/j-ij-i" width="140px" /> <br><br> 😶 이선민 <br>(Front-End) </a> <br></td>
     </tr>
     <tr>
         <td align="center">REST API<br/>CI/CD<br/>Infra<br/></td>
-        <td align="center">REST API</td>
-        <td align="center">REST API<br/>SMART CONTRACT<br/></td>
-        <td align="center">UI/UX</td>
-        <td align="center">UI/UX</td>
-        <td align="center">UI/UX</td>
+        <td align="center">REST API<br/>Security<br/>Database<br/></td>
+        <td align="center">REST API<br/>Smart Contract<br/>Web3 API<br/></td>
+        <td align="center">UI/UX<br/>Atomic Design<br/></td>
+        <td align="center">UI/UX<br/>NFT Contract<br/>Web3 API<br/></td>
+        <td align="center">UI/UX<br/><br/></td>
     </tr>
 </table>
 
