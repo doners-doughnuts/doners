@@ -120,9 +120,7 @@ const ApprovalModal = ({
       setPreventDuplicatedRequest(true);
       const fundContractAddress: string = await createFundraiser(
         process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!,
-        //! 신청자의 지갑주소로 변경
-        //// await getWalletAccount(),
-        donationDetail.account,
+        await getWalletAccount(),
         donationDetail.title,
         //// process.env.REACT_APP_BASE_URL + '/fundraisers/' + donation.donationId,
         //* url 대신 donationId로 변경
@@ -230,10 +228,10 @@ const ApprovalModal = ({
                   color="secondary"
                   fullWidth
                   onClick={handleApprove}
-                  disabled={
-                    donationDetail?.approvalStatusCode === 'APPROVAL' ||
-                    preventDuplicatedRequest
-                  }
+                  // disabled={
+                  // donationDetail?.approvalStatusCode === 'APPROVAL' ||
+                  // preventDuplicatedRequest
+                  // }
                 >
                   승인
                 </Button>
