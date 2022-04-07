@@ -44,7 +44,7 @@ const MyNFT = ({ walletAddress }: MyNFTType) => {
         <div className={cx('row')}>
           {nftList ? (
             nftList.map((item: string, idx) => {
-              console.log(item, idx);
+              // console.log(item, idx);
               return (
                 <div
                   key={idx}
