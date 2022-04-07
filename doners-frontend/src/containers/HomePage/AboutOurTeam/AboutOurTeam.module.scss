@@ -1,10 +1,5 @@
 @import 'assets/styles/main';
 
-.section {
-  height: 100vh;
-  width: 100vw;
-}
-
 .About {
   height: 800px;
   position: relative;
@@ -13,21 +8,10 @@
   justify-content: center;
 }
 
-.background {
-  background-color: #e8e5e2;
-  width: 150%;
-  height: 100%;
-  position: absolute;
-  z-index: 1;
-  top: 60%;
-  border-radius: 50%;
-}
-
-.team-character {
-  width: 250px;
-  height: 250px;
-}
 .section {
+  height: 100vh;
+  width: 100vw;
+
   .teamName {
     position: absolute;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -38,46 +22,89 @@
     font-family: 'Hand Writting';
     z-index: 3;
   }
-}
+  .team-character {
+    img {
+      width: 250px;
+      height: 250px;
+    }
+    &:hover {
+      transform: scale(1.3);
+      .desc {
+        opacity: 1;
+        width: 150px;
+        text-align: center;
+      }
+    }
+  }
+  .desc {
+    @include text-style(24);
 
-.teammate1 {
-  position: absolute;
-  top: 500px;
-  left: 200px;
-  z-index: 2;
-}
-.teammate2 {
-  position: absolute;
-  top: 400px;
-  left: 600px;
-  z-index: 2;
-}
-.teammate3 {
-  position: absolute;
-  top: 200px;
-  left: 200px;
-  z-index: 2;
-  transform: rotate(-30deg);
-}
-.teammate4 {
-  position: absolute;
-  top: 500px;
-  right: 400px;
-  transform: rotate(20deg);
-  z-index: 2;
-}
-.teammate5 {
-  position: absolute;
-  top: 200px;
-  right: 600px;
-  z-index: 2;
-  transform: rotate(180deg);
-}
+    box-shadow: $btn-shadow;
+    font-weight: 800;
+    background-color: $yellow;
+    border: 2px solid $black;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    top: 70%;
+    left: 35%;
+    opacity: 0;
+    .id {
+      @include text-style(12);
+    }
+  }
 
-.teammate6 {
-  position: absolute;
-  top: 300px;
-  right: 200px;
-  z-index: 2;
-  transform: rotate(60deg);
+  .background {
+    background-color: #e8e5e2;
+    width: 150%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 60%;
+    border-radius: 50%;
+  }
+
+  .teammate1 {
+    position: absolute;
+    top: 500px;
+    left: 200px;
+    z-index: 2;
+    transform: rotate(15deg);
+  }
+  .teammate2 {
+    position: absolute;
+    top: 400px;
+    left: 600px;
+    z-index: 2;
+    transform: rotate(5deg);
+  }
+  .teammate3 {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    z-index: 2;
+    transform: rotate(-30deg);
+  }
+  .teammate4 {
+    position: absolute;
+    top: 500px;
+    right: 400px;
+    transform: rotate(20deg);
+    z-index: 2;
+  }
+  .teammate5 {
+    position: absolute;
+    top: 200px;
+    right: 600px;
+    z-index: 2;
+    transform: rotate(60deg);
+  }
+
+  .teammate6 {
+    position: absolute;
+    top: 300px;
+    right: 200px;
+    z-index: 2;
+    transform: rotate(60deg);
+  }
 }
