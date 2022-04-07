@@ -15,7 +15,7 @@ import 'aos/dist/aos.css';
 const cx = classNames.bind(styles);
 const Discord = () => {
   const moveDiscord = () => {
-    location.href = 'https://discord.gg/hDsjhMw2';
+    window.location.href = 'https://discord.gg/hDsjhMw2';
   };
   useEffect(() => {
     AOS.init();

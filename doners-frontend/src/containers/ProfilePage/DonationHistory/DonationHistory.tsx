@@ -1,23 +1,14 @@
-import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './DonationHistory.module.scss';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import H3 from 'assets/theme/Typography/H3/H3';
 import H4 from 'assets/theme/Typography/H4/H4';
-import Selectbox from 'assets/theme/Selectbox/Selectbox';
 import { ReactComponent as DollarIcon } from 'assets/images/icon/dollar.svg';
 import DonationHistoryListItem from 'components/DonationHistoryListItem/DonationHistoryListItem';
-import {
-  allFundraiserMyDonationData,
-  donate,
-} from 'services/blockchain/SsfApi';
+import { allFundraiserMyDonationData } from 'services/blockchain/SsfApi';
 import { getWalletAccount } from 'utils/walletAddress';
-import { fToNow } from 'utils/formatTime';
 import { DonationTransactionType } from 'types/TransactionTypes';
 import { getUserNFTIdList } from 'services/blockchain/NftApi';
 import H2 from 'assets/theme/Typography/H2/H2';
-import H1 from 'assets/theme/Typography/H1/H1';
 
 const cx = classNames.bind(styles);
 
@@ -45,26 +36,16 @@ const cx = classNames.bind(styles);
 //   'ETC' = '기타',
 // }
 
-const DonationHistory = () => {
+type DonationHistoryProps = {
+  walletAddress: string;
+};
+const DonationHistory = ({ walletAddress }: DonationHistoryProps) => {
   const [historyList, setHistoryList] = useState<DonationTransactionType[]>([]);
   const [totalDonationAmount, setTotalDontaionAmount] = useState(0);
   const [donationCount, setDonationCount] = useState(0);
 
-  // // TODO DELETE AFTER TEST (응답 포맷 확인용)
-  // const testDonate = async () => {
-  //   const response = await donate(
-  //     '0x6102E9D6767639Fe76Ec3650e0Ba53D9530Fd0EA',
-  //     await getWalletAccount(),
-  //     1
-  //   );
-  //   console.log(response);
-  // };
-
   const getUserDonationHistory = async () => {
-    const response = await allFundraiserMyDonationData(
-      await getWalletAccount()
-    );
-    console.log(response);
+    const response = await allFundraiserMyDonationData(walletAddress);
     const list: Array<DonationTransactionType> = [];
     response.forEach((e) => {
       // (완료) API 응답 수정된 것에 따라서 수정
@@ -93,10 +74,7 @@ const DonationHistory = () => {
   };
 
   const getUserDonationCount = async () => {
-    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
-    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
-    // mint('covid', '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367');
-    const response = await getUserNFTIdList(await getWalletAccount());
+    const response = await getUserNFTIdList(walletAddress);
     // console.log(response);
     setDonationCount(response.length);
   };
@@ -104,7 +82,7 @@ const DonationHistory = () => {
   useEffect(() => {
     getUserDonationHistory();
     getUserDonationCount();
-  }, []);
+  }, [walletAddress]);
 
   useEffect(() => {
     calcTotalDonationAmount();

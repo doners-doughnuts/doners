@@ -1,12 +1,8 @@
-import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './FundModal.module.scss';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
-import { checkNickname } from 'services/api/UserApi';
-import Avatar from 'assets/theme/Avatar/Avatar';
 import Span from 'assets/theme/Typography/Span/Span';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import H4 from 'assets/theme/Typography/H4/H4';
@@ -17,9 +13,9 @@ import {
   nowFundraiserCount,
   withdraw,
 } from 'services/blockchain/SsfApi';
-import { ApplicationProfileListType } from 'types/ApplicationTypes';
 import { getWalletAccount } from 'utils/walletAddress';
 import { toast } from 'react-toastify';
+import { deleteClosedDonation } from 'services/api/Donation';
 const cx = classNames.bind(styles);
 type ProfileType = {
   focus: number;
@@ -30,8 +26,9 @@ const FundModal = (props: {
   close?: any;
   contractAddress: string;
   targetAmount: number;
+  donationId: string;
 }) => {
-  const { open, close, contractAddress, targetAmount } = props;
+  const { open, close, contractAddress, targetAmount, donationId } = props;
 
   const [target, setTarget] = useState(targetAmount);
   const [totalDoners, setTotalDoners] = useState(0);
@@ -43,16 +40,18 @@ const FundModal = (props: {
 
   /* 모금액 수령하기 */
   const handleWithdraw = async () => {
-    if (walletAddress) {
-      await withdraw(contractAddress, walletAddress)
-        .then(() => {
-          toast.success('성공적으로 모금수령이 되었습니다!');
-        })
-        .catch(() => {
-          toast.error('모금수령에 문제가 있었습니다. 관리자에게 문의하세요.');
-        });
-      close();
+    try {
+      if (walletAddress) {
+        await withdraw(contractAddress, walletAddress);
+        toast.success('성공적으로 모금수령이 되었습니다!');
+        const result = await deleteClosedDonation(donationId);
+        console.log(result);
+      }
+    } catch (error) {
+      toast.error('모금수령에 문제가 있었습니다. 관리자에게 문의하세요.');
     }
+
+    close();
   };
 
   /* 모금 달성률 */
