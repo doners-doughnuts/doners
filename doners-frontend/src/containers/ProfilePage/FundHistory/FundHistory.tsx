@@ -60,7 +60,10 @@ const FundHistory = ({ nickname }: FundHistoryType) => {
                 if (idx !== 0) {
                   return (
                     <div key={idx}>
-                      <LastFundingItem item={item} />
+                      <LastFundingItem
+                        item={item}
+                        isOwner={nickname === getLoggedUserNickname()}
+                      />
                     </div>
                   );
                 }
