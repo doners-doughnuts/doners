@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from './UserInfo.module.scss';
 import { ReactComponent as ErrorIcon } from 'assets/images/icon/error.svg';
 import { DontationDetailType } from 'types/DonationTypes';
+import { useEffect, useState } from 'react';
+import { isAdmin } from 'utils/loggedUser';
 
 const cx = classNames.bind(styles);
 
@@ -16,9 +18,15 @@ type UserInfoProps = {
 const UserInfo = ({ data }: UserInfoProps) => {
   const navigate = useNavigate();
   console.log(data);
+
   const handleNavigate = () => {
     navigate(`/profile/${data.nickname}`);
   };
+
+  let replacePhonenumber = data.phone.replace(
+    /^(\d{2,3})(\d{3,4})(\d{4})$/,
+    `$1-$2-$3`
+  );
   return (
     <div className={cx('inner-container')}>
       <div className={cx('title')}>
@@ -45,6 +53,12 @@ const UserInfo = ({ data }: UserInfoProps) => {
           <dt>이메일</dt>
           <dd>{data.email}</dd>
         </dl>
+        {isAdmin() ? (
+          <dl>
+            <dt>전화번호</dt>
+            <dd>{replacePhonenumber}</dd>
+          </dl>
+        ) : null}
         <dl>
           <dt>기존 모금 신청 여부</dt>
           <dd>

@@ -6,6 +6,7 @@ import EpilogueDetailHeader from '../EpilogueDetailHeader/EpilogueDetailHeader';
 import EpilogueDetailReceipt from '../EpilogueDetailReceipt/EpilogueDetailReceipt';
 import { useNavigate, useParams } from 'react-router';
 import { deleteEpilogue, getEpilogueDetail } from 'services/api/Epilogue';
+import EpilogueDetailTotalDonate from '../EpilogueDetailTotalDonate/EpilogueDetailTotalDonate';
 
 const cx = classNames.bind(styles);
 
@@ -74,7 +75,10 @@ const EpilogueContents = () => {
       <main className={cx('content')}>
         {contents !== '' ? <Viewer initialValue={contents} /> : null}
       </main>
-      <EpilogueDetailReceipt history={historyList} donationId={donationId} />
+      <footer className={cx('donate-history')}>
+        <EpilogueDetailTotalDonate donationId={donationId} />
+        <EpilogueDetailReceipt history={historyList} donationId={donationId} />
+      </footer>
     </div>
   );
 };

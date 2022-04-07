@@ -9,9 +9,9 @@ const EpilogueDetailReceipt = ({ history, donationId }: any) => {
   return (
     <div className={cx('receipt')}>
       <div className={cx('badge')}>
-        <Badge color="yellow">모금액 사용 내역</Badge>
+        <Badge color="yellow">모금 활용 내역</Badge>
       </div>
-      <TotalDonate donationId={donationId} />
+      {/* <TotalDonate donationId={donationId} /> */}
       <div className={cx('history')}>
         {history.map((data: any, idx: number) => {
           // console.log(data);
