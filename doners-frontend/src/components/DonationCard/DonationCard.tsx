@@ -38,7 +38,6 @@ const DonationCard = ({ data }: DonateProps) => {
   };
 
   useEffect(() => {
-    console.log(data);
     getCurrentBalance();
     getProfileImg();
   }, []);

@@ -15,7 +15,6 @@ export function fDateTimeSuffix(date: string) {
 }
 
 export function fToNow(date: string) {
-  console.log(date);
   //// return formatDistanceToNow(new Date(date), { addSuffix: true, });
   return formatDistanceToNowStrict(new Date(date), {
     locale: local,
