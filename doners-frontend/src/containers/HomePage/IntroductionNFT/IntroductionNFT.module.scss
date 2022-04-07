@@ -4,9 +4,13 @@
 //   overflow: hidden;
 // }
 
-.container {
-  height: 70vh;
+.container-wrap {
+  height: 50vh;
   position: relative;
+  @include flexbox(start, start);
+  // .row {
+  //   flex-wrap: nowrap;
+  // }
 }
 
 .nft {
@@ -25,17 +29,16 @@
   height: 285px;
   overflow: hidden;
   position: absolute;
-  top: 0;
 }
 .theme-wrap {
   display: flex;
-  padding-left: 10px;
+  flex-wrap: nowrap;
   animation: move 10s infinite alternate;
   animation-timing-function: ease-in-out;
 }
 
 .theme {
-  width: 285px;
+  width: 280px;
   height: 285px;
 }
 
@@ -45,15 +48,15 @@
     transform: translate(0, 0);
   }
   25% {
-    transform: translate(-275px, 0);
+    transform: translate(-280px, 0);
   }
   50% {
-    transform: translate(-570px, 0);
+    transform: translate(-560px, 0);
   }
   75% {
-    transform: translate(-855px, 0);
+    transform: translate(-840px, 0);
   }
   100% {
-    transform: translate(-1140px, 0);
+    transform: translate(-1120px, 0);
   }
 }
