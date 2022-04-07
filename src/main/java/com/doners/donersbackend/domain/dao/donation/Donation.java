@@ -66,7 +66,7 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_recommendations")
     private long recommendations;
 
-    @Column(name = "donation_is_received")
+    @Column(name = "donation_is_received", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isReceived;
 
     @Column(name = "donation_is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
