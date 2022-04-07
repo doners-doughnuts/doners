@@ -51,7 +51,7 @@ contract Fundraiser is Ownable {
         donationsGoal = _donationsGoal;
         fundRaisingCloses = _fundRaisingCloses;
         beneficiary = _beneficiary;
-        // transferOwnership(_beneficiary);
+        transferOwnership(_beneficiary);
         erc20Contract = IERC20(
             address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)
         ); // ssafycontract 주소 주입
