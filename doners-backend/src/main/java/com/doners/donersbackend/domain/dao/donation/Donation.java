@@ -66,6 +66,9 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_recommendations")
     private long recommendations;
 
+    @Column(name = "donation_is_received")
+    private boolean isReceived;
+
     @Column(name = "donation_is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
 
@@ -112,6 +115,10 @@ public class Donation extends BaseEntity {
     // 삭제
     public void changeIsDeleted() {
         this.isDeleted = true;
+    }
+
+    public void changeIsReceived() {
+        this.isReceived = true;
     }
 
 }

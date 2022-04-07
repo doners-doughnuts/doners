@@ -22,6 +22,8 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
+    boolean existsByIdAndIsReceived(String donationId, boolean isReceived);
+
     Optional<List<Donation>> findByIsApprovedAndApprovalStatusCode(boolean isApproved, ApprovalStatusCode approvalStatusCode);
 
     Optional<List<Donation>> findByUserAndIsDeletedOrderByEndDateDesc(User user, boolean isDeleted);

@@ -1,6 +1,7 @@
 package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationReceivedPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
@@ -48,4 +49,5 @@ public interface DonationService {
     // 관계 증명서 업로드
     void uploadCertificateFile(Donation donation, MultipartFile certificate);
 
+    Integer receiveDonation(String accessToken, DonationReceivedPatchDTO donationReceivedPatchDTO);
 }
