@@ -24,9 +24,10 @@ const cx = classNames.bind(styles);
 
 type FundingItemProps = {
   item: ApplicationProfileListType;
+  isOwner: boolean;
 };
 
-const FundingItem = ({ item }: FundingItemProps) => {
+const FundingItem = ({ item, isOwner }: FundingItemProps) => {
   const [target, setTarget] = useState(item.targetAmount);
   // 관리자 승인이 된 모금이라면, 애니메이션 효과를 위해 99999로 설정
   const [current, setCurrent] = useState(item.donationIsApproved ? 999999 : 0);
@@ -102,7 +103,7 @@ const FundingItem = ({ item }: FundingItemProps) => {
       checkWithdrawState();
     }
     // calcDday();
-  }, []);
+  }, [item]);
 
   return (
     <div>
@@ -128,9 +129,11 @@ const FundingItem = ({ item }: FundingItemProps) => {
                   // onClick={openModal}
                 >
                   <Tag color="black">모금 완료</Tag>
-                  <Button color={'secondary'} onClick={openModal}>
-                    기부금 수령하기
-                  </Button>
+                  {isOwner ? (
+                    <Button color={'secondary'} onClick={openModal}>
+                      기부금 수령하기
+                    </Button>
+                  ) : null}
                 </div>
               )
             ) : (

@@ -18,7 +18,7 @@ const ApplicationListItem = (item: any) => {
   const { donationId, thumbnail, title, beneficiaryName, targetAmount } =
     item.item;
 
-  console.log(status);
+  // console.log(account);
 
   const handleOpenModal = () => {
     setOpenModal(true);

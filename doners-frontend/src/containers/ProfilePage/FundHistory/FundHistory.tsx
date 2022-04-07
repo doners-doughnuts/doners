@@ -8,10 +8,15 @@ import LastFundingItem from 'components/LastFundingItem/LastFundingItem';
 import H3 from 'assets/theme/Typography/H3/H3';
 import { getUserApplicationList } from 'services/api/UserApi';
 import { ApplicationProfileListType } from 'types/ApplicationTypes';
+import { getLoggedUserNickname } from 'utils/loggedUser';
 
 const cx = classNames.bind(styles);
 
-const FundHistory = () => {
+type FundHistoryType = {
+  nickname: string;
+};
+
+const FundHistory = ({ nickname }: FundHistoryType) => {
   const [applicationList, setApplicationList] = useState<
     ApplicationProfileListType[]
   >([]);
@@ -25,14 +30,17 @@ const FundHistory = () => {
 
   useEffect(() => {
     getApplicationList();
-  }, []);
+  }, [nickname]);
 
   return (
     <div>
       {applicationList?.length > 0 ? (
         <div>
           <H3>신청한 모금</H3>
-          <FundingItem item={applicationList[0]} />
+          <FundingItem
+            item={applicationList[0]}
+            isOwner={nickname === getLoggedUserNickname()}
+          />
         </div>
       ) : (
         <div>진행 중인 기부가 없습니다</div>
