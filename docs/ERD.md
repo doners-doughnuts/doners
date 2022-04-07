@@ -24,7 +24,7 @@
 
 
 ### Donation
-![Community](https://user-images.githubusercontent.com/76759852/162286330-a2e7e1f8-5b93-402c-a401-46118a342c4e.PNG)
+![Donation](https://user-images.githubusercontent.com/76759852/162286445-463b399f-bfb6-4ec1-a740-afd9560a5f33.PNG)
 
 
 ### Community
