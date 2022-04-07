@@ -1,0 +1,45 @@
+@import 'assets/styles/main';
+.section {
+  width: 100vw;
+  // background-color: $gray-2;
+
+  .container {
+    width: 100vw;
+    position: relative;
+
+    .contents {
+      @include flexbox(between, start);
+      padding: 200px 0;
+
+      .left-content {
+        .title {
+          color: $green;
+          font-size: 28px;
+          margin-bottom: 30px;
+        }
+
+        .textbox {
+          .text {
+            font-size: 50px;
+            line-height: 1.5;
+          }
+        }
+      }
+
+      .right-content {
+        .monitor {
+          position: relative;
+        }
+        .image {
+          position: absolute;
+          top: 13px;
+          left: 12px;
+          img {
+            width: 475px;
+            height: 284px;
+          }
+        }
+      }
+    }
+  }
+}

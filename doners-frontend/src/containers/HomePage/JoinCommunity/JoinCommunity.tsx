@@ -26,7 +26,7 @@ const JoinCommunity = () => {
       >
         <div className={`${styles.container} ${styles['container-default']}`}>
           <div className={cx('innerContainer')}>
-            <div data-aos="zoom-in" className={cx('welcome-community-box')}>
+            <div className={cx('welcome-community-box')}>
               <div>
                 <img
                   src={character}
