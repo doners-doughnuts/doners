@@ -9,24 +9,14 @@ import {
   declineApplication,
 } from 'services/api/Donation';
 import { createFundraiser } from 'services/blockchain/SsfApi';
-import {
-  DonationListType,
-  DontationDetailType,
-  EvidenceType,
-} from 'types/DonationTypes';
+import { DonationListType, EvidenceType } from 'types/DonationTypes';
 import { getWalletAccount } from 'utils/walletAddress';
 import { ReactComponent as CloseIcon } from 'assets/images/icon/close.svg';
 
 import styles from './ApprovalModal.module.scss';
-import H4 from 'assets/theme/Typography/H4/H4';
 import { toast } from 'react-toastify';
-import { IFileTypes } from 'containers/Apply/ApplyReasonForm/ApplyReasonForm';
-import { useCallback } from 'react';
-import { ChangeEvent } from 'react';
-import { useRef } from 'react';
 import FileButton from 'assets/theme/Button/FileButton/FileButton';
 import UserInfo from 'containers/DonatePage/DonateDetailPage/UserInfo/UserInfo';
-import DonateContent from 'containers/DonatePage/DonateDetailPage/DonateContent/DonateContent';
 import DonateInfo from 'containers/DonatePage/DonateDetailPage/DonateInfo/DonateInfo';
 import H3 from 'assets/theme/Typography/H3/H3';
 
@@ -43,12 +33,6 @@ export enum RejectionCode {
   LACK_OF_EVIDENCE = '증빙자료 부족',
   ETC = '기타',
 }
-
-// const [options, setOptions] = useState<selectBoxType>({ options: [] });
-// Object.values(RejectionCode).forEach((value, idx) => {
-//   options.options.push({ value: idx.toString(), label: value })
-// })
-// setOptions(options);
 
 /* 관리자 기부신청 처리 관련 반려 사유 */
 const options = [
@@ -130,12 +114,6 @@ const ApprovalModal = ({
   const handleApprove = async () => {
     // 스마트 컨트랙트에 올릴 기부 상세 정보 받아오기
 
-    //** 송민수 수정 : await getDonationDetail을 하면 바로 data를 가져오는게 아니라 response.data에 값이 들어가 있음.
-    //               따라서 const donationDetail에서 바로 요소 추출 불가능  */
-    ///// const donationDetail: DontationDetailType = await getDonationDetail(
-    //// const response = await getDonationDetail(donation.donationId);
-    //// const donationDetail = response.data;
-
     // contract address가 반환된다
     // ex. 0xc86F168f8D5b22C677c0184C2865C11Dc5921951
     if (donationDetail) {
@@ -214,6 +192,14 @@ const ApprovalModal = ({
             </div>
             <div className={cx('col-lg-5', 'col-md-5', 'col-sm-4', 'userInfo')}>
               <UserInfo data={donationDetail} />
+              <div className={cx('select-box')}>
+                {/* <div className={cx('select-box')}> */}
+                <H3>기부 신청 반려사유 선택</H3>
+                <Selectbox
+                  onChange={(e) => setApprovalStatus(e.value)}
+                  options={options}
+                />
+              </div>
             </div>
             {/* <div
               className={cx(
@@ -227,8 +213,8 @@ const ApprovalModal = ({
             </div> */}
 
             <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
+              <H3>증빙자료</H3>
               <div className={cx('file')}>
-                <H3>증빙자료</H3>
                 <div className={cx('fileuploadlist')}>
                   {files.length > 0 &&
                     files.map((file: EvidenceType) => (
@@ -241,44 +227,40 @@ const ApprovalModal = ({
                 </div>
               </div>
             </div>
-            <div className={cx('col-lg-5', 'col-md-5', 'col-sm-4')}>
-              <div className={cx('select-box')}>
-                <H3>기부 신청 반려사유 선택</H3>
-                <Selectbox
-                  onChange={(e) => setApprovalStatus(e.value)}
-                  options={options}
-                />
+
+            {/* </div> */}
+            <div
+              className={cx('col-lg-5', 'col-md-5', 'col-sm-4', 'button-group')}
+            >
+              {/* <div className={cx('button-group')}> */}
+              <div className={cx('button')}>
+                <Button
+                  color="secondary"
+                  fullWidth
+                  onClick={handleApprove}
+                  disabled={
+                    donationDetail?.approvalStatusCode === 'APPROVAL' ||
+                    preventDuplicatedRequest
+                  }
+                >
+                  승인
+                </Button>
               </div>
-              <div className={cx('button-group')}>
-                <div className={cx('button')}>
-                  <Button
-                    color="secondary"
-                    fullWidth
-                    onClick={handleApprove}
-                    disabled={
-                      donationDetail?.approvalStatusCode === 'APPROVAL' ||
-                      preventDuplicatedRequest
-                    }
-                  >
-                    승인
-                  </Button>
-                </div>
-                <div className={cx('button')}>
-                  <Button
-                    color="alternate"
-                    fullWidth
-                    onClick={handleDecline}
-                    disabled={
-                      donationDetail?.approvalStatusCode !==
-                      'BEFORE_CONFIRMATION'
-                    }
-                  >
-                    거절
-                  </Button>
-                </div>
+              <div className={cx('button')}>
+                <Button
+                  color="alternate"
+                  fullWidth
+                  onClick={handleDecline}
+                  disabled={
+                    donationDetail?.approvalStatusCode !== 'BEFORE_CONFIRMATION'
+                  }
+                >
+                  거절
+                </Button>
               </div>
             </div>
           </div>
+          {/* </div> */}
         </section>
       ) : null}
     </div>

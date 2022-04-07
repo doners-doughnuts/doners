@@ -45,6 +45,7 @@ const DonateContent = ({ data }: DonateContentProps) => {
         open={openContentModal}
         onClose={handleOnClose}
         contents={data.description}
+        title={data.title}
       />
     </div>
   );
