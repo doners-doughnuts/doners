@@ -71,7 +71,7 @@ public class DonationServiceImpl implements DonationService {
         // 대리인
         if (donationRegisterPostDTO.isDeputy()) {
             donation.changeBeneficiary(donationRegisterPostDTO.getBeneficiaryName(), donationRegisterPostDTO.getBeneficiaryPhone());
-        // 본인
+            // 본인
         } else {
             donation.changeBeneficiary(user.getUserName(), donationRegisterPostDTO.getPhone());
         }
@@ -370,7 +370,7 @@ public class DonationServiceImpl implements DonationService {
 
         Donation donation = donationRepository.findById(donationPatchDTO.getDonationId()).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
 
-        if(!requestUser.getId().equals(donation.getUser().getId())) return 401;
+        if (!requestUser.getId().equals(donation.getUser().getId())) return 401;
 
         try {
             donation.changeIsReceived();
