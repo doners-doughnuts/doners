@@ -201,16 +201,6 @@ const ApprovalModal = ({
                 />
               </div>
             </div>
-            {/* <div
-              className={cx(
-                'col-lg-6',
-                'col-md-6',
-                'col-sm-4',
-                'donateContent'
-              )}
-            >
-              <DonateContent data={donationDetail} />
-            </div> */}
 
             <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
               <H3>증빙자료</H3>

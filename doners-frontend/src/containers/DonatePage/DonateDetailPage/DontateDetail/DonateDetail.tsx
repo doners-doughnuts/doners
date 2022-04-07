@@ -155,6 +155,17 @@ const DonateDetail = () => {
                         모금 종료
                       </Button>
                     )
+                  ) : isOwn ? (
+                    <Button
+                      color="secondary"
+                      size="large"
+                      fullWidth
+                      shadow
+                      onClick={handleDonateClick}
+                      disabled
+                    >
+                      자신이 신청한 모금에는 기부할 수 없습니다.
+                    </Button>
                   ) : (
                     <Button
                       color="secondary"
