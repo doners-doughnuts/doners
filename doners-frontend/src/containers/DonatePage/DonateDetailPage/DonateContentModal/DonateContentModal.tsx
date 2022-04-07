@@ -12,8 +12,9 @@ type modalType = {
   open: boolean;
   onClose: any;
   contents: any;
+  title: string;
 };
-const DonateContentModal = ({ open, onClose, contents }: modalType) => {
+const DonateContentModal = ({ open, onClose, contents, title }: modalType) => {
   const handleOnClick = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event.target);
   };
@@ -29,7 +30,7 @@ const DonateContentModal = ({ open, onClose, contents }: modalType) => {
         <section className={cx('modalForm')}>
           <div className={cx('header')}>
             <div className={cx('title')}>
-              <H2>신청자의 글</H2>
+              <H2>{title}</H2>
             </div>
             <div className={cx('close-btn')} onClick={() => onClose()}>
               <CloseIcon />

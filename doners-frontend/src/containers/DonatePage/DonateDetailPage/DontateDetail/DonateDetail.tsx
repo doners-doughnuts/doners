@@ -173,15 +173,15 @@ const DonateDetail = () => {
                   onClose={handleCloseClick}
                 />
               </div>
-              <div className={cx('col-lg-6')}>
+              {/* <div className={cx('col-lg-6')}>
                 <DonateContent data={donationData} />
-              </div>
+              </div> */}
               <div className={cx('col-lg-6')}>
                 <DonateInfo data={donationData} />
               </div>
-              <div className={cx('col-lg-6', 'user-info')}>
+              <div className={cx('col-lg-6')}>
                 <UserInfo data={donationData} />
-                <div className={cx('file-form')}>
+                <div className={cx('files')}>
                   <DonateFiles data={donationData} />
                 </div>
               </div>

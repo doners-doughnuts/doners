@@ -5,13 +5,11 @@ import H4 from 'assets/theme/Typography/H4/H4';
 import P from 'assets/theme/Typography/P/P';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
-import HistoryItem from 'components/HistoryItem/HistoryItem';
-import { differenceInDays } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { nowBalance } from 'services/blockchain/SsfApi';
 import { DontationDetailType } from 'types/DonationTypes';
 import { calcDday } from 'utils/formatTime';
-import DonateContent from '../DonateContent/DonateContent';
+import DonateContentModal from '../DonateContentModal/DonateContentModal';
 // import { DonationDetailType } from '../DontateDetail/DonateDetail';
 import styles from './DonateInfo.module.scss';
 
@@ -26,6 +24,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
   // const [target, setTarget] = useState(3.89);
   const [current, setCurrent] = useState(1.0);
   const [rate, setRate] = useState(0);
+  const [openContentModal, setOpenContentModal] = useState(false);
 
   useEffect(() => {
     getCurrentBalance();
@@ -45,6 +44,14 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
 
   const handleHistoryListClick = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleOpenModal = () => {
+    setOpenContentModal(true);
+  };
+
+  const handleOnClose = () => {
+    setOpenContentModal(false);
   };
 
   return (
@@ -84,28 +91,13 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
         </div>
       ) : null}
       <div>
-        <div className={cx('donate-title')}>{/* <H3>신청자의 글</H3> */}</div>
         <div className={cx('donate-plan')}>
           <div className={cx('detail-plan')}>
             <H4>신청자의 글</H4>
-            <div className={cx('ocBtn')} onClick={handleHistoryListClick}>
-              <H4 color="green">{isOpen ? '닫기' : '더보기'}</H4>
+            <div className={cx('ocBtn')} onClick={handleOpenModal}>
+              <H4 color="green">더보기</H4>
             </div>
           </div>
-          {isOpen ? (
-            <div className={cx('history-items')}>
-              {data.budget.map((value) => {
-                return (
-                  <div className={cx('history-item')} key={value.sequence}>
-                    <P>{value.plan}</P>
-                    <div className={cx('value')}>
-                      <P>{`${value.amount.toLocaleString()}SSF`}</P>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
         </div>
         <div className={cx('donate-title')}>
           {/* <H3>모금액 활용계획</H3> */}
@@ -131,6 +123,12 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
               })}
             </div>
           ) : null}
+          <DonateContentModal
+            open={openContentModal}
+            onClose={handleOnClose}
+            contents={data.description}
+            title={data.title}
+          />
         </div>
       </div>
     </div>
