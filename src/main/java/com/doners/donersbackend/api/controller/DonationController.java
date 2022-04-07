@@ -1,8 +1,10 @@
 package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationReceivedPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
+import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
@@ -257,26 +259,26 @@ public class DonationController {
 
     }
 
-    @ApiOperation(value = "기부 삭제 (완료 처리)")
+    @ApiOperation(value = "기부 수령 완료 처리)")
     @ApiResponses({
-            @ApiResponse(code=200, message="기부 삭제 완료"),
-            @ApiResponse(code=401, message="삭제할 권한이 없습니다."),
-            @ApiResponse(code=409, message="기부 삭제 실패"),
+            @ApiResponse(code=200, message="기부 수령 완료 처리 성공"),
+            @ApiResponse(code=401, message="수령 완료 처리할 권한이 없습니다."),
+            @ApiResponse(code=409, message="기부 수령 완료 처리 실패"),
     })
-    @DeleteMapping("/{donationId}")
-    public ResponseEntity<? extends BaseResponseDTO> deleteDonation(
+    @PatchMapping("/receipt")
+    public ResponseEntity<? extends BaseResponseDTO> receiveDonation(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @PathVariable("donationId") @ApiParam(value="기부 ID", required=true) String donationId) {
+            @RequestBody @ApiParam(value="기부 ID", required=true) DonationReceivedPatchDTO donationReceivedPatchDTO) {
         try {
-            Integer code = donationService.deleteDonation(accessToken, donationId);
+            Integer code = donationService.receiveDonation(accessToken, donationReceivedPatchDTO);
 
             if(code == 401) {
-                return ResponseEntity.status(401).body(BaseResponseDTO.of("삭제할 권한이 없습니다.", 401));
+                return ResponseEntity.status(401).body(BaseResponseDTO.of("수령 완료 처리할 권한이 없습니다.", 401));
             }
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부 삭제 실패", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기기부 수령 완료 처리 실패", 409));
         }
 
-        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 삭제 성공", 200));
+        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 수령 완료 처리 성공", 200));
     }
 }
