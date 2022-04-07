@@ -125,13 +125,13 @@ public class DonationController {
     @PatchMapping("/recommend")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationPatchDTO donationRecommendPatchDTO
+            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationPatchDTO donationPatchDTO
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
 
         try {
-            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationRecommendPatchDTO);
+            donationRecommendResponseDTO = donationService.recommendDonation(accessToken, donationPatchDTO);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(404).body(BaseResponseDTO.of("기부글을 찾을 수 없습니다.", 404));
         } catch (Exception e) {
@@ -265,10 +265,10 @@ public class DonationController {
     @PatchMapping("/receipt")
     public ResponseEntity<? extends BaseResponseDTO> receiveDonation(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @RequestBody @ApiParam(value="기부 ID", required=true) DonationPatchDTO donationReceivedPatchDTO) {
+            @RequestBody @ApiParam(value="기부 ID", required=true) DonationPatchDTO donationPatchDTO) {
 
         try {
-            Integer code = donationService.receiveDonation(accessToken, donationReceivedPatchDTO);
+            Integer code = donationService.receiveDonation(accessToken, donationPatchDTO);
 
             if(code == 401) {
                 return ResponseEntity.status(401).body(BaseResponseDTO.of("기부 수령 완료 처리 권한이 없습니다.", 401));
