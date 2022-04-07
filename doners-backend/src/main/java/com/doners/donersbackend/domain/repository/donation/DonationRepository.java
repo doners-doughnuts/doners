@@ -22,7 +22,7 @@ public interface DonationRepository extends JpaRepository<Donation, String> {
 
     boolean existsByIdAndIsDeleted(String donationId, boolean delete);
 
-    boolean existsByIdAndIsReceived(String donationId, boolean isReceived);
+    boolean existsByUserAndIsReceived(User user, boolean isReceived);
 
     Optional<List<Donation>> findByIsApprovedAndApprovalStatusCode(boolean isApproved, ApprovalStatusCode approvalStatusCode);
 
