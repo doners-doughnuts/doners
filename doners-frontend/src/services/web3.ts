@@ -4,7 +4,6 @@ import { FundraiserABI } from 'assets/abi/FundraiserABI';
 import { FundraiserFactoryABI } from 'assets/abi/FundraiserFactoryABI';
 import { SsfABI } from 'assets/abi/SsfABI';
 import Web3 from 'web3';
-import { AbiItem } from 'web3-utils';
 
 //* Remote Node Provider
 // Using a remote node provider, like Alchemy (https://www.alchemyapi.io/supernode), is simple.

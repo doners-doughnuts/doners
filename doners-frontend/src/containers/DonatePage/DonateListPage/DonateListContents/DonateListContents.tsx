@@ -19,6 +19,7 @@ export type DonateType = {
   thumbnail: string;
   title: string;
   beneficiaryName: string;
+  userNickname: string;
   targetAmount: number;
   endDate: string;
   contractAddress: string;
@@ -116,7 +117,6 @@ const DonateListContents = () => {
       setIsLoaded(true);
       const response = await getDonationList(categoryId, sort, page, view);
       const data = response.data.donationGetListResponseDTOList;
-      console.log(response);
       if (data.length === 0) {
         setIsLoaded(false);
         setEndCheck(true);

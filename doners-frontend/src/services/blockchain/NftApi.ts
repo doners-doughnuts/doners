@@ -19,7 +19,7 @@
  * - transaction stages (SSF)
  */
 
-import { DDHelperContract, Web3Client } from 'services/web3';
+import { DDHelperContract } from 'services/web3';
 //! metadata.json import 받아와서 loop 돌림
 // (https://nodejs.dev/learn/reading-files-with-nodejs)
 import { Metadata } from 'assets/metadata/_ipfsMetadatas';

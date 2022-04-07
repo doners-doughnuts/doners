@@ -61,7 +61,7 @@ const ApprovalModal = ({
   setStatus,
   donation,
 }: ApprovalModalType) => {
-  const [approvalStatus, setApprovalStatus] = useState('');
+  const [approvalStatus, setApprovalStatus] = useState('WRONG_CONTACT_NUM');
   const [donationDetail, setDonationDetail] = useState({
     achievementRate: 0,
     account: '',
@@ -176,7 +176,7 @@ const ApprovalModal = ({
 
   return (
     <div className={cx('modal', { openModal: open === true })}>
-      {open ? (
+      {open && donation ? (
         <section className={cx('container')}>
           <div className={cx('row')}>
             <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
@@ -196,7 +196,9 @@ const ApprovalModal = ({
                 {/* <div className={cx('select-box')}> */}
                 <H3>기부 신청 반려사유 선택</H3>
                 <Selectbox
-                  onChange={(e) => setApprovalStatus(e.value)}
+                  onChange={(e) => {
+                    setApprovalStatus(e.value);
+                  }}
                   options={options}
                 />
               </div>

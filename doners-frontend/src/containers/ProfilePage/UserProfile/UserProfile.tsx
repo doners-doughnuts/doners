@@ -78,7 +78,7 @@ const UserProfile = ({ nickname }: nickNameType) => {
             <H2>{String(nickname)}</H2>
           </div>
           <div className={cx('wallet_check')} onClick={handleWalletAddress}>
-            <P color="gray">내 지갑 주소 확인하기</P>
+            <P color="gray">지갑 주소 확인하기</P>
           </div>
           {walletOpen ? (
             <div>

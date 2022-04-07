@@ -1,7 +1,4 @@
-import { vi } from 'date-fns/locale';
 import instance from 'services/axios';
-import { DontationDetailType } from 'types/DonationTypes';
-import _donationDetail from '_mocks_/donationDetail';
 
 type donationType = {
   category: string;
@@ -26,7 +23,6 @@ export const postDonation = async (formData: any) => {
  */
 export const checkUserFundState = async () => {
   const result = await instance.get(COMMON + `/check`);
-  console.log(result);
   return result;
 };
 
@@ -36,7 +32,6 @@ export const getDonationList = async (
   page: number,
   view: boolean = false
 ) => {
-  console.log(category, sort, page, view);
   const result = await instance.get(
     `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
@@ -49,7 +44,6 @@ export const getAvailableDonationList = async (
   page: number,
   view: boolean
 ) => {
-  console.log(category, sort, page, view);
   const result = await instance.get(
     `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
@@ -68,7 +62,6 @@ export const getSearchDonation = async (
   page: number,
   type: string = 't'
 ) => {
-  console.log(keyword);
   const result = await instance.get(
     `/donation/search?category=${category}&page=${page}&keyword=${keyword}&type=${type}`
   );
@@ -77,6 +70,11 @@ export const getSearchDonation = async (
 
 export const checkApporveDonation = async () => {
   const result = await instance.get(`/donation/check/approve`);
+  return result;
+};
+
+export const deleteClosedDonation = async (donationId: string) => {
+  const result = await instance.patch(`/donation/receipt`, { donationId });
   return result;
 };
 
@@ -94,7 +92,6 @@ export const approveApplication = async (
     approved: true,
     contractAddress,
   });
-  console.log(response);
   return response;
 };
 
@@ -113,6 +110,5 @@ export const declineApplication = async (
     approved: false,
     rejectionCode,
   });
-  console.log(response);
   return response;
 };

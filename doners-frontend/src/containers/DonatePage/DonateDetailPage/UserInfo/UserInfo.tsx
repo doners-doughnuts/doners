@@ -15,6 +15,7 @@ type UserInfoProps = {
 };
 const UserInfo = ({ data }: UserInfoProps) => {
   const navigate = useNavigate();
+  console.log(data);
   const handleNavigate = () => {
     navigate(`/profile/${data.nickname}`);
   };

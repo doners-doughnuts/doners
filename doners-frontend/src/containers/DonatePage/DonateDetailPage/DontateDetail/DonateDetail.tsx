@@ -18,6 +18,7 @@ import LoadingSpinner from 'assets/theme/LoadingSpinner/LoadingSpinner';
 import { checkClosedDonation } from 'utils/formatTime';
 import { Link } from 'react-router-dom';
 import { CategoryCode } from 'types/ApplicationTypes';
+import { mint } from 'services/blockchain/NftApi';
 
 const cx = classNames.bind(styles);
 
@@ -90,6 +91,7 @@ const DonateDetail = () => {
         setIsOwn(true);
       }
     }
+    console.log(donationData);
   }, [donationData]);
 
   const getDetail = async () => {

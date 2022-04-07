@@ -26,7 +26,7 @@ const ProfileDetail = ({ focus, nickname, walletAddress }: ProfileType) => {
               {focus === 1 ? (
                 <MyNFT walletAddress={walletAddress} />
               ) : focus === 2 ? (
-                <DonationHistory />
+                <DonationHistory walletAddress={walletAddress} />
               ) : focus === 3 ? (
                 <FundHistory nickname={nickname} />
               ) : null}
