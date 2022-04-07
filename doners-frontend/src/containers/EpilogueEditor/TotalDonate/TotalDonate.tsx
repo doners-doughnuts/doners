@@ -32,6 +32,7 @@ const TotalDonate = ({ donationId }: any) => {
   const checkWithdrawState = async () => {
     // (완료) 모금액 수령이 완료되었는지 검사
     const response = await fundraiserIsWithdraw(contractAddress);
+    console.log(response);
     setCollectedBalance(response.targetMoney);
   };
 
