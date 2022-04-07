@@ -18,28 +18,34 @@ const ProfileTab = ({ focus, nickname }: TabType) => {
 
   return (
     <div>
-      <nav className={cx('lnb')}>
+      <nav className={cx('tab')}>
         <div className={cx('container')}>
           <div className={cx('row')}>
-            <div className={cx('col-lg-8')}>
-              <ul className={cx('lnb-list')}>
-                <li className={cx('lnb-item', { 'is-active': focus === 1 })}>
-                  <Link to={`/profile/mynft/${nickname}`}>보유 NFT</Link>
-                </li>
-                <li className={cx('lnb-item', { 'is-active': focus === 2 })}>
-                  <Link to={`/profile/donationhistory/${nickname}`}>
-                    기부한 내역
+            <ul className={cx('tab-list')}>
+              <li className={cx('tab-list-item', { 'is-active': focus === 1 })}>
+                <Link to={`/profile/mynft/${nickname}`}>보유 NFT</Link>
+              </li>
+              <li
+                className={cx('tab-list-item', {
+                  'tab-is-active': focus === 2,
+                })}
+              >
+                <Link to={`/profile/donationhistory/${nickname}`}>
+                  기부한 내역
+                </Link>
+              </li>
+              {nickname === getLoggedUserNickname() ? (
+                <li
+                  className={cx('tab-list-item', {
+                    'tab-is-active': focus === 3,
+                  })}
+                >
+                  <Link to={`/profile/fundhistory/${nickname}`}>
+                    모금신청 관리
                   </Link>
                 </li>
-                {nickname === getLoggedUserNickname() ? (
-                  <li className={cx('lnb-item', { 'is-active': focus === 3 })}>
-                    <Link to={`/profile/fundhistory/${nickname}`}>
-                      모금신청 관리
-                    </Link>
-                  </li>
-                ) : null}
-              </ul>
-            </div>
+              ) : null}
+            </ul>
           </div>
         </div>
       </nav>

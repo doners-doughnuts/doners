@@ -228,10 +228,10 @@ const ApprovalModal = ({
                   color="secondary"
                   fullWidth
                   onClick={handleApprove}
-                  // disabled={
-                  // donationDetail?.approvalStatusCode === 'APPROVAL' ||
-                  // preventDuplicatedRequest
-                  // }
+                  disabled={
+                    donationDetail?.approvalStatusCode === 'APPROVAL' ||
+                    preventDuplicatedRequest
+                  }
                 >
                   승인
                 </Button>
