@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
-        <div className={cx('col-lg-12')}>
+        <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
           <div className={cx('header')}>
             <div className={cx('header-leftside')}>
               <ul className={cx('header-list')}>
