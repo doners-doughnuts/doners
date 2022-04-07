@@ -1,7 +1,9 @@
+import Button from 'assets/theme/Button/Button';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import Tag from 'assets/theme/Tag/Tag';
 import Span from 'assets/theme/Typography/Span/Span';
 import classNames from 'classnames/bind';
+import FundModal from 'containers/ProfilePage/FundModal/FundModal';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { fundraiserIsWithdraw } from 'services/blockchain/SsfApi';
@@ -16,13 +18,24 @@ const cx = classNames.bind(styles);
 
 type LastFundingItemProps = {
   item: ApplicationProfileListType;
+  isOwner: boolean;
 };
 
-const LastFundingItem = ({ item }: LastFundingItemProps) => {
-  const [collectedBalance, setCollectedBalance] = useState(0);
+const LastFundingItem = ({ item, isOwner }: LastFundingItemProps) => {
   const [isWithdrawn, setIsWithdrawn] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [collectedBalance, setCollectedBalance] = useState(0);
 
   const navigate = useNavigate();
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = async () => {
+    checkWithdrawState();
+    setModalOpen(false);
+  };
 
   /* 기부글 상세로 이동 */
   const handleThumbnailClick = () => {
@@ -62,7 +75,18 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
         <div className={cx('img-wrap')}></div>
         <div className={cx('item-info-wrap')}>
           {item.donationIsApproved ? (
-            <Tag color="black">기부금 수령 완료</Tag>
+            isWithdrawn ? (
+              <Tag color="black">기부금 수령 완료</Tag>
+            ) : (
+              <div className={cx('withdraw-button-wrapper')}>
+                <Tag color="black">모금 완료</Tag>
+                {isOwner ? (
+                  <Button color={'secondary'} onClick={openModal}>
+                    기부금 수령하기
+                  </Button>
+                ) : null}
+              </div>
+            )
           ) : (
             <Tag color="orange">
               {`반려처리: ${
@@ -70,6 +94,17 @@ const LastFundingItem = ({ item }: LastFundingItemProps) => {
               }`}
             </Tag>
           )}
+
+          {item.donationIsApproved ? (
+            <FundModal
+              open={modalOpen}
+              close={closeModal}
+              contractAddress={item.contractAddress}
+              targetAmount={item.targetAmount}
+              donationId={item.donationId}
+            />
+          ) : null}
+
           <div className={cx('date-row')}>
             <div
               className={cx('date-title', 'date-start-title')}
