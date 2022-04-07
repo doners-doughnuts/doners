@@ -48,4 +48,5 @@ public interface DonationService {
     // 관계 증명서 업로드
     void uploadCertificateFile(Donation donation, MultipartFile certificate);
 
+    Integer deleteDonation(String accessToken, String donationId);
 }
