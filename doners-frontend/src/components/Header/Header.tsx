@@ -6,56 +6,36 @@ import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import Button from 'assets/theme/Button/Button';
 import Logo from 'assets/images/header-logo.svg';
-import { getLoggedUserInfo } from 'utils/loggedUser';
-import { useRecoilValue } from 'recoil';
-import { isLoggedState, nicknameState } from '../../atoms/atoms';
+import {
+  getLoggedUserInfo,
+  getLoggedUserNickname,
+  isAdmin,
+} from 'utils/loggedUser';
+import NotificationsPopover from 'containers/Notification/NotificationsPopover';
 
 const cx = classNames.bind(styles);
 const Header = () => {
-  const [loggedUserInfo, setLoggedUserInfo] = useState(false);
-  // const [ScrollY, setScrollY] = useState(0); // window 의 pageYOffset값을 저장
-  const [ScrollActive, setScrollActive] = useState(false);
-  // }
-  // function handleScroll() {
-  //   }
-  //     setScrollActive(false);
-  //     setScrollY(window.pageYOffset);
-  //     setScrollActive(true);
-  //     setScrollY(window.pageYOffset);
-  //   if (ScrollY > 45) {
-  //   } else {
-  const mynickname = useRecoilValue(nicknameState);
-
-  // useEffect(() => {
-  //   function scrollListener() {
-  //     window.addEventListener('scroll', handleScroll);
-  //   } //  window 에서 스크롤을 감시 시작
-  //   scrollListener(); // window 에서 스크롤을 감시
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   }; //  window 에서 스크롤을 감시를 종료
-  // });
+  const [isLogged, setIsLogged] = useState(false);
+  const [loggedUserNickname, setLoggedUserNickname] = useState('');
+  const [isLoggedAdmin, setIsLoggedAdmin] = useState(false);
 
   useEffect(() => {
-    const localStorageUserInfo = getLoggedUserInfo();
-    console.log(localStorageUserInfo);
-    if (localStorageUserInfo) {
-      setLoggedUserInfo(true);
-      // console.log(mynickname);
+    const sessionStorageUserNickname = getLoggedUserNickname();
+
+    if (sessionStorageUserNickname) {
+      setIsLogged(true);
+      setLoggedUserNickname(sessionStorageUserNickname);
     }
+
+    // console.log(isAdmin());
+    setIsLoggedAdmin(isAdmin());
   }, [getLoggedUserInfo()]);
 
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
-        <div className={cx('col-lg-12')}>
-          <div
-            className={
-              ScrollActive
-                ? [styles.header, styles.fixed].join(' ')
-                : styles['header']
-            }
-          >
+        <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
+          <div className={cx('header')}>
             <div className={cx('header-leftside')}>
               <ul className={cx('header-list')}>
                 <Link to="/">
@@ -64,7 +44,7 @@ const Header = () => {
                   </li>
                 </Link>
                 <li>
-                  <Link to="/apply">
+                  <Link to="/apply/main">
                     <H5>기부신청</H5>
                   </Link>
                 </li>
@@ -88,23 +68,30 @@ const Header = () => {
               </div>
             </div>
             <div className={cx('header-rightside')}>
-              <ul className={cx('header-list')}>
+              <ul className={cx('header-list-rightside')}>
+                {/* //TODO 다크모드 OR 언어 (리팩토링)
                 <li>
                   <H5>언어</H5>
-                </li>
-                <li>
-                  <H5>알림</H5>
-                </li>
-                <li>
-                  <H5>프로필</H5>
-                </li>
-                <div className="btn">
-                  {loggedUserInfo ? (
-                    <Link to={`/profile/mynft/${mynickname}`}>
-                      <Button size="small" fullWidth color={'alternate'}>
-                        Profile
-                      </Button>
-                    </Link>
+                </li> */}
+                <div className={cx('row')}>
+                  {isLogged ? (
+                    <>
+                      {isLoggedAdmin ? (
+                        <Link to="/admin">
+                          <li>
+                            <H5>관리자 페이지</H5>
+                          </li>
+                        </Link>
+                      ) : null}
+                      <li>
+                        <NotificationsPopover />
+                      </li>
+                      <Link to={`/profile/${loggedUserNickname}`}>
+                        <Button size="small" fullWidth color={'alternate'}>
+                          Profile
+                        </Button>
+                      </Link>
+                    </>
                   ) : (
                     <Link to="/signup">
                       <Button size="small" fullWidth color={'alternate'}>

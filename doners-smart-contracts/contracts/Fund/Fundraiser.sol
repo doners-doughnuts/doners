@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract Fundraiser is Ownable {
     using SafeMath for uint256;
     string public title; // 글 제목
-    string public url; // 모금 주소
+    string public id; // 모금 donationId
     string public imageURL; // 사진 주소
     string public description; // 사연
     uint256 public donationsGoal; // 목표 금액
@@ -16,21 +16,27 @@ contract Fundraiser is Ownable {
     address payable public beneficiary; // 수혜자 주소
     address public custodian; // 후견인 주소
     IERC20 public erc20Contract; // ssafyContract를 가져오기위한 토큰 컨트랙트 인터페이스
+    bool public isWithdraw; // 기부 수령 확인
+    uint256 public donationCollectMoney;
 
     struct Donation {
-        uint256 value;
+        address fromAccount;
+        address toAccount;
         uint256 date;
-        address account;
+        uint256 value;
+        string donationTitle;
+        string donationId;
     }
     Donation[] public _donations;
+    Donation public withdrawData; // 수령 data
+    mapping(address => Donation[]) public _myDonations;
     uint256 public donationsCount; // 현재 기부한 사람 인원
-
     event DonationReceived(address indexed donor, uint256 value);
     event Withdraw(uint256 amount);
 
     constructor(
         string memory _title,
-        string memory _url,
+        string memory _id,
         string memory _imageURL,
         string memory _description,
         uint256 _donationsGoal,
@@ -39,69 +45,107 @@ contract Fundraiser is Ownable {
         address _custodian
     ) {
         title = _title;
-        url = _url;
+        id = _id;
         imageURL = _imageURL;
         description = _description;
         donationsGoal = _donationsGoal;
         fundRaisingCloses = _fundRaisingCloses;
         beneficiary = _beneficiary;
-        transferOwnership(_custodian);
-        erc20Contract = IERC20(address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)); // ssafycontract 주소 주입
+        transferOwnership(_beneficiary);
+        erc20Contract = IERC20(
+            address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)
+        ); // ssafycontract 주소 주입
+        isWithdraw = false;
+        donationCollectMoney = 0;
+    }
+
+    function myDonationsCount(address _sender)
+        public
+        payable
+        returns (uint256)
+    {
+        return _myDonations[_sender].length;
     }
 
     function setBeneficiary(address payable _beneficiary) public onlyOwner {
         beneficiary = _beneficiary;
     }
 
-    function nowAddress() public returns(address) { // 현재 컨트랙트 주소
-        return address(this);
-    }
-
     function donate(uint256 _amount) public payable {
         // require(block.timestamp < fundRaisingCloses, "FUND RAISING CLOSED");
+        address sender = msg.sender;
 
         // 기부한 금액과 시간과 사람
         Donation memory donation = Donation({
-            value: _amount,
+            fromAccount: sender,
+            toAccount: address(this),
             date: block.timestamp,
-            account: msg.sender
+            value: _amount,
+            donationTitle: title,
+            donationId: id
         });
         _donations.push(donation);
+        _myDonations[sender].push(
+            Donation(sender, address(this), block.timestamp, _amount, title, id)
+        );
+        donationCollectMoney += _amount;
         donationsCount++;
-        require (erc20Contract.approve(address(this),_amount),"address fail");
-        require (erc20Contract.approve(msg.sender,_amount),"msg.sender fail");
+        require(erc20Contract.approve(address(this), _amount), "address fail");
+        require(erc20Contract.approve(sender, _amount), "msg.sender fail");
 
-        erc20Contract.transferFrom(msg.sender, address(this), _amount); // 후견인 -> 컨트랙트로 송금
-        emit DonationReceived(msg.sender, _amount);
+        erc20Contract.transferFrom(sender, address(this), _amount); // 후견인 -> 컨트랙트로 송금
+        emit DonationReceived(sender, _amount);
     }
 
+    // 현재 컨트랙트에 내가 기부한 내역
+    function myDonations(address _myAccount)
+        public
+        payable
+        returns (Donation[] memory donationlist)
+    {
+        uint256 count = myDonationsCount(_myAccount);
+        donationlist = new Donation[](count);
+        for (uint256 i = 0; i < count; i++) {
+            Donation storage donation = _myDonations[_myAccount][i];
+            donationlist[i] = donation;
+        }
+        return donationlist;
+    }
+
+    // 현재 컨트랙트의 모든 기부내역
     function getDonations()
         public
         view
-        returns (uint256[] memory values, uint256[] memory dates,address[] memory accounts)
+        returns (Donation[] memory donationlist)
     {
         uint256 count = donationsCount;
-        values = new uint256[](count);
-        dates = new uint256[](count);
-        accounts = new address[](count);
+        donationlist = new Donation[](count);
         for (uint256 i = 0; i < count; i++) {
             Donation storage donation = _donations[i];
-            values[i] = donation.value; // 금액
-            dates[i] = donation.date; // 시간
-            accounts[i] = donation.account; // 지갑주소
+            donationlist[i] = donation;
         }
-        return (values, dates,accounts);
+        return donationlist;
     }
 
-    function withdraw() public payable onlyOwner {
+    function withdraw() public payable {
         uint256 balance = erc20Contract.balanceOf(address(this)); // 현재 컨트랙트의 금액
+        address sender = msg.sender;
+        isWithdraw = true;
+        require(erc20Contract.approve(address(this), balance), "address fail");
+        require(erc20Contract.approve(sender, balance), "msg.sender fail");
+        require(balance > 0, "contract have no money");
 
-        require (erc20Contract.approve(address(this),balance),"address fail");
-        require (erc20Contract.approve(msg.sender,balance),"msg.sender fail");
-        require (balance > 0 ,"contract have no money");
+        withdrawData = Donation({
+            fromAccount: sender,
+            toAccount: address(this),
+            date: block.timestamp,
+            value: balance,
+            donationTitle: title,
+            donationId: id
+        });
 
         erc20Contract.transfer(beneficiary, balance); // 현재 컨트랙트의 금액을 beneficiary에게 송금처리한다.
+
         emit Withdraw(balance);
     }
-
 }

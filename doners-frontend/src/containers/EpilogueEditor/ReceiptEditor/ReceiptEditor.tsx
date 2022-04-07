@@ -5,66 +5,72 @@ import P from 'assets/theme/Typography/P/P';
 import classNames from 'classnames/bind';
 import styles from './ReceiptEditor.module.scss';
 import HistoryItem from 'components/HistoryItem/HistoryItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 type historyType = {
+  epilogueBudgetSequence: number;
   epilogueBudgetPlan: string;
   epilogueBudgetAmount: string;
-  id: number;
 };
 
-const ReceiptEditor = ({ onChange, list }: any) => {
+const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [history, setHistory] = useState('');
   const [money, setMoney] = useState('');
-  const [id, setId] = useState(0);
+  const [initlength, setLength] = useState(0);
+
+  useEffect(() => {
+    if (list) {
+      list.map((data: historyType, idx: number) => {
+        data.epilogueBudgetSequence = idx;
+        return data;
+      });
+      setHistoryList(list);
+    }
+  }, [list]);
+
+  useEffect(() => {
+    setLength(historyList.length);
+  }, [historyList]);
 
   const handleOnclick = () => {
     if (history && money) {
-      const data = {
-        id: historyList.length,
-        epilogueBudgetPlan: history,
-        epilogueBudgetAmount: money,
-      };
-      setHistoryList((prev) => [...prev, data]);
+      setHistoryList((prev) => [
+        ...prev,
+        {
+          epilogueBudgetSequence: initlength,
+          epilogueBudgetPlan: history,
+          epilogueBudgetAmount: money,
+        },
+      ]);
+
       onChange({
+        epilogueBudgetSequence: initlength,
         epilogueBudgetPlan: history,
         epilogueBudgetAmount: money,
       });
+      setLength((prev) => prev + 1);
+
       setHistory('');
       setMoney('');
     }
   };
 
-  const handleHistoryDelete = (id: number) => {
-    setHistoryList(historyList.filter((history) => history.id !== id));
-  };
-
-  useEffect(() => {
-    for (let id in list) {
-      console.log(id);
-      console.log(list[id]);
-      setHistoryList((prev) => [
-        ...prev,
-        {
-          id,
-          ...list[id],
-        },
-      ]);
-    }
-
-    // setHistoryList(list);
-  }, [list]);
-
-  useEffect(() => {
-    console.log(historyList);
-  }, [historyList]);
-
   const total = historyList
     .map((item) => Number(item.epilogueBudgetAmount))
     .reduce((prev, curr) => prev + curr, 0);
+
+  const handleHistoryDelete = (epilogueBudgetSequence: number): void => {
+    // console.log(epilogueBudgetSequence);
+    setHistoryList(
+      historyList.filter(
+        (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
+      )
+    );
+    onDelete(epilogueBudgetSequence);
+  };
 
   return (
     <div className={cx('receipt-editor')}>
@@ -92,17 +98,19 @@ const ReceiptEditor = ({ onChange, list }: any) => {
       </div>
       <div className={cx('history-list')}>
         {historyList.map((data, idx) => {
+          // console.log(data);
           return (
             <HistoryItem
               value={data}
               key={idx}
               onDelete={handleHistoryDelete}
+              viewOnly={false}
             />
           );
         })}
       </div>
       <div className={cx('total-use-value')}>
-        <P>{`총 사용 모금액: ${total.toLocaleString()} KRW`}</P>
+        <P>{`총 사용 모금액: ${total} KRW`}</P>
       </div>
     </div>
   );

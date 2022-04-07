@@ -3,6 +3,29 @@
 
 .container {
   margin: 0 auto;
+
+  .profile {
+    @include column-flexbox(center, center);
+    width: 70%;
+    margin: 0 auto;
+  }
+  .profile-info {
+    @include column-flexbox(center, center);
+    font-size: small;
+    margin-top: 20px;
+
+    .nickname {
+      width: fit-content;
+      margin: 0 auto;
+    }
+    .wallet_check {
+      cursor: pointer;
+    }
+    b {
+      font-size: 24px;
+    }
+  }
+
   .profileimage {
     @include flexbox;
     justify-content: center;

@@ -1,0 +1,40 @@
+@import 'assets/styles/main';
+
+.container {
+  position: relative;
+  text-align: center;
+  .inner-container {
+    background-color: $white;
+    border: 2px solid $black;
+    box-shadow: $btn-shadow;
+    padding: 50px;
+    margin-bottom: 150px;
+  }
+
+  .content {
+    @include text-style-18;
+    padding: 50px 0 150px 0;
+    .pointer {
+      position: absolute;
+      bottom: 150px;
+      right: -100px;
+    }
+    .charactor {
+      position: absolute;
+      width: 450px;
+      left: -200px;
+    }
+  }
+
+  .header {
+    padding: 50px 0 0 0;
+    @include text-style-36;
+  }
+
+  .footer {
+    padding: 0 0 70px 0;
+    Button {
+      width: 200px;
+    }
+  }
+}

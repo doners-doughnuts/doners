@@ -11,7 +11,7 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
       },
       {
         internalType: 'string',
-        name: '_url',
+        name: '_id',
         type: 'string',
       },
       {
@@ -110,9 +110,14 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     name: '_donations',
     outputs: [
       {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'fromAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'toAccount',
+        type: 'address',
       },
       {
         internalType: 'uint256',
@@ -120,9 +125,68 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'donationTitle',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'donationId',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
-        name: 'account',
+        name: '',
         type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: '_myDonations',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'fromAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'toAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'date',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'donationTitle',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'donationId',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -162,6 +226,19 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'donationCollectMoney',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -221,12 +298,38 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
+    name: 'id',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'imageURL',
     outputs: [
       {
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'isWithdraw',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -280,15 +383,59 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
   },
   {
     inputs: [],
-    name: 'url',
+    name: 'withdrawData',
     outputs: [
       {
+        internalType: 'address',
+        name: 'fromAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'toAccount',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'date',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
         internalType: 'string',
-        name: '',
+        name: 'donationTitle',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'donationId',
         type: 'string',
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_sender',
+        type: 'address',
+      },
+    ],
+    name: 'myDonationsCount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -301,19 +448,6 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     ],
     name: 'setBeneficiary',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'nowAddress',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -331,23 +465,96 @@ export const FundraiserABI: AbiItem | AbiItem[] = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_myAccount',
+        type: 'address',
+      },
+    ],
+    name: 'myDonations',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'fromAccount',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'toAccount',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'date',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'donationTitle',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'donationId',
+            type: 'string',
+          },
+        ],
+        internalType: 'struct Fundraiser.Donation[]',
+        name: 'donationlist',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'getDonations',
     outputs: [
       {
-        internalType: 'uint256[]',
-        name: 'values',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'uint256[]',
-        name: 'dates',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'address[]',
-        name: 'accounts',
-        type: 'address[]',
+        components: [
+          {
+            internalType: 'address',
+            name: 'fromAccount',
+            type: 'address',
+          },
+          {
+            internalType: 'address',
+            name: 'toAccount',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'date',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'donationTitle',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
+            name: 'donationId',
+            type: 'string',
+          },
+        ],
+        internalType: 'struct Fundraiser.Donation[]',
+        name: 'donationlist',
+        type: 'tuple[]',
       },
     ],
     stateMutability: 'view',

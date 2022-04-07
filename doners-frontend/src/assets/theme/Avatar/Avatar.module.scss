@@ -7,6 +7,7 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
+  border: 2px solid $black;
   border-radius: 50%;
 
   img {
@@ -33,4 +34,10 @@
   @extend %avatar-base;
   width: 90px;
   height: 90px;
+}
+
+.avatar-xlarge {
+  @extend %avatar-base;
+  width: 180px;
+  height: 180px;
 }

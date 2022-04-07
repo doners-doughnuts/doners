@@ -9,7 +9,7 @@ const BoardDetail = () => {
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
-        <div className={cx('col-lg-12')}>
+        <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
           <BoardContents />
           <CommentsForm />
           {/* <Comments /> */}

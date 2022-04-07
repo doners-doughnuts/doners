@@ -36,9 +36,9 @@ type EditType = {
 };
 
 type historyType = {
+  epilogueBudgetSequence: number;
   epilogueBudgetPlan: string;
   epilogueBudgetAmount: string;
-  // id: number;
 };
 
 function EpilogueEditor({ modify = false }: EditType) {
@@ -46,28 +46,32 @@ function EpilogueEditor({ modify = false }: EditType) {
   const [content, setContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [imgFile, setImgFile] = useState('');
+  const [initlength, SetInit] = useState(0);
   const [historyList, setHistoryList] = useState<historyType[]>([]);
-
+  const [donationId, setDonationId] = useState('');
   const editorRef = useRef<Editor>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
-  const { epilogue_id } = useParams<string>();
+  const { id } = useParams<string>();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (modify && isLoading) {
       getDetail();
+    } else {
+      if (id) setDonationId(id);
     }
   }, [isLoading]);
 
   const getDetail = async () => {
-    if (typeof epilogue_id === 'string') {
-      const response = await getEpilogueDetail(epilogue_id);
-      console.log(response);
+    if (typeof id === 'string') {
+      const response = await getEpilogueDetail(id);
       setContent(response.data.epilogueDescription);
       setTitle(response.data.epilogueTitle);
       setImgFile(response.data.epilogueImage);
       setHistoryList(response.data.epilogueBudgetResponseDTOList);
+      SetInit(response.data.epilogueBudgetResponseDTOList.length);
+      setDonationId(response.data.donationId);
       setIsLoading(false);
     }
   };
@@ -93,6 +97,7 @@ function EpilogueEditor({ modify = false }: EditType) {
 
   const registApi = async () => {
     const formData = new FormData();
+    console.log(historyList);
     formData.append('multipartFile', imgFile[0]);
     formData.append(
       'epilogueRegisterPostDTO',
@@ -102,6 +107,7 @@ function EpilogueEditor({ modify = false }: EditType) {
             epilogueBudgetRequestDTOList: historyList,
             epilogueDescription: content,
             epilogueTitle: title,
+            donationId: id,
           }),
         ],
         {
@@ -109,7 +115,6 @@ function EpilogueEditor({ modify = false }: EditType) {
         }
       )
     );
-    console.log(formData);
 
     try {
       if (!imgFile) {
@@ -122,7 +127,6 @@ function EpilogueEditor({ modify = false }: EditType) {
 
       if (imgFile && title && content) {
         const response = await registEpilogue(formData);
-        console.log(response);
         navigate('/community/epilogue');
       }
     } catch (error) {
@@ -132,14 +136,15 @@ function EpilogueEditor({ modify = false }: EditType) {
 
   const modifyApi = async () => {
     const body = {
+      epilogueBudgetRequestDTOList: historyList,
       epilogueDescription: content,
-      epilogueId: epilogue_id,
+      epilogueId: id,
       epilogueTitle: title,
     };
 
     try {
       await modifyEpilogue(body);
-      navigate(`/community/epilogue/${epilogue_id}`);
+      navigate(`/community/epilogue/${id}`);
     } catch (error) {
       console.log(error);
     }
@@ -151,18 +156,26 @@ function EpilogueEditor({ modify = false }: EditType) {
   };
 
   const handleUploadPlan = (data: any) => {
+    console.log(data);
     setHistoryList((prev) => [...prev, data]);
   };
 
-  // const handleDeletePlan = (id) => {};
+  const handleDeletePlan = (epilogueBudgetSequence: number) => {
+    setHistoryList(
+      historyList.filter(
+        (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
+      )
+    );
+  };
 
-  useEffect(() => {
-    console.log(historyList);
-  }, [historyList]);
+  // useEffect(() => {
+  //   console.log(historyList);
+  //   handleUploadPlan(historyList);
+  // }, []);
 
-  useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
+  // useEffect(() => {
+  //   console.log(imgFile);
+  // }, [imgFile]);
 
   return (
     <>
@@ -174,7 +187,11 @@ function EpilogueEditor({ modify = false }: EditType) {
         )}
       </div>
       <div className={cx('inner-container')}>
-        <EpilogueEditorHeader onChange={handleUploadImage} src={imgFile} />
+        <EpilogueEditorHeader
+          onChange={handleUploadImage}
+          src={imgFile}
+          donation_id={donationId}
+        />
         <div className={cx('editor')}>
           <textarea
             className={cx('title')}
@@ -202,10 +219,15 @@ function EpilogueEditor({ modify = false }: EditType) {
         {/* <EditorForm /> */}
         <div className={cx('donate-receipt')}>
           <div className={cx('total-donate')}>
-            <TotalDonate />
+            <TotalDonate donationId={donationId} />
           </div>
           <div className={cx('receipt-editor')}>
-            <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
+            <ReceiptEditor
+              onDelete={handleDeletePlan}
+              onChange={handleUploadPlan}
+              list={historyList}
+              length={initlength}
+            />
           </div>
         </div>
         <div className={cx('btn-row')}>

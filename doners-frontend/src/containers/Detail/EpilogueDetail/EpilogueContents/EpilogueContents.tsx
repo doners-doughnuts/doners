@@ -6,6 +6,7 @@ import EpilogueDetailHeader from '../EpilogueDetailHeader/EpilogueDetailHeader';
 import EpilogueDetailReceipt from '../EpilogueDetailReceipt/EpilogueDetailReceipt';
 import { useNavigate, useParams } from 'react-router';
 import { deleteEpilogue, getEpilogueDetail } from 'services/api/Epilogue';
+import EpilogueDetailTotalDonate from '../EpilogueDetailTotalDonate/EpilogueDetailTotalDonate';
 
 const cx = classNames.bind(styles);
 
@@ -16,8 +17,7 @@ const EpilogueContents = () => {
   const [writer, setWriter] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [historyList, setHistoryList] = useState([]);
-
-  const [views, setViews] = useState(0);
+  const [donationId, setDonationId] = useState('');
 
   const { epilogue_id } = useParams<string>();
 
@@ -37,6 +37,7 @@ const EpilogueContents = () => {
       setWriter(response.data.epilogueWriter);
       setThumbnail(response.data.epilogueImage);
       setHistoryList(response.data.epilogueBudgetResponseDTOList);
+      setDonationId(response.data.donationId);
     }
   };
 
@@ -59,6 +60,7 @@ const EpilogueContents = () => {
       }
     }
   };
+  // console.log(test.title);
   return (
     <div className={cx('inner-container')}>
       <EpilogueDetailHeader
@@ -68,11 +70,15 @@ const EpilogueContents = () => {
         src={thumbnail}
         onDelete={handleDeleteClick}
         onModify={handleModifyClick}
+        donationId={donationId}
       />
       <main className={cx('content')}>
         {contents !== '' ? <Viewer initialValue={contents} /> : null}
       </main>
-      <EpilogueDetailReceipt history={historyList} />
+      <footer className={cx('donate-history')}>
+        <EpilogueDetailTotalDonate donationId={donationId} />
+        <EpilogueDetailReceipt history={historyList} donationId={donationId} />
+      </footer>
     </div>
   );
 };

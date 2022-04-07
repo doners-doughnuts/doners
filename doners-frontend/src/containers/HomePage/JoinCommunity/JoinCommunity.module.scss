@@ -1,0 +1,57 @@
+@import 'assets/styles/main';
+
+/* Section 4 Cumminity */
+
+.Cummunity {
+  height: 800px;
+  width: 100vw;
+}
+
+.community-character {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: -110px;
+  left: -50px;
+}
+.welcome-community-box {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: $red;
+  border-radius: 8px;
+  border: 2px solid black;
+  padding: 30px;
+  /* display: flex; */
+
+  /* align-items: flex-end; */
+}
+
+.community-contents {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .community-text {
+    margin: 0 auto;
+  }
+  H1 {
+    margin: 0 0 20px 0;
+  }
+  H4 {
+    color: $white;
+  }
+  .right-button {
+    margin-left: auto;
+    Button {
+      width: 188px;
+    }
+  }
+}
+
+.alternative-button {
+  background-color: black;
+  color: white;
+  border: none;
+}

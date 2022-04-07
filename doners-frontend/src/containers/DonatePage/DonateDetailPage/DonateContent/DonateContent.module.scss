@@ -1,6 +1,7 @@
 @import 'assets/styles/main';
 
 .inner-container {
+  // height: 100%;
   padding: 30px;
   border: 2px solid $black;
   box-shadow: $btn-shadow;
@@ -11,10 +12,27 @@
   }
 
   .content {
-    min-height: 350px;
+    width: 100%;
+    overflow-wrap: break-word;
+    overflow: hidden;
   }
 
   .open-btn {
     cursor: pointer;
+  }
+
+  // .donate-plan {
+   
+    .content-detail {
+      @include flexbox(between);
+      border: 2px solid $black;
+      border-radius: 8px;
+      padding: 10px;
+  
+      .expand-btn {
+        cursor: pointer;
+      }
+    // }
+   
   }
 }

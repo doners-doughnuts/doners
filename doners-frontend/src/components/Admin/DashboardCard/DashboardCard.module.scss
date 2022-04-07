@@ -1,0 +1,30 @@
+@import 'assets/styles/main';
+
+
+
+.card {
+  border: 2px solid $black;
+  border-radius: 8px;
+  padding: 22px 44px;
+  margin: 8px;
+  background-color: $background-shadow;
+
+  .card-header {
+    font-size: small;
+    font-weight: 500;
+    color: $gray-4;
+    margin-bottom: 12px;
+  }
+
+  .card-content {
+    margin-right: 4px;
+    font-size: xx-large;
+    font-family: $font-number;
+  }
+
+  .card-content-label {
+    font-size: 18px;
+    font-family: 'Noto Sans';
+    font-size: medium;
+  }
+}

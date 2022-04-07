@@ -3,32 +3,38 @@
 .history-item {
   border: 2px solid $black;
   border-radius: 8px;
-  padding: 30px 30px 0 30px;
+  padding: 30px;
   margin: 10px 0 50px 0;
   display: flex;
+  background-color: $white;
 
   .image {
     margin: 0 30px 0 0;
+
     .card {
-      left: 50%;
-      transform: translateX(-50%);
       box-shadow: $btn-shadow;
-      border: 2px solid $black;
       border-radius: 8px;
       position: relative;
-      background-color: $white;
-      height: 200px;
+      background-color: $black;
+      height: 250px;
       width: 300px;
 
       .img-wrap {
         width: 100%;
         height: 100%;
-        background-color: $red;
-        // background-image: url('../../assets/images/character.png');
-        background-position: center center;
-        background-size: cover;
-        background-repeat: no-repeat;
+        background-color: $white;
         border-radius: 8px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          border: 2px solid $black;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
       }
       .tag {
         text-align: center;
@@ -42,12 +48,14 @@
   .title {
     @include text-style(24);
     margin: 10px 0 0 0;
-    font-family: $font-sub;
+    font-family: $font-main;
     font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
   }
 }
 
-.date-wrap {
+.item-info-wrap {
   width: 100%;
   margin-bottom: 30px;
 
@@ -55,14 +63,36 @@
     @include flexbox(start);
     .date-title {
       margin-right: 10px;
+      // font-size: 12px;
+    }
+    .date-start-title {
+      margin-top: 10px;
+    }
+    .date-dday {
+      color: $red;
     }
   }
   .value-row {
     @include flexbox(start, end);
     margin-top: 5px;
+    align-items: baseline;
+
+    .value-info {
+      font-family: $font-number;
+      font-size: xx-large;
+    }
+
     .value-title {
+      margin-bottom: 5px;
       margin-right: 10px;
     }
+  }
+
+  .withdraw-button-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 

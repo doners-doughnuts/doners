@@ -15,16 +15,16 @@ import java.util.Optional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Override
-	public UserDetails loadUserByUsername(String userAccount) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String userAccount) throws UsernameNotFoundException {
 
-		Optional<User> oUser = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false);
+        Optional<User> oUser = userRepository.findByUserAccountAndUserIsDeleted(userAccount, false);
 
-		return new UserDetailsImpl(oUser.orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다.")));
+        return new UserDetailsImpl(oUser.orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다.")));
 
-	}
+    }
 
 }

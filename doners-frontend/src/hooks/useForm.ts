@@ -2,17 +2,15 @@ import { useEffect, useState } from 'react';
 
 type useFormProps = {
   initialValues: {
-    realname?: string; // 유저의 이름
+    realname: string; // 유저의 이름
     nickname: string; //유저의 닉네임
-    authmail?: boolean;
-    email?: string;
+    email: string;
   };
   onSubmit: (values: any) => any; // eslint-disable-line
   validate: any;
 };
 
 function useForm({ initialValues, onSubmit, validate }: useFormProps) {
-  let sendEmailFlag = false;
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({
     nickname: '',
@@ -24,34 +22,19 @@ function useForm({ initialValues, onSubmit, validate }: useFormProps) {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    console.log('handleChange');
-
-    if (name === 'email') {
-      setErrors({ ...errors, authmail: '' });
-    } else if (event.target.type === 'button') {
-      sendEmailFlag = true;
-      setErrors({ ...errors, authmail: '' });
-      setValues({ ...values, authmail: true });
-    } else {
-      setErrors({ ...errors, [name]: '' });
-    }
     setValues({ ...values, [name]: value });
-    if (sendEmailFlag) {
-      setValues({ ...values, authmail: true });
-    }
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    setIsLoading(true);
-
     event.preventDefault();
-    await new Promise((r) => setTimeout(r, 1000));
+    setIsLoading(true);
     setErrors(validate(values));
   };
 
   useEffect(() => {
     if (isLoading) {
       if (Object.keys(errors).length === 0) {
+        console.log('들어옴?');
         onSubmit(values);
       }
       setIsLoading(false);

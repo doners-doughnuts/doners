@@ -3,20 +3,30 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ApplyDetailForm.module.scss';
 import ReceiptEditor from 'containers/EpilogueEditor/ReceiptEditor/ReceiptEditor';
+import { Link, useNavigate } from 'react-router-dom';
 import allow from 'assets/images/exchangearrow.png';
 import Button from 'assets/theme/Button/Button';
 import { postDonation } from 'services/api/Donation';
+import { getWalletAccount } from 'utils/walletAddress';
+import H1 from 'assets/theme/Typography/H1/H1';
 
 type historyType = {
   epilogueBudgetAmount: string;
   epilogueBudgetPlan: string;
-  sequence: number;
+  epilogueBudgetSequence: number;
 };
 
 const cx = classNames.bind(styles);
 const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
-  const [ssf, setSSF] = useState(100);
+  const [walletAddress, setWalletAddress] = useState<string>('');
+  const [ssf, setSSF] = useState(0);
+  const [isSend, setIsSend] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getAccountInfo();
+  }, []);
 
   let total = historyList
     .map((item) => Number(item.epilogueBudgetAmount))
@@ -24,37 +34,57 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
 
   const handleUploadPlan = (data: any) => {
     setHistoryList((prev) => [...prev, data]);
-    console.log(historyList);
+  };
+
+  const getAccountInfo = async () => {
+    // TODO 프로필 사용자의 지갑주소로 대체
+    const address = await getWalletAccount();
+    setWalletAddress(address);
+  };
+
+  const handleDeletePlan = (epilogueBudgetSequence: number) => {
+    setHistoryList(
+      historyList.filter(
+        (history) => history.epilogueBudgetSequence !== epilogueBudgetSequence
+      )
+    );
   };
 
   const setValue = async () => {
-    console.log(apply);
+    setIsSend(true);
     const formData = new FormData();
     formData.append('certificate', apply.certificate);
-    formData.append('muitipart', apply.image);
-    formData.append('evidence', apply.evidence);
+    formData.append('image', apply.image);
+    const fileevi = apply.evidence;
+    // fileevi.forEach((file: string | Blob) => {
+    //   formData.append('evidence', file);
+    // });
 
+    for (let i = 0; i < apply.evidence.length; i++) {
+      formData.append('evidence', apply.evidence[i]);
+      // console.log(apply.evidence[i]);
+    }
+    // formData.append('evidence', apply.evidence);
+    //console.log(apply.evidence);
     let result = historyList
       .map(({ epilogueBudgetPlan: plan, epilogueBudgetAmount: amount }) => ({
         plan,
         amount,
       }))
       .map((data, idx) => ({ ...data, sequence: idx }));
-    console.log(result);
-
     formData.append(
-      'donationInfoRequestDTO',
+      'donationRegisterPostDTO ',
       new Blob(
         [
           JSON.stringify({
             beneficiaryName: apply.beneficiaryName,
-            beneficiaryPhone: apply.beneficiaryPhoney,
+            beneficiaryPhone: apply.beneficiaryPhone,
             categoryCode: apply.categoryCode,
             deputy: apply.deputy,
             description: apply.description,
-            endTime: apply.endTime,
+            endDate: apply.endDate,
             budget: result,
-            targetAmount: total,
+            targetAmount: apply.targetAmount,
             title: apply.title,
             phone: apply.phone,
           }),
@@ -64,36 +94,42 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
         }
       )
     );
-    console.log(formData);
     const response = await postDonation(formData);
-    console.log(response);
+    if (response) {
+      setApplyStep(3);
+    } else {
+      navigate('/apply/fail');
+    }
   };
-  useEffect(() => {
-    const ssftrans = total / 4000000;
-    const temp1 = ssftrans * 10000;
-    const temp2 = Math.ceil(temp1);
-    const result = temp2 / 10000;
-    setSSF(result);
-    setApply({ ...apply, targetAmount: total });
-    console.log(total);
-    console.log(apply.targetAmount);
-  }, [total]);
 
   useEffect(() => {
-    setApply({ ...apply, budget: historyList });
-  }, [historyList]);
+    const ssftrans = total / 10000;
+    const ssfBalance = Math.ceil(ssftrans);
+    setSSF(ssfBalance);
+    setApply({ ...apply, targetAmount: ssfBalance, budget: historyList });
+    console.log(total);
+  }, [total, historyList]);
 
   return (
     <div className={cx('containor')}>
+      <div className={cx('maintitle')}>
+        <H1>희망 기부 금액 설정</H1>
+      </div>
       <div className={cx('title')}>지갑 주소 확인</div>
       <div className={cx('subtitle')}>
         모금액을 수령하실 지갑의 Account 주소입니다.
       </div>
-      <Input placeholder="모금 신청자 계정 지갑 주소" />
-      <div className={cx('maintitle')}>희망 기부 금액 설정</div>
+      <Input
+        value={walletAddress}
+        placeholder="모금 신청자 계정 지갑 주소(자동입력)"
+      />
       <div className={cx('title')}>모금액 활용계획</div>
       <div className={cx('editor')}>
-        <ReceiptEditor onChange={handleUploadPlan} list={historyList} />
+        <ReceiptEditor
+          onDelete={handleDeletePlan}
+          onChange={handleUploadPlan}
+          list={historyList}
+        />
       </div>
 
       <div className={cx('title')}>목표 모금액</div>
@@ -106,19 +142,19 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
           />
         </div>
         <div className={cx('icon')}>
-          <img src={allow} />
+          <img src={allow} alt="icon" />
         </div>
         <div className={cx('trans')}>
           <Input placeholder={`SSF`} value={`${ssf} SSF`} disabled={true} />
         </div>
       </div>
       <div className={cx('nextbtn')}>
-        {apply.budget !== '' ? (
-          <Button color={'alternate'} onClick={setValue}>
+        {apply.budget.length !== 0 ? (
+          <Button color={'alternate'} onClick={setValue} disabled={isSend}>
             완료
           </Button>
         ) : (
-          <Button color={'alternate'}>폼을 작성해주세요.</Button>
+          <Button color={'alternate'}>폼을 완성해주세요</Button>
         )}
       </div>
     </div>

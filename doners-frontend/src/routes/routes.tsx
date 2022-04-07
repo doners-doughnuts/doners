@@ -7,14 +7,16 @@ import DonateListPage from 'pages/Donate/DonateListPage';
 import DonateRegistPage from 'pages/Donate/DonateRegistPage';
 import SignupPage from 'pages/SignupPage/SignupPage';
 import HomePage from 'pages/HomePage/HomePage';
-import MyPage from 'pages/MyPage/MyPage';
-import Test from 'pages/Test/Test';
+import ProfilePage from 'pages/ProfilePage/ProfilePage';
 import ApplyPage from 'pages/ApplyPage/ApplyPage';
 import { Navigate, useRoutes } from 'react-router';
 import BoardEditPage from 'pages/EditPage/Board/BoardEditPage';
 import EpilogueEditPage from 'pages/EditPage/Epilogue/EpilogueEditPage';
 import EpilogueDetail from 'pages/Detail/EpilogueDetail/EpilogueDetail';
 import AdminPage from 'pages/AdminPage/AdminPage';
+import ApplyMainPage from 'pages/ApplyPage/ApplyMainPage';
+import ApplyFailPage from 'pages/ApplyPage/ApplyFailPage';
+import NotFoundPage from 'pages/CommonPage/NotFoundPage';
 
 export default function Router() {
   return useRoutes([
@@ -26,7 +28,11 @@ export default function Router() {
     {
       path: '/apply',
       element: <ScrollLayout />,
-      children: [{ path: '', element: <ApplyPage /> }],
+      children: [
+        { path: 'main', element: <ApplyMainPage /> },
+        { path: 'form', element: <ApplyPage /> },
+        { path: 'fail', element: <ApplyFailPage /> },
+      ],
     },
     {
       path: '/category',
@@ -40,17 +46,24 @@ export default function Router() {
         // { path: 'list', element: <DonateListPage /> },
         { path: 'list', element: <DonateListPage /> },
         { path: 'apply', element: <DonateRegistPage /> },
-        { path: ':donate_seq', element: <DonateDetailPage /> },
+        { path: ':donation_id', element: <DonateDetailPage /> },
       ],
     },
     {
       path: '/profile',
       element: <ScrollLayout />,
       children: [
-        { path: '', element: <MyPage focus={1} /> },
-        { path: 'mynft/:id', element: <MyPage focus={1} /> },
-        { path: 'donationhistory/:id', element: <MyPage focus={2} /> },
-        { path: 'fundhistory/:id', element: <MyPage focus={3} /> },
+        { path: ':nickname', element: <ProfilePage focus={1} /> },
+        { path: 'mynft/:nickname', element: <ProfilePage focus={1} /> },
+        {
+          path: 'donationhistory/:nickname',
+          element: <ProfilePage focus={2} />,
+        },
+        { path: 'fundhistory/:nickname', element: <ProfilePage focus={3} /> },
+        // {
+        //   path: ':nickname',
+        //   element: <Navigate to="mynft/:nickname" replace />,
+        // },
       ],
     },
     {
@@ -62,9 +75,9 @@ export default function Router() {
         { path: 'membership', element: <CommunityPage focus={1} /> },
         { path: 'epilogue', element: <CommunityPage focus={2} /> },
         { path: 'epilogue/:epilogue_id', element: <EpilogueDetail /> },
-        { path: 'epilogue/write/:epilogue_id', element: <EpilogueEditPage /> },
+        { path: 'epilogue/write/:id', element: <EpilogueEditPage /> },
         {
-          path: 'epilogue/modify/:epilogue_id',
+          path: 'epilogue/modify/:id',
           element: <EpilogueEditPage modify />,
         },
         { path: 'board', element: <CommunityPage focus={3} /> },
@@ -74,7 +87,7 @@ export default function Router() {
           path: 'board/modify/:community_id',
           element: <BoardEditPage modify />,
         },
-        { path: 'about', element: <CommunityPage focus={4} /> },
+        { path: 'discord', element: <CommunityPage focus={4} /> },
       ],
     },
     // {
@@ -93,6 +106,6 @@ export default function Router() {
       children: [{ path: '/', element: <HomePage /> }],
     },
     // { path: '*', element: <Navigate to="/error" replace /> },
-    { path: '*', element: <Test /> },
+    { path: '*', element: <NotFoundPage /> },
   ]);
 }

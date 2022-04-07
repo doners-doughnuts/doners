@@ -1,6 +1,10 @@
 @import 'assets/styles/main';
 
 .row {
+  .loading-spinner-wrapper {
+    height: 70vh;
+    @include flexbox;
+  }
   // padding: 50px 0;
   .none-contents {
     @include column-flexbox;

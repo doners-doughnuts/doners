@@ -4,6 +4,6 @@ const DonersHelperContract = artifacts.require("DonersHelper");
 
 module.exports = function (deployer) {
   // deployer.deploy(DonersDoughnutsFactoryContract);
-  deployer.deploy(DonersHelperContract);
+  // deployer.deploy(DonersHelperContract);
   // deployer.deploy(DonersOwnershipiContract);
 };

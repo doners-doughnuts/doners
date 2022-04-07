@@ -22,14 +22,14 @@ public class EmailConfirmationController {
     @ApiOperation(value="이메일 인증 요청")
     @ApiResponses({
             @ApiResponse(code=201, message="인증 메일이 전송되었습니다. 해당 이메일 계정을 확인해주세요."),
-            @ApiResponse(code=409, message="이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다."),
+            @ApiResponse(code=409, message="이미 해당 이메일로 가입된 계정이 있습니다."),
     })
     public ResponseEntity<? extends BaseResponseDTO> createEmailConfirmation(
             @RequestBody @ApiParam(value="이메일 주소", required=true) EmailConfirmationCreateRequestDTO emailConfirmationCreateRequestDTO) {
         try {
             emailConfirmationService.createEmailConfirmation(emailConfirmationCreateRequestDTO);
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 전송된 이메일 인증이 있거나, 해당 이메일로 가입되어 있는 계정이 있습니다.", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("이미 해당 이메일로 가입된 계정이 있습니다.", 409));
         }
 
         return ResponseEntity.status(201).body(BaseResponseDTO.of("인증 메일이 전송되었습니다. 해당 이메일 계정을 확인해주세요.", 201));

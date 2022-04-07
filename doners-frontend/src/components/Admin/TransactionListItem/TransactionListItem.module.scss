@@ -1,0 +1,54 @@
+@import 'assets/styles/main';
+
+.item {
+  display: flex;
+  align-items: center;
+  height: min-content;
+  padding: 10px 30px;
+  // flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+  .dot-wrapper {
+    // width: 100%;
+    width: fit-content;
+   justify-content: left;
+
+    .dot {
+      height: 16px;
+      width: 16px;
+      background-color: $black;
+      border-radius: 100%;
+      // align-content: flex-start;
+    }
+  }
+
+  .history-item {
+    // justify-content: space-evenly;
+    // @include flexbox(between);
+    flex-direction: column;
+    // border-bottom: 1px solid $gray-2;
+    // height: 100%;
+    font-size: smaller;
+    text-align: start;
+    margin-left: 30px;
+    // margin-right: 10px;
+    width: 100%;
+
+    .history-timestamp {
+      color: $gray-3;
+    }
+
+    .history-address {
+      word-break: break-all;
+      align-items: flex-start;
+    }
+
+    .history-balance {
+      // width: 100%;
+      height: min-content;
+      align-content: flex-end;
+    }
+  }
+    
+}

@@ -1,63 +1,86 @@
-import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './FundModal.module.scss';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
-import { checkNickname } from 'services/api/UserApi';
-import Avatar from 'assets/theme/Avatar/Avatar';
 import Span from 'assets/theme/Typography/Span/Span';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import H4 from 'assets/theme/Typography/H4/H4';
 import H2 from 'assets/theme/Typography/H2/H2';
 import H3 from 'assets/theme/Typography/H3/H3';
+import {
+  nowBalance,
+  nowFundraiserCount,
+  withdraw,
+} from 'services/blockchain/SsfApi';
+import { getWalletAccount } from 'utils/walletAddress';
+import { toast } from 'react-toastify';
+import { deleteClosedDonation } from 'services/api/Donation';
 const cx = classNames.bind(styles);
 type ProfileType = {
   focus: number;
   // user: string;
 };
-const FundModal = (props: { open?: any; close?: any }) => {
-  const { open, close } = props;
-  const [target, setTarget] = useState(3.89);
-  const [totalpeople, setTotalpeople] = useState(234);
-  const [current, setCurrent] = useState(1.0);
-  const [nickname, setNickname] = useState('');
-  const [nicknameMsg, setNicknameMsg] = useState('');
-  const [nicknameConfirm, setNicknameConfirm] = useState(false);
-  const [nicknameCheck, setNicknameCheck] = useState(false);
+const FundModal = (props: {
+  open?: any;
+  close?: any;
+  contractAddress: string;
+  targetAmount: number;
+  donationId: string;
+}) => {
+  const { open, close, contractAddress, targetAmount, donationId } = props;
+
+  const [target, setTarget] = useState(targetAmount);
+  const [totalDoners, setTotalDoners] = useState(0);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [current, setCurrent] = useState(0);
   let rate = Math.floor((current / target) * 100);
-  const handleNicknameCheck = async () => {
-    // 닉네임 중복 검사 api 호출
+
+  // console.log(target);
+
+  /* 모금액 수령하기 */
+  const handleWithdraw = async () => {
     try {
-      const data = await checkNickname(nickname);
-      console.log('data', data);
-      if (!data) {
-        setNicknameMsg('중복된 닉네임 입니다.');
-      } else {
-        setNicknameConfirm(true);
-        setNicknameMsg('사용가능합니다.');
+      if (walletAddress) {
+        await withdraw(contractAddress, walletAddress);
+        toast.success('성공적으로 모금수령이 되었습니다!');
+        const result = await deleteClosedDonation(donationId);
+        console.log(result);
       }
-    } catch ({ response }) {
-      setNicknameMsg('중복된 닉네임 입니다.');
+    } catch (error) {
+      toast.error('모금수령에 문제가 있었습니다. 관리자에게 문의하세요.');
     }
+
+    close();
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    if (!nicknameConfirm) {
-      setNicknameMsg('닉네임을 확인해주세요.');
-    } else {
-      const bodyparams = {
-        userNickname: nickname,
-      };
-      // //회원가입 api 호출
-      try {
-      } catch (error) {
-        alert('회원가입에 실패했습니다. 새로고침 후 다시 시도해주세요');
-      }
-    }
+  /* 모금 달성률 */
+  const calcAchievementRate = async () => {
+    // let rate = Math.floor((current / target) * 100);
+    const currentBalance = await nowBalance(contractAddress);
+    // console.log(currentBalance);
+    setCurrent(currentBalance);
   };
+
+  /* 총 기부자 */
+  const getTotalDoners = async () => {
+    const doners = await nowFundraiserCount(contractAddress);
+    // console.log(doners);
+    setTotalDoners(doners);
+  };
+
+  /* 사용자의 지갑주소 */
+  const getUserWalletAddress = async () => {
+    const address = await getWalletAccount();
+    setWalletAddress(address);
+  };
+
+  useEffect(() => {
+    //// getApplicationDetail();
+    calcAchievementRate();
+    getUserWalletAddress();
+    getTotalDoners();
+  }, []);
 
   return (
     <div
@@ -72,31 +95,32 @@ const FundModal = (props: { open?: any; close?: any }) => {
             <button className={cx('close')} onClick={close}>
               &times;
             </button>
-          </header>{' '}
+          </header>
           <main>
             <div className={cx('total_fund_raised')}>
               <div className={cx('data-row')}>
-                {' '}
                 <div className={cx('value-row')}>
                   <div className={cx('value-title')}>
                     <H4>총 모금액 </H4>
                   </div>
-                  <H2>{String(target)}</H2>
+                  <H2>{String(current)}</H2>
                   <H4>SSF</H4>
                 </div>
                 <div className={cx('people-row')}>
                   <div className={cx('value-title')}>
                     <H4>총</H4>
                   </div>
-                  <H3>{String(totalpeople)}</H3>
+                  <H3>{String(totalDoners)}</H3>
                   <H4> 명의 기부자</H4>
                 </div>
                 <Progressbar value={rate} />
                 <div className={cx('')}>
                   <div className={cx('date-title')}>
-                    <Span color="gray">모금액 달성률 : </Span>{' '}
-                    <Span color="green">{String(rate).concat('%')}</Span>
-                    <Span color="gray"> (0.010212 SSF)</Span>{' '}
+                    <Span color="gray">모금액 달성률 : </Span>
+                    <Span color="green">
+                      {String(Math.floor((current / target) * 100)).concat('%')}
+                    </Span>
+                    <Span color="gray">{`(${current} SSF)`}</Span>
                   </div>
                 </div>
               </div>
@@ -106,7 +130,7 @@ const FundModal = (props: { open?: any; close?: any }) => {
               <div className={cx('inputWithBtn')}>
                 <Input
                   id="nickname"
-                  value={nickname}
+                  value={walletAddress}
                   type="text"
                   disabled={true}
                 />
@@ -115,7 +139,7 @@ const FundModal = (props: { open?: any; close?: any }) => {
             </div>
           </main>
           <footer>
-            <Button color="primary" size="large" onClick={close}>
+            <Button color="primary" size="large" onClick={handleWithdraw}>
               수령하기
             </Button>
           </footer>

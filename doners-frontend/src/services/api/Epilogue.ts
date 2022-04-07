@@ -31,3 +31,8 @@ export const deleteEpilogue = async (epilogue_id: string) => {
   const result = await instance.delete(`/epilogue/${epilogue_id}`);
   return result;
 };
+
+export const getEpilogueExist = async (donation_id: string) => {
+  const result = await instance.get(`/epilogue/check/${donation_id}`);
+  return result;
+};
