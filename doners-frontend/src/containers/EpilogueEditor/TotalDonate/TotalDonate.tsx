@@ -32,6 +32,7 @@ const TotalDonate = ({ donationId }: any) => {
   const checkWithdrawState = async () => {
     // (완료) 모금액 수령이 완료되었는지 검사
     const response = await fundraiserIsWithdraw(contractAddress);
+    console.log(response);
     setCollectedBalance(response.targetMoney);
   };
 
@@ -63,7 +64,6 @@ const TotalDonate = ({ donationId }: any) => {
   return (
     <div className={cx('form')}>
       <div className={cx('achieved-money')}>
-        <H3>총 모금액</H3>
         <H1>{String(collectedBalance)}</H1>
         <P>SSF</P>
       </div>

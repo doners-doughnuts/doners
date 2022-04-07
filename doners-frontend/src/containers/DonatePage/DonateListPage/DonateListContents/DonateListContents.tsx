@@ -116,6 +116,7 @@ const DonateListContents = () => {
     if (!endCheckRef.current) {
       setIsLoaded(true);
       const response = await getDonationList(categoryId, sort, page, view);
+      console.log(response);
       const data = response.data.donationGetListResponseDTOList;
       if (data.length === 0) {
         setIsLoaded(false);

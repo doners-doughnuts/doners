@@ -219,7 +219,7 @@ function EpilogueEditor({ modify = false }: EditType) {
         {/* <EditorForm /> */}
         <div className={cx('donate-receipt')}>
           <div className={cx('total-donate')}>
-            <TotalDonate donation_id={donationId} />
+            <TotalDonate donationId={donationId} />
           </div>
           <div className={cx('receipt-editor')}>
             <ReceiptEditor

@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import styles from './IntroductionDoners.module.scss';
 import P from 'assets/theme/Typography/P/P';
 import character from 'assets/images/landing/coincoalescence.png';
-import { cs } from 'date-fns/locale';
 import H1 from 'assets/theme/Typography/H1/H1';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -14,8 +13,8 @@ const IntroductionDoners = () => {
     AOS.init();
   }, []);
   return (
-    <section className={`${styles.Services} ${styles.section}`}>
-      <div className={`${styles.container} ${styles['container-default']}`}>
+    <section className={cx('Services', 'section')}>
+      <div className={cx('container', 'container-default')}>
         <div className={cx('contents')}>
           <div className={cx('contentstext')}>
             <H1>Why Doners?</H1>

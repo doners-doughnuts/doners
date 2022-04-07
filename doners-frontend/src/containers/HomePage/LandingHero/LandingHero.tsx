@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import H1 from 'assets/theme/Typography/H1/H1';
 
-import { useEffect } from 'react';
 const cx = classNames.bind(styles);
 
 const LandingHero = () => {
@@ -45,12 +44,12 @@ const LandingHero = () => {
                 className={cx('character-main')}
               />
             </div>
-            <ToastContainer
+            {/* <ToastContainer
               position="top-center"
               pauseOnFocusLoss
               draggable
               pauseOnHover
-            />
+            /> */}
           </div>
         </div>
       </div>
