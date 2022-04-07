@@ -8,6 +8,7 @@ import allow from 'assets/images/exchangearrow.png';
 import Button from 'assets/theme/Button/Button';
 import { postDonation } from 'services/api/Donation';
 import { getWalletAccount } from 'utils/walletAddress';
+import H1 from 'assets/theme/Typography/H1/H1';
 
 type historyType = {
   epilogueBudgetAmount: string;
@@ -111,6 +112,9 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
 
   return (
     <div className={cx('containor')}>
+      <div className={cx('maintitle')}>
+        <H1>희망 기부 금액 설정</H1>
+      </div>
       <div className={cx('title')}>지갑 주소 확인</div>
       <div className={cx('subtitle')}>
         모금액을 수령하실 지갑의 Account 주소입니다.
@@ -119,7 +123,6 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
         value={walletAddress}
         placeholder="모금 신청자 계정 지갑 주소(자동입력)"
       />
-      <div className={cx('maintitle')}>희망 기부 금액 설정</div>
       <div className={cx('title')}>모금액 활용계획</div>
       <div className={cx('editor')}>
         <ReceiptEditor
