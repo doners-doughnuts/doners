@@ -217,7 +217,7 @@ public class DonationServiceImpl implements DonationService {
                 .email(donation.getUser().getUserEmail())
                 .phone(donation.getPhone())
                 .deputy(donation.isDeputy())
-                .exist(donationRepository.existsByIdAndIsReceived(donationId, true))
+                .exist(donationRepository.existsByUserAndIsReceived(donation.getUser(), true))
                 .approvalStatusCode(donation.getApprovalStatusCode())
                 .evidence(evidence)
                 .build();
