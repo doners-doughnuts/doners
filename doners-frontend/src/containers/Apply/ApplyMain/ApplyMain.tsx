@@ -15,7 +15,7 @@ const ApplyMain = () => {
     try {
       const result = await checkUserFundState();
       console.log(result);
-      if (result.data.apply) {
+      if (result.data.check) {
         navigate('/apply/fail');
       } else {
         navigate('/apply/form');
