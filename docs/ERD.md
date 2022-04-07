@@ -10,7 +10,7 @@
 ## ERD
 
 
-### [ERD Cloud 바로가기](https://www.erdcloud.com/p/nHTpfG6k65pqTPLxc)
+### [ERD Cloud 바로가기]()
 
 
 ![Doners](https://user-images.githubusercontent.com/76759852/162276979-b46d16ec-c08e-43df-8e12-d94a51a2cb9f.PNG)
@@ -24,6 +24,7 @@
 
 
 ### Donation
+![Community](https://user-images.githubusercontent.com/76759852/162286330-a2e7e1f8-5b93-402c-a401-46118a342c4e.PNG)
 
 
 ### Community
