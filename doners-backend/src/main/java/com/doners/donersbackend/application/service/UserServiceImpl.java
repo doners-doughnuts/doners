@@ -265,7 +265,7 @@ public class UserServiceImpl implements UserService {
         User user = getUserFromAccessToken(accessToken);
 
         List<Donation> donationList = donationRepository
-                .findByUserAndIsDeletedOrderByStartDateDesc(user, false)
+                .findByUserAndIsDeletedOrderByEndDateDesc(user, false)
                 .orElseThrow(() -> new IllegalArgumentException("기부 신청 내역이 존재하지 않습니다."));
 
         List<UserMyPageDonationHistoryResponseDTO> list = new ArrayList<>();

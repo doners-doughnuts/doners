@@ -19,7 +19,7 @@ const ProfileDetail = ({ focus, nickname, walletAddress }: ProfileType) => {
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
-        <div className={cx('col-lg-12')}>
+        <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
           <ProfileTab focus={focus} nickname={nickname} />
           <div className={cx('inner-container')}>
             <main className={cx('content')}>
