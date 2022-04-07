@@ -86,14 +86,7 @@ contract Fundraiser is Ownable {
         });
         _donations.push(donation);
         _myDonations[sender].push(
-            Donation(
-                sender,
-                address(this),
-                block.timestamp,
-                _amount,
-                title,
-                id
-            )
+            Donation(sender, address(this), block.timestamp, _amount, title, id)
         );
         donationCollectMoney += _amount;
         donationsCount++;

@@ -41,21 +41,19 @@
     margin-top: 20px;
     font-weight: 600;
     display: flex;
-    align-items: center;
+    // align-items: center;
     line-height: 1.5em;
     padding-left: 20px;
-    padding-right: 20px;
+    // padding-right: 20px;
     white-space: nowrap;
   }
 
   .detail-content {
     margin-top: 20px;
     color: $gray-3;
-    @include flexbox(start, start);
+    // @include flexbox(start, start);
     // display: flex;
-    // align-items: center;
     line-height: 1.5em;
-    // white-space: nowrap;
   }
 
   // div[class^="detail-"] {
