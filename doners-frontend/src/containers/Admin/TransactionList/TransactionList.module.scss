@@ -3,7 +3,6 @@
 .container {
   position: relative;
 
-
   .background {
     position: absolute;
     width: 100%;
@@ -11,9 +10,7 @@
     height: fit-content;
     z-index: -1;
   }
-  
 
-  
   .inner-container {
     position: relative;
     margin-bottom: 50px;
@@ -30,7 +27,7 @@
     }
 
     .list {
-      overflow: scroll;
+      overflow-y: scroll;
       height: 550px;
 
       .content {
@@ -39,7 +36,7 @@
         // padding-right: 40px;
         font-size: small;
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
       }
     }
 
@@ -49,8 +46,6 @@
       z-index: -1;
     }
   }
-  
-  
 
   .header {
     background-color: $yellow;
@@ -63,6 +58,4 @@
 
     border: 2px solid $black;
   }
-
-  
 }
