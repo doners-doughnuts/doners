@@ -91,10 +91,7 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
               isWithdrawn ? (
                 <Tag color="black">기부금 수령 완료</Tag>
               ) : (
-                <div
-                  className={cx('withdraw-button-wrapper')}
-                  // onClick={openModal}
-                >
+                <div className={cx('withdraw-button-wrapper')}>
                   <Tag color="black">모금 완료</Tag>
                   {isOwner ? (
                     <Button color={'secondary'} onClick={openModal}>
