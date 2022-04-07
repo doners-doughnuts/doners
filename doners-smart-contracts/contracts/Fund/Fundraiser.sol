@@ -51,7 +51,7 @@ contract Fundraiser is Ownable {
         donationsGoal = _donationsGoal;
         fundRaisingCloses = _fundRaisingCloses;
         beneficiary = _beneficiary;
-        transferOwnership(_custodian);
+        transferOwnership(_beneficiary);
         erc20Contract = IERC20(
             address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)
         ); // ssafycontract 주소 주입
@@ -134,7 +134,7 @@ contract Fundraiser is Ownable {
         return donationlist;
     }
 
-    function withdraw() public payable onlyOwner {
+    function withdraw() public payable {
         uint256 balance = erc20Contract.balanceOf(address(this)); // 현재 컨트랙트의 금액
         address sender = msg.sender;
         isWithdraw = true;
