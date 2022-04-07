@@ -1,10 +1,8 @@
 package com.doners.donersbackend.api.controller;
 
 import com.doners.donersbackend.application.dto.request.donation.DonationApproveRequestDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationReceivedPatchDTO;
+import com.doners.donersbackend.application.dto.request.donation.DonationPatchDTO;
 import com.doners.donersbackend.application.dto.request.donation.DonationRegisterPostDTO;
-import com.doners.donersbackend.application.dto.request.donation.DonationRecommendPatchDTO;
-import com.doners.donersbackend.application.dto.request.user.UserNicknameChangeRequestDTO;
 import com.doners.donersbackend.application.dto.response.BaseResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.donation.DonationGetListWrapperResponseDTO;
@@ -15,7 +13,6 @@ import com.doners.donersbackend.domain.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -128,7 +125,7 @@ public class DonationController {
     @PatchMapping("/recommend")
     public ResponseEntity<? extends BaseResponseDTO> recommend(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationRecommendPatchDTO donationRecommendPatchDTO
+            @ApiParam(value = "기부글 정보", required = true) @Valid @RequestBody DonationPatchDTO donationRecommendPatchDTO
     ) {
 
         DonationRecommendResponseDTO donationRecommendResponseDTO = null;
@@ -259,26 +256,29 @@ public class DonationController {
 
     }
 
-    @ApiOperation(value = "기부 수령 완료 처리)")
+    @ApiOperation(value = "기부 수령 완료 처리")
     @ApiResponses({
-            @ApiResponse(code=200, message="기부 수령 완료 처리 성공"),
-            @ApiResponse(code=401, message="수령 완료 처리할 권한이 없습니다."),
-            @ApiResponse(code=409, message="기부 수령 완료 처리 실패"),
+            @ApiResponse(code=200, message="기부 수령 완료 처리에 성공했습니다."),
+            @ApiResponse(code=401, message="기부 수령 완료 처리 권한이 없습니다."),
+            @ApiResponse(code=409, message="기부 수령 완료 처리에 실패했습니다."),
     })
     @PatchMapping("/receipt")
     public ResponseEntity<? extends BaseResponseDTO> receiveDonation(
             @ApiIgnore @RequestHeader("Authorization") String accessToken,
-            @RequestBody @ApiParam(value="기부 ID", required=true) DonationReceivedPatchDTO donationReceivedPatchDTO) {
+            @RequestBody @ApiParam(value="기부 ID", required=true) DonationPatchDTO donationReceivedPatchDTO) {
+
         try {
             Integer code = donationService.receiveDonation(accessToken, donationReceivedPatchDTO);
 
             if(code == 401) {
-                return ResponseEntity.status(401).body(BaseResponseDTO.of("수령 완료 처리할 권한이 없습니다.", 401));
+                return ResponseEntity.status(401).body(BaseResponseDTO.of("기부 수령 완료 처리 권한이 없습니다.", 401));
             }
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(BaseResponseDTO.of("기기부 수령 완료 처리 실패", 409));
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부 수령 완료 처리에 실패했습니다.", 409));
         }
 
-        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 수령 완료 처리 성공", 200));
+        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 수령 완료 처리에 성공했습니다.", 200));
+
     }
+
 }
