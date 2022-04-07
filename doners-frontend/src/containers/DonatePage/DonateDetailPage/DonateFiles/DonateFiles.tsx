@@ -18,10 +18,14 @@ const DonateFiles = ({ data }: DonateFIlesProps) => {
       <div className={cx('title')}>
         <H3>증빙자료</H3>
       </div>
-      {data.evidence &&
-        data.evidence.map((file: EvidenceType) => {
-          return <FileButton key={file.url} name={file.name} url={file.url} />;
-        })}
+      <div className={cx('file-items')}>
+        {data.evidence &&
+          data.evidence.map((file: EvidenceType) => {
+            return (
+              <FileButton key={file.url} name={file.name} url={file.url} />
+            );
+          })}
+      </div>
     </div>
   );
 };
