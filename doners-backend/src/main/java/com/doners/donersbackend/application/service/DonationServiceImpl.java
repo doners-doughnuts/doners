@@ -229,9 +229,9 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationRecommendPatchDTO) {
+    public DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationPatchDTO) {
 
-        Donation donation = donationRepository.findById(donationRecommendPatchDTO.getDonationId())
+        Donation donation = donationRepository.findById(donationPatchDTO.getDonationId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 기부글을 찾을 수 없습니다."));
 
         // 추천수 증가
@@ -364,11 +364,11 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public Integer receiveDonation(String accessToken, DonationPatchDTO donationReceivedPatchDTO) {
+    public Integer receiveDonation(String accessToken, DonationPatchDTO donationPatchDTO) {
 
         User requestUser = convertAccessTokenToUser(accessToken);
 
-        Donation donation = donationRepository.findById(donationReceivedPatchDTO.getDonationId()).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
+        Donation donation = donationRepository.findById(donationPatchDTO.getDonationId()).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
 
         if(!requestUser.getId().equals(donation.getUser().getId())) return 401;
 

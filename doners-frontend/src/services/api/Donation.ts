@@ -74,7 +74,7 @@ export const checkApporveDonation = async () => {
 };
 
 export const deleteClosedDonation = async (donationId: string) => {
-  const result = await instance.patch(`/donation/receipt`, { donationId });
+  const result = await instance.patch(`/donation/receive`, { donationId });
   return result;
 };
 
