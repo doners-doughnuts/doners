@@ -128,7 +128,7 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d-emojis/u1F913-apng.png"
               alt="loading spinner"
             />
-            <div className={cx('text-background')}>
+            <div className={cx('text-background', 'yellow')}>
               <H3 color="white">잠시만요! 요청을 처리하고 있어요.</H3>
             </div>
           </div>
@@ -138,7 +138,7 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d/money-wings-confetti-apng.png"
               alt="loading spinner"
             />
-            <div className={cx('text-background')}>
+            <div className={cx('text-background', 'green')}>
               <H3>송금하는중이에요.</H3>
             </div>
           </div>
@@ -148,7 +148,7 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
               src="https://static.toss.im/3d-emojis/u1F389_apng.png"
               alt="loading spinner"
             />
-            <div className={cx('text-background')}>
+            <div className={cx('text-background', 'red')}>
               <H3>NFT를 발급해줄게요.</H3>
             </div>
           </div>

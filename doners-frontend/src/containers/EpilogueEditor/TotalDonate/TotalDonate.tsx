@@ -64,7 +64,6 @@ const TotalDonate = ({ donationId }: any) => {
   return (
     <div className={cx('form')}>
       <div className={cx('achieved-money')}>
-        <H3>총 모금액</H3>
         <H1>{String(collectedBalance)}</H1>
         <P>SSF</P>
       </div>
