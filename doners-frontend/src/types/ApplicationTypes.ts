@@ -23,6 +23,7 @@ export const CategoryCode: Record<string, string> = {
 export const ApplicationStatusCode: Record<string, string> = {
   BEFORE_CONFIRMATION: '확인 전',
   APPROVAL: '승인',
+  // STARTED: '기부 시작됨',
   WRONG_CONTACT_NUM: '신청자 연락처 확인 불가',
   UNQUALIFIED_DEPUTY: '대리인 자격 부족',
   DUPLICATION: '기존 기부 내역과 중복',

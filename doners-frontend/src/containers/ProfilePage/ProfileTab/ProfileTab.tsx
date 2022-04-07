@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './ProfileTab.module.scss';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { getLoggedUserNickname } from 'utils/loggedUser';
 const cx = classNames.bind(styles);
 
 type TabType = {
@@ -30,11 +31,13 @@ const ProfileTab = ({ focus, nickname }: TabType) => {
                     기부한 내역
                   </Link>
                 </li>
-                <li className={cx('lnb-item', { 'is-active': focus === 3 })}>
-                  <Link to={`/profile/fundhistory/${nickname}`}>
-                    모금신청 관리
-                  </Link>
-                </li>
+                {nickname === getLoggedUserNickname() ? (
+                  <li className={cx('lnb-item', { 'is-active': focus === 3 })}>
+                    <Link to={`/profile/fundhistory/${nickname}`}>
+                      모금신청 관리
+                    </Link>
+                  </li>
+                ) : null}
               </ul>
             </div>
           </div>
