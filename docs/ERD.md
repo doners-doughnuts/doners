@@ -1,13 +1,31 @@
-# ERD
+## 목차
+- [ERD](#erd)
+- [Categorizing](#categorizing)
+    - [User](#user)
+    - [Donation](#donation)
+    - [Community](#community)
+    - [Code](#code)
 
-## 전체
-![erd](/uploads/b66b568751e55136c7a02c703064f6df/erd.png)
 
-## user
-![user](/uploads/ca960729bb245d3653ee24ee6206e70d/user.png)
+## ERD
 
-## donation
-![donation](/uploads/2d307fe5642e271db9787855a100f686/donation.png)
 
-## community
-![community](/uploads/26b6f16d7b329ed9f4dc5c1b96993628/community.png)
+### [ERD Cloud 바로가기](https://www.erdcloud.com/p/nHTpfG6k65pqTPLxc)
+
+
+![Doners](https://user-images.githubusercontent.com/76759852/162276979-b46d16ec-c08e-43df-8e12-d94a51a2cb9f.PNG)
+
+
+## Categorizing
+
+
+### User
+
+
+### Donation
+
+
+### Community
+
+
+### Code
