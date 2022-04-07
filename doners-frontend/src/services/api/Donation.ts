@@ -23,7 +23,6 @@ export const postDonation = async (formData: any) => {
  */
 export const checkUserFundState = async () => {
   const result = await instance.get(COMMON + `/check`);
-  console.log(result);
   return result;
 };
 
@@ -33,7 +32,6 @@ export const getDonationList = async (
   page: number,
   view: boolean = false
 ) => {
-  console.log(category, sort, page, view);
   const result = await instance.get(
     `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
@@ -46,7 +44,6 @@ export const getAvailableDonationList = async (
   page: number,
   view: boolean
 ) => {
-  console.log(category, sort, page, view);
   const result = await instance.get(
     `/donation?category=${category}&page=${page}&sort=${sort}&view=${view}`
   );
@@ -65,7 +62,6 @@ export const getSearchDonation = async (
   page: number,
   type: string = 't'
 ) => {
-  console.log(keyword);
   const result = await instance.get(
     `/donation/search?category=${category}&page=${page}&keyword=${keyword}&type=${type}`
   );
@@ -96,7 +92,6 @@ export const approveApplication = async (
     approved: true,
     contractAddress,
   });
-  console.log(response);
   return response;
 };
 
@@ -115,6 +110,5 @@ export const declineApplication = async (
     approved: false,
     rejectionCode,
   });
-  console.log(response);
   return response;
 };
