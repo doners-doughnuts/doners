@@ -28,7 +28,7 @@ public interface DonationService {
     DonationResponseDTO getDonation(String donationId);
 
     // 기부글 추천
-    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationRecommendPatchDTO);
+    DonationRecommendResponseDTO recommendDonation(String accessToken, DonationPatchDTO donationPatchDTO);
 
     // 기부글 검색
     DonationGetListWrapperResponseDTO searchDonation(CategoryCode category, String type, String keyword, int page, boolean view);
@@ -43,7 +43,7 @@ public interface DonationService {
     DonationCheckResponseDTO checkApprovedDonation(String accessToken);
 
     // 기부금 수령 완료 처리
-    Integer receiveDonation(String accessToken, DonationPatchDTO donationReceivedPatchDTO);
+    Integer receiveDonation(String accessToken, DonationPatchDTO donationPatchDTO);
 
     // 대표 사진 및 증빙 자료 업로드
     void uploadDonationFile(Donation donation, MultipartFile image, List<MultipartFile> evidence);
