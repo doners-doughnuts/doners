@@ -13,6 +13,7 @@ import com.doners.donersbackend.domain.enums.CategoryCode;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -256,4 +257,26 @@ public class DonationController {
 
     }
 
+    @ApiOperation(value = "기부 삭제 (완료 처리)")
+    @ApiResponses({
+            @ApiResponse(code=200, message="기부 삭제 완료"),
+            @ApiResponse(code=401, message="삭제할 권한이 없습니다."),
+            @ApiResponse(code=409, message="기부 삭제 실패"),
+    })
+    @DeleteMapping("/{donationId}")
+    public ResponseEntity<? extends BaseResponseDTO> deleteDonation(
+            @ApiIgnore @RequestHeader("Authorization") String accessToken,
+            @PathVariable("donationId") @ApiParam(value="기부 ID", required=true) String donationId) {
+        try {
+            Integer code = donationService.deleteDonation(accessToken, donationId);
+
+            if(code == 401) {
+                return ResponseEntity.status(401).body(BaseResponseDTO.of("삭제할 권한이 없습니다.", 401));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(409).body(BaseResponseDTO.of("기부 삭제 실패", 409));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseDTO.of("기부 삭제 성공", 200));
+    }
 }
