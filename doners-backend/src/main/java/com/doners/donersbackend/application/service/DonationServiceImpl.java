@@ -415,6 +415,26 @@ public class DonationServiceImpl implements DonationService {
 
     }
 
+    @Override
+    public Integer deleteDonation(String accessToken, String donationId) {
+        User requestUser = convertAccessTokenToUser(accessToken);
+
+        Donation donation = donationRepository.findById(donationId).orElseThrow(() -> new IllegalArgumentException("해당 기부 글이 존재하지 않습니다."));
+
+        if(!requestUser.getId().equals(donation.getUser().getId())) {
+            return 401;
+        }
+
+        try {
+            donation.changeIsDeleted();
+            donationRepository.save(donation);
+        } catch (Exception e) {
+            return 409;
+        }
+
+        return 200;
+    }
+
     private DonationGetListWrapperResponseDTO convertDonationListToDTO(List<Donation> donationList) {
 
         List<DonationGetListResponseDTO> donationGetListResponseDTOList = new ArrayList<>();
