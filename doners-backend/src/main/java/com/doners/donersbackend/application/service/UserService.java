@@ -1,18 +1,19 @@
 package com.doners.donersbackend.application.service;
 
-import com.doners.donersbackend.application.dto.request.user.UserInfoSetRequestDTO;
-import com.doners.donersbackend.application.dto.response.user.UserLoginResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageCommunityHistoryWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageDonationHistoryWrapperResponseDTO;
-import com.doners.donersbackend.application.dto.response.user.UserMyPageEpilogueHistoryWrapperResponseDTO;
+import com.doners.donersbackend.application.dto.request.user.UserRegisterRequestDTO;
+import com.doners.donersbackend.application.dto.response.user.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
     // 회원가입 : 필수 회원 정보 입력 - 이름, 이메일, 닉네임
-    Integer setUserInfo(UserInfoSetRequestDTO userInfoSetRequestDto);
+    Integer registerUser(UserRegisterRequestDTO userRegisterRequestDto);
 
     UserLoginResponseDTO getUserLoginResponseDTO(String userAccount);
+
+    UserAccountResponseDTO getUserAccountResponseDTO(String accessToken, String userNickname);
+
+    UserNameResponseDTO getUserNameResponseDTO(String accessToken, String userNickname);
 
     // 닉네임 변경
     Integer changeUserNickname(String accessToken, String userNickname);
@@ -32,6 +33,4 @@ public interface UserService {
     UserMyPageEpilogueHistoryWrapperResponseDTO getEpilogueHistoryList(String accessToken);
 
     UserMyPageDonationHistoryWrapperResponseDTO getDonationHistoryList(String accessToken);
-
-    String getUserAccountFromAccessToken(String accessToken);
 }

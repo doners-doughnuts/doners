@@ -1,0 +1,35 @@
+@import 'assets/styles/main';
+
+body {
+  background: yellow;
+  text-align: center;
+  width: 100vh;
+  height: 100vh;
+}
+.popup { display: none; }
+.popup.open { display: block; }
+
+.blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: ' ';
+  background: rgba(0,0,0,.5);
+}
+.popup .contents {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF;
+
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}

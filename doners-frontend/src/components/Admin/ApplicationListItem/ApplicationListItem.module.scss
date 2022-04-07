@@ -1,0 +1,58 @@
+@import 'assets/styles/main';
+
+
+div {
+  font-family: 'Noto Sans';
+}
+.item {
+  display: flex;
+  padding: 10px 20px;
+  // border-top: 2px solid $black;
+  border-bottom: 2px solid $black;
+  font-size: small;
+  justify-content: space-between;
+  align-items: center;
+
+  .item-avatar {
+    justify-content: flex-start;
+  
+  }
+
+  .item-content {
+    width: 100%;
+    font-size: small;
+    justify-content: center;
+    padding-left: 10px;
+    text-align: start;
+    line-height: 1.5;
+
+    b {
+      
+      font-family: 'Noto Sans';
+    }
+  }
+  
+
+
+  .status {
+    justify-content: flex-end;
+    // position: absolute;
+    // right: 0;
+    // font-size: 18px;
+  font-size: small;
+    font-family: 'Noto Sans';
+    // width: auto;
+
+    Tag {
+      align-items: center;
+      font-size: small;
+      // width: 100%;
+      // word-wrap: inherit;
+    }
+  }
+
+  &:hover {
+    background-color: $background-shadow;
+  }
+}
+

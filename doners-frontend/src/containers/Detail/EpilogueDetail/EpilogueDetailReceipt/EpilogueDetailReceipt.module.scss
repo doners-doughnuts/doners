@@ -4,9 +4,11 @@
   border: 2px solid $black;
   border-radius: 8px;
   position: relative;
-  padding: 80px;
+  padding: 30px;
   margin-top: 60px;
   background-color: $background;
+  width: 48%;
+  height: 230px;
 
   .badge {
     position: absolute;
@@ -15,6 +17,8 @@
   }
 
   .history {
-    margin-top: 50px;
+    margin-top: 20px;
+    height: 160px;
+    overflow-y: scroll;
   }
 }

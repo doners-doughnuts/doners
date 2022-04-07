@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+import { createBrowserHistory } from 'history';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -14,21 +16,18 @@ const instance = axios.create({
 // HTTP request interceptor
 instance.interceptors.request.use(
   (config) => {
-    const item = localStorage.getItem('user');
-    if (typeof item === 'string') {
-      const user = JSON.parse(item);
-      if (user.accessToken) {
-        // For Spring Boot back-end
-        config.headers!.Authorization = 'Bearer ' + user.accessToken;
-        // for Node.js Express back-end
-        //// return { 'x-access-token': user.accessToken };
+    const user = sessionStorage.getItem('user');
+    if (user) {
+      const Juser = JSON.parse(user);
+      if (Juser.accessToken) {
+        config.headers!.Authorization = 'Bearer ' + Juser.accessToken;
       }
     }
     return config;
   },
   (err) => {
-    // return Promise.reject(err);
-    return false;
+    return Promise.reject(err);
+    // return false;
   }
 );
 
@@ -39,6 +38,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
+      const history = createBrowserHistory();
       console.log(error.response);
       switch (error.response.status) {
         /* 'JWT expired' exeption */
@@ -46,7 +46,13 @@ instance.interceptors.response.use(
           console.log('400 ERROR, not authorized.');
           break;
         case 401:
-          console.log('401error!');
+          history.push('/signup');
+          // 강제로 새로고침 (임시)
+          window.location.reload();
+          toast.info('세션이 만료되었습니다. 다시 로그인해주세요.');
+          //  2. Reset authentication from localstorage/sessionstorage
+          sessionStorage.removeItem('user');
+          // logout();
           break;
         case 404:
           console.log('404error!');
@@ -59,9 +65,18 @@ instance.interceptors.response.use(
     } else {
       // ex. 서버 키지 않은 경우
     }
-    //return Promise.reject(error);
-    return false;
+    return Promise.reject(error);
+    // return false;
   }
 );
+
+export const multipartInstance = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  // TODO timeout 설정
+  timeout: 30000,
+  headers: {
+    'Content-Type': `multipart/form-data`,
+  },
+});
 
 export default instance;

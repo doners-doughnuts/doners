@@ -1,0 +1,14 @@
+@import 'assets/styles/main';
+
+.search-bar {
+  @include flexbox(start);
+  border: 2px solid $black;
+  border-radius: 8px;
+  padding: 10px;
+  margin-left: auto;
+  background-color: $white;
+
+  input {
+    width: 100%;
+  }
+}

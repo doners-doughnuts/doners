@@ -5,6 +5,14 @@ import PopularMembership from 'containers/CommunityPage/Membership/PopularMember
 import CommunityTab from 'containers/CommunityPage/Tab/CommunityTab';
 import styles from '../page.module.scss';
 import classNames from 'classnames/bind';
+import Discord from 'containers/CommunityPage/Discord/Discord';
+import { isMembership } from 'services/blockchain/NftApi';
+import { getWalletAccount } from 'utils/walletAddress';
+import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { checkApporveDonation } from 'services/api/Donation';
+import { isAdmin } from 'utils/loggedUser';
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +21,33 @@ interface CommunityPageProps {
 }
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    isHaveMembership();
+  }, []);
+
+  const isHaveMembership = async () => {
+    try {
+      const account = await getWalletAccount();
+      const exist = await isMembership(account);
+      const response = await checkApporveDonation();
+      const check = response.data.check;
+      console.log(response);
+      const admin = await isAdmin();
+
+      if (!exist && !check) {
+        if (!admin) {
+          toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');
+          navigate('/');
+        }
+      }
+    } catch (error) {
+      toast.error('해당 페이지는 기부가 완료된 사람만 접근이 가능합니다.');
+      navigate('/');
+    }
+  };
+
   return (
     <section className={cx('container')}>
       <div className={cx('row')}>
@@ -29,6 +64,8 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
         <Epilogue />
       ) : focus === 3 ? (
         <BoardList />
+      ) : focus === 4 ? (
+        <Discord />
       ) : null}
     </section>
   );

@@ -19,7 +19,7 @@
  * - transaction stages (SSF)
  */
 
-import { DDHelperContract, Web3Client } from 'services/web3';
+import { DDHelperContract } from 'services/web3';
 //! metadata.json import 받아와서 loop 돌림
 // (https://nodejs.dev/learn/reading-files-with-nodejs)
 import { Metadata } from 'assets/metadata/_ipfsMetadatas';
@@ -31,7 +31,7 @@ import { Metadata } from 'assets/metadata/_ipfsMetadatas';
 //   'patient' = 4,
 // }
 
-// TODO DELETE AFTER USE
+// DELETE AFTER USE
 export const nftTest = async (walletAddress: string) => {
   //! mm setAppovalForAll 해야 ERC721 거래가능? 필요한가?
   // setApprovalForAll(walletAddress);
@@ -51,30 +51,32 @@ export const setApprovalForAll = async (walletAddress: string) => {
 
 /* 각 카테고리 별 minting */
 export const mint = async (edition: string, walletAddress: string) => {
+  console.log(edition);
+  console.log(walletAddress);
   let result;
   switch (edition) {
-    case 'covid':
+    case 'COVID19':
       result = await DDHelperContract.methods
         .mintCovidToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
-    case 'single':
+    case 'SINGLE':
       result = await DDHelperContract.methods
         .mintSingleToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
-    case 'warrior':
+    case 'WARRIOR':
       result = await DDHelperContract.methods
         .mintWarriorToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
-    case 'patient':
+    case 'PATIENT':
       result = await DDHelperContract.methods
         .mintPatientToken(walletAddress)
-        .send({ from: '0xb72207EB8c21c7698d493Da3bB273F6C8a76E367' });
+        .send({ from: walletAddress });
       console.log(result);
       break;
   }
@@ -83,7 +85,7 @@ export const mint = async (edition: string, walletAddress: string) => {
 
 /* Metadata 가져오기 */
 // 그냥 uri 반환받아와서  web3에서 직접 호출. 컨트랙트에서 가져와주지 않음 (비용이 비싸질수도 있기 때문에)
-export const getMetadata = async (tokenId: number) => {
+export const getMetadataFromTokenId = async (tokenId: number) => {
   // 위와 동일
   var metadataURI = await DDHelperContract.methods
     .getMetadataUri(tokenId)
@@ -118,14 +120,15 @@ export const getUserNFTIdList = async (walletAddress: string) => {
     .call();
 
   //! (실패, 위에 성공)
-  // const result = await DDHelperContract.methods
-  //   .userOwnedTokens()
-  //   .call(walletAddress, { from: walletAddress })
-  //   .then((balance: any) => {
-  //     console.log(balance.toNumber());
-  //   })
-  //   .catch(console.log);
-  console.log('보유 NFT 목록: ', result);
+  //// const result = await DDHelperContract.methods
+  ////   .userOwnedTokens()
+  ////   .call(walletAddress, { from: walletAddress })
+  ////   .then((balance: any) => {
+  ////     console.log(balance.toNumber());
+  ////   })
+  ////   .catch(console.log);
+
+  // console.log('보유 NFT 목록: ', result);
   return result;
 };
 
@@ -133,6 +136,7 @@ export const getUserNFTIdList = async (walletAddress: string) => {
 // (https://ethereum.stackexchange.com/a/98495)
 export const getUserNFTMetadataList = async (walletAddress: string) => {
   //? 성공
+  // console.log(walletAddress);
   let result = await DDHelperContract.methods
     .getTokenMetadatasByOwner(walletAddress)
     .call();
@@ -142,14 +146,23 @@ export const getUserNFTMetadataList = async (walletAddress: string) => {
     uri.replace('ipfs://', 'https://ipfs.io/ipfs/')
   );
 
-  console.log('보유 NFT의 Metadata 목록: ', result);
+  // console.log('보유 NFT의 Metadata 목록: ', result);
   return result;
+};
+
+export const getMetadataFromUri = async (metadataURI: string) => {
+  // 위의 url에서 JSON가져오기
+  // (https://stackoverflow.com/a/55784549)
+  var metadata: any = await (await fetch(metadataURI)).json();
+  // console.log(metadata);
+
+  return metadata;
 };
 
 /* 총 발행된 NFT(DD) 개수 (관리자페이지용) */
 export const getTotalNFTCount = async () => {
   const result = await DDHelperContract.methods.getTotalCnt().call();
-  console.log('총 발행된 NFT 개수: ', result);
+  // console.log('총 발행된 NFT 개수: ', result);
   return result;
 };
 
@@ -173,10 +186,6 @@ export const createDoughnut = async () => {
 
 /* 총 잔여 NFT 발급량 조회 */
 export const getMintedNFTCount = async () => {
-  const result = await DDHelperContract.methods
-    .getMintedTokenCount()
-    .call()
-    .then(console.log);
-
+  const result = await DDHelperContract.methods.getMintedTokenCount().call();
   return result;
 };

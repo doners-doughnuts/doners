@@ -1,8 +1,29 @@
 @import 'assets/styles/main';
 
 .total_donation {
+  @include flexbox(start, end);
   text-align: center;
-  margin: 0 0 50px 0;
+  margin-bottom: 30px;
+  width: 100%;
+  white-space: nowrap;
+
+  .title {
+    margin: 0 5px;
+    width: 50px;
+    font-family: $font-main;
+    font-size: 70px;
+  }
+}
+.total_donation_amount {
+  @include column-flexbox(center, start);
+
+  .amount {
+    @include flexbox(start);
+    margin-top: 10px;
+    .icon {
+      margin-right: 10px;
+    }
+  }
 }
 
 .donation_list {
@@ -14,7 +35,7 @@
 .title {
   margin: 0 50px 0 0;
   @include text-style(24);
-  font-family: $font-sub;
+  font-family: $font-main;
   font-weight: 700;
 }
 .selectboxlist {

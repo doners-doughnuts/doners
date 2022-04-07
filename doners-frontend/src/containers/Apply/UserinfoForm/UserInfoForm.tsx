@@ -5,9 +5,14 @@ import classNames from 'classnames/bind';
 import Input from 'assets/theme/Input/Input';
 import styles from './UserInfoForm.module.scss';
 import React, { useEffect, useState } from 'react';
-
+import { getLoggedUserInfo, getLoggedUserNickname } from 'utils/loggedUser';
+import { useRecoilValue } from 'recoil';
+import { isLoggedState, nicknameState } from 'atoms/atoms';
+import { getUserName } from 'services/api/UserApi';
 const cx = classNames.bind(styles);
+
 const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
+  const [loggedUserNickname, setLoggedUserNickname] = useState('');
   const [isSelect, setIsSelect] = useState(false);
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
@@ -15,6 +20,17 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
   const [deputyPhone, setDeputyPhone] = useState('');
   const [file, setFile] = useState('');
   const [deputyDoc, setDeputyDoc] = useState('');
+
+  useEffect(() => {
+    const sessionStorageUserNickname = getLoggedUserNickname();
+    getName(sessionStorageUserNickname);
+  }, []);
+
+  const getName = async (nickname: string) => {
+    const response = await getUserName(nickname);
+    setUserName(response.data.userName);
+  };
+  useEffect(() => {}, [getLoggedUserInfo()]);
 
   const handleCheckbox = () => {
     setIsSelect((prev) => !prev);
@@ -45,11 +61,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
   const handleUploadFile = async (event: any) => {
     const file = event.target.files;
     setDeputyDoc(file);
-    console.log(file);
-    setFile(URL.createObjectURL(file[0]));
-    // const formData = new FormData();
-    // formData.append('file', file[0]);
-    // console.log(formData);
+    setFile(file[0]);
   };
 
   return (
@@ -69,6 +81,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
           <Input
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
+            disabled
           />
         </div>
         <div className={cx('input-data')}>
@@ -96,6 +109,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             value={deputyName}
             onChange={(e) => setDeputyName(e.target.value)}
             placeholder="수혜자의 성명"
+            block={!isSelect}
             disabled={!isSelect}
           />
         </div>
@@ -105,6 +119,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             value={deputyPhone}
             onChange={(e) => setDeputyPhone(e.target.value)}
             placeholder="수혜자의 전화번호"
+            block={!isSelect}
             disabled={!isSelect}
           />
         </div>
@@ -115,12 +130,13 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             value={''}
             placeholder="file"
             type="file"
+            block={!isSelect}
             disabled={!isSelect}
           />
         </div>
       </section>
       <div className={cx('nextbtn')}>
-        {(!isSelect && userName !== '' && userPhone !== '') ||
+        {(!isSelect && userPhone !== '') ||
         (isSelect &&
           deputyPhone !== '' &&
           deputyName !== '' &&
@@ -129,7 +145,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
             다음 단계
           </Button>
         ) : (
-          <Button color={'alternate'}>폼을 작성해주세요</Button>
+          <Button color={'alternate'}>폼을 완성해주세요</Button>
         )}
       </div>
     </div>

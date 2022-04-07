@@ -7,9 +7,10 @@ import H4 from 'assets/theme/Typography/H4/H4';
 import Span from 'assets/theme/Typography/Span/Span';
 import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import { deleteComments, modifyComment } from 'services/api/Comment';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
-import Textarea from 'assets/theme/Textarea/Textarea';
+import { Link } from 'react-router-dom';
+import { fToNow } from 'utils/formatTime';
 
 const cx = classNames.bind(styles);
 const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
@@ -19,32 +20,30 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
-
   const handleDeleteClick = () => {
     delComment();
   };
 
   const delComment = async () => {
-    const result = await deleteComments(id);
+    await deleteComments(id);
     onDelete(id);
-    console.log(result);
   };
 
-  const checkUser = () => {
-    const item = localStorage.getItem('user');
-    if (typeof item === 'string') {
-      const Juser = JSON.parse(item);
-      if (nickname === Juser.userNickname) {
+  const checkUser = useCallback(() => {
+    const user = sessionStorage.getItem('user');
+    if (typeof user === 'string') {
+      const Juser = JSON.parse(user);
+      if (nickname === Juser.nickName) {
         setIsOwn(true);
       }
     }
-  };
+  }, [nickname]);
 
   const getProfileImg = async () => {
     const response = await getUserProfile(nickname);
     if (response) {
       // 이미지등록
-      // setImgSrc(defaultImg);
+      setImgSrc(response.data.profileImage);
     }
   };
 
@@ -90,10 +89,13 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
     <div className={cx('inner-container')}>
       <div className={cx('comment-header')}>
         <div className={cx('comment-info')}>
-          <Avatar src={imgSrc} />
+          <Link to={`/profile/${nickname}`}>
+            <Avatar src={imgSrc} />
+          </Link>
           <div className={cx('sub-info')}>
             <H4>{nickname}</H4>
-            <Span>{date}</Span>
+            <Span>{fToNow(date)}</Span>
+            {/* <Span>{date}</Span> */}
           </div>
         </div>
         <div className={cx('button-wrap')}>

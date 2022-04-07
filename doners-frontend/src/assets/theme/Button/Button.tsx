@@ -3,7 +3,7 @@ import styles from './Button.module.scss';
 const cx = classNames.bind(styles);
 
 type ButtonSize = 'small' | 'default' | 'large';
-type ButtonColor = 'primary' | 'secondary' | 'alternate';
+type ButtonColor = 'primary' | 'secondary' | 'alternate' | 'discord';
 type BtnType = 'button' | 'submit' | 'reset';
 type ButtonType = {
   size?: ButtonSize;

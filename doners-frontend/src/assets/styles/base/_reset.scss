@@ -17,7 +17,12 @@ body {
 
 h1 {
   margin: 0;
+  font-family: $font-header;
 }
+
+// p {
+//   font-size: 30px;
+// }
 
 a {
   color: inherit;

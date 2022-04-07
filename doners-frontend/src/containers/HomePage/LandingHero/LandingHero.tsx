@@ -1,10 +1,13 @@
 import classNames from 'classnames/bind';
 import styles from './LandingHero.module.scss';
 import Button from 'assets/theme/Button/Button';
-import character from 'assets/images/character.png';
+import character from 'assets/images/character-angel.png';
 import { useNavigate } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import H1 from 'assets/theme/Typography/H1/H1';
 
 const cx = classNames.bind(styles);
+
 const LandingHero = () => {
   const navigate = useNavigate();
   const onClick = () => {
@@ -19,6 +22,7 @@ const LandingHero = () => {
               <h1 className={cx('slogan')}>
                 Donate & Collect <br />
                 extraordinary <br />
+                {/* // TODO 리팩토링 */}
                 <span>doughnut</span> NFTs
               </h1>
               <div className={cx('description')}>
@@ -37,9 +41,15 @@ const LandingHero = () => {
               <img
                 src={character}
                 alt="character"
-                // className={styles.character}
+                className={cx('character-main')}
               />
             </div>
+            {/* <ToastContainer
+              position="top-center"
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            /> */}
           </div>
         </div>
       </div>

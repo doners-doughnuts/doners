@@ -18,6 +18,7 @@
 .avatar {
   display: flex;
   justify-content: center;
+  cursor: pointer;
 }
 .title {
   margin: 10px 0 10px 0;
@@ -44,6 +45,7 @@
   padding: 16px 64px 16px 16px;
 }
 .modal > section > header button {
+  @include flexbox;
   position: absolute;
   border-radius: 100%;
   top: 15px;

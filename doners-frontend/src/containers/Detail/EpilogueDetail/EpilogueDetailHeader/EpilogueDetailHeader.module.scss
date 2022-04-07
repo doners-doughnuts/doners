@@ -48,8 +48,24 @@
       }
     }
 
+    .info {
+      @include flexbox(between, start);
+
+      .left-info {
+        @include column-flexbox(between, start);
+        height: 150px;
+        width: 470px;
+        word-break: keep-all;
+      }
+    }
+
     .donation-info {
       margin-bottom: 20px;
+
+      .donation-date {
+        @include flexbox(between);
+        width: 350px;
+      }
     }
     .user-info {
       @include flexbox(start);

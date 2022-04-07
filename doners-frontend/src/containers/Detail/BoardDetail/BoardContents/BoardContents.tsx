@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { deleteBoard, getBoardDetail } from 'services/api/Board';
 import { getUserProfile } from 'services/api/UserApi';
+import { Link } from 'react-router-dom';
+import { fDate, fToNow } from 'utils/formatTime';
 
 const cx = classNames.bind(styles);
 const BoardContents = () => {
@@ -37,15 +39,14 @@ const BoardContents = () => {
   }, [writer]);
 
   const checkUser = () => {
-    const item = localStorage.getItem('user');
-    if (typeof item === 'string') {
-      const Juser = JSON.parse(item);
+    const user = sessionStorage.getItem('user');
+    if (typeof user === 'string') {
+      const Juser = JSON.parse(user);
       console.log(writer);
-      console.log(Juser.userNickname);
-      if (writer === Juser.userNickname) {
+      console.log(Juser.nickName);
+      if (writer === Juser.nickName) {
         setIsOwn(true);
       }
-      // console.log(Juser.userNickname);
     }
   };
   const getBoard = async () => {
@@ -64,7 +65,7 @@ const BoardContents = () => {
     const response = await getUserProfile(writer);
     if (response) {
       // 이미지등록
-      // setImgSrc(defaultImg);
+      setImgSrc(response.data.profileImage);
     }
   };
 
@@ -84,10 +85,10 @@ const BoardContents = () => {
     }
   };
 
-  function formatDate(value: string) {
-    const date = new Date(value);
-    return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
-  }
+  // function formatDate(value: string) {
+  //   const date = new Date(value);
+  //   return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}`;
+  // }
 
   return (
     <div className={cx('inner-container')}>
@@ -114,7 +115,9 @@ const BoardContents = () => {
         <div className={cx('info-wrap')}>
           <div className={cx('article-info')}>
             <div>
-              <P color="gray">{`작성일: ${formatDate(createTime)}`}</P>
+              {createTime ? (
+                <P color="gray">{`작성일: ${fToNow(createTime)}`}</P>
+              ) : null}
               <div className={cx('sub-info')}>
                 <div className={cx('views')}>
                   <ViewsIcon className={cx('icon')} fill="gray" />
@@ -124,7 +127,9 @@ const BoardContents = () => {
             </div>
           </div>
           <div className={cx('author')}>
-            <Avatar src={imgSrc} />
+            <Link to={`/profile/${writer}`}>
+              <Avatar src={imgSrc} />
+            </Link>
             <div className={cx('name')}>
               <P>{`${writer}`}</P>
             </div>

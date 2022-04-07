@@ -3,7 +3,7 @@ import styles from './H3.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-type TextColor = 'black' | 'yellow' | 'gray' | 'orange' | 'red';
+type TextColor = 'black' | 'yellow' | 'gray' | 'orange' | 'red' | 'white';
 
 type TextType = {
   children: string;

@@ -1,0 +1,94 @@
+@import 'assets/styles/main';
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .container {
+    position: relative;
+    height: 75vh;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: $white;
+
+    .row {
+      .close-btn {
+        width: fit-content;
+      }
+
+      .header {
+        width: 100%;
+        @include flexbox(between);
+      }
+
+      .donationDetail {
+        height: 40vh;
+      }
+      .userInfo {
+        position: relative;
+        height: 40vh;
+
+        .select-box {
+          position: absolute;
+          // top: 400px;
+          margin-top: 15px;
+        }
+      }
+
+      .button-group {
+        @include flexbox(between, center);
+        position: absolute;
+        bottom: 35px;
+        right: 65px;
+        .button {
+          width: 45%;
+        }
+      }
+
+      .content {
+        min-height: fit-content;
+        border: 2px solid $black;
+
+        img {
+          width: 100px;
+        }
+      }
+
+      .file {
+        height: 265px;
+        overflow: scroll;
+
+        .fileuploadlist {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+.openModal {
+  @include flexbox;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+embed {
+  width: 50%;
+  height: fit-content;
+}

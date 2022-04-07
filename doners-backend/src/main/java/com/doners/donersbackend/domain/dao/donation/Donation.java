@@ -17,6 +17,9 @@ import java.time.LocalDate;
 @Entity
 public class Donation extends BaseEntity {
 
+    @Column(name = "donation_contract_address")
+    private String contractAddress;
+
     @Column(name = "donation_phone")
     private String phone;
 
@@ -36,10 +39,14 @@ public class Donation extends BaseEntity {
     private CategoryCode categoryCode;
 
     @Column(name = "donation_description")
+    @Lob
     private String description;
 
+    @Column(name = "donation_account")
+    private String account;
+
     @Column(name = "donation_amount")
-    private long amount;
+    private double amount;
 
     @Column(name = "donation_start_date")
     private LocalDate startDate;
@@ -53,14 +60,14 @@ public class Donation extends BaseEntity {
     @Column(name = "donation_approval_status_code")
     private ApprovalStatusCode approvalStatusCode;
 
-    @Column(name = "donation_is_received", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean isReceived;
-
     @Column(name = "donation_views")
     private long views;
 
     @Column(name = "donation_recommendations")
     private long recommendations;
+
+    @Column(name = "donation_is_received", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isReceived;
 
     @Column(name = "donation_is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
@@ -90,14 +97,28 @@ public class Donation extends BaseEntity {
         this.isApproved = true;
     }
 
-    // 시작
+    // 시작일
     public void changeStartDate() {
         this.startDate = LocalDate.now();
+    }
+
+    // 컨트랙트 주소
+    public void changeContractAddress(String contractAddress) {
+        this.contractAddress = contractAddress;
     }
 
     // 거절 사유
     public void changeApprovalStatusCode(ApprovalStatusCode approvalStatusCode) {
         this.approvalStatusCode = approvalStatusCode;
+    }
+
+    // 삭제
+    public void changeIsDeleted() {
+        this.isDeleted = true;
+    }
+
+    public void changeIsReceived() {
+        this.isReceived = true;
     }
 
 }

@@ -2,6 +2,7 @@ package com.doners.donersbackend.application.service;
 
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueChangePatchDTO;
 import com.doners.donersbackend.application.dto.request.epilogue.EpilogueRegisterPostDTO;
+import com.doners.donersbackend.application.dto.response.epilogue.EpilogueCheckResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueGetListWrapperResponseDTO;
 import com.doners.donersbackend.application.dto.response.epilogue.EpilogueResponseDTO;
 import com.doners.donersbackend.domain.dao.epilogue.Epilogue;
@@ -21,7 +22,7 @@ public interface EpilogueService {
 
     EpilogueResponseDTO getEpilogue(String accessToken, String epilogueId);
 
-    void uploadEpilogueImage(Epilogue epilogue, MultipartFile image);
+    EpilogueCheckResponseDTO checkIfEpilogueExists(String accessToken, String donationId);
 
-    String getUserAccountFromAccessToken(String accessToken);
+    void uploadEpilogueImage(Epilogue epilogue, MultipartFile image);
 }

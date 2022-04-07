@@ -10,14 +10,15 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @ApiModel("DonationResponseDTO")
 @Getter
 @ToString
 public class DonationResponseDTO extends BaseResponseDTO {
+
+    @ApiModelProperty(name = "컨트랙트 주소")
+    private String contractAddress;
 
     @ApiModelProperty(name = "제목")
     private String title;
@@ -34,7 +35,7 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "사연")
     private String description;
 
-    @ApiModelProperty(name = "대표 사진 주소")
+    @ApiModelProperty(name = "대표 사진 URL")
     private String image;
 
     @ApiModelProperty(name = "신청일")
@@ -43,14 +44,20 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "마감일")
     private LocalDate endDate;
 
+    @ApiModelProperty(name = "신청자 지갑 주소")
+    private String account;
+
     @ApiModelProperty(name = "목표 모금액")
-    private long targetAmount;
+    private double targetAmount;
 
     @ApiModelProperty(name = "모금액 활용 계획")
     private List<DonationBudgetResponseDTO> budget;
 
     @ApiModelProperty(name = "신청자 이름")
     private String name;
+
+    @ApiModelProperty(name = "신청자 닉네임")
+    private String nickname;
 
     @ApiModelProperty(name = "신청자 이메일")
     private String email;
@@ -70,17 +77,12 @@ public class DonationResponseDTO extends BaseResponseDTO {
     @ApiModelProperty(name = "승인 상태 코드")
     private ApprovalStatusCode approvalStatusCode;
 
-    @ApiModelProperty(name = "기부자 명단")
-    private List<DonationHistoryResponseDTO> donors;
-
-    @ApiModelProperty(name = "기부액 달성률")
-    private double achievementRate;
-
     @ApiModelProperty(name = "증빙 자료")
-    private Map<String, String> evidence;
+    private List<FileResponseDTO> evidence;
 
     @Builder
-    public DonationResponseDTO(String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, long targetAmount, List<DonationBudgetResponseDTO> budget, String name, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<DonationHistoryResponseDTO> donors, double achievementRate, Map<String, String> evidence) {
+    public DonationResponseDTO(String contractAddress, String title, CategoryCode categoryCode, long views, long recommendations, String description, String image, LocalDate startDate, LocalDate endDate, String account, double targetAmount, List<DonationBudgetResponseDTO> budget, String name, String nickname, String email, String phone, boolean deputy, String beneficiaryName, boolean exist, ApprovalStatusCode approvalStatusCode, List<FileResponseDTO> evidence) {
+        this.contractAddress = contractAddress;
         this.title = title;
         this.categoryCode = categoryCode;
         this.views = views;
@@ -89,17 +91,17 @@ public class DonationResponseDTO extends BaseResponseDTO {
         this.image = image;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.account = account;
         this.targetAmount = targetAmount;
         this.budget = budget;
         this.name = name;
+        this.nickname = nickname;
         this.email = email;
         this.phone = phone;
         this.deputy = deputy;
         this.beneficiaryName = beneficiaryName;
         this.exist = exist;
         this.approvalStatusCode = approvalStatusCode;
-        this.donors = donors;
-        this.achievementRate = achievementRate;
         this.evidence = evidence;
     }
 

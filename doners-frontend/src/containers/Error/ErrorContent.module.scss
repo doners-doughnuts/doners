@@ -1,0 +1,24 @@
+@import 'assets/styles/main';
+
+.container {
+  text-align: center;
+  position: relative;
+  .inner-container {
+    margin: 300px;
+    .contents {
+    }
+    Button {
+      margin: 50px 0 0 0;
+      width: 188px;
+      box-shadow: $btn-shadow;
+    }
+  }
+  .img {
+    position: absolute;
+    top: -90%;
+    left: -5%;
+    img {
+      width: 500px;
+    }
+  }
+}
