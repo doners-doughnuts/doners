@@ -1,12 +1,16 @@
 @import 'assets/styles/main';
 
-.popup { display: none; }
-.popup.open { display: block;  }
+.popup {
+  display: none;
+}
+.popup.open {
+  display: block;
+}
 
 .badge {
   position: absolute;
   background-color: $red;
-  top: 0; 
+  top: 0;
   margin-left: 12px;
   color: $white;
   border-radius: 100%;
@@ -17,8 +21,6 @@
   align-items: center;
   text-align: center;
 }
-
-
 
 .blocker {
   position: fixed;
@@ -31,13 +33,11 @@
 .popover {
   top: 100px;
 
-
   hr {
     height: 2px;
     background-color: $black;
     border: none;
   }
-
 }
 
 .contents {
@@ -57,8 +57,6 @@
 
   font-size: small;
 
-          
-
   .notification-header {
     margin: 8px 24px 16px 20px;
     display: flex;
@@ -77,27 +75,22 @@
     }
   }
 
-
-
   .notification-unread-count {
     color: $red;
     font-weight: 600;
   }
 
-
-
   .list {
-    overflow: scroll;
+    overflow-y: scroll;
     // height: max-content;
     // height: 470px;
     height: 85%;
-    
+
     .list-new,
     .list-prev {
       // overflow: scroll;
       // height: min-content;
       // height: 190px;
-      
     }
     .list-header {
       display: flex;
@@ -109,13 +102,8 @@
       text-align: start;
       align-items: center;
       padding-left: 15px;
-      
-
     }
-
-
   }
-  
 }
 .reload-button {
   position: absolute;
@@ -123,7 +111,7 @@
   // top: 600px;
   width: 100%;
   text-align: center;
-  // margin-top: 20px; 
+  // margin-top: 20px;
 
   // background-color: $black;
   border-radius: 0 0 8px 8px;
@@ -137,4 +125,3 @@
     color: $gray-4;
   }
 }
-

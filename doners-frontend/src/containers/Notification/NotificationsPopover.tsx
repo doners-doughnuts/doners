@@ -15,12 +15,17 @@ import _notificationList from '_mocks_/notificationData';
 import { ReactComponent as CheckAllIcon } from 'assets/images/icon/check.svg';
 
 import { useNavigate } from 'react-router';
+// import { useHistory } from 'react-router';
+import { useLocation } from 'react-router';
 
 const cx = classNames.bind(styles);
 
 const NotificationsPopover = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [totalUnReadCnt, setTotalUnReadCnt] = useState(0);
+
+  // const history = useHistory();
+  const location = useLocation();
 
   // const [notifications, setNotifications] =
   // useState<NotificationItemType[]>(_notificationList);
@@ -74,11 +79,9 @@ const NotificationsPopover = () => {
   };
 
   useEffect(() => {
+    // console.log('알림 호출(경로 바뀜):', location);
     getUserNotificationList();
-    // notifications.sort(function (a: any, b: any) {
-    //   return a.read - b.read;
-    // });
-  }, []);
+  }, [location]);
 
   return (
     <>
