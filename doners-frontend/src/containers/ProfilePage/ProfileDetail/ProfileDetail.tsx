@@ -28,7 +28,7 @@ const ProfileDetail = ({ focus, nickname, walletAddress }: ProfileType) => {
               ) : focus === 2 ? (
                 <DonationHistory />
               ) : focus === 3 ? (
-                <FundHistory />
+                <FundHistory nickname={nickname} />
               ) : null}
             </main>
           </div>
