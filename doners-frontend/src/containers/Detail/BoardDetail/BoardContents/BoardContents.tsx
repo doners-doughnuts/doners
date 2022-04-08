@@ -7,12 +7,13 @@ import H1 from 'assets/theme/Typography/H1/H1';
 import P from 'assets/theme/Typography/P/P';
 import { ReactComponent as ViewsIcon } from 'assets/images/icon/views.svg';
 import Avatar from 'assets/theme/Avatar/Avatar';
+import { Viewer } from '@toast-ui/react-editor';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { deleteBoard, getBoardDetail } from 'services/api/Board';
 import { getUserProfile } from 'services/api/UserApi';
 import { Link } from 'react-router-dom';
-import { fToNow } from 'utils/formatTime';
+import { fDate, fToNow } from 'utils/formatTime';
 import ViewerForm from 'containers/BoardEditor/ViewerForm';
 
 const cx = classNames.bind(styles);

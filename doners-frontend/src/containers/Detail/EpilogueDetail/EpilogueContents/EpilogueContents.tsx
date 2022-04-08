@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './EpilogueContents.module.scss';
+import { Viewer } from '@toast-ui/react-editor';
 import { useEffect, useState } from 'react';
 import EpilogueDetailHeader from '../EpilogueDetailHeader/EpilogueDetailHeader';
 import EpilogueDetailReceipt from '../EpilogueDetailReceipt/EpilogueDetailReceipt';
