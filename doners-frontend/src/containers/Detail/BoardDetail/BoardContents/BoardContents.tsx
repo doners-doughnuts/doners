@@ -133,7 +133,7 @@ const BoardContents = () => {
         </div>
       </header>
       <main className={cx('content')}>
-        {contents !== '' ? <Viewer initialValue={contents} /> : null}
+        {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
       </main>
     </div>
   );

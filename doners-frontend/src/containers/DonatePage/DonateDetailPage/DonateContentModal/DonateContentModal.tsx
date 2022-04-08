@@ -32,7 +32,7 @@ const DonateContentModal = ({ open, onClose, contents, title }: modalType) => {
             </div>
           </div>
           <main className={cx('content')}>
-            {contents !== '' ? <Viewer initialValue={contents} /> : null}
+            {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
           </main>
         </section>
       ) : null}
