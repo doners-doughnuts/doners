@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './EpilogueDetailHeader.module.scss';
 import Tag from 'assets/theme/Tag/Tag';
-import H5 from 'assets/theme/Typography/H5/H5';
 import CustomButton from 'assets/theme/Button/CustomButton/CustomButton';
 import editIcon from 'assets/images/icon/edit.svg';
 import deleteIcon from 'assets/images/icon/delete.svg';
@@ -9,7 +8,6 @@ import H1 from 'assets/theme/Typography/H1/H1';
 import { Link } from 'react-router-dom';
 import P from 'assets/theme/Typography/P/P';
 import Avatar from 'assets/theme/Avatar/Avatar';
-import Span from 'assets/theme/Typography/Span/Span';
 import { ReactComponent as ClipIcon } from 'assets/images/icon/clip.svg';
 import { useEffect, useState } from 'react';
 import { getUserProfile } from 'services/api/UserApi';
@@ -29,7 +27,6 @@ type headerType = {
 };
 const EpilogueDetailHeader = ({
   title,
-  date,
   writer,
   src,
   donationId,

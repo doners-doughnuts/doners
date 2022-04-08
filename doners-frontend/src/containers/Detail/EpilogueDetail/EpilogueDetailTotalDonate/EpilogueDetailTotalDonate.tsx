@@ -1,6 +1,5 @@
 import Badge from 'assets/theme/Badge/Badge';
 import classNames from 'classnames/bind';
-import HistoryItem from 'components/HistoryItem/HistoryItem';
 import TotalDonate from 'containers/EpilogueEditor/TotalDonate/TotalDonate';
 import styles from './EpilogueDetailTotalDonate.module.scss';
 const cx = classNames.bind(styles);
