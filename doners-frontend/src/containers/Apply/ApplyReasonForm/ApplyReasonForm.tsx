@@ -12,6 +12,7 @@ import deleteicon from 'assets/images/icon/delete.png';
 import H3 from 'assets/theme/Typography/H3/H3';
 import Span from 'assets/theme/Typography/Span/Span';
 import { Editor } from '@toast-ui/react-editor';
+import Write from 'containers/BoardEditor/Write';
 
 export interface IFileTypes {
   id: number;
@@ -41,10 +42,13 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
     { value: 'COVID19', label: '코로나19' },
   ];
 
-  const contentHandler = () => {
-    setContent(editorRef.current?.getInstance().getMarkdown() || '');
-    setApply({ ...apply, description: content });
+  const contentHandler = (value: any) => {
+    setContent(value);
   };
+
+  useEffect(() => {
+    setApply({ ...apply, description: content });
+  }, [content]);
 
   const handleUploadImage = async (event: any) => {
     setIsLoading(true);
@@ -191,6 +195,7 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
           </div>
         </div>
       </div>
+      <Write content={content} onChange={contentHandler} />
       {/* <div className={cx('editor')}>
         <Editor
           previewStyle="vertical"
