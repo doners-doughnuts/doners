@@ -10,6 +10,7 @@ import Button from 'assets/theme/Button/Button';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
 import { getBoardDetail, modifyBoard, registBoard } from 'services/api/Board';
+import Write from './Write';
 
 const cx = classNames.bind(styles);
 
@@ -108,16 +109,17 @@ function BoardEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
+          <Write />
           {/* {(!modify || !isLoading) && ( */}
           <>
-            <Editor
+            {/* <Editor
               previewStyle="vertical"
               height="79vh"
               initialEditType="wysiwyg"
               initialValue={content}
               onChange={contentHandler}
               ref={editorRef}
-            />
+            /> */}
           </>
           {/* )} */}
         </div>

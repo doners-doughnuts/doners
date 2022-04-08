@@ -1,14 +1,3 @@
-import Prism from 'prismjs';
-import 'prismjs/themes/prism.css';
-// color-syntax
-import 'tui-color-picker/dist/tui-color-picker.css';
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-
-// code-syntax-highlight
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
 import Selectbox from 'assets/theme/Selectbox/Selectbox';
