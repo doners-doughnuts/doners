@@ -119,7 +119,7 @@ function BoardEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          {/* {(!modify || !isLoading) && (
+          {(!modify || !isLoading) && (
             <Editor
               previewStyle="vertical"
               height="79vh"
@@ -132,7 +132,7 @@ function BoardEditor({ modify = false }: EditType) {
               onChange={contentHandler}
               ref={editorRef}
             />
-          )} */}
+          )}
         </div>
         <div className={cx('btn-row')}>
           <div className={cx('regist-btn')}>
