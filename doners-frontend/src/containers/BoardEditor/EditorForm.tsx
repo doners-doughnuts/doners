@@ -4,22 +4,20 @@ import { Editor } from '@toast-ui/react-editor';
 import { useRef } from 'react';
 
 function EditorForm({ content, onChange }: any) {
-  // const editorRef = useRef<Editor>(null);
+  const editorRef = useRef<Editor>(null);
 
-  // const handleChange = () => {
-  //   onChange(editorRef.current?.getInstance().getMarkdown() || '');
-  // };
+  const handleChange = () => {
+    onChange(editorRef.current?.getInstance().getMarkdown() || '');
+  };
   return (
     <>
       <Editor
-        // previewStyle="vertical"
-        // height="79vh"
-        // initialEditType="wysiwyg"
-        // initialValue={content}
-        initialValue="하이하이"
-        usageStatistics={false}
-        // ref={editorRef}
-        // onChange={handleChange}
+        previewStyle="vertical"
+        height="79vh"
+        initialEditType="wysiwyg"
+        initialValue={content}
+        ref={editorRef}
+        onChange={handleChange}
       />
     </>
   );
