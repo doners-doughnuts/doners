@@ -202,7 +202,7 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
           </div>
         </div>
       </div>
-      <div className={cx('editor')}>
+      {/* <div className={cx('editor')}>
         <Editor
           previewStyle="vertical"
           height="80vh"
@@ -211,7 +211,7 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
           onChange={contentHandler}
           ref={editorRef}
         />
-      </div>
+      </div> */}
 
       <div className={cx('certificate')}>
         <div className={cx('en')}>
