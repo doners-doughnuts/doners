@@ -6,12 +6,12 @@ import 'prismjs/themes/prism.css';
 
 // code-syntax-highlight
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+// import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
 // color-syntax
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+// import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import { useEffect, useRef, useState } from 'react';
 import H1 from 'assets/theme/Typography/H1/H1';
 
@@ -119,20 +119,16 @@ function BoardEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          {(!modify || !isLoading) && (
-            <Editor
-              previewStyle="vertical"
-              height="79vh"
-              initialEditType="wysiwyg"
-              initialValue={content}
-              plugins={[
-                colorSyntax,
-                [codeSyntaxHighlight, { highlighter: Prism }],
-              ]}
-              onChange={contentHandler}
-              ref={editorRef}
-            />
-          )}
+          {/* {(!modify || !isLoading) && ( */}
+          <Editor
+            previewStyle="vertical"
+            height="79vh"
+            initialEditType="wysiwyg"
+            initialValue={content}
+            onChange={contentHandler}
+            ref={editorRef}
+          />
+          {/* )} */}
         </div>
         <div className={cx('btn-row')}>
           <div className={cx('regist-btn')}>
