@@ -23,7 +23,6 @@ function BoardEditor({ modify = false }: EditType) {
   const [content, setContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const editorRef = useRef<Editor>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   const { community_id } = useParams<string>();
@@ -50,8 +49,8 @@ function BoardEditor({ modify = false }: EditType) {
     }
   };
 
-  const contentHandler = () => {
-    setContent(editorRef.current?.getInstance().getMarkdown() || '');
+  const contentHandler = (value: any) => {
+    setContent(value);
   };
 
   const handleRegistSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,7 +108,9 @@ function BoardEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          <Write />
+          {(!modify || !isLoading) && (
+            <Write content={content} onChange={contentHandler} />
+          )}
           {/* {(!modify || !isLoading) && ( */}
           <>
             {/* <Editor

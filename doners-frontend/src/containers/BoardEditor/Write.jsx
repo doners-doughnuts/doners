@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // TOAST UI Editor import
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 
-function Write() {
+function Write({ content, onChange }) {
+  const editorRef = useRef();
+  const handleChange = () => {
+    onChange(editorRef.current.getInstance().getMarkdown() || '');
+  };
   return (
     <>
-      <Editor initialValue="헬로헬로 나는 에디터야" usageStatistics={false} />
+      <Editor
+        initialValue={content}
+        usageStatistics={false}
+        ref={editorRef}
+        onChange={handleChange}
+      />
     </>
   );
 }
