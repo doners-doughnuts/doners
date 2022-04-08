@@ -31,7 +31,6 @@ class HashLipsGiffer {
     this.gifEncoder.finish();
     const buffer = this.gifEncoder.out.getData();
     writeFile(this.fileName, buffer, (error) => {});
-    console.log(`Created gif at ${this.fileName}`);
   };
 }
 
