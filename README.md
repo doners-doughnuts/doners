@@ -36,7 +36,7 @@
 
 <div id="2"></div>
 
-## 🎥 [UCC 보러가기]()
+## 🎥 [UCC 보러가기](https://www.youtube.com/watch?v=CcpQOXdwyJ0)
 
 
 <br/><br/>
