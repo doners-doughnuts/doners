@@ -52,10 +52,11 @@ const DonateSSF = () => {
                   <div data-aos="fade-up-right" className={cx('image')}>
                     <img src={category} alt="category" />
                     <div className={cx('btn')}>
-                      <Link to="/category"></Link>
-                      <Button color={'primary'} fullWidth>
-                        기부하러 가기
-                      </Button>
+                      <Link to="/category">
+                        <Button color={'primary'} fullWidth>
+                          기부하러 가기
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
