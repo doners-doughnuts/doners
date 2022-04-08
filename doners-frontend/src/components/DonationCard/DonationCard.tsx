@@ -7,7 +7,7 @@ import Tag from 'assets/theme/Tag/Tag';
 import Progressbar from 'assets/theme/Progressbar/Progressbar';
 import { DonateType } from 'containers/DonatePage/DonateListPage/DonateListContents/DonateListContents';
 import { checkClosedDonation } from 'utils/formatTime';
-import { nowBalance } from 'services/blockchain/SsfApi';
+import { fundraiserIsWithdraw, nowBalance } from 'services/blockchain/SsfApi';
 import { useEffect, useState } from 'react';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { getUserProfile } from 'services/api/UserApi';
@@ -18,16 +18,16 @@ type DonateProps = {
 };
 
 const DonationCard = ({ data }: DonateProps) => {
-  const [current, setCurrent] = useState(0);
   const [rate, setRate] = useState(0);
   const [imgSrc, setImgSrc] = useState('');
+  const [collectedBalance, setCollectedBalance] = useState(0);
 
-  const getCurrentBalance = async () => {
-    if (data.contractAddress) {
-      const result = await nowBalance(data.contractAddress);
-      setCurrent(result);
-    }
-  };
+  // const getCurrentBalance = async () => {
+  //   if (data.contractAddress) {
+  //     const result = await nowBalance(data.contractAddress);
+  //     setCurrent(result);
+  //   }
+  // };
 
   const getProfileImg = async () => {
     const response = await getUserProfile(data.userNickname);
@@ -38,14 +38,26 @@ const DonationCard = ({ data }: DonateProps) => {
   };
 
   useEffect(() => {
-    getCurrentBalance();
+    if (data.contractAddress) {
+      checkWithdrawState();
+    }
+  }, [data]);
+
+  const checkWithdrawState = async () => {
+    // (완료) 모금액 수령이 완료되었는지 검사
+    const response = await fundraiserIsWithdraw(data.contractAddress);
+    setCollectedBalance(response.targetMoney);
+  };
+
+  useEffect(() => {
+    // getCurrentBalance();
     getProfileImg();
   }, []);
 
   useEffect(() => {
-    const result = Math.floor((current / data.targetAmount) * 100);
+    const result = Math.floor((collectedBalance / data.targetAmount) * 100);
     setRate(result);
-  }, [current]);
+  }, [collectedBalance]);
 
   return (
     <div className={cx('card')}>

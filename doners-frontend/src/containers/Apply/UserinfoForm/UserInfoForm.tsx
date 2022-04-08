@@ -11,7 +11,7 @@ import { isLoggedState, nicknameState } from 'atoms/atoms';
 import { getUserName } from 'services/api/UserApi';
 const cx = classNames.bind(styles);
 
-const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
+const UserInfoForm = ({ onClick, apply, setApply }: any) => {
   const [loggedUserNickname, setLoggedUserNickname] = useState('');
   const [isSelect, setIsSelect] = useState(false);
   const [userName, setUserName] = useState('');
@@ -55,7 +55,7 @@ const UserInfoForm = ({ setApplyStep, apply, setApply }: any) => {
         deputy: isSelect,
       });
     }
-    setApplyStep(1);
+    onClick(1);
   };
 
   const handleUploadFile = async (event: any) => {
