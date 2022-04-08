@@ -31,7 +31,7 @@ export interface IFileTypes {
 
 const cx = classNames.bind(styles);
 
-const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
+const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
   const date = new Date();
   // date.getDate() + 1;
   date.setDate(date.getDate() + 1);
@@ -72,7 +72,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     // console.log(files);
     // console.log(files.map((data) => data.object));
     // console.log(apply);
-    setApplyStep(2);
+    onClick(2);
   };
 
   const setTime = (event: any) => {
@@ -129,7 +129,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   }, []);
 
   return (
-    <div className={cx('containor')}>
+    <div className={cx('container')}>
       <div className={cx('an')}>
         <div className={cx('title')}>
           <H3>모금에 대한 상세 정보를 기재해주세요</H3>
@@ -208,7 +208,6 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
           height="80vh"
           initialEditType="wysiwyg"
           initialValue={content}
-          plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
           onChange={contentHandler}
           ref={editorRef}
         />
@@ -246,7 +245,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
                       className={cx('item-delete-icon')}
                       onClick={() => handleFilterFile(id)}
                     >
-                      <img src={deleteicon}></img>
+                      <img src={deleteicon} alt="delete" />
                     </div>
                   </div>
                 );
