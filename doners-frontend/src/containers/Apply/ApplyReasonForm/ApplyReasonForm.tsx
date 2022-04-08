@@ -1,4 +1,3 @@
-import { Editor } from '@toast-ui/react-editor';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
 // color-syntax
@@ -23,6 +22,7 @@ import { fDateDash } from 'utils/formatTime';
 import deleteicon from 'assets/images/icon/delete.png';
 import H3 from 'assets/theme/Typography/H3/H3';
 import Span from 'assets/theme/Typography/Span/Span';
+import { Editor } from '@toast-ui/react-editor';
 
 export interface IFileTypes {
   id: number;
@@ -202,7 +202,7 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
           </div>
         </div>
       </div>
-      {/* <div className={cx('editor')}>
+      <div className={cx('editor')}>
         <Editor
           previewStyle="vertical"
           height="80vh"
@@ -211,7 +211,7 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
           onChange={contentHandler}
           ref={editorRef}
         />
-      </div> */}
+      </div>
 
       <div className={cx('certificate')}>
         <div className={cx('en')}>
