@@ -1,13 +1,47 @@
-# ERD
+## 목차
 
-## 전체
-![erd](/uploads/b66b568751e55136c7a02c703064f6df/erd.png)
+- [ERD](#erd)
 
-## user
-![user](/uploads/ca960729bb245d3653ee24ee6206e70d/user.png)
+- [Categorizing](#categorizing)
 
-## donation
-![donation](/uploads/2d307fe5642e271db9787855a100f686/donation.png)
+    - [User](#user)
 
-## community
-![community](/uploads/26b6f16d7b329ed9f4dc5c1b96993628/community.png)
+    - [Donation](#donation)
+
+    - [Community](#community)
+    
+    - [Code](#code)
+
+
+<br />
+
+
+## ERD
+
+
+### [ERD Cloud 바로가기](https://www.erdcloud.com/p/nHTpfG6k65pqTPLxc)
+
+
+![Doners](https://user-images.githubusercontent.com/76759852/162276979-b46d16ec-c08e-43df-8e12-d94a51a2cb9f.PNG)
+
+
+<br />
+
+
+## Categorizing
+
+
+### User
+![User](https://user-images.githubusercontent.com/76759852/162286218-478638b0-953f-49eb-a6fb-747effa0a81b.PNG)
+
+
+### Donation
+![Donation](https://user-images.githubusercontent.com/76759852/162286445-463b399f-bfb6-4ec1-a740-afd9560a5f33.PNG)
+
+
+### Community
+![Community](https://user-images.githubusercontent.com/76759852/162286330-a2e7e1f8-5b93-402c-a401-46118a342c4e.PNG)
+
+
+### Code
+![Code](https://user-images.githubusercontent.com/76759852/162286568-ea191345-051b-46ed-a9e0-4002293a08e4.PNG)

@@ -57,26 +57,26 @@
 ## 👪 팀원 소개
 <table>
     <tr>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 👑 손창현 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙂 박기범 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😆 정홍진 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😁 송민수 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 🙄 신지우 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/">
-            <img src="https://avatars.githubusercontent.com/" width="140px" /> <br><br> 😶 이선민 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/changhyuns">
+            <img src="https://avatars.githubusercontent.com/changhyuns" width="140px" /> <br><br> 👑 손창현 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/kibum414">
+            <img src="https://avatars.githubusercontent.com/kibum414" width="140px" /> <br><br> 🙂 박기범 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/JeongHongJin">
+            <img src="https://avatars.githubusercontent.com/JeongHongJin" width="140px" /> <br><br> 😆 정홍진 <br>(Back-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/thdalstn6352">
+            <img src="https://avatars.githubusercontent.com/thdalstn6352" width="140px" /> <br><br> 😁 송민수 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/eazae">
+            <img src="https://avatars.githubusercontent.com/eazae" width="140px" /> <br><br> 🙄 신지우 <br>(Front-End) </a> <br></td>
+        <td height="140px" align="center"> <a href="https://github.com/j-ij-i">
+            <img src="https://avatars.githubusercontent.com/j-ij-i" width="140px" /> <br><br> 😶 이선민 <br>(Front-End) </a> <br></td>
     </tr>
     <tr>
         <td align="center">REST API<br/>CI/CD<br/>Infra<br/></td>
-        <td align="center">REST API</td>
-        <td align="center">REST API<br/>SMART CONTRACT<br/></td>
-        <td align="center">UI/UX</td>
-        <td align="center">UI/UX</td>
-        <td align="center">UI/UX</td>
+        <td align="center">REST API<br/>Security<br/>Database<br/></td>
+        <td align="center">REST API<br/>Smart Contract<br/>Web3 API<br/></td>
+        <td align="center">UI/UX<br/>Atomic Design<br/></td>
+        <td align="center">UI/UX<br/>NFT Contract<br/>Web3 API<br/></td>
+        <td align="center">UI/UX<br/><br/></td>
     </tr>
 </table>
 
@@ -131,6 +131,10 @@
 
 ## 🗂️ 시스템 아키텍처
 
+|                              시스템 아키텍처                       |
+| :---------------------------------------------------------------------------: |
+|  <img src="./readme_assets/architecture.png" alt="시스템 아키텍처" />  |
+
 <br/><br/>
 
 <div id="7"></div>
@@ -159,13 +163,17 @@
 | :---------------------------------------------------------------------------: |
 |  <img src="./readme_assets/donation.gif" alt="기부 요청" />  |
 
+|                              관리자 승인                       |
+| :---------------------------------------------------------------------------: |
+|  <img src="./readme_assets/admin.gif" alt="관리자 승인" />  |
+
 <br/>
 
-### 기부, NFT 지급
+### 기부, NFT 지급 (프로필)
 - 관리자로부터 승인이 완료된 기부 요청글 중 기부하고 싶은 개인에게 원하는 금액만큼 기부한다. (SSF 싸피 토큰 사용)  <br>
   기부를 완료하고 나면 NFT를 지급받고, 마이페이지에서 확인할 수 있다.
 
-|                              기부 + NFT                       |
+|                              기부하기 + 프로필 확인                       |
 | :---------------------------------------------------------------------------: |
 |  <img src="./readme_assets/donate.gif" alt="기부 + NFT" />  |
 
