@@ -51,33 +51,27 @@ export const setApprovalForAll = async (walletAddress: string) => {
 
 /* 각 카테고리 별 minting */
 export const mint = async (edition: string, walletAddress: string) => {
-  console.log(edition);
-  console.log(walletAddress);
   let result;
   switch (edition) {
     case 'COVID19':
       result = await DDHelperContract.methods
         .mintCovidToken(walletAddress)
         .send({ from: walletAddress });
-      console.log(result);
       break;
     case 'SINGLE':
       result = await DDHelperContract.methods
         .mintSingleToken(walletAddress)
         .send({ from: walletAddress });
-      console.log(result);
       break;
     case 'WARRIOR':
       result = await DDHelperContract.methods
         .mintWarriorToken(walletAddress)
         .send({ from: walletAddress });
-      console.log(result);
       break;
     case 'PATIENT':
       result = await DDHelperContract.methods
         .mintPatientToken(walletAddress)
         .send({ from: walletAddress });
-      console.log(result);
       break;
   }
   return result;
@@ -97,7 +91,6 @@ export const getMetadataFromTokenId = async (tokenId: number) => {
   // 위의 url에서 JSON가져오기
   // (https://stackoverflow.com/a/55784549)
   var metadata: any = await (await fetch(metadataURI)).json();
-  console.log(metadata);
 
   return metadata;
 };
@@ -107,7 +100,6 @@ export const isMembership = async (walletAddress: string) => {
   const result = await DDHelperContract.methods
     .isMembership(walletAddress)
     .call();
-  console.log('도너스 커뮤니티 멤버: ', result);
   return result;
 };
 
@@ -169,8 +161,6 @@ export const getTotalNFTCount = async () => {
 /* 맨 초기에 DD Token creation (한번만 실행하면 된다) */
 // export const createDoughnut = async (metadata: Array<string>) => {
 export const createDoughnut = async () => {
-  console.log('CREATING DD TOKENS...');
-
   /* All 4 EDITIONs */
   for (let idx in Metadata) {
     DDHelperContract.methods

@@ -66,7 +66,6 @@ const BoardList = () => {
     if (!endCheckRef.current) {
       setIsLoaded(true);
       const response = await getBoardList(pageRef.current);
-      console.log(response);
       const data = response.data.communityGetListResponseDTOList;
 
       if (data.length === 0) {

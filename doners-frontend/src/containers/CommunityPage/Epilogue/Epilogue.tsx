@@ -66,7 +66,6 @@ const Epilogue = () => {
       setIsLoaded(true);
       const response = await getEpilogueList(page);
       const data = response.data.epilogueGetListResponseDTOList;
-      console.log(data);
       if (data.length === 0) {
         setIsLoaded(false);
         setEndCheck(true);

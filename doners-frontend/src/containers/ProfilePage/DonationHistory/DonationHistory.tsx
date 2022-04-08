@@ -58,7 +58,6 @@ const DonationHistory = ({ walletAddress }: DonationHistoryProps) => {
         donationId: e[5],
       });
     });
-    console.log(list);
     setHistoryList(list);
   };
 
@@ -68,7 +67,6 @@ const DonationHistory = ({ walletAddress }: DonationHistoryProps) => {
       let total = historyList
         .map((item) => Number(item.value))
         .reduce((acc, curr) => acc + curr);
-      console.log(total);
       setTotalDontaionAmount(total);
     }
   };

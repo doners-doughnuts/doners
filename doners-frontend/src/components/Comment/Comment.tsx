@@ -57,12 +57,10 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
       commentDescription: comment,
     };
     const result = await modifyComment(body);
-    console.log(result);
     onModify();
   };
 
   const handleCancelClick = () => {
-    console.log(content);
     setIsDisabled(true);
   };
 
@@ -81,7 +79,6 @@ const Comment = ({ id, date, content, nickname, onDelete, onModify }: any) => {
   const handleInputChange = () => {
     if (commentRef.current) {
       setComment(commentRef.current.value);
-      console.log(comment);
     }
   };
 

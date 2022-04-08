@@ -24,17 +24,12 @@ const FundHistory = ({ nickname }: FundHistoryType) => {
   /* 기부 신청 목록 조회 */
   const getApplicationList = async () => {
     const response = await getUserApplicationList();
-    console.log(response.data.userMyPageDonationHistoryResponseDTOList);
     setApplicationList(response.data.userMyPageDonationHistoryResponseDTOList);
   };
 
   useEffect(() => {
     getApplicationList();
   }, [nickname]);
-
-  useEffect(() => {
-    console.log(applicationList);
-  }, [applicationList]);
 
   return (
     <div>

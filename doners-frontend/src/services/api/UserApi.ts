@@ -12,7 +12,6 @@ type SignUpValidationProps = {
 
 export const login = async (userAccount: string) => {
   const response = await instance.get(`/user/${userAccount}`);
-  console.log(response);
   const user = {
     accessToken: response.data.accessToken,
     nickName: response.data.userNickname,
@@ -36,44 +35,37 @@ export const checkNickname = async (userNickname: string) => {
 };
 
 export const signup = async (body: SignUpValidationProps) => {
-  console.log('dataSet', body);
   const response = await instance.post(`/user`, body);
-  console.log(response);
   return response;
 };
 
 /* 이메일 인증 메일 발송 */
 export const emailSend = async (userEmail: string) => {
   const response = await instance.post(`/email`, { emailAddress: userEmail });
-  console.log(response);
   return response;
 };
 
 /* 이메일 인증 완료 여부 확인 */
 export const emailcheck = async (userEmail: string) => {
   const response = await instance.get(`/email/check/${userEmail}`);
-  console.log(response);
   return response;
 };
 
 /* 유저 프로필 */
 export const getUserProfile = async (nickname: string) => {
   const response = await instance.get(`/user/image/${nickname}`);
-  // console.log(response);
   return response;
 };
 
 /* 유저 프로필사진 수정 */
 export const postProfile = async (formData: any) => {
   const response = await instance.post(`/user/image`, formData);
-  // console.log(response);
   return response;
 };
 
 /* 유저 이름 불러오기 */
 export const getUserName = async (nickname: string) => {
   const response = await instance.get(`/user/name/${nickname}`);
-  //console.log(response);
   return response;
 };
 

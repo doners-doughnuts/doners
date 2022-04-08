@@ -47,7 +47,6 @@ const LastFundingItem = ({ item, isOwner }: LastFundingItemProps) => {
   const checkWithdrawState = async () => {
     // (완료) 모금액 수령이 완료되었는지 검사
     const response = await fundraiserIsWithdraw(item.contractAddress);
-    console.log('이전 내역 모금액 수령 여부: ', response);
     setIsWithdrawn(response.isWithdraw);
     setCollectedBalance(response.targetMoney);
   };

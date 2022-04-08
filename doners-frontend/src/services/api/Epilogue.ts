@@ -17,7 +17,6 @@ export const modifyEpilogue = async (body: epilogueType) => {
 };
 
 export const getEpilogueList = async (sequence: number) => {
-  console.log(sequence);
   const result = await instance.get(`/epilogue/list/${sequence}`);
   return result;
 };
