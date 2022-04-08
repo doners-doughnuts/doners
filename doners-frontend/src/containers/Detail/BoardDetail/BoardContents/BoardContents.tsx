@@ -14,6 +14,7 @@ import { deleteBoard, getBoardDetail } from 'services/api/Board';
 import { getUserProfile } from 'services/api/UserApi';
 import { Link } from 'react-router-dom';
 import { fDate, fToNow } from 'utils/formatTime';
+import View from 'containers/BoardEditor/View';
 
 const cx = classNames.bind(styles);
 const BoardContents = () => {
@@ -133,6 +134,7 @@ const BoardContents = () => {
         </div>
       </header>
       <main className={cx('content')}>
+        {contents !== '' ? <View content={contents} /> : null}
         {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
       </main>
     </div>
