@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 // TOAST UI Editor import
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -12,6 +12,9 @@ function Write({ content, onChange }) {
   return (
     <>
       <Editor
+        previewStyle="vertical"
+        height="79vh"
+        initialEditType="wysiwyg"
         initialValue={content}
         usageStatistics={false}
         ref={editorRef}
