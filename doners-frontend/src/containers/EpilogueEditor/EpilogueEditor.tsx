@@ -16,6 +16,7 @@ import {
   registEpilogue,
 } from 'services/api/Epilogue';
 import { useNavigate, useParams } from 'react-router';
+import Write from 'containers/BoardEditor/Write';
 
 const cx = classNames.bind(styles);
 
@@ -69,8 +70,8 @@ function EpilogueEditor({ modify = false }: EditType) {
     }
   };
 
-  const contentHandler = () => {
-    setContent(editorRef.current?.getInstance().getMarkdown() || '');
+  const contentHandler = (value: any) => {
+    setContent(value);
   };
 
   const handleRegistSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -188,6 +189,9 @@ function EpilogueEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
+          {(!modify || !isLoading) && (
+            <Write content={content} onChange={contentHandler} />
+          )}
           {/* {(!modify || !isLoading) && (
             <Editor
               previewStyle="vertical"
