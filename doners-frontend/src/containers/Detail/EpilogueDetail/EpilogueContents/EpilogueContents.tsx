@@ -71,7 +71,7 @@ const EpilogueContents = () => {
         donationId={donationId}
       />
       <main className={cx('content')}>
-        {contents !== '' ? <Viewer initialValue={contents} /> : null}
+        {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
       </main>
       <footer className={cx('donate-history')}>
         <EpilogueDetailTotalDonate donationId={donationId} />
