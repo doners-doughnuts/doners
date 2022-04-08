@@ -11,7 +11,6 @@ import { fDateDash } from 'utils/formatTime';
 import deleteicon from 'assets/images/icon/delete.png';
 import H3 from 'assets/theme/Typography/H3/H3';
 import Span from 'assets/theme/Typography/Span/Span';
-import { Editor } from '@toast-ui/react-editor';
 import EditorForm from 'containers/BoardEditor/EditorForm';
 
 export interface IFileTypes {
@@ -29,7 +28,6 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
   const [imgFile, setImgFile] = useState('');
   const [content, setContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
-  const editorRef = useRef<Editor>(null);
   const [files, setFiles] = useState<IFileTypes[]>([]);
 
   const dragRef = useRef<HTMLLabelElement | null>(null);
@@ -196,16 +194,6 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
         </div>
       </div>
       <EditorForm content={content} onChange={contentHandler} />
-      {/* <div className={cx('editor')}>
-        <Editor
-          previewStyle="vertical"
-          height="80vh"
-          initialEditType="wysiwyg"
-          initialValue={content}
-          onChange={contentHandler}
-          ref={editorRef}
-        />
-      </div> */}
 
       <div className={cx('certificate')}>
         <div className={cx('en')}>
