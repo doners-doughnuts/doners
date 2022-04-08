@@ -1,6 +1,3 @@
-import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor } from '@toast-ui/react-editor';
-
 import React, { useEffect, useRef, useState } from 'react';
 import H1 from 'assets/theme/Typography/H1/H1';
 
@@ -23,7 +20,6 @@ function BoardEditor({ modify = false }: EditType) {
   const [content, setContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const editorRef = useRef<Editor>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   const { community_id } = useParams<string>();
