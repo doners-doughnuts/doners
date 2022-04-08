@@ -17,7 +17,7 @@ type historyType = {
 };
 
 const cx = classNames.bind(styles);
-const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
+const ApplyDetailForm = ({ onClick, apply, setApply }: any) => {
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [walletAddress, setWalletAddress] = useState<string>('');
   const [ssf, setSSF] = useState(0);
@@ -96,7 +96,7 @@ const ApplyDetailForm = ({ setApplyStep, apply, setApply }: any) => {
     );
     const response = await postDonation(formData);
     if (response) {
-      setApplyStep(3);
+      onClick(3);
     } else {
       navigate('/apply/fail');
     }
