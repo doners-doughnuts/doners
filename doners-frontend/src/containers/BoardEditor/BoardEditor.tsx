@@ -1,7 +1,7 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import H1 from 'assets/theme/Typography/H1/H1';
 
 import classNames from 'classnames/bind';
@@ -114,7 +114,7 @@ function BoardEditor({ modify = false }: EditType) {
             height="79vh"
             initialEditType="wysiwyg"
             initialValue={content}
-            // onChange={contentHandler}
+            onChange={contentHandler}
             ref={editorRef}
           />
           {/* )} */}
