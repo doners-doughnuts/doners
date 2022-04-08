@@ -7,7 +7,6 @@ import EpilogueDetailReceipt from '../EpilogueDetailReceipt/EpilogueDetailReceip
 import { useNavigate, useParams } from 'react-router';
 import { deleteEpilogue, getEpilogueDetail } from 'services/api/Epilogue';
 import EpilogueDetailTotalDonate from '../EpilogueDetailTotalDonate/EpilogueDetailTotalDonate';
-import ViewerForm from 'containers/BoardEditor/ViewerForm';
 
 const cx = classNames.bind(styles);
 
@@ -72,7 +71,7 @@ const EpilogueContents = () => {
         donationId={donationId}
       />
       <main className={cx('content')}>
-        {contents !== '' ? <ViewerForm contents={contents} /> : null}
+        {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
       </main>
       <footer className={cx('donate-history')}>
         <EpilogueDetailTotalDonate donationId={donationId} />
