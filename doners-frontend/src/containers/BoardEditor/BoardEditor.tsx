@@ -1,17 +1,6 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 
-import Prism from 'prismjs';
-import 'prismjs/themes/prism.css';
-
-// code-syntax-highlight
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-// import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-
-// color-syntax
-import 'tui-color-picker/dist/tui-color-picker.css';
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-// import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import { useEffect, useRef, useState } from 'react';
 import H1 from 'assets/theme/Typography/H1/H1';
 
@@ -125,7 +114,7 @@ function BoardEditor({ modify = false }: EditType) {
             height="79vh"
             initialEditType="wysiwyg"
             initialValue={content}
-            onChange={contentHandler}
+            // onChange={contentHandler}
             ref={editorRef}
           />
           {/* )} */}
