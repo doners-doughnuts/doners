@@ -50,8 +50,6 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
   useEffect(() => {
     if (account) {
       getBalance();
-      console.log(data.categoryCode);
-      console.log(account);
     }
   }, [account]);
 
@@ -86,16 +84,13 @@ const DonateModal = ({ data, open, onClose }: modalType) => {
       if (approveResult.status) {
         setApproveLoading(false);
       }
-      console.log(approveResult);
       setDonateLoading(true);
       const donateResult = await donate(data.contractAddress, account, money);
-      console.log(donateResult);
       if (donateResult.status) {
         setDonateLoading(false);
       }
       setMintLoading(true);
       const mintResult = await mint(data.categoryCode, account);
-      console.log(mintResult);
       if (mintResult.status) {
         setMintLoading(false);
       }

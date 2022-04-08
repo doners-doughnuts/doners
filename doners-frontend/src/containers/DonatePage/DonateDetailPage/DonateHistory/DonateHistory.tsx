@@ -45,17 +45,12 @@ const DonateHistory = ({ data }: DonateHistoryProps) => {
   // };
 
   useEffect(() => {
-    console.log(data);
     if (data.contractAddress) {
       getDonateHistory();
       checkWithdrawState();
     }
     // getCurrentBalance();
   }, [data]);
-
-  useEffect(() => {
-    console.log(history);
-  }, [history]);
 
   return (
     <div className={cx('inner-container')}>

@@ -18,7 +18,10 @@ const ApplyCard = () => {
   // 입력 폼 데이터
   const [applySteps, setApplyStep] = useState(0);
 
-  //
+  const handleApplyStep = (step: number) => {
+    setApplyStep(step);
+  };
+
   const [apply, setApply] = useState({
     beneficiaryPhone: '',
     beneficiaryName: '',
@@ -34,6 +37,10 @@ const ApplyCard = () => {
     targetAmount: 0,
     budget: [{ amount: '', plan: '', sequence: '' }],
   });
+
+  const handleApplySet = (data: any) => {
+    setApply({ ...apply, ...data });
+  };
 
   const titlelist = [
     '사용자 정보 기입',
@@ -63,33 +70,33 @@ const ApplyCard = () => {
                   case 0:
                     return (
                       <UserInfoForm
-                        setApplyStep={setApplyStep}
+                        onClick={handleApplyStep}
                         apply={apply}
-                        setApply={setApply}
+                        setApply={handleApplySet}
                       />
                     );
                   case 1:
                     return (
                       <ApplyReasonForm
-                        setApplyStep={setApplyStep}
+                        onClick={handleApplyStep}
                         apply={apply}
-                        setApply={setApply}
+                        setApply={handleApplySet}
                       />
                     );
                   case 2:
                     return (
                       <ApplyDetailForm
-                        setApplyStep={setApplyStep}
+                        onClick={handleApplyStep}
                         apply={apply}
-                        setApply={setApply}
+                        setApply={handleApplySet}
                       />
                     );
                   case 3:
                     return (
                       <ApplyComplete
-                        setApplyStep={setApplyStep}
+                        onClick={handleApplyStep}
                         apply={apply}
-                        setApply={setApply}
+                        setApply={handleApplySet}
                       />
                     );
                 }

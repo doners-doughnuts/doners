@@ -16,8 +16,6 @@ const DonationHistoryListItem = ({
   donationId,
   donationTitle,
 }: DonationTransactionType) => {
-  // console.log(fDateTime(new Date(date).toDateString()));
-
   return (
     <div className={cx('history-item')}>
       <div className={cx('card')}>
