@@ -193,7 +193,9 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
           </div>
         </div>
       </div>
-      <EditorForm content={content} onChange={contentHandler} />
+      {/* <>
+        <EditorForm content={content} onChange={contentHandler} />
+      </> */}
 
       <div className={cx('certificate')}>
         <div className={cx('en')}>

@@ -105,9 +105,11 @@ function BoardEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          {(!modify || !isLoading) && (
+          {/* {(!modify || !isLoading) && ( */}
+          <>
             <EditorForm content={content} onChange={contentHandler} />
-          )}
+          </>
+          {/* )} */}
         </div>
         <div className={cx('btn-row')}>
           <div className={cx('regist-btn')}>
