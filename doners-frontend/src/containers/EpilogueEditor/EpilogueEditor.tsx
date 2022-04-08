@@ -1,3 +1,6 @@
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/react-editor';
+
 import H1 from 'assets/theme/Typography/H1/H1';
 
 import classNames from 'classnames/bind';
@@ -35,6 +38,7 @@ function EpilogueEditor({ modify = false }: EditType) {
   const [initlength, SetInit] = useState(0);
   const [historyList, setHistoryList] = useState<historyType[]>([]);
   const [donationId, setDonationId] = useState('');
+  const editorRef = useRef<Editor>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
 
   const { id } = useParams<string>();
@@ -152,6 +156,15 @@ function EpilogueEditor({ modify = false }: EditType) {
     );
   };
 
+  // useEffect(() => {
+  //   console.log(historyList);
+  //   handleUploadPlan(historyList);
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(imgFile);
+  // }, [imgFile]);
+
   return (
     <>
       <div className={cx('header')}>
@@ -176,10 +189,11 @@ function EpilogueEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          {/* {(!modify || !isLoading) && (
+          {(!modify || !isLoading) && (
             <EditorForm content={content} onChange={contentHandler} />
-          )} */}
+          )}
         </div>
+        {/* <EditorForm /> */}
         <div className={cx('donate-receipt')}>
           <div className={cx('total-donate')}>
             <TotalDonate donationId={donationId} />
