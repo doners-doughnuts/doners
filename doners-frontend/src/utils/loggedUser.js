@@ -10,7 +10,6 @@ export function getLoggedUserId() {
 
 /* 로그인 상태인지 검사해주는 hook */
 export function checkUserLogged() {
-  console.log('사용자 로그인 여부:', getLoggedUserId() !== undefined);
   return getLoggedUserId() !== undefined;
 }
 
@@ -36,5 +35,5 @@ export function isAdmin() {
   // if (isAdmin) {
   //   console.log('ADMIN ACCOUNT');
   //   return true;
-  // } else 
+  // } else
 }

@@ -1,6 +1,9 @@
 @import 'assets/styles/main';
 
-.contents {
+.section {
+  width: 100vw;
+  background-color: $gray-2;
+
   .title {
     margin: 150px 0 0 50px;
   }

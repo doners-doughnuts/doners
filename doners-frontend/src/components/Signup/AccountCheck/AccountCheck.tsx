@@ -28,7 +28,6 @@ const AccountCheck = () => {
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts',
         });
-        console.log(accounts);
         setAccount(accounts[0]);
       } else {
         toast.info('Metamask를 설치해주세요!');
@@ -54,7 +53,6 @@ const AccountCheck = () => {
   const handleLogin = async (account: string) => {
     try {
       const result = await login(account);
-      console.log(result);
       // // 로그인 성공한 userId와, response로 온 userNickname을 atom에 저장
       toast.success('로그인 성공');
       setIsLoggedState(true);

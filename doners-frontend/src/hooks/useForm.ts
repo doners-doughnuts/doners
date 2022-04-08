@@ -34,7 +34,6 @@ function useForm({ initialValues, onSubmit, validate }: useFormProps) {
   useEffect(() => {
     if (isLoading) {
       if (Object.keys(errors).length === 0) {
-        console.log('들어옴?');
         onSubmit(values);
       }
       setIsLoading(false);

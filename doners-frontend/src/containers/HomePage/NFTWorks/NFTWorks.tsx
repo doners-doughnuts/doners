@@ -12,14 +12,22 @@ import 'aos/dist/aos.css';
 const cx = classNames.bind(styles);
 const NFTWorks = () => {
   return (
-    <section>
-      <div className={cx('contents')}>
-        <div className={cx('title')}>
-          <H1>How it works...</H1>
-          <H4>기부 후 다양한 조합의 자신만의 NFT를 가질 수 있습니다.</H4>
-        </div>
-        <div>
-          <IntroductionNFT />
+    <section className={cx('section')}>
+      <div className={cx('container')}>
+        <div className={cx('row')}>
+          <div className={cx('col-lg-12')}>
+            <div className={cx('contents')}>
+              <div className={cx('title')}>
+                <H1>How it works...</H1>
+                <H4 color="gray">
+                  기부 후 다양한 조합의 자신만의 NFT를 가질 수 있습니다.
+                </H4>
+              </div>
+              <div>
+                <IntroductionNFT />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

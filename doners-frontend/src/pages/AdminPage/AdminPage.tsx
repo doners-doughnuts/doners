@@ -54,7 +54,6 @@ const AdminPage = () => {
   const getPendingList = async () => {
     const { donationGetListResponseDTOList } =
       await getPendingApplicationList();
-    console.log(donationGetListResponseDTOList);
     setApplicationList(donationGetListResponseDTOList);
 
     setPendingCount(donationGetListResponseDTOList.length);
@@ -63,12 +62,10 @@ const AdminPage = () => {
   const getTransactionList = async () => {
     // TODO
     let response = await allFundraiserData();
-    console.log('기부내역들: ', response);
     let totalBalance: number = 0;
     response.forEach((e) => (totalBalance += Number(e.value)));
 
     response.push(await allWithdrawData());
-    console.log('수령내역들: ', response);
 
     //(임시)
     // const response: TransactionListItemType[] = [];

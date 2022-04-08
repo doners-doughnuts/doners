@@ -1,6 +1,8 @@
 import AboutOurTeam from 'containers/HomePage/AboutOurTeam/AboutOurTeam';
 import DonateSSF from 'containers/HomePage/DonateSSF/DonateSSF';
-import IntroductionDoners from 'containers/HomePage/IntroductionDoners/IntroductionDoners';
+import IntroductionApply from 'containers/HomePage/IntroductionDoners/Apply/IntroductionApply';
+import IntroductionCommunity from 'containers/HomePage/IntroductionDoners/Community/IntroductionCommunity';
+import IntroductionDonate from 'containers/HomePage/IntroductionDoners/Donate/IntroductionDonate';
 import IntroductionNFT from 'containers/HomePage/IntroductionNFT/IntroductionNFT';
 import JoinCommunity from 'containers/HomePage/JoinCommunity/JoinCommunity';
 import LandingHero from 'containers/HomePage/LandingHero/LandingHero';
@@ -10,10 +12,12 @@ const HomePage = () => {
   return (
     <>
       <LandingHero />
-      <IntroductionDoners />
+      <IntroductionApply />
+      <IntroductionDonate />
+      <IntroductionCommunity />
       <DonateSSF />
       <NFTWorks />
-      <JoinCommunity />
+      {/* <JoinCommunity /> */}
       <AboutOurTeam />
     </>
   );

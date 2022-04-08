@@ -11,7 +11,6 @@ const DonateSearchBar = ({ onClick }: any) => {
 
   const handleEnterClick = (e: any) => {
     if (e.key === 'Enter') {
-      console.log(inputRef.current.value);
       onClick(inputRef.current.value);
     }
   };
