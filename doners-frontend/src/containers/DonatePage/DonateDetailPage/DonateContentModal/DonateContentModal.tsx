@@ -15,14 +15,9 @@ type modalType = {
   title: string;
 };
 const DonateContentModal = ({ open, onClose, contents, title }: modalType) => {
-  const handleOnClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    console.log(event.target);
-  };
-
   return (
     <div
       className={cx('modal', { openModal: open === true })}
-      onClick={handleOnClick}
       id="modal"
       // onMouseUp={handleOnClick}
     >

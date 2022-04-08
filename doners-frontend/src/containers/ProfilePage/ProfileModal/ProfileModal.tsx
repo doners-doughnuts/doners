@@ -63,7 +63,6 @@ const ProfileModal = (props: { open?: any; close?: any }) => {
     // 닉네임 중복 검사 api 호출
     try {
       const data = await checkNickname(nickname);
-      console.log('data', data);
       if (initnickname === nickname) {
         setNicknameMsg('');
         setNicknameConfirm(true);

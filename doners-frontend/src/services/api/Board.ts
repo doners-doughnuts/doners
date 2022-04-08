@@ -17,7 +17,6 @@ export const modifyBoard = async (body: boardType) => {
 };
 
 export const getBoardList = async (sequence: number) => {
-  console.log(sequence);
   const result = await instance.get(`/community/list/${sequence}`);
   return result;
 };

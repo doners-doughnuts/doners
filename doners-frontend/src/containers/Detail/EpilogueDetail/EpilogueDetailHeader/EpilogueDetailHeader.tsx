@@ -54,7 +54,6 @@ const EpilogueDetailHeader = ({
 
   const getProfileImg = async () => {
     const response = await getUserProfile(writer);
-    console.log(response);
     if (response) {
       // 이미지등록
       setProfile(response.data.profileImage);

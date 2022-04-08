@@ -18,7 +18,6 @@ const NotificationItem = ({ item, triggerRefresh }: NotificationItemProps) => {
 
   const handleClick = async () => {
     const response = await readNotification(item.notificationId);
-    console.log(response);
     triggerRefresh();
     navigate(`/profile/fundhistory/${getLoggedUserNickname()}`);
   };

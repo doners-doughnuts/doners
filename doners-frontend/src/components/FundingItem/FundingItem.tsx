@@ -50,16 +50,13 @@ const FundingItem = ({ item, isOwner }: FundingItemProps) => {
   /* 최종 모금 달성률 */
   const checkWithdrawState = async () => {
     const response = await fundraiserIsWithdraw(item.contractAddress);
-    console.log('모금액 수령 여부: ', response);
     setIsWithdrawn(response.isWithdraw);
     setCollectedBalance(response.targetMoney);
   };
 
   /* 현재 모금 달성률 */
   const calcCurrentAchievementRate = async () => {
-    // let rate = Math.floor((current / target) * 100);
     const currentBalance = await nowBalance(item.contractAddress);
-    // console.log(currentBalance);
     setCurrent(currentBalance);
   };
 
