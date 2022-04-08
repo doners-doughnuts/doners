@@ -10,7 +10,7 @@ import Button from 'assets/theme/Button/Button';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
 import { getBoardDetail, modifyBoard, registBoard } from 'services/api/Board';
-import Write from './Write';
+import EditorForm from './EditorForm';
 
 const cx = classNames.bind(styles);
 
@@ -50,8 +50,8 @@ function BoardEditor({ modify = false }: EditType) {
     }
   };
 
-  const contentHandler = () => {
-    setContent(editorRef.current?.getInstance().getMarkdown() || '');
+  const contentHandler = (value: any) => {
+    setContent(value);
   };
 
   const handleRegistSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,19 +109,9 @@ function BoardEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          <Write />
-          {/* {(!modify || !isLoading) && ( */}
-          <>
-            {/* <Editor
-              previewStyle="vertical"
-              height="79vh"
-              initialEditType="wysiwyg"
-              initialValue={content}
-              onChange={contentHandler}
-              ref={editorRef}
-            /> */}
-          </>
-          {/* )} */}
+          {(!modify || !isLoading) && (
+            <EditorForm content={content} onChange={contentHandler} />
+          )}
         </div>
         <div className={cx('btn-row')}>
           <div className={cx('regist-btn')}>
