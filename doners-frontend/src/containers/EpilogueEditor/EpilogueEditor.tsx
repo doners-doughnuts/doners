@@ -16,7 +16,6 @@ import {
   registEpilogue,
 } from 'services/api/Epilogue';
 import { useNavigate, useParams } from 'react-router';
-import EditorForm from 'containers/BoardEditor/EditorForm';
 
 const cx = classNames.bind(styles);
 
@@ -70,8 +69,8 @@ function EpilogueEditor({ modify = false }: EditType) {
     }
   };
 
-  const contentHandler = (value: any) => {
-    setContent(value);
+  const contentHandler = () => {
+    setContent(editorRef.current?.getInstance().getMarkdown() || '');
   };
 
   const handleRegistSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -189,9 +188,20 @@ function EpilogueEditor({ modify = false }: EditType) {
             onChange={titleHandler}
             value={title}
           />
-          {(!modify || !isLoading) && (
-            <EditorForm content={content} onChange={contentHandler} />
-          )}
+          {/* {(!modify || !isLoading) && (
+            <Editor
+              previewStyle="vertical"
+              height="79vh"
+              initialEditType="wysiwyg"
+              initialValue={content}
+              plugins={[
+                colorSyntax,
+                [codeSyntaxHighlight, { highlighter: Prism }],
+              ]}
+              onChange={contentHandler}
+              ref={editorRef}
+            />
+          )} */}
         </div>
         {/* <EditorForm /> */}
         <div className={cx('donate-receipt')}>
