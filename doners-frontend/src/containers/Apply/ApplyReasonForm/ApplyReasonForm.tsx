@@ -15,22 +15,14 @@ import Input from 'assets/theme/Input/Input';
 import Selectbox from 'assets/theme/Selectbox/Selectbox';
 import classNames from 'classnames/bind';
 import styles from './ApplyReasonForm.module.scss';
-import React, {
-  ChangeEvent,
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
+import { ChangeEvent, useCallback, useRef, useState, useEffect } from 'react';
 import P from 'assets/theme/Typography/P/P';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import { fDateDash } from 'utils/formatTime';
 import deleteicon from 'assets/images/icon/delete.png';
-import { cs } from 'date-fns/locale';
 import H3 from 'assets/theme/Typography/H3/H3';
 import Span from 'assets/theme/Typography/Span/Span';
-import H2 from 'assets/theme/Typography/H2/H2';
 
 export interface IFileTypes {
   id: number;
