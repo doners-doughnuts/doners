@@ -30,7 +30,6 @@ const EpilogueContents = () => {
   const getEpilogue = async () => {
     if (typeof epilogue_id === 'string') {
       const response = await getEpilogueDetail(epilogue_id);
-      console.log(response.data);
       setTitle(response.data.epilogueTitle);
       setContents(response.data.epilogueDescription);
       setCreateTime(response.data.epilogueCreateTime);
@@ -53,7 +52,6 @@ const EpilogueContents = () => {
     if (typeof epilogue_id === 'string') {
       try {
         const response = await deleteEpilogue(epilogue_id);
-        console.log(response);
         navigate('/community/epilogue');
       } catch (error) {
         console.log(error);

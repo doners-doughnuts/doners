@@ -20,23 +20,18 @@ export default function SignUpValidation({
 
   if (!realname) {
     errors.realname = '이름이 입력되지 않았습니다.';
-    console.log(errors.realname);
   }
 
   if (!nickname) {
     errors.nickname = '닉네임이 입력되지 않았습니다.';
-    console.log(errors.nickname);
   } else if (!nICKNAME_REGEX.test(nickname)) {
     errors.nickname = '닉네임을 올바르게 입력해주세요.';
-    console.log(errors.nickname);
   }
 
   if (!email) {
     errors.email = '이메일이 입력되지 않았습니다.';
-    console.log(errors.email);
   } else if (!emailRegex.test(email)) {
     errors.email = '이메일 형식이 올바르지 않습니다.';
-    console.log(errors.email);
   }
 
   return errors;

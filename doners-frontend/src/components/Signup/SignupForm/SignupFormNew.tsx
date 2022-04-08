@@ -18,6 +18,7 @@ import { signupState } from 'atoms/atoms';
 import { useRecoilValue } from 'recoil';
 import useEmailAuth from 'hooks/useEmailAuth';
 import { useSetRecoilState } from 'recoil';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 const SignupFormNew = () => {
@@ -107,7 +108,6 @@ const SignupFormNew = () => {
     // 닉네임 중복 검사 api 호출
     try {
       const data = await checkNickname(nickname);
-      console.log('data', data);
       if (!data) {
         setNicknameMsg('중복된 닉네임 입니다.');
       } else {
@@ -137,27 +137,11 @@ const SignupFormNew = () => {
     }
   };
 
-  const handleEmailCheck = async () => {
-    try {
-      const data = await emailcheck(email);
-      console.log('data', data);
-      if (!data) {
-        setEmailConfirmMsg('메일을 확인해주세요.');
-      } else {
-        setEmailConfirm(true);
-        setEmailConfirmMsg('인증이 완료되었습니다.');
-      }
-    } catch (error) {
-      setEmailConfirmMsg('메일을 확인해주세요.');
-    }
-  };
-
   // 회원가입 버튼 클릭 시 이벤트
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
       const data = await emailcheck(email);
-      console.log(data);
       if (!data) {
         setEmailConfirmMsg('메일을 확인해주세요.');
       } else {
@@ -190,11 +174,9 @@ const SignupFormNew = () => {
       try {
         const response = await signup(bodyparams);
         if (!response) {
-          console.log(response);
-          alert('회원가입 실패');
+          toast.error('회원가입 실패');
         } else {
-          console.log(response);
-          alert('회원가입 완료');
+          toast.success('회원가입 완료');
           navigate(-1);
         }
       } catch (error) {

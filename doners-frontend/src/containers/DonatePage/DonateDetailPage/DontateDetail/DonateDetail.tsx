@@ -91,7 +91,6 @@ const DonateDetail = () => {
         setIsOwn(true);
       }
     }
-    console.log(donationData);
   }, [donationData]);
 
   const getDetail = async () => {

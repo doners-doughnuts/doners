@@ -14,7 +14,6 @@ const EpilogueCard = ({ data }: any) => {
 
   const getProfileImg = async () => {
     const response = await getUserProfile(data.epilogueWriter);
-    console.log(response);
     if (response) {
       // 이미지등록
       setImgSrc(response.data.profileImage);

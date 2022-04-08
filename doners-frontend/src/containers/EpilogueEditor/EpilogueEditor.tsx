@@ -97,7 +97,6 @@ function EpilogueEditor({ modify = false }: EditType) {
 
   const registApi = async () => {
     const formData = new FormData();
-    console.log(historyList);
     formData.append('multipartFile', imgFile[0]);
     formData.append(
       'epilogueRegisterPostDTO',
