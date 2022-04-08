@@ -109,14 +109,16 @@ function BoardEditor({ modify = false }: EditType) {
             value={title}
           />
           {/* {(!modify || !isLoading) && ( */}
-          <Editor
-            previewStyle="vertical"
-            height="79vh"
-            initialEditType="wysiwyg"
-            initialValue={content}
-            onChange={contentHandler}
-            ref={editorRef}
-          />
+          <>
+            <Editor
+              previewStyle="vertical"
+              height="79vh"
+              initialEditType="wysiwyg"
+              initialValue={content}
+              onChange={contentHandler}
+              ref={editorRef}
+            />
+          </>
           {/* )} */}
         </div>
         <div className={cx('btn-row')}>
