@@ -132,7 +132,6 @@ const DonateListContents = () => {
     const response = await getSearchDonation(categoryId, keyword, 1);
     const data = response.data.donationGetListResponseDTOList;
     setDonateList(data);
-    console.log(response);
   };
 
   // const handleSortClick = (sort_id: string) => {

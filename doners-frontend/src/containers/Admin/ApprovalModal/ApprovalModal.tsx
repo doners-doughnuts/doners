@@ -100,7 +100,6 @@ const ApprovalModal = ({
     const response = await getDonationDetail(donation.donationId);
     // const donationDetail: DontationDetailType = response.data;
 
-    console.log(donationDetail);
     setFiles(response.data.evidence);
     setDonationDetail(response.data);
   };
@@ -132,14 +131,11 @@ const ApprovalModal = ({
         donationDetail.account
       );
 
-      console.log(fundContractAddress);
-
       if (fundContractAddress.includes('0x')) {
         const response = await approveApplication(
           donation.donationId,
           fundContractAddress
         );
-        console.log(response);
         if (response.status === 200) {
           toast.success('기부 신청이 승인처리 되었습니다.');
           setStatus(true);

@@ -40,20 +40,19 @@ const EpilogueEditorHeader = ({ onChange, donation_id }: any) => {
     setIsLoading(true);
     const file = event.target.files;
     onChange(file);
-    console.log(URL.createObjectURL(file[0]));
     setImgFile(URL.createObjectURL(file[0]));
     const formData = new FormData();
     formData.append('file', file[0]);
-    console.log(formData);
   };
 
   const handleDonateDetail = async () => {
     const result = await getDonationDetail(donation_id);
+    console.log(result);
     setCategory(result.data.categoryCode);
     setTitle(result.data.title);
     setEndDate(result.data.endDate);
     setStartDate(result.data.startDate);
-    setName(result.data.name);
+    setName(result.data.nickname);
   };
 
   const handleUserProfile = async () => {

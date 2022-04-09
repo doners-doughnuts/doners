@@ -14,7 +14,6 @@ const ApplyMain = () => {
     //api 판단해서
     try {
       const result = await checkUserFundState();
-      console.log(result);
       if (result.data.check) {
         navigate('/apply/fail');
       } else {

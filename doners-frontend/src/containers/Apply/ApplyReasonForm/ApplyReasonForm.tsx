@@ -1,36 +1,18 @@
-import { Editor } from '@toast-ui/react-editor';
-import Prism from 'prismjs';
-import 'prismjs/themes/prism.css';
-// color-syntax
-import 'tui-color-picker/dist/tui-color-picker.css';
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-
-// code-syntax-highlight
-import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-
 import Button from 'assets/theme/Button/Button';
 import Input from 'assets/theme/Input/Input';
 import Selectbox from 'assets/theme/Selectbox/Selectbox';
 import classNames from 'classnames/bind';
 import styles from './ApplyReasonForm.module.scss';
-import React, {
-  ChangeEvent,
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
+import { ChangeEvent, useCallback, useRef, useState, useEffect } from 'react';
 import P from 'assets/theme/Typography/P/P';
 import H4 from 'assets/theme/Typography/H4/H4';
 import { ReactComponent as ImageIcon } from 'assets/images/icon/image.svg';
 import { fDateDash } from 'utils/formatTime';
 import deleteicon from 'assets/images/icon/delete.png';
-import { cs } from 'date-fns/locale';
 import H3 from 'assets/theme/Typography/H3/H3';
 import Span from 'assets/theme/Typography/Span/Span';
-import H2 from 'assets/theme/Typography/H2/H2';
+import { Editor } from '@toast-ui/react-editor';
+import Write from 'containers/BoardEditor/Write';
 
 export interface IFileTypes {
   id: number;
@@ -39,7 +21,7 @@ export interface IFileTypes {
 
 const cx = classNames.bind(styles);
 
-const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
+const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
   const date = new Date();
   // date.getDate() + 1;
   date.setDate(date.getDate() + 1);
@@ -60,10 +42,13 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     { value: 'COVID19', label: '코로나19' },
   ];
 
-  const contentHandler = () => {
-    setContent(editorRef.current?.getInstance().getMarkdown() || '');
-    setApply({ ...apply, description: content });
+  const contentHandler = (value: any) => {
+    setContent(value);
   };
+
+  useEffect(() => {
+    setApply({ ...apply, description: content });
+  }, [content]);
 
   const handleUploadImage = async (event: any) => {
     setIsLoading(true);
@@ -80,7 +65,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
     // console.log(files);
     // console.log(files.map((data) => data.object));
     // console.log(apply);
-    setApplyStep(2);
+    onClick(2);
   };
 
   const setTime = (event: any) => {
@@ -137,7 +122,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
   }, []);
 
   return (
-    <div className={cx('containor')}>
+    <div className={cx('container')}>
       <div className={cx('an')}>
         <div className={cx('title')}>
           <H3>모금에 대한 상세 정보를 기재해주세요</H3>
@@ -210,17 +195,17 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
           </div>
         </div>
       </div>
-      <div className={cx('editor')}>
+      <Write content={content} onChange={contentHandler} />
+      {/* <div className={cx('editor')}>
         <Editor
           previewStyle="vertical"
           height="80vh"
           initialEditType="wysiwyg"
           initialValue={content}
-          plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
           onChange={contentHandler}
           ref={editorRef}
         />
-      </div>
+      </div> */}
 
       <div className={cx('certificate')}>
         <div className={cx('en')}>
@@ -254,7 +239,7 @@ const ApplyReasonForm = ({ setApplyStep, apply, setApply }: any) => {
                       className={cx('item-delete-icon')}
                       onClick={() => handleFilterFile(id)}
                     >
-                      <img src={deleteicon}></img>
+                      <img src={deleteicon} alt="delete" />
                     </div>
                   </div>
                 );

@@ -8,7 +8,6 @@ import {
 /* Wallet ETH balance 조회 */
 export const getETHBalance = async (walletAddress: string) => {
   const balance = await Web3Client.eth.getBalance(walletAddress);
-  console.log(balance, 'ETH');
 };
 
 /* Wallet SSF(token) balance 조회 */
@@ -171,7 +170,6 @@ export const allFundraiserMyDonationData = async (
       allFundData.push(FundraiserData[j]);
     }
   }
-  console.log(allFundData);
   return allFundData;
 };
 
@@ -235,7 +233,6 @@ export const fundraiserIsWithdraw = async (fundraiserAddress: string) => {
     isWithdraw: isWithdraw,
     targetMoney: withdrawMoney,
   };
-  console.log(withdrawData);
   return withdrawData;
 };
 

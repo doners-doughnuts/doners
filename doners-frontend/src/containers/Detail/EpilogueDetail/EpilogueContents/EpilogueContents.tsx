@@ -7,6 +7,7 @@ import EpilogueDetailReceipt from '../EpilogueDetailReceipt/EpilogueDetailReceip
 import { useNavigate, useParams } from 'react-router';
 import { deleteEpilogue, getEpilogueDetail } from 'services/api/Epilogue';
 import EpilogueDetailTotalDonate from '../EpilogueDetailTotalDonate/EpilogueDetailTotalDonate';
+import View from 'containers/BoardEditor/View';
 
 const cx = classNames.bind(styles);
 
@@ -30,7 +31,6 @@ const EpilogueContents = () => {
   const getEpilogue = async () => {
     if (typeof epilogue_id === 'string') {
       const response = await getEpilogueDetail(epilogue_id);
-      console.log(response.data);
       setTitle(response.data.epilogueTitle);
       setContents(response.data.epilogueDescription);
       setCreateTime(response.data.epilogueCreateTime);
@@ -53,7 +53,6 @@ const EpilogueContents = () => {
     if (typeof epilogue_id === 'string') {
       try {
         const response = await deleteEpilogue(epilogue_id);
-        console.log(response);
         navigate('/community/epilogue');
       } catch (error) {
         console.log(error);
@@ -73,7 +72,7 @@ const EpilogueContents = () => {
         donationId={donationId}
       />
       <main className={cx('content')}>
-        {contents !== '' ? <Viewer initialValue={contents} /> : null}
+        {contents !== '' ? <View content={contents} /> : null}
       </main>
       <footer className={cx('donate-history')}>
         <EpilogueDetailTotalDonate donationId={donationId} />

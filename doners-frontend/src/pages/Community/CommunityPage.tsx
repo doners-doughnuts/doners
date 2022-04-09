@@ -33,7 +33,6 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ focus }) => {
       const exist = await isMembership(account);
       const response = await checkApporveDonation();
       const check = response.data.check;
-      console.log(response);
       const admin = await isAdmin();
 
       if (!exist && !check) {

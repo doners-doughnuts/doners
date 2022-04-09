@@ -14,6 +14,7 @@ import { deleteBoard, getBoardDetail } from 'services/api/Board';
 import { getUserProfile } from 'services/api/UserApi';
 import { Link } from 'react-router-dom';
 import { fDate, fToNow } from 'utils/formatTime';
+import View from 'containers/BoardEditor/View';
 
 const cx = classNames.bind(styles);
 const BoardContents = () => {
@@ -42,8 +43,6 @@ const BoardContents = () => {
     const user = sessionStorage.getItem('user');
     if (typeof user === 'string') {
       const Juser = JSON.parse(user);
-      console.log(writer);
-      console.log(Juser.nickName);
       if (writer === Juser.nickName) {
         setIsOwn(true);
       }
@@ -52,7 +51,6 @@ const BoardContents = () => {
   const getBoard = async () => {
     if (typeof community_id === 'string') {
       const response = await getBoardDetail(community_id);
-      console.log(response.data);
       setTitle(response.data.communityTitle);
       setContents(response.data.communityDescription);
       setCreateTime(response.data.communityCreateTime);
@@ -79,8 +77,7 @@ const BoardContents = () => {
 
   const deleteHandler = async () => {
     if (typeof community_id === 'string') {
-      const response = await deleteBoard(community_id);
-      console.log(response);
+      await deleteBoard(community_id);
       navigate('/community/board');
     }
   };
@@ -137,7 +134,8 @@ const BoardContents = () => {
         </div>
       </header>
       <main className={cx('content')}>
-        {contents !== '' ? <Viewer initialValue={contents} /> : null}
+        {contents !== '' ? <View content={contents} /> : null}
+        {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
       </main>
     </div>
   );
