@@ -21,6 +21,5 @@ export const readNotification = async (notificationId: string) => {
   const response = await instance.patch(COMMON, {
     notificationId,
   });
-  console.log(response);
   return response;
 };

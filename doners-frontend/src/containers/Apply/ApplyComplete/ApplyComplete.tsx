@@ -5,10 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { getLoggedUserInfo, getLoggedUserNickname } from 'utils/loggedUser';
 import { Link } from 'react-router-dom';
 import { fDateDash } from 'utils/formatTime';
-import { useRecoilValue } from 'recoil';
 const cx = classNames.bind(styles);
 
-const ApplyComplete = ({ setApplyStep, apply, setApply }: any) => {
+const ApplyComplete = ({ apply }: any) => {
   const date: string = new Date().toString();
   const [isLogged, setIsLogged] = useState(false);
   const [loggedUserNickname, setLoggedUserNickname] = useState('');

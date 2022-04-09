@@ -63,7 +63,6 @@ const CommentsForm = () => {
     if (typeof id === 'string' && id !== '') {
       if (paramName === 'communityId') {
         const response = await getBoardComments(id);
-        console.log(response.data.commentResponseDTOList);
         setCommentList(response.data.commentResponseDTOList);
       } else {
         const response = await getEpilogueComments(id);
@@ -77,7 +76,6 @@ const CommentsForm = () => {
   };
 
   const handleModify = () => {
-    console.log('수정 완료.');
     getCommentsApi();
   };
 
