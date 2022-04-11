@@ -45,7 +45,6 @@ const FundModal = (props: {
         await withdraw(contractAddress, walletAddress);
         toast.success('성공적으로 모금수령이 되었습니다!');
         const result = await deleteClosedDonation(donationId);
-        console.log(result);
       }
     } catch (error) {
       toast.error('모금수령에 문제가 있었습니다. 관리자에게 문의하세요.');
