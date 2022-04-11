@@ -62,9 +62,6 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
 
   const setValue = () => {
     setApply({ ...apply, evidence: files.map((data) => data.object) });
-    // console.log(files);
-    // console.log(files.map((data) => data.object));
-    // console.log(apply);
     onClick(2);
   };
 
@@ -196,6 +193,7 @@ const ApplyReasonForm = ({ onClick, apply, setApply }: any) => {
         </div>
       </div>
       <Write content={content} onChange={contentHandler} />
+
       {/* <div className={cx('editor')}>
         <Editor
           previewStyle="vertical"
