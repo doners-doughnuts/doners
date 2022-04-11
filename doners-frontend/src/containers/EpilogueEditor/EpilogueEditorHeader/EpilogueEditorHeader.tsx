@@ -47,7 +47,6 @@ const EpilogueEditorHeader = ({ onChange, donation_id }: any) => {
 
   const handleDonateDetail = async () => {
     const result = await getDonationDetail(donation_id);
-    console.log(result);
     setCategory(result.data.categoryCode);
     setTitle(result.data.title);
     setEndDate(result.data.endDate);
