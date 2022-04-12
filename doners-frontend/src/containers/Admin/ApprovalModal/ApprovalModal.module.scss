@@ -10,6 +10,31 @@
   z-index: 50;
   background-color: rgba(0, 0, 0, 0.5);
 
+  .text-background {
+    padding: 20px 40px;
+    border-radius: 20px;
+
+    &.green {
+      background-color: $green;
+    }
+    &.yellow {
+      background-color: $yellow;
+    }
+    &.red {
+      background-color: $red;
+    }
+  }
+  .loading-spinner {
+    // background-color: ;
+    width: 40vw;
+    height: 70vh;
+    @include column-flexbox(start);
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  }
+
   .container {
     position: relative;
     height: 75vh;

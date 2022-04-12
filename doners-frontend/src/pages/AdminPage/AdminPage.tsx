@@ -1,6 +1,5 @@
 import styles from '../page.module.scss';
 import classNames from 'classnames/bind';
-import H2 from 'assets/theme/Typography/H2/H2';
 import TransactionList from 'containers/Admin/TransactionList/TransactionList';
 import DashboardPanel from 'containers/Admin/DashboardPanel/DashboardPanel';
 import { useEffect, useState } from 'react';
@@ -10,12 +9,8 @@ import {
   getTotalNFTCount,
 } from 'services/blockchain/NftApi';
 import ApplicationList from 'containers/Admin/ApplicationList/ApplicationList';
-import { cursorTo } from 'readline';
-import ApprovalModal from 'containers/Admin/ApprovalModal/ApprovalModal';
 import { TransactionListItemType } from 'types/TransactionTypes';
 import { allFundraiserData, allWithdrawData } from 'services/blockchain/SsfApi';
-import H1 from 'assets/theme/Typography/H1/H1';
-import H3 from 'assets/theme/Typography/H3/H3';
 
 const cx = classNames.bind(styles);
 
