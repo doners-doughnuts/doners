@@ -61,6 +61,7 @@ const ApprovalModal = ({
   setStatus,
   donation,
 }: ApprovalModalType) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [approvalStatus, setApprovalStatus] = useState('WRONG_CONTACT_NUM');
   const [donationDetail, setDonationDetail] = useState({
     achievementRate: 0,
@@ -120,6 +121,7 @@ const ApprovalModal = ({
     // ex. 0xc86F168f8D5b22C677c0184C2865C11Dc5921951
     if (donationDetail) {
       setPreventDuplicatedRequest(true);
+      setIsLoading(true);
       const fundContractAddress: string = await createFundraiser(
         process.env.REACT_APP_DONATIONFACTORY_CONTRACT_ADDRESS!,
         await getWalletAccount(),
@@ -142,6 +144,7 @@ const ApprovalModal = ({
         if (response.status === 200) {
           toast.success('기부 신청이 승인처리 되었습니다.');
           setStatus(true);
+          setIsLoading(false);
           onClose();
         } else {
           // (완료) 승인 실패 처리
@@ -176,83 +179,103 @@ const ApprovalModal = ({
   return (
     <div className={cx('modal', { openModal: open === true })}>
       {open && donation ? (
-        <section className={cx('container')}>
-          <div className={cx('row')}>
-            <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
-              <div className={cx('header')}>
-                <H3>기부신청 내역 처리</H3>
-                <div className={cx('close-btn')} onClick={() => onClose()}>
-                  <CloseIcon />
-                </div>
-              </div>
-            </div>
-            <div className={cx('col-lg-6', 'donationDetail')}>
-              <DonateInfo data={donationDetail} />
-            </div>
-            <div className={cx('col-lg-5', 'col-md-5', 'col-sm-4', 'userInfo')}>
-              <UserInfo data={donationDetail} />
-              <div className={cx('select-box')}>
-                {/* <div className={cx('select-box')}> */}
-                <H3>기부 신청 반려사유 선택</H3>
-                <Selectbox
-                  onChange={(e) => {
-                    setApprovalStatus(e.value);
-                  }}
-                  options={options}
-                />
-              </div>
-            </div>
-
-            <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
-              <H3>증빙자료</H3>
-              <div className={cx('file')}>
-                <div className={cx('fileuploadlist')}>
-                  {files.length > 0 &&
-                    files.map((file: EvidenceType) => (
-                      <FileButton
-                        key={file.url}
-                        name={file.name}
-                        url={file.url}
-                      />
-                    ))}
-                </div>
-              </div>
-            </div>
-
-            {/* </div> */}
-            <div
-              className={cx('col-lg-5', 'col-md-5', 'col-sm-4', 'button-group')}
-            >
-              {/* <div className={cx('button-group')}> */}
-              <div className={cx('button')}>
-                <Button
-                  color="secondary"
-                  fullWidth
-                  onClick={handleApprove}
-                  disabled={
-                    donationDetail?.approvalStatusCode === 'APPROVAL' ||
-                    preventDuplicatedRequest
-                  }
-                >
-                  승인
-                </Button>
-              </div>
-              <div className={cx('button')}>
-                <Button
-                  color="alternate"
-                  fullWidth
-                  onClick={handleDecline}
-                  disabled={
-                    donationDetail?.approvalStatusCode !== 'BEFORE_CONFIRMATION'
-                  }
-                >
-                  거절
-                </Button>
-              </div>
+        isLoading ? (
+          <div className={cx('loading-spinner')}>
+            <img
+              src="https://static.toss.im/3d-emojis/u1F913-apng.png"
+              alt="loading spinner"
+            />
+            <div className={cx('text-background', 'yellow')}>
+              <H3 color="white">잠시만요! 요청을 처리하고 있어요.</H3>
             </div>
           </div>
-          {/* </div> */}
-        </section>
+        ) : (
+          <section className={cx('container')}>
+            <div className={cx('row')}>
+              <div className={cx('col-lg-12', 'col-md-12', 'col-sm-4')}>
+                <div className={cx('header')}>
+                  <H3>기부신청 내역 처리</H3>
+                  <div className={cx('close-btn')} onClick={() => onClose()}>
+                    <CloseIcon />
+                  </div>
+                </div>
+              </div>
+              <div className={cx('col-lg-6', 'donationDetail')}>
+                <DonateInfo data={donationDetail} />
+              </div>
+              <div
+                className={cx('col-lg-5', 'col-md-5', 'col-sm-4', 'userInfo')}
+              >
+                <UserInfo data={donationDetail} />
+                <div className={cx('select-box')}>
+                  {/* <div className={cx('select-box')}> */}
+                  <H3>기부 신청 반려사유 선택</H3>
+                  <Selectbox
+                    onChange={(e) => {
+                      setApprovalStatus(e.value);
+                    }}
+                    options={options}
+                  />
+                </div>
+              </div>
+
+              <div className={cx('col-lg-6', 'col-md-6', 'col-sm-4')}>
+                <H3>증빙자료</H3>
+                <div className={cx('file')}>
+                  <div className={cx('fileuploadlist')}>
+                    {files.length > 0 &&
+                      files.map((file: EvidenceType) => (
+                        <FileButton
+                          key={file.url}
+                          name={file.name}
+                          url={file.url}
+                        />
+                      ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* </div> */}
+              <div
+                className={cx(
+                  'col-lg-5',
+                  'col-md-5',
+                  'col-sm-4',
+                  'button-group'
+                )}
+              >
+                {/* <div className={cx('button-group')}> */}
+                <div className={cx('button')}>
+                  <Button
+                    color="secondary"
+                    fullWidth
+                    onClick={handleApprove}
+                    disabled={
+                      donationDetail?.approvalStatusCode === 'APPROVAL' ||
+                      preventDuplicatedRequest
+                    }
+                  >
+                    승인
+                  </Button>
+                </div>
+                <div className={cx('button')}>
+                  <Button
+                    color="alternate"
+                    fullWidth
+                    onClick={handleDecline}
+                    disabled={
+                      donationDetail?.approvalStatusCode !==
+                      'BEFORE_CONFIRMATION'
+                    }
+                  >
+                    거절
+                  </Button>
+                </div>
+              </div>
+            </div>
+            {/* </div> */}
+          </section>
+        )
       ) : null}
     </div>
   );

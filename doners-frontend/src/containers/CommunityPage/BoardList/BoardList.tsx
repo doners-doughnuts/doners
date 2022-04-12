@@ -40,7 +40,7 @@ const BoardList = () => {
     getList();
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 300);
   }, []);
 
   useEffect(() => {
