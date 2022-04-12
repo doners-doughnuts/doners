@@ -7,6 +7,11 @@ import Logo from 'assets/images/footer-logo.svg';
 // import InstagramIcon from '@mui/icons-material/Instagram';
 
 const Footer = () => {
+  const logout = () => {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('isAdmin');
+  };
+
   return (
     <div className={styles.footer}>
       <div className={styles.innerFooter}>
@@ -55,10 +60,8 @@ const Footer = () => {
             }}
           /> */}
         </div>
-        <div className={styles.copyright}>
-          <span>
-            © SSAFY 6기 A404. 2022. All Copyrights reserved. blah blah
-          </span>
+        <div className={styles.copyright} onClick={logout}>
+          <span>© SSAFY 6기 A404. 2022. All Copyrights reserved.</span>
         </div>
       </div>
     </div>

@@ -120,7 +120,7 @@ const DonationHistory = ({ walletAddress }: DonationHistoryProps) => {
           <div>
             {historyList
               ? historyList.map((item, idx) => (
-                  <div key={idx} className={cx('col-lg-12')}>
+                  <div key={idx}>
                     <DonationHistoryListItem
                       toAccount={item.toAccount}
                       fromAccount={item.fromAccount}
