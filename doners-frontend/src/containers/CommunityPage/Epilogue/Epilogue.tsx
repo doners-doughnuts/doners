@@ -37,9 +37,10 @@ const Epilogue = () => {
   useEffect(() => {
     setIsLoading(true);
     getList();
+    // setIsLoading(false);
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 300);
   }, []);
 
   useEffect(() => {
