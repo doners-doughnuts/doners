@@ -4,11 +4,23 @@
   margin-bottom: 50px;
 }
 .title-wrap {
-  width: fit-content;
+  // width: fit-content;
+  width: 100%;
   margin: 0 auto 50px auto;
 
   .title {
     @include text-style(36);
+    font-family: $font-header;
+    // text-align: end;
+    text-align: center;
+  }
+
+  .intro {
+    font-family: $font-main;
+    font-size: medium;
+    text-align: center;
+    line-height: normal;
+    color: $gray-4;
   }
 }
 
@@ -55,7 +67,7 @@
       // }
     }
     .is-active {
-      background-color: #3617ce;
+      background-color: $red;
       color: white;
     }
   }

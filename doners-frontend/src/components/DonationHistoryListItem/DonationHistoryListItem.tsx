@@ -26,10 +26,10 @@ const DonationHistoryListItem = ({
         <div className={cx('title')}>{donationTitle}</div>
         <div className={cx('ls')}>
           <div className={cx('icon')}>
-            <DollarIcon />
+            <DollarIcon width={20} height={20} />
           </div>
           <div className={cx('money')}>{`${value} SSF`}</div>
-          <div className={cx('parti')}>{toAccount}</div>
+          <div className={cx('parti')}>To: {toAccount}</div>
           {/* <div className={cx('parti')}>기부참여</div> */}
           <div className={cx('open-btn')}>
             <Link to={`/fundraisings/${donationId}`} className={cx('open-btn')}>

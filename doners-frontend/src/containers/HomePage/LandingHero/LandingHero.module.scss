@@ -37,6 +37,7 @@
   top: 0;
   right: 0px;
   transform: rotate(15deg);
+  z-index: -1;
   .character-main {
     width: 500px;
     filter: drop-shadow(5px 5px 5px rgb(145, 145, 145));

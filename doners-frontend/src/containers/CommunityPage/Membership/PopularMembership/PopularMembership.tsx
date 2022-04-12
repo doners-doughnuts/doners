@@ -18,8 +18,11 @@ const PopularMembership = () => {
         <div className={cx('col-lg-12')}>
           <div className={cx('inner-container')}>
             <div className={cx('title-wrap')}>
-              <p className={cx('title')}>
-                지금 HOT한 혜택! 가장 인기있는 혜택 정보
+              {/* 지금 HOT한 혜택! 가장 인기있는 혜택 정보  */}
+              <p className={cx('title')}>For our 'DD-Owners'!</p>
+              <p className={cx('intro')}>
+                DD(Doners Doughnuts) NFT 보유자들을 위한
+                <br /> 도너스 멤버십 혜택을 준비했어요!
               </p>
             </div>
             <div className={cx('event-items')}>

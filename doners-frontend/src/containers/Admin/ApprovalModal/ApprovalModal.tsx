@@ -105,7 +105,10 @@ const ApprovalModal = ({
   };
 
   useEffect(() => {
-    if (open) getDonationDetailInfo();
+    if (open) {
+      getDonationDetailInfo();
+      setPreventDuplicatedRequest(false);
+    }
   }, [open]);
 
   // useEffect(() => {}, [files]);

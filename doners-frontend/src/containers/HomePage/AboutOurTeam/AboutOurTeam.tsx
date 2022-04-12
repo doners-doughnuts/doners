@@ -45,7 +45,7 @@ const AboutOurTeam = () => {
       <div className={cx('teammate3', 'team-character')}>
         <img data-aos="zoom-out" src={jiwu} alt="character" />
         <div className={cx('desc')}>
-          <Tag color={'black'}>FE, BlockChain</Tag>
+          <Tag color={'black'}>FE, Contract</Tag>
           <div className={cx('name')}>신지우</div>
           <div className={cx('id')}>@ziu974</div>
         </div>
@@ -70,7 +70,7 @@ const AboutOurTeam = () => {
       <div className={cx('teammate6', 'team-character')}>
         <img data-aos="zoom-out" src={hongjin} alt="character" />
         <div className={cx('desc')}>
-          <Tag color={'black'}>BE, BlockChain</Tag>
+          <Tag color={'black'}>BE, Contract</Tag>
           <div className={cx('name')}>정홍진</div>
           <div className={cx('id')}>@mistake9518</div>
         </div>

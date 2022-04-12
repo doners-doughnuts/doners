@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './UserProfile.module.scss';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Avatar from 'assets/theme/Avatar/Avatar';
 import ProfileModal from '../ProfileModal/ProfileModal';
@@ -9,9 +7,9 @@ import { getWalletAccount } from 'utils/walletAddress';
 import { getUserAddress, getUserProfile } from 'services/api/UserApi';
 import { getUserNFTIdList } from 'services/blockchain/NftApi';
 import { getLoggedUserNickname } from 'utils/loggedUser';
-import H3 from 'assets/theme/Typography/H3/H3';
 import H2 from 'assets/theme/Typography/H2/H2';
 import P from 'assets/theme/Typography/P/P';
+import { ReactComponent as FoxIcon } from 'assets/images/icon/fox.svg';
 const cx = classNames.bind(styles);
 
 type nickNameType = {
@@ -82,7 +80,8 @@ const UserProfile = ({ nickname }: nickNameType) => {
           </div>
           {walletOpen ? (
             <div>
-              <H3>{walletAddress}</H3>
+              {/* <FoxIcon /> */}
+              <P>{walletAddress}</P>
             </div>
           ) : null}
           {/* <div>

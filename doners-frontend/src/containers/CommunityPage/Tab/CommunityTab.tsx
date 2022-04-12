@@ -14,7 +14,7 @@ const CommunityTab = ({ focus }: TabType) => {
       <nav className={cx('lnb')}>
         <div className={cx('container')}>
           <div className={cx('row')}>
-            <div className={cx('col-lg-8')}>
+            <div className={cx('col-lg-8', 'col-md-8', 'col-sm-3')}>
               <ul className={cx('lnb-list')}>
                 <li className={cx('lnb-item', { 'is-active': focus === 1 })}>
                   <Link to="/community/membership">도너스 멤버쉽</Link>

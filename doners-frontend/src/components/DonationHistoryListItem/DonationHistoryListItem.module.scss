@@ -3,18 +3,8 @@
 .history-item {
   margin: 20px 0 0 0;
   padding-bottom: 10px;
-
   @include flexbox(between, center);
-  
-  .value {
-    @include flexbox;
 
-    .icon {
-      @include flexbox;
-      margin-left: 10px;
-      
-    }
-  }
   .card {
     margin: 10px 0 5px 0;
     padding: 15px 20px 10px 20px;
@@ -34,7 +24,7 @@
       color: $gray-3;
       margin-bottom: 4px;
     }
-  
+
     .title {
       @include text-style(18);
       font-family: $font-main;
@@ -42,13 +32,21 @@
       color: $black;
       // white-space: nowrap;
     }
-  
+
     .ls {
       @include flexbox(start);
+      align-items: center;
+      margin-top: 8px;
+
+      .icon {
+        @include flexbox;
+        margin-right: 5px;
+      }
+
       .money {
         @include text-style(16);
         color: $gray-4;
-       white-space: nowrap;
+        white-space: nowrap;
       }
       .parti {
         padding: 0 0 0 10px;
@@ -57,7 +55,7 @@
         white-space: nowrap;
       }
     }
-  
+
     .open-btn {
       cursor: pointer;
       width: 100%;
@@ -70,4 +68,3 @@
     }
   }
 }
-
