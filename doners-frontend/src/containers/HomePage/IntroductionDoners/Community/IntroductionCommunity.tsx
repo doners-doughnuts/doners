@@ -4,6 +4,7 @@ import styles from './IntroductionCommunity.module.scss';
 import discord1 from 'assets/images/img-discord1.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import communityGif from 'assets/images/landing/community.gif';
 
 const cx = classNames.bind(styles);
 const IntroductionCommunity = () => {
@@ -31,10 +32,7 @@ const IntroductionCommunity = () => {
                 <div className={cx('monitor')}>
                   <img src={discord1} alt="monitor" />
                   <div className={cx('image')}>
-                    <img
-                      src="https://lab.ssafy.com/s06-blockchain-nft-sub2/S06P22A404/-/raw/develop/readme_assets/community.gif"
-                      alt="img"
-                    />
+                    <img src={communityGif} alt="img" />
                   </div>
                 </div>
               </div>
