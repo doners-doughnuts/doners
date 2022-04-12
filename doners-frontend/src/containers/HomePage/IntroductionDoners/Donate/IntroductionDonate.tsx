@@ -4,6 +4,7 @@ import styles from './IntroductionDonate.module.scss';
 import discord1 from 'assets/images/img-discord1.png';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import donateGif from 'assets/images/landing/donate.gif';
 
 const cx = classNames.bind(styles);
 const IntroductionDonate = () => {
@@ -31,10 +32,7 @@ const IntroductionDonate = () => {
                 <div className={cx('monitor')}>
                   <img src={discord1} alt="monitor" />
                   <div className={cx('image')}>
-                    <img
-                      src="https://lab.ssafy.com/s06-blockchain-nft-sub2/S06P22A404/-/raw/develop/readme_assets/donate.gif"
-                      alt="img"
-                    />
+                    <img src={donateGif} alt="img" />
                   </div>
                 </div>
               </div>
