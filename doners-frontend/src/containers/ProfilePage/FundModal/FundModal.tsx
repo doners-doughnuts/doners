@@ -34,6 +34,8 @@ const FundModal = (props: {
   const [totalDoners, setTotalDoners] = useState(0);
   const [walletAddress, setWalletAddress] = useState('');
   const [current, setCurrent] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
   let rate = Math.floor((current / target) * 100);
 
   // console.log(target);
@@ -42,10 +44,11 @@ const FundModal = (props: {
   const handleWithdraw = async () => {
     try {
       if (walletAddress) {
+        setIsLoading(true);
         await withdraw(contractAddress, walletAddress);
+        setIsLoading(false);
         toast.success('성공적으로 모금수령이 되었습니다!');
-        const result = await deleteClosedDonation(donationId);
-        console.log(result);
+        await deleteClosedDonation(donationId);
       }
     } catch (error) {
       toast.error('모금수령에 문제가 있었습니다. 관리자에게 문의하세요.');
@@ -89,61 +92,75 @@ const FundModal = (props: {
       }
     >
       {open ? (
-        <section>
-          <header>
-            모금액 수령하기
-            <button className={cx('close')} onClick={close}>
-              &times;
-            </button>
-          </header>
-          <main>
-            <div className={cx('total_fund_raised')}>
-              <div className={cx('data-row')}>
-                <div className={cx('value-row')}>
-                  <div className={cx('value-title')}>
-                    <H4>총 모금액 </H4>
+        isLoading ? (
+          <div className={cx('loading-spinner')}>
+            <img
+              src="https://static.toss.im/3d/money-wings-confetti-apng.png"
+              alt="loading spinner"
+            />
+            <div className={cx('text-background', 'green')}>
+              <H3>기부금을 수령하고 있어요.</H3>
+            </div>
+          </div>
+        ) : (
+          <section>
+            <header>
+              모금액 수령하기
+              <button className={cx('close')} onClick={close}>
+                &times;
+              </button>
+            </header>
+            <main>
+              <div className={cx('total_fund_raised')}>
+                <div className={cx('data-row')}>
+                  <div className={cx('value-row')}>
+                    <div className={cx('value-title')}>
+                      <H4>총 모금액 </H4>
+                    </div>
+                    <H2>{String(current)}</H2>
+                    <H4>SSF</H4>
                   </div>
-                  <H2>{String(current)}</H2>
-                  <H4>SSF</H4>
-                </div>
-                <div className={cx('people-row')}>
-                  <div className={cx('value-title')}>
-                    <H4>총</H4>
+                  <div className={cx('people-row')}>
+                    <div className={cx('value-title')}>
+                      <H4>총</H4>
+                    </div>
+                    <H3>{String(totalDoners)}</H3>
+                    <H4> 명의 기부자</H4>
                   </div>
-                  <H3>{String(totalDoners)}</H3>
-                  <H4> 명의 기부자</H4>
-                </div>
-                <Progressbar value={rate} />
-                <div className={cx('')}>
-                  <div className={cx('date-title')}>
-                    <Span color="gray">모금액 달성률 : </Span>
-                    <Span color="green">
-                      {String(Math.floor((current / target) * 100)).concat('%')}
-                    </Span>
-                    <Span color="gray">{`(${current} SSF)`}</Span>
+                  <Progressbar value={rate} />
+                  <div className={cx('')}>
+                    <div className={cx('date-title')}>
+                      <Span color="gray">모금액 달성률 : </Span>
+                      <Span color="green">
+                        {String(Math.floor((current / target) * 100)).concat(
+                          '%'
+                        )}
+                      </Span>
+                      <Span color="gray">{`(${current} SSF)`}</Span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className={cx('title')}>수령할 지갑 주소</div>
-            <div className={cx('input')}>
-              <div className={cx('inputWithBtn')}>
-                <Input
-                  id="nickname"
-                  value={walletAddress}
-                  type="text"
-                  disabled={true}
-                />
-                <div className={cx('inputBtn')}></div>
+              <div className={cx('title')}>수령할 지갑 주소</div>
+              <div className={cx('input')}>
+                <div className={cx('inputWithBtn')}>
+                  <Input
+                    id="nickname"
+                    value={walletAddress}
+                    type="text"
+                    disabled={true}
+                  />
+                  <div className={cx('inputBtn')}></div>
+                </div>
               </div>
-            </div>
-          </main>
-          <footer>
-            <Button color="primary" size="large" onClick={handleWithdraw}>
-              수령하기
-            </Button>
-          </footer>
-        </section>
+            </main>
+            <footer>
+              <Button color="primary" size="large" onClick={handleWithdraw}>
+                수령하기
+              </Button>
+            </footer>
+          </section>
+        )
       ) : null}
     </div>
   );

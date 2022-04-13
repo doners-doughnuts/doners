@@ -122,11 +122,36 @@
   bottom: 0;
   left: 0;
   z-index: 10;
-  align-items: center;
+  @include flexbox;
+  // align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-bg-show 0.3s;
 }
 
+.text-background {
+  padding: 20px 40px;
+  border-radius: 20px;
+
+  &.green {
+    background-color: $green;
+  }
+  &.yellow {
+    background-color: $yellow;
+  }
+  &.red {
+    background-color: $red;
+  }
+}
+.loading-spinner {
+  // background-color: ;
+  width: 40vw;
+  height: 70vh;
+  @include column-flexbox(start);
+  img {
+    width: 300px;
+    height: 300px;
+  }
+}
 .inputWithBtn {
   padding: 10px;
   display: flex;
