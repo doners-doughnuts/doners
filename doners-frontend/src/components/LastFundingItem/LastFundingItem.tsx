@@ -136,7 +136,6 @@ const LastFundingItem = ({ item, isOwner }: LastFundingItemProps) => {
             </div>
           </div>
         </div>
-        <div></div>
       </div>
     </div>
   );
