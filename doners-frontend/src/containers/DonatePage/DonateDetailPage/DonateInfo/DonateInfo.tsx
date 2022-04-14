@@ -115,7 +115,7 @@ const DonateInfo = ({ data }: DonateInfoProps) => {
                   <div className={cx('history-item')} key={value.sequence}>
                     <P>{value.plan}</P>
                     <div className={cx('value')}>
-                      <P>{`${value.amount.toLocaleString()}KRW`}</P>
+                      <P>{`${value.amount.toLocaleString()}원`}</P>
                     </div>
                   </div>
                 );

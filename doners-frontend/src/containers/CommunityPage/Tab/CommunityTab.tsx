@@ -26,7 +26,7 @@ const CommunityTab = ({ focus }: TabType) => {
                   <Link to="/community/board">자유 광장</Link>
                 </li>
                 <li className={cx('lnb-item', { 'is-active': focus === 4 })}>
-                  <Link to="/community/discord">디스코드</Link>
+                  <Link to="/community/discord">소통</Link>
                 </li>
               </ul>
             </div>
