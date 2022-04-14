@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import styles from './DonateContentModal.module.scss';
 import { ReactComponent as CloseIcon } from 'assets/images/icon/close.svg';
+import View from 'containers/BoardEditor/View';
 
 const cx = classNames.bind(styles);
 
@@ -32,6 +33,7 @@ const DonateContentModal = ({ open, onClose, contents, title }: modalType) => {
             </div>
           </div>
           <main className={cx('content')}>
+            <View content={contents} />
             {/* {contents !== '' ? <Viewer initialValue={contents} /> : null} */}
           </main>
         </section>
