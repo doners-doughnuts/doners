@@ -84,7 +84,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
         </div>
         <div className={cx('input-value')}>
           <Input
-            placeholder="KRW"
+            placeholder="원"
             onChange={(ev) => setMoney(ev.target.value)}
             value={money}
             type="number"
@@ -110,7 +110,7 @@ const ReceiptEditor = ({ onDelete, onChange, list, length }: any) => {
         })}
       </div>
       <div className={cx('total-use-value')}>
-        <P>{`총 사용 모금액: ${total} KRW`}</P>
+        <P>{`총 사용 모금액: ${total} 원`}</P>
       </div>
     </div>
   );

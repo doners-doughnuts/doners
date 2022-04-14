@@ -11,7 +11,7 @@ const HistoryItem = ({ value, onDelete, viewOnly }: any) => {
     <div className={cx('history-item')}>
       <P>{value.epilogueBudgetPlan}</P>
       <div className={cx('value')}>
-        <P>{`${money}KRW`}</P>
+        <P>{`${money}원`}</P>
         <div
           className={cx('icon')}
           onClick={() => onDelete(value.epilogueBudgetSequence)}

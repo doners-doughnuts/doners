@@ -135,8 +135,8 @@ const ApplyDetailForm = ({ onClick, apply, setApply }: any) => {
       <div className={cx('goal')}>
         <div className={cx('trans')}>
           <Input
-            placeholder="KRW"
-            value={`${total.toLocaleString()} KRW`}
+            placeholder="원"
+            value={`${total.toLocaleString()} 원`}
             disabled={true}
           />
         </div>
