@@ -58,6 +58,8 @@ const DonationHistory = ({ walletAddress }: DonationHistoryProps) => {
         donationId: e[5],
       });
     });
+    // 모금 참여 이력 리스트의 순서를 반대로 정렬
+    list.reverse();
     setHistoryList(list);
   };
 
