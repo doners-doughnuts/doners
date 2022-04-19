@@ -53,7 +53,7 @@ contract Fundraiser is Ownable {
         beneficiary = _beneficiary;
         transferOwnership(_beneficiary);
         erc20Contract = IERC20(
-            address(0x6C927304104cdaa5a8b3691E0ADE8a3ded41a333)
+            address('이요할 토큰 컨트랙트 Address')
         ); // ssafycontract 주소 주입
         isWithdraw = false;
         donationCollectMoney = 0;
